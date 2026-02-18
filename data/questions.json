@@ -1,0 +1,704 @@
+{
+  "questions": [
+    {
+      "id": "q001",
+      "moduleId": 1,
+      "level": "debutant",
+      "question": "Quel pourcentage des émissions mondiales de CO₂ est attribué au numérique ?",
+      "answers": ["2%", "4%", "8%", "12%"],
+      "correctIndex": 1,
+      "explanation": "Le numérique représente environ 4% des émissions mondiales de CO₂, un chiffre en constante augmentation.",
+      "source": "Module 1 - Introduction"
+    },
+    {
+      "id": "q002",
+      "moduleId": 1,
+      "level": "debutant",
+      "question": "Quel type d'instrument a un caractère obligatoire ?",
+      "answers": ["Les normes ISO", "Les labels EPEAT", "La réglementation (lois, directives)", "Les codes de conduite"],
+      "correctIndex": 2,
+      "explanation": "Seule la réglementation (lois, directives, règlements) a un caractère contraignant et obligatoire. Les normes, labels et codes sont volontaires.",
+      "source": "Module 1 - Typologie des instruments"
+    },
+    {
+      "id": "q003",
+      "moduleId": 1,
+      "level": "intermediaire",
+      "question": "Quelle est la différence principale entre une directive et un règlement européen ?",
+      "answers": ["La directive nécessite une transposition nationale, pas le règlement", "Le règlement est volontaire, pas la directive", "La directive s'applique seulement aux grandes entreprises", "Il n'y a pas de différence"],
+      "correctIndex": 0,
+      "explanation": "Une directive fixe des objectifs et doit être transposée en droit national. Un règlement s'applique directement et uniformément dans tous les États membres sans transposition.",
+      "source": "Module 1 - Directive vs Règlement"
+    },
+    {
+      "id": "q004",
+      "moduleId": 1,
+      "level": "intermediaire",
+      "question": "Quel organisme luxembourgeois est responsable de la normalisation ?",
+      "answers": ["CSSF", "ILNAS", "Luxinnovation", "INDR"],
+      "correctIndex": 1,
+      "explanation": "L'ILNAS (Institut Luxembourgeois de la Normalisation, de l'Accréditation, de la Sécurité) est l'organisme national de normalisation, relais ISO/CEN au Luxembourg.",
+      "source": "Module 1 - Acteurs luxembourgeois"
+    },
+    {
+      "id": "q005",
+      "moduleId": 1,
+      "level": "avance",
+      "question": "Quel pourcentage des DEEE (Déchets d'Équipements Électriques et Électroniques) n'est pas recyclé au niveau mondial ?",
+      "answers": ["30-40%", "50-60%", "70-90%", "95-99%"],
+      "correctIndex": 2,
+      "explanation": "Entre 70 et 90% des DEEE ne sont pas correctement recyclés au niveau mondial, ce qui représente un enjeu environnemental majeur.",
+      "source": "Module 1 - Introduction"
+    },
+    {
+      "id": "q006",
+      "moduleId": 1,
+      "level": "debutant",
+      "question": "Que signifie l'acronyme INDR au Luxembourg ?",
+      "answers": ["Institut National des Ressources", "Institut National pour le Développement durable et la RSE", "Institut Numérique de Recherche", "Institut National de Régulation"],
+      "correctIndex": 1,
+      "explanation": "L'INDR est l'Institut National pour le Développement durable et la Responsabilité Sociale des Entreprises au Luxembourg.",
+      "source": "Module 1 - Acteurs luxembourgeois"
+    },
+    {
+      "id": "q007",
+      "moduleId": 2,
+      "level": "debutant",
+      "question": "Quelle est l'année cible du Green Deal européen pour atteindre la neutralité carbone ?",
+      "answers": ["2030", "2040", "2050", "2060"],
+      "correctIndex": 2,
+      "explanation": "Le Pacte Vert Européen (Green Deal), lancé en 2019, vise la neutralité carbone de l'UE d'ici 2050.",
+      "source": "Module 2 - Green Deal"
+    },
+    {
+      "id": "q008",
+      "moduleId": 2,
+      "level": "debutant",
+      "question": "Que signifie l'acronyme CSRD ?",
+      "answers": ["Corporate Social Responsibility Directive", "Corporate Sustainability Reporting Directive", "Climate Standards and Regulations Directive", "Carbon Strategy Reduction Directive"],
+      "correctIndex": 1,
+      "explanation": "CSRD signifie Corporate Sustainability Reporting Directive. C'est la directive sur le reporting extra-financier obligatoire pour les entreprises.",
+      "source": "Module 2 - Réglementations clés"
+    },
+    {
+      "id": "q009",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "Combien d'entreprises européennes sont concernées par la CSRD ?",
+      "answers": ["~5 000", "~15 000", "~50 000", "~100 000"],
+      "correctIndex": 2,
+      "explanation": "Environ 50 000 entreprises européennes sont concernées par la CSRD, avec une application progressive de 2024 à 2026 selon la taille.",
+      "source": "Module 2 - CSRD"
+    },
+    {
+      "id": "q010",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "À partir de quelle puissance un datacenter doit-il reporter ses données selon la directive EED ?",
+      "answers": ["100 kW", "250 kW", "500 kW", "1 MW"],
+      "correctIndex": 2,
+      "explanation": "La directive EED (Energy Efficiency Directive) impose un reporting pour les datacenters de plus de 500 kW de puissance installée.",
+      "source": "Module 2 - EED"
+    },
+    {
+      "id": "q011",
+      "moduleId": 2,
+      "level": "avance",
+      "question": "Quel objectif de réduction des émissions de GES le PNEC luxembourgeois fixe-t-il pour 2030 ?",
+      "answers": ["-40%", "-45%", "-55%", "-65%"],
+      "correctIndex": 2,
+      "explanation": "Le Plan National Énergie-Climat (PNEC) luxembourgeois fixe un objectif de -55% d'émissions de GES d'ici 2030 par rapport à 2005.",
+      "source": "Module 2 - Cadre luxembourgeois"
+    },
+    {
+      "id": "q012",
+      "moduleId": 2,
+      "level": "debutant",
+      "question": "Que réglemente la directive DEEE ?",
+      "answers": ["Les émissions de CO₂", "Les déchets d'équipements électriques et électroniques", "La consommation énergétique", "Les substances dangereuses"],
+      "correctIndex": 1,
+      "explanation": "La directive DEEE (2012/19/UE) réglemente la collecte et le recyclage des Déchets d'Équipements Électriques et Électroniques.",
+      "source": "Module 2 - Réglementations sectorielles"
+    },
+    {
+      "id": "q013",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "Quel est l'objectif de recyclage fixé par la directive DEEE ?",
+      "answers": ["45% en poids", "55% en poids", "65% en poids", "75% en poids"],
+      "correctIndex": 2,
+      "explanation": "La directive DEEE fixe un objectif de 65% de recyclage en poids des équipements collectés.",
+      "source": "Module 2 - DEEE"
+    },
+    {
+      "id": "q014",
+      "moduleId": 2,
+      "level": "avance",
+      "question": "Que signifie SFDR dans le contexte financier européen ?",
+      "answers": ["Sustainable Finance Disclosure Regulation", "Standard Financial Data Reporting", "Strategic Fund Development Rules", "Social Finance Directive Regulation"],
+      "correctIndex": 0,
+      "explanation": "SFDR (Sustainable Finance Disclosure Regulation) est le règlement européen sur la publication d'informations en matière de durabilité des produits financiers.",
+      "source": "Module 2 - Secteur financier"
+    },
+    {
+      "id": "q015",
+      "moduleId": 3,
+      "level": "debutant",
+      "question": "Quelle norme ISO spécifie les exigences pour un Système de Management Environnemental ?",
+      "answers": ["ISO 9001", "ISO 14001", "ISO 27001", "ISO 50001"],
+      "correctIndex": 1,
+      "explanation": "ISO 14001 spécifie les exigences pour un Système de Management Environnemental (SME). ISO 9001 concerne la qualité, ISO 27001 la sécurité de l'information, ISO 50001 l'énergie.",
+      "source": "Module 3 - ISO 14001"
+    },
+    {
+      "id": "q016",
+      "moduleId": 3,
+      "level": "debutant",
+      "question": "Quelle est la différence entre une norme et une certification ?",
+      "answers": ["La norme est obligatoire, la certification volontaire", "La norme dit quoi faire, la certification prouve qu'on le fait", "La norme concerne les produits, la certification les personnes", "Il n'y a pas de différence"],
+      "correctIndex": 1,
+      "explanation": "La norme est un document de référence qui définit les exigences (le QUOI). La certification est une attestation par un tiers indépendant que l'organisation respecte ces exigences (la PREUVE).",
+      "source": "Module 3 - Norme vs Certification"
+    },
+    {
+      "id": "q017",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Quelle norme ISO définit les exigences pour un Système de Management de l'Énergie ?",
+      "answers": ["ISO 14001", "ISO 14040", "ISO 50001", "ISO 27001"],
+      "correctIndex": 2,
+      "explanation": "ISO 50001:2018 spécifie les exigences pour un Système de Management de l'Énergie (SMÉ), permettant d'améliorer la performance énergétique de manière continue.",
+      "source": "Module 3 - ISO 50001"
+    },
+    {
+      "id": "q018",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Quelle est la durée de validité typique d'une certification ISO ?",
+      "answers": ["1 an", "2 ans", "3 ans", "5 ans"],
+      "correctIndex": 2,
+      "explanation": "Une certification ISO a généralement une validité de 3 ans, avec des audits de surveillance annuels pour vérifier le maintien de la conformité.",
+      "source": "Module 3 - Certification"
+    },
+    {
+      "id": "q019",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Quelles normes ISO définissent la méthodologie de l'Analyse du Cycle de Vie (ACV) ?",
+      "answers": ["ISO 9001 et 9004", "ISO 14001 et 14004", "ISO 14040 et 14044", "ISO 50001 et 50002"],
+      "correctIndex": 2,
+      "explanation": "ISO 14040 (principes et cadre) et ISO 14044 (exigences et lignes directrices) définissent la méthodologie de l'Analyse du Cycle de Vie.",
+      "source": "Module 3 - ACV"
+    },
+    {
+      "id": "q020",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Que signifie l'acronyme PUE dans le contexte des datacenters ?",
+      "answers": ["Power Utilization Efficiency", "Power Usage Effectiveness", "Performance Usage Evaluation", "Power Unit Equivalence"],
+      "correctIndex": 1,
+      "explanation": "PUE signifie Power Usage Effectiveness. C'est le ratio entre l'énergie totale consommée par le datacenter et l'énergie consommée par les équipements IT. Un PUE idéal est < 1.4.",
+      "source": "Module 3 - EN 50600"
+    },
+    {
+      "id": "q021",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Quelle série de normes européennes est spécifique aux datacenters ?",
+      "answers": ["EN 45000", "EN 50600", "EN 62000", "EN 80000"],
+      "correctIndex": 1,
+      "explanation": "La série EN 50600 est la norme européenne spécifique aux datacenters, couvrant la conception, construction, exploitation et les indicateurs de performance (PUE, WUE, etc.).",
+      "source": "Module 3 - EN 50600"
+    },
+    {
+      "id": "q022",
+      "moduleId": 3,
+      "level": "debutant",
+      "question": "Que signifie PDCA dans le contexte du management ?",
+      "answers": ["Plan-Design-Check-Audit", "Plan-Do-Check-Act", "Prepare-Deliver-Control-Analyze", "Process-Define-Certify-Approve"],
+      "correctIndex": 1,
+      "explanation": "PDCA signifie Plan-Do-Check-Act (Planifier-Réaliser-Vérifier-Agir). C'est le cycle d'amélioration continue utilisé dans les systèmes de management ISO.",
+      "source": "Module 3 - ISO 14001"
+    },
+    {
+      "id": "q023",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Quelles sont les économies typiques réalisées avec un système de management de l'énergie ISO 50001 ?",
+      "answers": ["1-5%", "10-30%", "40-60%", "70-90%"],
+      "correctIndex": 1,
+      "explanation": "La mise en place d'un système de management de l'énergie conforme à ISO 50001 permet typiquement des économies de 10 à 30% sur les coûts énergétiques.",
+      "source": "Module 3 - ISO 50001"
+    },
+    {
+      "id": "q024",
+      "moduleId": 4,
+      "level": "debutant",
+      "question": "Que signifie l'acronyme EPEAT ?",
+      "answers": ["Environmental Protection Equipment Assessment Tool", "Electronic Product Environmental Assessment Tool", "Energy Performance Evaluation and Testing", "European Product Eco-Audit Technology"],
+      "correctIndex": 1,
+      "explanation": "EPEAT signifie Electronic Product Environmental Assessment Tool. C'est un système d'évaluation de la performance environnementale des produits électroniques.",
+      "source": "Module 4 - EPEAT"
+    },
+    {
+      "id": "q025",
+      "moduleId": 4,
+      "level": "debutant",
+      "question": "Quels sont les trois niveaux du label EPEAT ?",
+      "answers": ["Vert, Orange, Rouge", "A, B, C", "Bronze, Argent, Or", "Standard, Premium, Excellence"],
+      "correctIndex": 2,
+      "explanation": "EPEAT a trois niveaux : Bronze (critères requis seulement), Argent (requis + 50% optionnels), Or (requis + 75% optionnels).",
+      "source": "Module 4 - EPEAT"
+    },
+    {
+      "id": "q026",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "En quelle année le programme Energy Star a-t-il été créé ?",
+      "answers": ["1985", "1992", "2000", "2008"],
+      "correctIndex": 1,
+      "explanation": "Energy Star a été créé en 1992 par l'EPA (Environmental Protection Agency) aux États-Unis pour identifier les produits économes en énergie.",
+      "source": "Module 4 - Energy Star"
+    },
+    {
+      "id": "q027",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "Quelle est la réduction moyenne de consommation d'un produit Energy Star par rapport à un produit standard ?",
+      "answers": ["10%", "20%", "30%", "50%"],
+      "correctIndex": 2,
+      "explanation": "Un produit certifié Energy Star consomme en moyenne 30% d'énergie en moins qu'un produit standard de même catégorie.",
+      "source": "Module 4 - Energy Star"
+    },
+    {
+      "id": "q028",
+      "moduleId": 4,
+      "level": "avance",
+      "question": "Quel est le plus ancien écolabel au monde ?",
+      "answers": ["Energy Star", "EPEAT", "Blue Angel", "EU Ecolabel"],
+      "correctIndex": 2,
+      "explanation": "Blue Angel (Blauer Engel) est le plus ancien écolabel au monde, créé en 1978 en Allemagne par le Ministère fédéral de l'Environnement.",
+      "source": "Module 4 - Blue Angel"
+    },
+    {
+      "id": "q029",
+      "moduleId": 4,
+      "level": "debutant",
+      "question": "Quelle est la différence entre un label et une certification d'organisation ?",
+      "answers": ["Le label est plus cher", "Le label porte sur le produit, la certification sur l'organisation", "La certification est plus facile à obtenir", "Il n'y a pas de différence"],
+      "correctIndex": 1,
+      "explanation": "Un label (comme EPEAT) certifie qu'un PRODUIT répond à des critères environnementaux. Une certification (comme ISO 14001) atteste qu'une ORGANISATION a mis en place un système de management.",
+      "source": "Module 4 - Introduction"
+    },
+    {
+      "id": "q030",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "Quelle est la consommation maximale en mode veille pour un produit Energy Star ?",
+      "answers": ["Moins de 0.5W", "Moins de 1W", "Moins de 2W", "Moins de 5W"],
+      "correctIndex": 1,
+      "explanation": "Les produits Energy Star doivent avoir une consommation en mode veille inférieure à 1W pour la plupart des équipements.",
+      "source": "Module 4 - Energy Star"
+    },
+    {
+      "id": "q031",
+      "moduleId": 4,
+      "level": "avance",
+      "question": "Combien de produits sont certifiés Blue Angel ?",
+      "answers": ["Environ 5 000", "Environ 10 000", "Environ 20 000", "Environ 50 000"],
+      "correctIndex": 2,
+      "explanation": "Plus de 20 000 produits sont certifiés Blue Angel dans plus de 120 catégories différentes.",
+      "source": "Module 4 - Blue Angel"
+    },
+    {
+      "id": "q032",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "Quelle organisation gère le label EPEAT ?",
+      "answers": ["EPA", "ISO", "Global Electronics Council (GEC)", "Commission Européenne"],
+      "correctIndex": 2,
+      "explanation": "EPEAT est géré par le Global Electronics Council (GEC), une organisation à but non lucratif basée aux États-Unis.",
+      "source": "Module 4 - EPEAT"
+    },
+    {
+      "id": "q033",
+      "moduleId": 5,
+      "level": "debutant",
+      "question": "Quelle est la caractéristique principale d'un code de conduite ?",
+      "answers": ["Il est obligatoire", "Il est vérifié par audit", "Il est volontaire", "Il donne droit à un label"],
+      "correctIndex": 2,
+      "explanation": "Un code de conduite est un engagement volontaire par lequel une organisation s'engage publiquement à respecter un ensemble de bonnes pratiques, sans audit obligatoire.",
+      "source": "Module 5 - Définition"
+    },
+    {
+      "id": "q034",
+      "moduleId": 5,
+      "level": "debutant",
+      "question": "En quelle année le Code de conduite européen pour les datacenters a-t-il été lancé ?",
+      "answers": ["2005", "2008", "2012", "2015"],
+      "correctIndex": 1,
+      "explanation": "Le Code de conduite européen pour les datacenters a été lancé en 2008 par le JRC (Joint Research Centre) de la Commission européenne.",
+      "source": "Module 5 - EU Code DC"
+    },
+    {
+      "id": "q035",
+      "moduleId": 5,
+      "level": "intermediaire",
+      "question": "Combien de datacenters sont signataires du Code de conduite européen ?",
+      "answers": ["Plus de 100", "Plus de 300", "Plus de 500", "Plus de 1000"],
+      "correctIndex": 2,
+      "explanation": "Plus de 500 datacenters en Europe sont signataires du Code de conduite européen pour les datacenters.",
+      "source": "Module 5 - EU Code DC"
+    },
+    {
+      "id": "q036",
+      "moduleId": 5,
+      "level": "intermediaire",
+      "question": "Que signifie CNDCP ?",
+      "answers": ["Centre National de Développement du Cloud Public", "Climate Neutral Data Centre Pact", "Certification Numérique des Datacenters Carbone Positif", "Code National des Datacenters et Cloud Providers"],
+      "correctIndex": 1,
+      "explanation": "CNDCP signifie Climate Neutral Data Centre Pact, un pacte signé en 2021 par les grands acteurs du cloud visant la neutralité carbone des datacenters d'ici 2030.",
+      "source": "Module 5 - CNDCP"
+    },
+    {
+      "id": "q037",
+      "moduleId": 5,
+      "level": "avance",
+      "question": "Quel est l'objectif de PUE fixé par le CNDCP pour les nouveaux datacenters en 2025 ?",
+      "answers": ["≤ 1.1", "≤ 1.2", "≤ 1.3", "≤ 1.5"],
+      "correctIndex": 2,
+      "explanation": "Le Climate Neutral Data Centre Pact fixe un objectif de PUE ≤ 1.3 pour les nouveaux datacenters à partir de 2025.",
+      "source": "Module 5 - CNDCP"
+    },
+    {
+      "id": "q038",
+      "moduleId": 5,
+      "level": "debutant",
+      "question": "Que signifie RBA dans le contexte de la supply chain électronique ?",
+      "answers": ["Responsible Business Alliance", "Regulation for Business Activities", "Resource-Based Audit", "Risk and Benefit Analysis"],
+      "correctIndex": 0,
+      "explanation": "RBA signifie Responsible Business Alliance (anciennement EICC). C'est un code de conduite pour la supply chain électronique adopté par Apple, Dell, HP, Intel, Microsoft, etc.",
+      "source": "Module 5 - Autres codes"
+    },
+    {
+      "id": "q039",
+      "moduleId": 5,
+      "level": "avance",
+      "question": "Quel est l'objectif d'énergie renouvelable du CNDCP pour 2030 ?",
+      "answers": ["50%", "75%", "90%", "100%"],
+      "correctIndex": 3,
+      "explanation": "Le CNDCP fixe l'objectif de 100% d'énergie renouvelable pour les datacenters signataires d'ici 2030.",
+      "source": "Module 5 - CNDCP"
+    },
+    {
+      "id": "q040",
+      "moduleId": 5,
+      "level": "intermediaire",
+      "question": "Combien d'engagements comporte la Charte Numérique Responsable de l'INR ?",
+      "answers": ["5", "10", "15", "20"],
+      "correctIndex": 1,
+      "explanation": "La Charte Numérique Responsable de l'INR (Institut du Numérique Responsable) comporte 10 engagements couvrant les achats responsables, l'éco-conception, la sensibilisation, etc.",
+      "source": "Module 5 - Autres codes"
+    },
+    {
+      "id": "q041",
+      "moduleId": 6,
+      "level": "debutant",
+      "question": "En quelle année LuxConnect a-t-il été créé ?",
+      "answers": ["2002", "2006", "2010", "2014"],
+      "correctIndex": 1,
+      "explanation": "LuxConnect a été créé en 2006 par l'État luxembourgeois pour développer une infrastructure de datacenters au Luxembourg.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q042",
+      "moduleId": 6,
+      "level": "debutant",
+      "question": "Quel est le PUE moyen des datacenters LuxConnect ?",
+      "answers": ["1.1-1.2", "1.3-1.4", "1.5-1.6", "1.7-1.8"],
+      "correctIndex": 1,
+      "explanation": "Les datacenters LuxConnect ont un PUE moyen de 1.3-1.4, conforme à l'objectif du Code de conduite européen.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q043",
+      "moduleId": 6,
+      "level": "intermediaire",
+      "question": "Quelle source d'énergie renouvelable utilise LuxConnect ?",
+      "answers": ["Éolien Luxembourg", "Solaire local", "Hydroélectrique Norvège", "Biomasse belge"],
+      "correctIndex": 2,
+      "explanation": "LuxConnect utilise 100% d'énergie verte provenant de l'hydroélectricité norvégienne.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q044",
+      "moduleId": 6,
+      "level": "avance",
+      "question": "Quelle innovation rend le datacenter DC2 de LuxConnect à Bissen unique ?",
+      "answers": ["Refroidissement à l'eau de mer", "Cogénération biomasse Kiowatt", "Panneaux solaires intégrés", "Éoliennes sur le toit"],
+      "correctIndex": 1,
+      "explanation": "Le DC2 de Bissen est considéré comme le 'premier datacenter vert au monde' grâce à la cogénération biomasse Kiowatt, qui permet d'éviter 27 000 tonnes de CO₂ par an.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q045",
+      "moduleId": 6,
+      "level": "debutant",
+      "question": "EBRC est une filiale de quel groupe ?",
+      "answers": ["LuxConnect", "POST Group", "Amazon Web Services", "SES"],
+      "correctIndex": 1,
+      "explanation": "EBRC est une filiale du groupe POST Luxembourg, créée en 2000.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q046",
+      "moduleId": 6,
+      "level": "intermediaire",
+      "question": "Combien de certifications ISO EBRC détient-il ?",
+      "answers": ["2", "3", "4", "5"],
+      "correctIndex": 3,
+      "explanation": "EBRC détient 5 certifications ISO : ISO 14001, ISO 50001, ISO 27001, ISO 22301 et ISO 9001.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q047",
+      "moduleId": 6,
+      "level": "avance",
+      "question": "En quelles années EBRC a-t-il été lauréat du prix European Code of Conduct ?",
+      "answers": ["2009 et 2012", "2011 et 2016", "2013 et 2018", "2015 et 2020"],
+      "correctIndex": 1,
+      "explanation": "EBRC a été lauréat du prix European Code of Conduct for Data Centres en 2011 et 2016.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q048",
+      "moduleId": 6,
+      "level": "intermediaire",
+      "question": "Quelle réduction d'empreinte carbone EBRC permet-il à ses clients ?",
+      "answers": ["-25%", "-50%", "-75%", "-90%"],
+      "correctIndex": 1,
+      "explanation": "EBRC permet une réduction de 50% de l'empreinte carbone de ses clients, soit environ 10 000 tonnes de CO₂ évitées par an.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q049",
+      "moduleId": 6,
+      "level": "avance",
+      "question": "Quelle technologie de refroidissement EBRC utilise-t-il ?",
+      "answers": ["Refroidissement liquide direct", "Roues de Kyoto", "Free cooling classique", "Absorption lithium-bromure"],
+      "correctIndex": 1,
+      "explanation": "EBRC utilise la technologie des Roues de Kyoto, un système de refroidissement économe en eau et en énergie.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q050",
+      "moduleId": 6,
+      "level": "debutant",
+      "question": "Quel est le premier facteur clé de succès identifié pour les datacenters verts ?",
+      "answers": ["Budget important", "Green by design (dès la conception)", "Subventions publiques", "Localisation géographique"],
+      "correctIndex": 1,
+      "explanation": "'Green by design' signifie intégrer les principes environnementaux dès la conception du datacenter, plutôt qu'en rattrapage.",
+      "source": "Module 6 - Enseignements"
+    },
+    {
+      "id": "q051",
+      "moduleId": 1,
+      "level": "avance",
+      "question": "Quel est le rôle de la CSSF au Luxembourg en matière de Green IT ?",
+      "answers": ["Normalisation technique", "Régulation financière et exigences ESG", "Gestion des déchets", "Certification des datacenters"],
+      "correctIndex": 1,
+      "explanation": "La CSSF (Commission de Surveillance du Secteur Financier) est le régulateur financier luxembourgeois qui définit les attentes ESG pour les prestataires de services financiers.",
+      "source": "Module 1 - Acteurs luxembourgeois"
+    },
+    {
+      "id": "q052",
+      "moduleId": 2,
+      "level": "avance",
+      "question": "Que signifie DPP dans le règlement Écoconception 2024 ?",
+      "answers": ["Data Protection Policy", "Digital Product Passport", "Design Process Protocol", "Directive Production Propre"],
+      "correctIndex": 1,
+      "explanation": "DPP signifie Digital Product Passport (Passeport numérique produit), une innovation du règlement Écoconception 2024 pour tracer le cycle de vie des produits.",
+      "source": "Module 2 - Écoconception"
+    },
+    {
+      "id": "q053",
+      "moduleId": 3,
+      "level": "debutant",
+      "question": "Combien de certificats ISO 14001 existent dans le monde ?",
+      "answers": ["Plus de 100 000", "Plus de 300 000", "Plus de 500 000", "Plus de 1 million"],
+      "correctIndex": 2,
+      "explanation": "Plus de 500 000 certificats ISO 14001 ont été délivrés dans le monde, ce qui en fait l'une des certifications les plus répandues.",
+      "source": "Module 3 - ISO 14001"
+    },
+    {
+      "id": "q054",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Que signifie WUE dans le contexte des datacenters ?",
+      "answers": ["Waste Usage Effectiveness", "Water Usage Effectiveness", "Work Unit Efficiency", "Watt Utilization Equivalent"],
+      "correctIndex": 1,
+      "explanation": "WUE signifie Water Usage Effectiveness. C'est un indicateur de la consommation d'eau par kWh IT consommé dans un datacenter.",
+      "source": "Module 3 - EN 50600"
+    },
+    {
+      "id": "q055",
+      "moduleId": 4,
+      "level": "avance",
+      "question": "Quelle est la durée de garantie minimale des pièces détachées exigée par Blue Angel pour les équipements IT ?",
+      "answers": ["2 ans", "3 ans", "5 ans", "7 ans"],
+      "correctIndex": 2,
+      "explanation": "Blue Angel exige une disponibilité des pièces détachées et des mises à jour logicielles pendant minimum 5 ans pour les équipements IT.",
+      "source": "Module 4 - Blue Angel"
+    },
+    {
+      "id": "q056",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "Combien d'objectifs environnementaux définit la Taxonomie européenne ?",
+      "answers": ["3", "4", "6", "8"],
+      "correctIndex": 2,
+      "explanation": "La Taxonomie européenne définit 6 objectifs environnementaux : atténuation du changement climatique, adaptation, eau, économie circulaire, pollution, biodiversité.",
+      "source": "Module 2 - Taxonomie"
+    },
+    {
+      "id": "q057",
+      "moduleId": 5,
+      "level": "debutant",
+      "question": "Quel est l'objectif d'énergie décarbonée du CNDCP pour 2025 ?",
+      "answers": ["50%", "65%", "75%", "85%"],
+      "correctIndex": 2,
+      "explanation": "Le CNDCP fixe l'objectif de 75% d'énergie décarbonée pour les datacenters signataires d'ici 2025.",
+      "source": "Module 5 - CNDCP"
+    },
+    {
+      "id": "q058",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Quel est le coût typique d'un audit initial ISO 14001 ?",
+      "answers": ["1 000 - 3 000 €", "5 000 - 15 000 €", "20 000 - 50 000 €", "Plus de 100 000 €"],
+      "correctIndex": 1,
+      "explanation": "Le coût typique d'un audit initial ISO 14001 se situe entre 5 000 et 15 000 €, avec des audits de surveillance annuels entre 2 000 et 5 000 €.",
+      "source": "Module 3 - Pourquoi se certifier"
+    },
+    {
+      "id": "q059",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "Quel rendement minimum l'alimentation électrique doit-elle avoir pour un produit Energy Star ?",
+      "answers": ["≥ 75%", "≥ 80%", "≥ 85%", "≥ 90%"],
+      "correctIndex": 2,
+      "explanation": "Les alimentations internes des produits Energy Star doivent avoir un rendement d'au moins 85%.",
+      "source": "Module 4 - Energy Star"
+    },
+    {
+      "id": "q060",
+      "moduleId": 6,
+      "level": "intermediaire",
+      "question": "Quelle surface IT totale LuxConnect exploite-t-il ?",
+      "answers": ["5 000 m²", "10 000 m²", "15 000 m²", "20 000 m²"],
+      "correctIndex": 2,
+      "explanation": "LuxConnect exploite une surface IT totale de 15 000 m² répartis sur 4 datacenters à Bettembourg et Bissen.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q061",
+      "moduleId": 1,
+      "level": "debutant",
+      "question": "Quel est l'objectif principal du Green IT ?",
+      "answers": ["Augmenter la puissance des ordinateurs", "Réduire l'empreinte environnementale des TIC", "Diminuer le coût des équipements", "Accélérer la transformation numérique"],
+      "correctIndex": 1,
+      "explanation": "Le Green IT vise à concilier transformation numérique et transition écologique en réduisant l'empreinte environnementale des Technologies de l'Information et de la Communication.",
+      "source": "Module 1 - Introduction"
+    },
+    {
+      "id": "q062",
+      "moduleId": 2,
+      "level": "debutant",
+      "question": "Quelle directive limite les substances dangereuses dans les équipements électroniques ?",
+      "answers": ["DEEE", "RoHS", "CSRD", "EED"],
+      "correctIndex": 1,
+      "explanation": "La directive RoHS (Restriction of Hazardous Substances) limite 10 substances dangereuses dans les équipements électroniques, dont le plomb, mercure et cadmium.",
+      "source": "Module 2 - Réglementations sectorielles"
+    },
+    {
+      "id": "q063",
+      "moduleId": 3,
+      "level": "debutant",
+      "question": "Quelles sont les 4 phases de l'Analyse du Cycle de Vie (ACV) ?",
+      "answers": ["Conception, Production, Utilisation, Recyclage", "Objectifs, Inventaire, Évaluation impacts, Interprétation", "Planification, Réalisation, Vérification, Action", "Extraction, Transformation, Distribution, Consommation"],
+      "correctIndex": 1,
+      "explanation": "Les 4 phases de l'ACV selon ISO 14040 sont : définition des objectifs et du champ, inventaire (ICV), évaluation des impacts, interprétation.",
+      "source": "Module 3 - ACV"
+    },
+    {
+      "id": "q064",
+      "moduleId": 4,
+      "level": "debutant",
+      "question": "Quel organisme américain a créé le label Energy Star ?",
+      "answers": ["FDA", "EPA", "FCC", "DOE"],
+      "correctIndex": 1,
+      "explanation": "Energy Star a été créé par l'EPA (Environmental Protection Agency), l'agence américaine de protection de l'environnement.",
+      "source": "Module 4 - Energy Star"
+    },
+    {
+      "id": "q065",
+      "moduleId": 5,
+      "level": "avance",
+      "question": "Quel engagement Microsoft a-t-il pris pour 2030 concernant son empreinte carbone ?",
+      "answers": ["Carbon neutral", "Carbon negative", "Net zero", "Carbon free"],
+      "correctIndex": 1,
+      "explanation": "Microsoft s'est engagé à devenir 'carbon negative' d'ici 2030, c'est-à-dire à retirer plus de CO₂ de l'atmosphère qu'il n'en émet.",
+      "source": "Module 5 - Chartes internes"
+    },
+    {
+      "id": "q066",
+      "moduleId": 6,
+      "level": "debutant",
+      "question": "Quelle certification Tier les datacenters LuxConnect possèdent-ils ?",
+      "answers": ["Tier I uniquement", "Tier II et III", "Tier II, III et IV", "Tier IV uniquement"],
+      "correctIndex": 2,
+      "explanation": "Les datacenters LuxConnect sont certifiés Tier II, Tier III et Tier IV par l'Uptime Institute selon leurs caractéristiques.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q067",
+      "moduleId": 2,
+      "level": "avance",
+      "question": "Quel pourcentage d'énergies renouvelables le PNEC luxembourgeois vise-t-il pour 2030 ?",
+      "answers": ["25%", "30%", "37%", "45%"],
+      "correctIndex": 2,
+      "explanation": "Le PNEC luxembourgeois fixe un objectif de 37% d'énergies renouvelables dans le mix énergétique d'ici 2030.",
+      "source": "Module 2 - Cadre luxembourgeois"
+    },
+    {
+      "id": "q068",
+      "moduleId": 4,
+      "level": "avance",
+      "question": "Quelle est la validité d'une certification Blue Angel ?",
+      "answers": ["2 ans", "3 ans", "4 ans", "5 ans"],
+      "correctIndex": 2,
+      "explanation": "Une certification Blue Angel est valide 4 ans, avec un renouvellement selon les critères actualisés.",
+      "source": "Module 4 - Blue Angel"
+    },
+    {
+      "id": "q069",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Quel est le ROI moyen d'une certification ISO 14001 ?",
+      "answers": ["6-9 mois", "12-18 mois", "24-36 mois", "Plus de 3 ans"],
+      "correctIndex": 1,
+      "explanation": "Le retour sur investissement moyen d'une certification ISO 14001 est de 12 à 18 mois.",
+      "source": "Module 3 - Pourquoi se certifier"
+    },
+    {
+      "id": "q070",
+      "moduleId": 5,
+      "level": "intermediaire",
+      "question": "Quels géants du cloud sont signataires du CNDCP ?",
+      "answers": ["Uniquement Google et Microsoft", "Google, AWS, Microsoft, OVHcloud, Equinix", "Seulement les entreprises européennes", "IBM et Oracle uniquement"],
+      "correctIndex": 1,
+      "explanation": "Les principaux signataires du CNDCP incluent Google, AWS, Microsoft, OVHcloud, Equinix, Scaleway et de nombreux autres acteurs majeurs du cloud.",
+      "source": "Module 5 - CNDCP"
+    }
+  ]
+}

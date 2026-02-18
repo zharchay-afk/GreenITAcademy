@@ -1,0 +1,26 @@
+{
+  "name": "greenit-academie",
+  "version": "1.0.0",
+  "main": "App.jsx",
+  "scripts": {
+    "dev": "vite",
+    "start": "expo start",
+    "web": "expo start --web",
+    "android": "expo start --android",
+    "ios": "expo start --ios"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~4.0.0",
+    "expo": "~52.0.0",
+    "expo-status-bar": "~2.0.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-native": "^0.76.9",
+    "react-native-web": "~0.19.13"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "vite": "^7.3.1"
+  }
+}

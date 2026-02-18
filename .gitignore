@@ -1,0 +1,20 @@
+# Dépendances (à réinstaller avec npm install)
+node_modules/
+
+# Builds de production
+dist/
+web-build/
+
+# Fichiers Expo
+.expo/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Paramètres locaux de l'éditeur
+.claude/
+
+# Variables d'environnement (ne jamais partager)
+.env
+.env.local
