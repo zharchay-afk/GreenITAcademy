@@ -81,9 +81,12 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
         <header style={{ backgroundColor: '#fff', padding: '16px 32px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>
-              {module.unite} · Section {currentIdx + 1} sur {total}
+              {module.unite} · Section {currentIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
             </div>
             <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#1e3a5f' }}>{section.title}</h1>
+            {module.subtitle && (
+              <div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
+            )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span style={{ fontSize: '12px', color: '#64748b' }}>Progression</span>

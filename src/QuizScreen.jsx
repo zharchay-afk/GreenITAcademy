@@ -1,11 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import questionsData from '../data/questions.json';
 
-export default function QuizScreen({ moduleId, onComplete, onBack }) {
-  const questions = useMemo(
-    () => questionsData.questions.filter(q => q.moduleId === moduleId),
-    [moduleId]
-  );
+export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCourse }) {
+  const questions = useMemo(() => {
+    const filtered = questionsData.questions.filter(q => q.moduleId === moduleId);
+    // Mélange aléatoire (Fisher-Yates) pour que le quiz soit différent à chaque fois
+    const shuffled = [...filtered];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }, [moduleId]);
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -66,7 +72,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack }) {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             {!passed && (
               <button
                 onClick={() => {
@@ -79,6 +85,14 @@ export default function QuizScreen({ moduleId, onComplete, onBack }) {
                 style={{ padding: '12px 20px', backgroundColor: '#fff', color: '#1e3a5f', border: '1px solid #1e3a5f', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
               >
                 Réessayer
+              </button>
+            )}
+            {onReviewCourse && (
+              <button
+                onClick={() => onReviewCourse(moduleId, finalScore)}
+                style={{ padding: '12px 20px', backgroundColor: '#fff', color: '#166534', border: '1px solid #166534', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+              >
+                📖 Revoir le cours
               </button>
             )}
             <button

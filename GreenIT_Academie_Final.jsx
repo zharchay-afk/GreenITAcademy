@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { exportScorm } from './src/utils/scormExport';
 
 // ================================================
 // GREEN IT ACADÉMIE - Style SecNum
@@ -43,6 +44,7 @@ const Sidebar = ({ activePage, onNavigate }) => (
         { id: 'accueil', icon: '🏠', label: 'Accueil' },
         { id: 'attestation', icon: '📄', label: 'Mon attestation' },
         { id: 'profil', icon: '👤', label: 'Mon profil' },
+        { id: 'references', icon: '📚', label: 'Sources & Références' },
       ].map((item) => (
         <button
           key={item.id}
@@ -216,12 +218,16 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
-export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp }) {
+export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
 
-  // Si des modules sont passés depuis App.jsx, on les utilise ; sinon on utilise l'état local
   const modules = modulesProp ?? modulesState;
+
+  const handleNavigate = (page) => {
+    setActivePage(page);
+    if (onNavigateProp) onNavigateProp(page);
+  };
 
   const handleStart = (id) => {
     if (onStartProp) {
@@ -253,7 +259,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
       backgroundColor: '#f1f5f9',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
-      <Sidebar activePage={activePage} onNavigate={setActivePage} />
+      <Sidebar activePage={activePage} onNavigate={handleNavigate} />
       
       <main style={{ flex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         {/* Header */}
@@ -336,21 +342,20 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
                 Intégrez ce parcours dans Moodle, Canvas ou tout LMS compatible SCORM 1.2.
                 Une démarche conforme aux principes Green IT : réutilisabilité et sobriété numérique.
               </p>
-              <button style={{
-                backgroundColor: '#166534',
-                color: '#fff',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '5px',
-                fontSize: '12px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}>
-                ⬇ Télécharger le package SCORM
-              </button>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={exportScorm}
+                  style={{ backgroundColor: '#166534', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '5px', fontSize: '12px', fontWeight: '600', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                >
+                  ⬇ Télécharger le package SCORM
+                </button>
+                <button
+                  onClick={() => onNavigateProp && onNavigateProp('scorm-player')}
+                  style={{ backgroundColor: '#fff', color: '#166534', border: '1px solid #166534', padding: '8px 16px', borderRadius: '5px', fontSize: '12px', fontWeight: '600', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                >
+                  📂 Importer un SCORM
+                </button>
+              </div>
             </div>
           </div>
         </div>
