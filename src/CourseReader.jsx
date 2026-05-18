@@ -118,8 +118,11 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
               </p>
             </div>
 
-            {/* Visuel (SVG) */}
-            {section.visual && <Visual name={section.visual} />}
+            {/* Visuel(s) SVG */}
+            {section.visual && (Array.isArray(section.visual)
+              ? section.visual.map((v, i) => <Visual key={i} name={v} />)
+              : <Visual name={section.visual} />
+            )}
 
             {/* Sous-sections détaillées */}
             {Array.isArray(section.details) && section.details.length > 0 && (
