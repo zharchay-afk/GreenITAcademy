@@ -19,32 +19,32 @@ const Wrapper = ({ children, caption }) => (
 // -------------------------------------------------- Pyramide des instruments
 const InstrumentHierarchy = () => (
   <Wrapper caption="Figure — Pyramide des instruments du Green IT, du plus contraignant au plus volontaire">
-    <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <polygon points="260,30 340,95 180,95" fill="#1e3a5f" />
-      <text x="260" y="68" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="system-ui">Réglementation</text>
-      <text x="260" y="85" textAnchor="middle" fill="#cbd5e0" fontSize="10" fontFamily="system-ui">Obligatoire — sanctions</text>
+    <svg viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
+      {/* Tier 1 — trapèze tronqué pour laisser la place au texte */}
+      <polygon points="240,40 380,40 405,110 215,110" fill="#1e3a5f" />
+      <text x="310" y="72" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Réglementation</text>
+      <text x="310" y="92" textAnchor="middle" fill="#cbd5e0" fontSize="10" fontFamily="system-ui">Obligatoire — sanctions</text>
 
-      <polygon points="180,95 340,95 380,155 140,155" fill="#3182ce" />
-      <text x="260" y="125" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="system-ui">Normes ISO / CEN</text>
-      <text x="260" y="143" textAnchor="middle" fill="#bee3f8" fontSize="10" fontFamily="system-ui">Volontaire, souvent exigée</text>
+      {/* Tier 2 */}
+      <polygon points="215,110 405,110 435,180 185,180" fill="#3182ce" />
+      <text x="310" y="142" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Normes ISO / CEN</text>
+      <text x="310" y="162" textAnchor="middle" fill="#bee3f8" fontSize="10" fontFamily="system-ui">Volontaire, souvent exigée</text>
 
-      <polygon points="140,155 380,155 420,215 100,215" fill="#48bb78" />
-      <text x="260" y="185" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="system-ui">Labels environnementaux</text>
-      <text x="260" y="203" textAnchor="middle" fill="#c6f6d5" fontSize="10" fontFamily="system-ui">Vérifiés par tierce partie</text>
+      {/* Tier 3 */}
+      <polygon points="185,180 435,180 470,250 150,250" fill="#48bb78" />
+      <text x="310" y="212" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Labels environnementaux</text>
+      <text x="310" y="232" textAnchor="middle" fill="#c6f6d5" fontSize="10" fontFamily="system-ui">Vérifiés par tierce partie</text>
 
-      <polygon points="100,215 420,215 460,270 60,270" fill="#ed8936" />
-      <text x="260" y="245" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="system-ui">Codes de conduite et chartes</text>
-      <text x="260" y="262" textAnchor="middle" fill="#feebc8" fontSize="10" fontFamily="system-ui">Engagement libre</text>
+      {/* Tier 4 */}
+      <polygon points="150,250 470,250 510,320 110,320" fill="#ed8936" />
+      <text x="310" y="282" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Codes de conduite et chartes</text>
+      <text x="310" y="302" textAnchor="middle" fill="#feebc8" fontSize="10" fontFamily="system-ui">Engagement libre</text>
 
-      {/* Axe latéral */}
-      <line x1="40" y1="60" x2="40" y2="270" stroke="#94a3b8" strokeWidth="1" markerEnd="url(#arrowDown)" />
-      <defs>
-        <marker id="arrowDown" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M 0 0 L 10 0 L 5 9 z" fill="#94a3b8" />
-        </marker>
-      </defs>
-      <text x="48" y="65" fill="#1e3a5f" fontSize="10" fontWeight="600" fontFamily="system-ui">+ contraignant</text>
-      <text x="48" y="265" fill="#ed8936" fontSize="10" fontWeight="600" fontFamily="system-ui">+ volontaire</text>
+      {/* Axe latéral à gauche, bien dégagé de la pyramide */}
+      <line x1="50" y1="80" x2="50" y2="280" stroke="#94a3b8" strokeWidth="1.5" />
+      <polygon points="50,286 46,278 54,278" fill="#94a3b8" />
+      <text x="15" y="70" fill="#1e3a5f" fontSize="11" fontWeight="600" fontFamily="system-ui">+ contraint</text>
+      <text x="15" y="305" fill="#ed8936" fontSize="11" fontWeight="600" fontFamily="system-ui">+ libre</text>
     </svg>
   </Wrapper>
 );
