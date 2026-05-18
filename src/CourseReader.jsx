@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import modulesData from '../data/modules.json';
+import Visual from './Visuals';
 
 export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
   const module = modulesData.modules.find(m => m.id === moduleId);
@@ -99,16 +100,56 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
 
         {/* Texte du cours */}
         <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
-          <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '780px', margin: '0 auto' }}>
+
+            {/* Intro (chapeau) */}
+            {section.intro && (
+              <div style={{ marginBottom: '20px', padding: '16px 20px', borderLeft: '3px solid #4ade80', backgroundColor: '#f0fdf4', borderRadius: '0 6px 6px 0' }}>
+                <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.65', color: '#166534', fontStyle: 'italic' }}>
+                  {section.intro}
+                </p>
+              </div>
+            )}
+
             {/* Contenu principal */}
             <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-              <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.85', color: '#374151' }}>
+              <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.85', color: '#374151', whiteSpace: 'pre-line' }}>
                 {section.content}
               </p>
             </div>
 
+            {/* Visuel (SVG) */}
+            {section.visual && <Visual name={section.visual} />}
+
+            {/* Sous-sections détaillées */}
+            {Array.isArray(section.details) && section.details.length > 0 && (
+              <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '24px 28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+                {section.details.map((d, i) => (
+                  <div key={i} style={{ marginBottom: i < section.details.length - 1 ? '18px' : 0, paddingBottom: i < section.details.length - 1 ? '18px' : 0, borderBottom: i < section.details.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
+                    <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#1e3a5f' }}>{d.subtitle}</h4>
+                    <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.7', color: '#374151', whiteSpace: 'pre-line' }}>{d.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Exemples concrets */}
+            {Array.isArray(section.examples) && section.examples.length > 0 && (
+              <div style={{ backgroundColor: '#fff8e1', borderRadius: '8px', padding: '20px 24px', marginBottom: '20px', border: '1px solid #fde68a' }}>
+                <h3 style={{ margin: '0 0 12px 0', fontSize: '13px', fontWeight: '700', color: '#92400e', display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.3px' }}>
+                  🔎 EXEMPLES CONCRETS
+                </h3>
+                {section.examples.map((ex, i) => (
+                  <div key={i} style={{ marginBottom: i < section.examples.length - 1 ? '12px' : 0 }}>
+                    <div style={{ fontSize: '13px', fontWeight: '700', color: '#78350f', marginBottom: '2px' }}>{ex.title}</div>
+                    <div style={{ fontSize: '13px', color: '#78350f', lineHeight: '1.55' }}>{ex.text}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Points clés */}
-            <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '20px', border: '1px solid #86efac' }}>
+            <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '20px', border: '1px solid #86efac', marginBottom: '20px' }}>
               <h3 style={{ margin: '0 0 14px 0', fontSize: '14px', fontWeight: '700', color: '#166534', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 💡 Points clés à retenir
               </h3>
@@ -121,6 +162,21 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
                 ))}
               </ul>
             </div>
+
+            {/* Pour aller plus loin */}
+            {Array.isArray(section.goFurther) && section.goFurther.length > 0 && (
+              <div style={{ backgroundColor: '#eff6ff', borderRadius: '8px', padding: '18px 22px', border: '1px solid #bfdbfe' }}>
+                <h3 style={{ margin: '0 0 10px 0', fontSize: '12px', fontWeight: '700', color: '#1e40af', letterSpacing: '0.4px' }}>
+                  📖 POUR ALLER PLUS LOIN
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: '18px', listStyle: 'disc' }}>
+                  {section.goFurther.map((g, i) => (
+                    <li key={i} style={{ fontSize: '12px', color: '#1e3a5f', lineHeight: '1.6', marginBottom: i < section.goFurther.length - 1 ? '4px' : 0 }}>{g}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
           </div>
         </div>
 

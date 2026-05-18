@@ -4,350 +4,699 @@
       "id": 1,
       "unite": "UNITÉ 1",
       "title": "Cadres conceptuels et typologie des instruments",
-      "subtitle": "Lois, normes, certifications, codes de conduite",
+      "subtitle": "Lois, normes, certifications, codes de conduite — savoir distinguer pour mieux agir",
       "image": "🌐",
       "bgColor": "#4299e1",
-      "estimatedTime": "00:25:00",
+      "estimatedTime": "00:30:00",
       "sections": [
         {
           "id": "1.1",
-          "title": "Introduction : L'empreinte du numérique",
-          "content": "Le numérique représente aujourd'hui 4% des émissions mondiales de CO₂, avec 48 milliards d'objets numériques prévus en 2025. Les impacts environnementaux sont majeurs : consommation énergétique croissante des datacenters, utilisation de métaux rares et terres rares, 53,6 Mt de déchets électroniques en 2019 dont 70-90% non recyclés. Le Green IT vise à concilier transformation numérique et transition écologique en réduisant l'empreinte environnementale des TIC.",
+          "title": "Introduction : l'empreinte environnementale du numérique",
+          "intro": "Le numérique, longtemps perçu comme « immatériel », pèse aujourd'hui autant que l'aviation civile dans le bilan carbone mondial. Comprendre l'ampleur du problème est le préalable indispensable à toute démarche Green IT.",
+          "content": "Selon les rapports convergents de l'ADEME, de l'ARCEP et du Shift Project, le secteur numérique représente entre 3 et 4 % des émissions mondiales de gaz à effet de serre (GES) — soit davantage que l'aviation civile (~2,5 %). En tendance, sans inflexion forte, ce poids pourrait doubler d'ici 2030 sous l'effet conjugué de la croissance des usages (vidéo en streaming, IA générative, IoT), de la multiplication des terminaux (48 milliards d'objets connectés prévus en 2025 selon l'IDC) et de l'explosion des volumes de données traités dans les datacenters.\n\nL'impact ne se limite pas au CO₂. La fabrication des équipements mobilise des dizaines de métaux critiques (cobalt, tantale, néodyme, lithium…) extraits dans des conditions sociales et environnementales souvent problématiques. La fin de vie est tout aussi préoccupante : selon le Global E-waste Monitor (UNITAR / ONU, 2024), 62 millions de tonnes de déchets d'équipements électriques et électroniques (DEEE) ont été générées en 2022 dans le monde, dont moins de 23 % ont été collectées et recyclées de manière formelle.\n\nLe Green IT — ou « numérique responsable » — désigne l'ensemble des démarches visant à réduire cette empreinte tout au long du cycle de vie : conception, fabrication, achat, exploitation, fin de vie. Il s'inscrit dans un cadre plus large, celui de la transition écologique, et fait l'objet depuis une dizaine d'années d'un foisonnement réglementaire et normatif que ce parcours se propose de cartographier.",
+          "visual": "instrumentHierarchy",
+          "examples": [
+            { "title": "L'IA générative, un nouveau défi", "text": "Selon une étude de l'Université du Massachusetts (2023), l'entraînement d'un grand modèle de langage peut consommer autant d'électricité qu'une centaine de foyers américains sur un an. Une simple requête à ChatGPT consomme environ 10 fois plus d'énergie qu'une recherche Google classique." },
+            { "title": "Le Luxembourg, hub européen", "text": "Avec environ 25 datacenters opérationnels et une stratégie nationale « Data-Driven Innovation », le Luxembourg est l'un des principaux pôles européens. La consommation électrique des datacenters luxembourgeois représente déjà près de 8 % de la consommation nationale d'électricité." }
+          ],
           "keyPoints": [
-            "4% des émissions mondiales de CO₂",
-            "48 milliards d'objets numériques en 2025",
-            "70-90% des DEEE non recyclés",
-            "Enjeu majeur pour le Luxembourg : hub de datacenters européen"
+            "Le numérique = 3-4 % des émissions mondiales de GES, en croissance rapide",
+            "62 Mt de DEEE en 2022, seulement 22,3 % recyclés formellement",
+            "Métaux critiques : enjeu géostratégique et environnemental",
+            "Le Luxembourg : enjeu particulier (hub datacenters européen)"
+          ],
+          "goFurther": [
+            "ADEME / ARCEP — Évaluation de l'impact environnemental du numérique en France, rapport 2022 puis actualisation 2024",
+            "The Shift Project — Lean ICT, pour une sobriété numérique, 2018 (référence fondatrice)",
+            "Global E-waste Monitor 2024 — UNITAR / ITU"
           ]
         },
         {
           "id": "1.2",
-          "title": "Les grandes familles d'instruments",
-          "content": "Il existe quatre grandes familles d'instruments pour encadrer le Green IT, avec un gradient de contrainte décroissant. La réglementation (lois, directives UE) a un caractère obligatoire. Les normes (ISO, CEN, CENELEC) sont volontaires mais quasi-requises dans certains secteurs. Les labels (EPEAT, Energy Star) sont volontaires avec vérification par tierce partie. Les codes et chartes sont des engagements purement volontaires.",
+          "title": "Les quatre familles d'instruments d'encadrement",
+          "intro": "Du droit dur au simple engagement moral, il existe un continuum d'instruments pour orienter les pratiques numériques vers plus de sobriété. Les confondre, c'est se tromper de levier.",
+          "content": "On distingue quatre grandes familles d'instruments, classées par ordre décroissant de force contraignante. Cette hiérarchie n'est pas anodine : elle conditionne les risques juridiques, les obligations de preuve et les leviers d'action des organisations.\n\nLa réglementation regroupe les lois, directives et règlements adoptés par des autorités publiques. Son respect est obligatoire et sa violation est sanctionnée — pénalement, financièrement, ou par le retrait d'une autorisation d'exercer. Dans l'Union européenne, ces actes émanent du Parlement européen et du Conseil, sur proposition de la Commission.\n\nLes normes (ISO au plan international, CEN/CENELEC au plan européen, AFNOR/DIN/ILNAS au plan national) sont des documents techniques de référence élaborés par consensus entre parties prenantes. Elles sont juridiquement volontaires, mais leur adoption devient souvent « quasi obligatoire » sous l'effet des marchés (appels d'offres, exigences contractuelles, attentes clients) ou des assureurs.\n\nLes labels environnementaux apposés sur des produits (EPEAT, Energy Star, Blue Angel, EU Ecolabel) sont également volontaires mais reposent sur une vérification tierce d'un cahier des charges public. Le label transfère la charge de la preuve au fabricant et permet à l'acheteur d'arbitrer rapidement.\n\nLes codes de conduite et chartes sont, eux, de simples engagements publics, généralement sans audit, dont la force est essentiellement réputationnelle. Ils traduisent souvent une volonté d'anticiper une future réglementation : ce qui est volontaire aujourd'hui devient fréquemment obligatoire demain.",
+          "details": [
+            { "subtitle": "Pourquoi cette gradation est-elle stratégique ?", "text": "Une organisation mature combine généralement les quatre niveaux : conformité réglementaire (le minimum), adoption sélective de normes (structuration interne), achats avec labels (responsabilisation de la supply chain), et adhésion à des chartes (signal externe). Ne s'appuyer que sur la réglementation, c'est rester en posture défensive ; ne miser que sur des chartes, c'est s'exposer à des accusations de greenwashing." },
+            { "subtitle": "L'effet d'entraînement vers le « hard law »", "text": "L'histoire récente du droit de l'environnement montre une migration constante : le reporting extra-financier volontaire (GRI années 2000) est devenu obligatoire (NFRD 2014 puis CSRD 2022). L'écoconception, longtemps un engagement, est désormais un règlement européen (2024). Anticiper, c'est gagner en avantage compétitif." }
+          ],
           "keyPoints": [
-            "Réglementation : obligatoire (lois, directives UE)",
-            "Normes : volontaire, quasi-requis (ISO, CEN)",
-            "Labels : volontaire, tierce partie (EPEAT, Energy Star)",
-            "Codes : volontaire, engagement (RSE, chartes)"
+            "Réglementation : obligatoire, sanctionnée — directives et règlements UE",
+            "Normes : volontaire mais quasi-requise (marchés, assurances) — ISO, CEN",
+            "Labels : volontaire avec vérification tierce — EPEAT, Energy Star",
+            "Codes : engagement public, force réputationnelle — EU Code DC, CNDCP",
+            "Loi du déplacement : ce qui est volontaire aujourd'hui devient souvent obligatoire demain"
+          ],
+          "goFurther": [
+            "Catala P., Le droit souple, Dalloz, 2018",
+            "Conseil d'État, Étude annuelle 2013 — Le droit souple"
           ]
         },
         {
           "id": "1.3",
-          "title": "Directive vs Règlement européen",
-          "content": "Une directive fixe des objectifs mais laisse le choix des moyens aux États membres. Elle nécessite une transposition en droit national, généralement sous 2 ans. Un règlement s'applique directement et uniformément dans tous les États membres, sans transposition nécessaire, et a primauté sur le droit national.",
+          "title": "Directive vs Règlement européen : un piège classique",
+          "intro": "Confondre directive et règlement est une erreur fréquente — y compris dans la presse spécialisée. La distinction conditionne pourtant le calendrier d'entrée en vigueur, le degré d'harmonisation et même le tribunal compétent en cas de litige.",
+          "content": "L'Union européenne dispose de deux principaux actes juridiques contraignants : la directive et le règlement (article 288 TFUE). Leurs effets diffèrent radicalement.\n\nUne directive lie chaque État membre destinataire quant au résultat à atteindre, tout en laissant aux instances nationales la compétence quant à la forme et aux moyens. Elle doit être transposée en droit interne — typiquement dans un délai de deux ans — par voie législative ou réglementaire. Tant que la transposition n'est pas effectuée, la directive ne produit en principe pas d'effet direct dans le droit national (sauf jurisprudence Van Duyn / Becker pour les directives suffisamment claires, précises et inconditionnelles).\n\nUn règlement, lui, a une portée générale, est obligatoire dans tous ses éléments et directement applicable dans tout État membre. Aucune transposition n'est nécessaire — sa publication au Journal officiel de l'UE suffit à le rendre opposable. En cas de conflit avec une norme nationale, le règlement prime (principe de primauté du droit de l'UE, arrêt Costa c/ ENEL, 1964).\n\nCette différence a des conséquences pratiques majeures. Une directive crée souvent une mosaïque de droits nationaux légèrement divergents (transpositions parfois imparfaites, marges d'interprétation). Un règlement garantit l'uniformité — il est donc privilégié quand le législateur européen veut un cadre identique partout, par exemple pour le RGPD (2016/679), la Taxonomie (2020/852) ou le règlement Écoconception (2024/1781).",
+          "visual": "directiveVsRegulation",
+          "examples": [
+            { "title": "DEEE — une directive aux mises en œuvre variables", "text": "La directive DEEE (2012/19/UE) fixe un objectif de 65 % de recyclage. Sa transposition au Luxembourg (loi du 21 mars 2017) confie l'éco-organisme Ecotrel de cette mission, tandis que la France passe par Ecologic, ESR ou Soren selon la catégorie de DEEE. Mêmes objectifs européens, organisations nationales différentes." },
+            { "title": "Taxonomie — un règlement directement applicable", "text": "Le règlement Taxonomie (2020/852) s'applique à l'identique en France, au Luxembourg, en Allemagne. Une activité économique « durable » au sens de la Taxonomie l'est partout, ce qui facilite la comparaison transfrontalière des fonds d'investissement." }
+          ],
           "keyPoints": [
-            "Directive : transposition nécessaire, flexibilité pour les États",
-            "Règlement : application directe, uniformité UE",
-            "Exemples directives : DEEE, RoHS, CSRD",
-            "Exemples règlements : Taxonomie, Écoconception, EMAS"
+            "Directive : fixe un objectif, transposition nationale obligatoire (≤ 2 ans typiquement)",
+            "Règlement : application directe, uniforme, immédiate après publication au JOUE",
+            "Primauté du droit UE en cas de conflit (arrêt Costa c/ ENEL, 1964)",
+            "Exemples directives : DEEE, RoHS, CSRD, EED",
+            "Exemples règlements : Taxonomie, Écoconception 2024, RGPD, DORA"
+          ],
+          "goFurther": [
+            "Article 288 du TFUE (Traité sur le fonctionnement de l'UE)",
+            "CJUE, arrêt Costa c/ ENEL (15 juillet 1964) — principe de primauté",
+            "CJUE, arrêt Van Duyn (4 décembre 1974) — effet direct des directives"
           ]
         },
         {
           "id": "1.4",
-          "title": "Acteurs luxembourgeois du Green IT",
-          "content": "Le Luxembourg dispose d'un écosystème d'acteurs publics et privés engagés dans le Green IT. Côté public : les ministères (Environnement, Économie, Digitalisation), la CSSF/CAA pour la régulation financière, l'ILNAS pour la normalisation, Luxinnovation pour l'innovation, et l'INDR pour le développement durable et la RSE. Côté privé : les chambres professionnelles, les clusters ICT et Cleantech, et les opérateurs de datacenters comme LuxConnect et EBRC.",
+          "title": "L'écosystème Green IT luxembourgeois",
+          "intro": "Pour une économie de 700 000 habitants, le Luxembourg dispose d'un écosystème institutionnel et industriel particulièrement dense en matière de Green IT. Connaître les acteurs, c'est savoir vers qui se tourner.",
+          "content": "L'écosystème luxembourgeois Green IT s'organise autour de trois sphères imbriquées : la puissance publique (régulation et impulsion), les organismes spécialisés (normalisation, accompagnement), et les acteurs économiques (opérateurs et entreprises engagés).\n\nCôté pouvoirs publics, plusieurs ministères co-pilotent les sujets : le Ministère de l'Environnement, du Climat et du Développement durable (porteur du PNEC et de la stratégie climat), le Ministère de l'Économie (volet compétitivité), et le Ministère de la Digitalisation (déploiement d'outils numériques publics responsables). La CSSF (Commission de Surveillance du Secteur Financier) joue un rôle central pour les acteurs financiers via ses circulaires ESG, tandis que la CAA (Commissariat aux Assurances) supervise spécifiquement le secteur assurantiel.\n\nDeux organismes méritent une attention particulière. L'ILNAS (Institut Luxembourgeois de la Normalisation, de l'Accréditation, de la Sécurité et qualité des produits et services) est le relais national des organismes ISO et CEN — il représente le Luxembourg dans les comités de normalisation et propose un accompagnement aux entreprises. L'INDR (Institut National pour le Développement durable et la Responsabilité sociale) accompagne gratuitement les PME vers le label « Entreprise Socialement Responsable » (ESR), avec un volet numérique de plus en plus marqué.\n\nLuxinnovation, l'agence nationale d'innovation, gère par ailleurs plusieurs programmes de financement (Fit4Sustainability, Sustainability Mapping…) qui incluent un volet Green IT. Côté opérateurs, LuxConnect et EBRC sont devenus des références européennes du datacenter durable, avec des engagements forts (100 % énergie renouvelable, cogénération biomasse, certifications multiples) que l'unité 6 détaillera.",
+          "details": [
+            { "subtitle": "Le label ESR de l'INDR — gratuit pour les PME", "text": "Le label « Entreprise Socialement Responsable » est délivré gratuitement par l'INDR après un diagnostic structuré couvrant la gouvernance, les conditions de travail, l'environnement (dont les pratiques numériques), les pratiques d'achat et l'engagement sociétal. C'est un excellent point d'entrée pour structurer une démarche RSE numérique." },
+            { "subtitle": "Les clusters luxembourgeois", "text": "Le ICT Cluster et le Cleantech Cluster, animés par Luxinnovation, réunissent les acteurs publics et privés. Ils organisent des groupes de travail, publient des études sectorielles et facilitent les partenariats inter-entreprises sur les sujets Green IT." }
+          ],
           "keyPoints": [
-            "ILNAS / Portail-Qualité : organisme de normalisation",
-            "INDR : Institut National pour le Développement durable et RSE",
-            "Luxinnovation : agence nationale d'innovation",
-            "LuxConnect, EBRC : opérateurs de datacenters durables"
+            "Ministères copilotes : Environnement, Économie, Digitalisation",
+            "ILNAS : normalisation, relais ISO/CEN au Luxembourg",
+            "INDR : label ESR gratuit pour les PME, accompagnement RSE",
+            "Luxinnovation : programmes Fit4Sustainability, Sustainability Mapping",
+            "CSSF : régulateur financier, attentes ESG pour les PSF",
+            "Opérateurs phares : LuxConnect, EBRC (cf. unité 6)"
+          ],
+          "goFurther": [
+            "Portail-Qualite.lu — site officiel de l'ILNAS",
+            "INDR.lu — référentiel ESR détaillé téléchargeable",
+            "Luxinnovation — page « Sustainability & Circularity »"
           ]
         }
       ]
     },
+
     {
       "id": 2,
       "unite": "UNITÉ 2",
       "title": "Cadre réglementaire européen et luxembourgeois",
-      "subtitle": "Green Deal, CSRD, Taxonomie, EED",
+      "subtitle": "Green Deal, CSRD, Taxonomie, EED, DEEE, RoHS, Écoconception",
       "image": "⚖️",
       "bgColor": "#ed8936",
-      "estimatedTime": "00:30:00",
+      "estimatedTime": "00:40:00",
       "sections": [
         {
           "id": "2.1",
-          "title": "Le Pacte Vert Européen (Green Deal)",
-          "content": "Lancé en 2019, le Green Deal vise la neutralité carbone de l'UE d'ici 2050. Le numérique est identifié comme levier de la transition ET comme secteur à décarboner. Trois réglementations clés pour le Green IT : la CSRD (reporting extra-financier), la Taxonomie (classification des activités durables), et l'EED (efficacité énergétique).",
+          "title": "Le Pacte Vert européen (Green Deal) : la matrice",
+          "intro": "Présenté en décembre 2019 par la Commission von der Leyen, le Green Deal n'est pas un texte juridique unique mais une stratégie politique qui sous-tend l'ensemble des règlements et directives environnementales adoptés depuis. C'est la « constitution écologique » de l'UE.",
+          "content": "Le European Green Deal, communiqué COM(2019) 640 final, fixe un cap historique : faire de l'Europe le premier continent climatiquement neutre d'ici 2050. Cet objectif est juridiquement contraignant depuis l'adoption de la Loi européenne pour le climat (règlement 2021/1119), qui fixe également un jalon intermédiaire de -55 % d'émissions nettes de GES d'ici 2030 (par rapport à 1990) — le fameux « Fit for 55 ».\n\nLe Green Deal identifie explicitement le numérique comme un instrument à double tranchant : levier indispensable de la transition (capteurs, IoT, jumeaux numériques, IA pour l'optimisation énergétique) mais également secteur à décarboner. La Commission a publié en 2020 une stratégie spécifique « Shaping Europe's digital future » qui appelle à un numérique « climatiquement neutre, hautement écoénergétique et durable » d'ici 2030.\n\nTrois piliers réglementaires structurent cette ambition pour le Green IT : la CSRD (transparence sur les impacts), la Taxonomie (classification des activités durables), et l'EED (efficacité énergétique). À cela s'ajoutent des réglementations sectorielles (DEEE, RoHS, Écoconception) que les sections suivantes détailleront. L'ensemble forme un maillage dense, parfois redondant, qu'il faut savoir naviguer.",
+          "visual": "greenDealTimeline",
+          "details": [
+            { "subtitle": "Le Pacte vert n'est pas qu'un slogan", "text": "Au-delà des objectifs symboliques, il s'est traduit par plus de 50 propositions législatives entre 2020 et 2024 : Fit for 55, paquet « Énergie », règlement Écoconception, CBAM (mécanisme d'ajustement carbone aux frontières), Nature Restoration Law, etc. Le numérique est explicitement adressé dans plusieurs de ces textes." },
+            { "subtitle": "Le « Digital Compass 2030 »", "text": "Présenté en 2021, ce plan fixe des objectifs concrets : 75 % des entreprises européennes utilisant cloud / IA / big data, 100 % des services publics essentiels en ligne, et des datacenters climatiquement neutres d'ici 2030 — un objectif aligné sur le Climate Neutral Data Centre Pact (cf. unité 5)." }
+          ],
           "keyPoints": [
-            "Objectif : neutralité carbone UE en 2050",
-            "CSRD : ~50 000 entreprises concernées, application 2024-2026",
-            "Taxonomie : 6 objectifs environnementaux, critères datacenters (PUE)",
-            "EED : audit énergétique obligatoire, reporting datacenters > 500 kW"
+            "Green Deal (2019) : neutralité carbone UE en 2050, juridiquement contraignant",
+            "Loi climat européenne (2021/1119) : -55 % émissions GES en 2030 vs 1990",
+            "Le numérique identifié comme levier ET secteur à décarboner",
+            "Trois piliers Green IT : CSRD, Taxonomie, EED",
+            "Digital Compass 2030 : objectif de datacenters neutres en 2030"
+          ],
+          "goFurther": [
+            "Commission européenne, COM(2019) 640 final — The European Green Deal",
+            "Règlement (UE) 2021/1119 — Loi européenne sur le climat",
+            "COM(2021) 118 final — Digital Compass 2030"
           ]
         },
         {
           "id": "2.2",
-          "title": "Réglementations sectorielles applicables",
-          "content": "Plusieurs directives et règlements encadrent spécifiquement le secteur IT. La directive DEEE (2012/19/UE) impose la collecte et le recyclage des équipements électroniques avec un objectif de 65% de recyclage. La directive RoHS (2011/65/UE) limite 10 substances dangereuses dans les équipements. Le règlement Écoconception (2024) remplace la directive 2009/125/CE et introduit le passeport numérique produit (DPP).",
+          "title": "CSRD : transparence et reporting de durabilité",
+          "intro": "La directive CSRD est probablement la révolution réglementaire la plus structurante de la décennie pour les directions financières et IT. Elle ne se contente pas de demander un rapport : elle impose un audit, des standards, et une comparabilité.",
+          "content": "La directive (UE) 2022/2464 — Corporate Sustainability Reporting Directive — du 14 décembre 2022 remplace l'ancienne NFRD (Non-Financial Reporting Directive, 2014). Elle élargit massivement le périmètre : environ 50 000 entreprises européennes sont désormais concernées (contre 11 700 sous la NFRD), incluant l'ensemble des grandes entreprises ainsi que les PME cotées.\n\nL'entrée en vigueur est progressive : exercice 2024 (rapport 2025) pour les entreprises déjà soumises à la NFRD, exercice 2025 pour les autres grandes entreprises, exercice 2026 pour les PME cotées, et exercice 2028 pour certaines filiales d'entreprises non-UE générant > 150 M€ dans l'UE.\n\nLa CSRD impose le respect des normes ESRS (European Sustainability Reporting Standards), élaborées par l'EFRAG et adoptées par règlement délégué. Ces standards couvrent 12 domaines, dont l'ESRS E1 (changement climatique) et l'ESRS E5 (utilisation des ressources et économie circulaire) sont particulièrement pertinents pour le Green IT. Les entreprises doivent appliquer le principe de « double matérialité » : analyser à la fois leurs impacts sur l'environnement et les risques que l'environnement fait peser sur leur activité.\n\nPoint clé pour les DSI : le rapport est désormais audité par un commissaire aux comptes (assurance limitée d'abord, puis raisonnable à terme), et publié dans un format numérique structuré (XBRL). Les données sur la consommation électrique des datacenters, l'empreinte carbone du parc IT, les politiques d'achat responsable et la gestion des DEEE deviennent des informations auditées, opposables, et comparables.",
+          "details": [
+            { "subtitle": "Calendrier de mise en œuvre — à connaître par cœur", "text": "Vague 1 (exercice 2024, rapport 2025) : grandes entreprises déjà NFRD (> 500 salariés et entité d'intérêt public). Vague 2 (exercice 2025, rapport 2026) : autres grandes entreprises (≥ 250 salariés OU > 50 M€ CA OU > 25 M€ bilan, 2 critères sur 3). Vague 3 (exercice 2026, rapport 2027) : PME cotées (avec possibilité d'opt-out jusqu'en 2028). Vague 4 (exercice 2028) : groupes non-UE de plus de 150 M€ de CA UE." },
+            { "subtitle": "Les ESRS pertinents pour le Green IT", "text": "ESRS E1 (changement climatique) impose la publication du bilan carbone scopes 1, 2 et 3 — incluant donc l'empreinte numérique. ESRS E5 (ressources et économie circulaire) couvre les flux de matières et la gestion des DEEE. ESRS G1 (conduite des affaires) inclut les pratiques d'achat responsable." }
+          ],
+          "examples": [
+            { "title": "Cas concret : un fonds luxembourgeois", "text": "Un asset manager basé à Luxembourg, soumis à la CSRD vague 1, doit désormais publier l'empreinte carbone de son siège (scope 1-2) ET de ses prestataires IT (scope 3). Cela inclut l'hébergement cloud, ce qui a poussé plusieurs acteurs à exiger contractuellement la fourniture de données carbone par AWS, Azure ou Google Cloud." }
+          ],
           "keyPoints": [
-            "DEEE : 65% de recyclage, responsabilité élargie du producteur",
-            "RoHS : limitation plomb, mercure, cadmium, chrome VI",
-            "Écoconception : durabilité, réparabilité, recyclabilité",
-            "RGPD : lien indirect mais important (minimisation = sobriété)"
+            "Directive (UE) 2022/2464 — entrée en vigueur progressive 2024-2028",
+            "~50 000 entreprises concernées (vs 11 700 sous la NFRD)",
+            "Standards ESRS obligatoires (12 domaines, dont E1 et E5 pour le Green IT)",
+            "Principe de double matérialité (impacts ET risques)",
+            "Audit obligatoire par commissaire aux comptes, format XBRL"
+          ],
+          "goFurther": [
+            "Directive (UE) 2022/2464 — texte officiel publié au JOUE",
+            "EFRAG — European Sustainability Reporting Standards (set 1 adopté 2023)",
+            "AMF / CSSF — guides d'application sectoriels"
           ]
         },
         {
           "id": "2.3",
-          "title": "Focus secteur financier (Luxembourg)",
-          "content": "Le secteur financier luxembourgeois est particulièrement concerné par les réglementations ESG. Le SFDR (2019/2088) impose la disclosure sur la durabilité des produits financiers. La CSSF a des attentes spécifiques en matière ESG pour les prestataires de services financiers. La Taxonomie crée des obligations de reporting pour les fonds d'investissement.",
+          "title": "Taxonomie, EED et autres réglementations sectorielles",
+          "intro": "Au-delà du reporting (CSRD), l'UE encadre directement les pratiques. Trois textes sont particulièrement structurants pour le Green IT : la Taxonomie (qui dit ce qui est « vert »), l'EED (qui exige des audits énergétiques), et la directive DEEE (qui pilote la fin de vie).",
+          "content": "Le règlement (UE) 2020/852, dit « Taxonomie », établit un système de classification harmonisé des activités économiques considérées comme durables. Six objectifs environnementaux sont retenus : atténuation du changement climatique, adaptation, eau et milieux marins, économie circulaire, prévention de la pollution, biodiversité et écosystèmes. Une activité est « alignée » si elle contribue substantiellement à au moins un objectif sans nuire significativement aux autres (principe « Do No Significant Harm ») et respecte des garanties sociales minimales.\n\nPour les datacenters, des critères techniques précis ont été publiés : PUE inférieur à des seuils définis, utilisation d'énergies renouvelables, optimisation de la réutilisation de la chaleur, etc. Un opérateur de datacenter peut ainsi présenter son chiffre d'affaires « aligné Taxonomie » à ses investisseurs — un argument commercial désormais central.\n\nLa directive (UE) 2023/1791, dite EED (Energy Efficiency Directive), refondue en 2023, impose plusieurs obligations. Les entreprises non-PME doivent réaliser un audit énergétique tous les 4 ans (ou disposer d'un SMÉ certifié ISO 50001, qui en dispense). Surtout, depuis 2024, tous les datacenters de plus de 500 kW de puissance installée doivent reporter publiquement, chaque année, des indicateurs détaillés : PUE, REF (part d'énergie renouvelable), WUE (consommation d'eau), volumes de données traitées, réutilisation de chaleur. Ce reporting alimente une base de données européenne consultable.\n\nDeux directives sectorielles complètent ce tableau : la directive DEEE (2012/19/UE) qui impose la collecte séparée et le recyclage à 65 % en poids des équipements collectés, et la directive RoHS (2011/65/UE) qui restreint l'utilisation de 10 substances dangereuses dans les EEE (plomb, mercure, cadmium, chrome VI, PBB, PBDE, et 4 phtalates). Enfin, le règlement Écoconception (2024/1781) remplace la directive 2009/125/CE et introduit le passeport numérique produit (DPP) qui tracera, dès 2027 pour les premiers produits, le cycle de vie complet d'un équipement.",
+          "examples": [
+            { "title": "Reporting EED — le déclic luxembourgeois", "text": "Avec ~25 datacenters dont une majorité au-dessus de 500 kW, le Luxembourg est l'un des pays les plus impactés par l'obligation de reporting EED. La transposition luxembourgeoise (août 2024) confie au ministère de l'Énergie la collecte annuelle des données — un dispositif inédit qui rendra publique la performance comparée des opérateurs." },
+            { "title": "Le DPP, future révolution achats", "text": "Dès 2027, certains équipements (commençant probablement par les batteries, puis les textiles et l'électronique) devront être livrés avec un Digital Product Passport accessible par QR code, contenant origine des matériaux, empreinte carbone de fabrication, instructions de réparation et chaîne de recyclage." }
+          ],
           "keyPoints": [
-            "SFDR : disclosure durabilité produits financiers",
-            "CSSF : attentes ESG pour les PSF",
-            "Taxonomie : reporting fonds d'investissement",
-            "DORA : résilience opérationnelle numérique"
+            "Taxonomie (2020/852) : 6 objectifs, principe DNSH, critères PUE pour datacenters",
+            "EED 2023 : audit énergétique tous les 4 ans, reporting datacenters > 500 kW",
+            "DEEE (2012/19/UE) : 65 % de recyclage, responsabilité élargie du producteur",
+            "RoHS (2011/65/UE) : restriction de 10 substances dangereuses",
+            "Écoconception (2024/1781) : Digital Product Passport progressif dès 2027"
+          ],
+          "goFurther": [
+            "Règlement (UE) 2020/852 — Taxonomie",
+            "Directive (UE) 2023/1791 — EED refonte",
+            "Acte délégué Taxonomie « Climate » (2021/2139) — critères techniques datacenters"
           ]
         },
         {
           "id": "2.4",
-          "title": "Le cadre luxembourgeois",
-          "content": "Le Luxembourg transpose les directives UE avec parfois des exigences renforcées. Le PNEC 2030 fixe des objectifs ambitieux : -55% d'émissions GES d'ici 2030, 37% d'énergies renouvelables, -42% d'efficacité énergétique. Les datacenters sont identifiés comme secteur clé. Des aides sont disponibles : subventions Luxinnovation jusqu'à 50%, primes énergie, label ESR de l'INDR, programme Fit4Sustainability.",
+          "title": "Focus secteur financier luxembourgeois",
+          "intro": "Le Luxembourg, première place européenne pour les fonds d'investissement (~6 000 Md€ d'actifs sous gestion), est en première ligne sur les réglementations ESG financières. Pour ses acteurs IT, c'est à la fois une contrainte et une opportunité commerciale.",
+          "content": "Trois textes structurent le paysage ESG financier européen, et le Luxembourg y joue un rôle d'amplificateur en raison de la concentration d'acteurs.\n\nLe règlement SFDR (Sustainable Finance Disclosure Regulation, UE 2019/2088) impose aux acteurs des marchés financiers de publier comment ils intègrent les risques de durabilité dans leurs décisions d'investissement, et de classifier leurs produits en trois catégories : article 6 (pas d'objectif durable), article 8 (promeut des caractéristiques ESG), article 9 (objectif d'investissement durable). Les niveaux 8 et 9 imposent des obligations de transparence renforcées et un reporting détaillé.\n\nLe règlement Taxonomie (cf. section 2.3) interagit étroitement avec le SFDR : un fonds article 9 doit démontrer un alignement Taxonomie ; un fonds article 8 doit le publier s'il le revendique.\n\nLe règlement DORA (Digital Operational Resilience Act, UE 2022/2554), applicable depuis le 17 janvier 2025, impose aux entités financières un cadre uniforme de gestion des risques numériques : tests de résilience, gouvernance ICT, gestion des incidents, supervision des prestataires tiers critiques (dont les fournisseurs cloud). Bien que centré sur la cybersécurité, DORA a un impact Green IT indirect : la résilience exige une infrastructure robuste, souvent redondante, dont l'empreinte doit être maîtrisée.\n\nAu niveau national, la CSSF a publié plusieurs circulaires (notamment CSSF 21/773 sur les risques climatiques et environnementaux, CSSF 22/796 sur les Sustainability Risks pour les FPS) qui précisent les attentes pour les acteurs supervisés.",
+          "details": [
+            { "subtitle": "Conséquence pour les PSF", "text": "Les Prestataires de Services Financiers luxembourgeois (PSF de support, gestionnaires de fonds, etc.) doivent désormais documenter leur stratégie ESG, leur empreinte carbone et leur politique d'achat IT. Cela tire vers le haut l'ensemble de la chaîne, y compris les hébergeurs et intégrateurs locaux." },
+            { "subtitle": "DORA et Green IT : tension ou synergie ?", "text": "DORA exige redondance et tests réguliers, ce qui peut accroître la consommation. Mais la conception « efficient by design » (mutualisation, virtualisation, scaling élastique) permet de réconcilier résilience et sobriété. Les opérateurs cloud européens en ont fait un argument commercial fort." }
+          ],
           "keyPoints": [
-            "PNEC 2030 : -55% GES, 37% renouvelables",
-            "Aides Luxinnovation : jusqu'à 50% pour l'éco-innovation",
-            "Label ESR : accompagnement INDR gratuit pour PME",
-            "Fit4Sustainability : diagnostic et plan d'action durabilité"
+            "SFDR (2019/2088) : classification articles 6/8/9 des produits financiers",
+            "Taxonomie : alignement obligatoire pour les fonds article 9",
+            "DORA (2022/2554) : résilience numérique des entités financières (depuis 2025)",
+            "CSSF circulaires 21/773, 22/796 : précisions sur les attentes ESG luxembourgeoises",
+            "Effet de chaîne : les PSF répercutent les exigences sur leurs prestataires IT"
+          ],
+          "goFurther": [
+            "CSSF.lu — section « Sustainable Finance » : circulaires et FAQ",
+            "Règlement (UE) 2019/2088 — SFDR",
+            "Règlement (UE) 2022/2554 — DORA"
+          ]
+        },
+        {
+          "id": "2.5",
+          "title": "Le cadre luxembourgeois : PNEC, aides et accompagnement",
+          "intro": "Le Luxembourg transpose les directives européennes mais y ajoute son propre niveau d'ambition, parfois plus exigeant que la moyenne UE. Surtout, il accompagne financièrement la transition.",
+          "content": "Le Plan National intégré en matière d'Énergie et de Climat (PNEC), mis à jour en 2024, fixe les objectifs luxembourgeois pour 2030 : -55 % d'émissions de gaz à effet de serre par rapport à 2005 (un cran au-dessus de l'objectif UE), une part de 37 % d'énergies renouvelables dans la consommation finale, et une amélioration de 42 % de l'efficacité énergétique. Les datacenters et l'IT sont identifiés comme un secteur clé, avec des mesures dédiées (incitation à la réutilisation de chaleur, contrats d'approvisionnement vert, etc.).\n\nPour soutenir les entreprises, Luxinnovation gère un éventail d'aides accessibles. La subvention « Aide à l'investissement environnemental » couvre jusqu'à 50 % des surcoûts liés à des équipements plus performants que la norme (datacenter, refroidissement, photovoltaïque). Le programme Fit4Sustainability propose un diagnostic gratuit suivi d'un plan d'action subventionné. Le « Sustainability Mapping » identifie les leviers prioritaires d'une PME. Pour l'innovation pure, le programme RDI (Recherche, Développement, Innovation) finance jusqu'à 60 % des projets, et certains appels ciblent explicitement le Green IT.\n\nL'INDR (cf. unité 1) propose gratuitement aux entreprises le label ESR, dont le référentiel intègre désormais explicitement le numérique responsable. Plus de 350 entreprises sont labellisées au Luxembourg, ce qui en fait l'un des dispositifs RSE les plus actifs au niveau européen rapporté à la taille du pays.\n\nEnfin, le Klima-Pakt fir Betriber (Pacte Climat Entreprises), lancé en 2024, propose aux entreprises un accompagnement structuré et des aides renforcées (audit gratuit, primes d'investissement bonifiées) en contrepartie d'engagements mesurables sur la réduction de leur empreinte carbone — y compris numérique.",
+          "examples": [
+            { "title": "Cas Luxinnovation : un cabinet d'avocats luxembourgeois", "text": "En 2023, un cabinet d'avocats de 80 collaborateurs a bénéficié de Fit4Sustainability : diagnostic identifiant le parc IT comme premier poste d'impact (renouvellement trop fréquent, faible recyclage). Plan d'action subventionné à 50 % : allongement de la durée de vie de 3 à 5 ans, contrat avec un éco-organisme, achat exclusif EPEAT Argent ou Or. ROI estimé : 18 mois." },
+            { "title": "Klima-Pakt 2024", "text": "Plus de 200 entreprises avaient signé le Klima-Pakt fir Betriber dans ses six premiers mois — un succès qui a poussé le gouvernement à débloquer une enveloppe complémentaire mi-2025." }
+          ],
+          "keyPoints": [
+            "PNEC 2030 : -55 % GES vs 2005, 37 % renouvelables, +42 % efficacité énergétique",
+            "Aide à l'investissement environnemental : jusqu'à 50 % de subvention",
+            "Fit4Sustainability : diagnostic gratuit + plan d'action subventionné",
+            "Label ESR de l'INDR : 350+ entreprises labellisées",
+            "Klima-Pakt fir Betriber : accompagnement structuré depuis 2024"
+          ],
+          "goFurther": [
+            "Gouvernement luxembourgeois — PNEC 2030 (mise à jour 2024)",
+            "Luxinnovation.lu — page « Aides et financements »",
+            "Klima-Pakt.lu — pacte climat entreprises"
           ]
         }
       ]
     },
+
     {
       "id": 3,
       "unite": "UNITÉ 3",
-      "title": "Normes et certifications ISO",
-      "subtitle": "ISO 14001, ISO 50001, ISO 14040, EN 50600",
+      "title": "Normes et certifications ISO appliquées au Green IT",
+      "subtitle": "ISO 14001, ISO 50001, ISO 14040/44, EN 50600",
       "image": "📋",
       "bgColor": "#48bb78",
-      "estimatedTime": "00:35:00",
+      "estimatedTime": "00:45:00",
       "sections": [
         {
           "id": "3.1",
-          "title": "Norme vs Certification",
-          "content": "Une norme est un document de référence établi par consensus qui fournit des règles et lignes directrices. Elle est élaborée par des experts (ISO, AFNOR), basée sur le consensus, volontaire sauf si rendue obligatoire, et révisée périodiquement. La certification est une attestation délivrée par un organisme tiers indépendant accrédité prouvant qu'une organisation respecte les exigences d'une norme. Elle est basée sur un audit externe, a une durée limitée (généralement 3 ans), avec des audits de surveillance annuels.",
+          "title": "Norme, certification, accréditation : trois notions à ne pas confondre",
+          "intro": "Le vocabulaire de la normalisation est piégeux. « Conforme », « certifié », « accrédité » désignent des réalités distinctes, et leur confusion peut conduire à des erreurs commerciales (greenwashing) ou contractuelles graves.",
+          "content": "Une norme est un document de référence, élaboré par consensus par un organisme de normalisation reconnu (ISO au niveau mondial, CEN/CENELEC au niveau européen, AFNOR/DIN/ILNAS au niveau national). Elle fournit des règles, lignes directrices ou caractéristiques pour des activités ou leurs résultats. Une norme est juridiquement volontaire (sauf si la loi y renvoie expressément, ce qui la rend obligatoire) et fait l'objet d'une révision systématique tous les 5 ans environ.\n\nLa conformité à une norme est une déclaration : l'organisation affirme respecter les exigences. Cette déclaration peut être interne (auto-évaluation), ou attestée par un tiers — c'est alors une certification. La certification est délivrée par un Organisme Certificateur (OC) à l'issue d'un audit. Sa validité est typiquement de 3 ans, avec des audits annuels de surveillance et un audit de renouvellement complet la troisième année.\n\nMais qui valide la compétence du certificateur lui-même ? C'est le rôle de l'accréditation. L'accréditation est délivrée par un organisme national (OLAS au Luxembourg, COFRAC en France, DAkkS en Allemagne) qui vérifie que l'organisme certificateur respecte les exigences de la norme ISO/IEC 17021 (audit de systèmes de management). Tous les organismes d'accréditation européens sont eux-mêmes coordonnés par l'EA (European Accreditation), garantissant une reconnaissance mutuelle.\n\nEn pratique, dire « notre datacenter est conforme à EN 50600 » et « notre datacenter est certifié EN 50600 par un organisme accrédité » sont deux affirmations très différentes — la seconde étant la seule réellement opposable.",
+          "visual": "pdcaCycle",
+          "details": [
+            { "subtitle": "Le triptyque Norme → Certification → Accréditation", "text": "Norme : document. Certification : preuve qu'une organisation respecte la norme. Accréditation : preuve que l'organisme qui certifie est compétent pour le faire. C'est une chaîne de confiance dont chaque maillon est indispensable." },
+            { "subtitle": "Le cycle de vie d'une certification", "text": "Audit initial (étape 1 : revue documentaire ; étape 2 : audit sur site) → décision de certification → audit de surveillance année 1 → audit de surveillance année 2 → audit de renouvellement année 3. Coût total moyen sur 3 ans pour ISO 14001 : 15 000 à 30 000 € pour une PME." }
+          ],
           "keyPoints": [
-            "La norme dit QUOI faire",
-            "La certification prouve que vous le FAITES",
-            "Processus : Norme → Organisation met en œuvre → Audit → Certification",
-            "Validité certification : généralement 3 ans + audits annuels"
+            "Norme = document de référence, volontaire sauf renvoi légal",
+            "Certification = attestation par un organisme tiers, validité typique 3 ans",
+            "Accréditation = validation de la compétence du certificateur (ISO/IEC 17021)",
+            "OLAS (Luxembourg), COFRAC (France) : organismes nationaux d'accréditation",
+            "Conformité ≠ certification — vigilance commerciale"
+          ],
+          "goFurther": [
+            "ISO/IEC 17021-1 — Exigences pour les organismes auditant et certifiant",
+            "OLAS.public.lu — organisme luxembourgeois d'accréditation",
+            "European Accreditation — www.european-accreditation.org"
           ]
         },
         {
           "id": "3.2",
-          "title": "ISO 14001 : Management environnemental",
-          "content": "ISO 14001:2015 spécifie les exigences pour un Système de Management Environnemental (SME). Elle permet de gérer les responsabilités environnementales de manière systématique. Plus de 500 000 certificats dans le monde. Structure en 10 chapitres : contexte, leadership, planification, support, réalisation, évaluation, amélioration.",
+          "title": "ISO 14001 : le système de management environnemental",
+          "intro": "Avec plus de 500 000 certificats actifs dans le monde, ISO 14001 est la norme environnementale la plus diffusée. Elle ne dit pas quels résultats atteindre, mais structure la démarche pour les atteindre.",
+          "content": "La norme ISO 14001:2015 spécifie les exigences pour un Système de Management Environnemental (SME). Elle s'inscrit dans la « High Level Structure » (HLS), la structure harmonisée commune à toutes les normes de management ISO (9001 qualité, 45001 santé-sécurité, 27001 sécurité de l'information, 50001 énergie). Cette structure facilite l'intégration des différents systèmes au sein d'une même organisation.\n\nL'esprit d'ISO 14001 repose sur le cycle PDCA (Plan-Do-Check-Act) — l'amélioration continue. Plan : identifier le contexte, les parties intéressées, les risques et opportunités environnementales, fixer des objectifs. Do : mettre en œuvre les actions, former, communiquer, documenter. Check : surveiller, mesurer, auditer en interne, faire la revue de direction. Act : corriger les écarts, planifier de nouvelles actions, ajuster les objectifs.\n\nLa norme est neutre quant aux secteurs et tailles : un cabinet de conseil de 30 personnes et un industriel de 5 000 salariés peuvent tous deux être certifiés. Mais la profondeur de la démarche s'adapte au contexte. Pour une activité IT, les axes typiques sont : politique d'achat responsable (intégrant labels EPEAT, durée de vie), gestion des DEEE (filière agréée, taux de recyclage), maîtrise de l'empreinte carbone (mesure scope 1-2-3 incluant le numérique), sobriété énergétique des bureaux et datacenters.\n\nL'intérêt principal d'ISO 14001 n'est pas le « tampon » mais la structuration qu'elle impose : sans système, les initiatives Green IT restent isolées, sans mesure, sans responsable identifié. Avec un SME, elles deviennent cohérentes, mesurables et auditables.",
+          "details": [
+            { "subtitle": "Coût et ROI typiques", "text": "Pour une PME (< 200 salariés) : 5 000 à 15 000 € pour l'audit initial, 2 000 à 5 000 € par an pour les audits de surveillance. ROI moyen 12-18 mois grâce aux économies (énergie, déchets, achats) et à l'accès à de nouveaux marchés (appels d'offres publics où ISO 14001 est de plus en plus exigée)." },
+            { "subtitle": "Compatibilité avec la CSRD", "text": "Une organisation certifiée ISO 14001 dispose déjà de l'infrastructure documentaire et des indicateurs nécessaires à l'élaboration du rapport ESRS E1. La certification n'est pas obligatoire pour la CSRD, mais elle constitue un accélérateur considérable." }
+          ],
           "keyPoints": [
-            "SME : Système de Management Environnemental",
-            "Structure HLS : compatible avec ISO 9001, ISO 45001",
-            "Cycle PDCA : Plan-Do-Check-Act",
-            "Pertinence Green IT : gestion DEEE, achats responsables, empreinte carbone"
+            "ISO 14001:2015 — norme la plus diffusée (500 000+ certificats mondiaux)",
+            "Structure HLS : compatible avec ISO 9001, 45001, 27001, 50001",
+            "Cycle PDCA : amélioration continue",
+            "Coût PME : 5-15 k€ initial, 2-5 k€/an, ROI moyen 12-18 mois",
+            "Accélérateur naturel pour la conformité CSRD (ESRS E1)"
+          ],
+          "goFurther": [
+            "ISO 14001:2015 — Systèmes de management environnemental — Exigences",
+            "AFNOR — guide « ISO 14001 et performance environnementale »",
+            "ISO Survey 2023 — données statistiques sur la diffusion des certifications"
           ]
         },
         {
           "id": "3.3",
-          "title": "ISO 14040/44 : Analyse du Cycle de Vie (ACV)",
-          "content": "Ces normes définissent les principes et le cadre méthodologique de l'ACV. L'ACV évalue les impacts environnementaux d'un produit ou service sur l'ensemble de son cycle de vie, du berceau à la tombe. Quatre phases : définition des objectifs et du champ, inventaire (ICV), évaluation des impacts, interprétation.",
+          "title": "ISO 14040 / 14044 : l'Analyse du Cycle de Vie (ACV)",
+          "intro": "L'ACV est l'outil méthodologique de référence pour mesurer objectivement l'empreinte environnementale d'un produit ou d'un service. C'est la base scientifique de toute démarche d'éco-conception sérieuse.",
+          "content": "L'Analyse du Cycle de Vie, normée par ISO 14040 (principes et cadre) et ISO 14044 (exigences et lignes directrices), évalue les impacts environnementaux d'un produit ou service sur l'ensemble de son cycle de vie, « du berceau à la tombe » — c'est-à-dire de l'extraction des matières premières à la fin de vie, en passant par la fabrication, la distribution et l'utilisation.\n\nLa méthodologie repose sur quatre phases. (1) Définition des objectifs et du champ : que cherche-t-on à comparer ? Sur quelle unité fonctionnelle (par exemple : « stocker 1 To de données pendant 1 an » plutôt que « un serveur ») ? Quelles frontières du système ? (2) Inventaire du cycle de vie (ICV) : recensement quantitatif des flux entrants (énergie, matières, eau) et sortants (émissions, déchets) à chaque étape. (3) Évaluation des impacts (ACVI) : conversion des flux en indicateurs d'impact (réchauffement climatique en kg CO₂ éq, acidification, eutrophisation, épuisement des ressources, toxicité humaine, etc.). (4) Interprétation : analyse des résultats, identification des contributions majeures, recommandations.\n\nPour le numérique, l'ACV révèle souvent des résultats contre-intuitifs. Selon les études de référence (rapport ADEME 2022, méthodologie GreenIT.fr), pour un ordinateur portable, près de 80 % de l'empreinte carbone provient de la phase de fabrication — bien avant la consommation électrique lors de l'usage. Pour un datacenter en revanche, la phase d'usage domine très largement. Conclusion opérationnelle : prolonger la durée de vie des terminaux est l'action la plus efficace pour les utilisateurs ; optimiser le PUE l'est pour les opérateurs.\n\nL'ACV est exigeante : une étude complète mobilise 50 à 200 jours-experts et coûte 30 à 150 k€. Pour des analyses moins poussées, des outils simplifiés existent : Bilan Carbone (Bilan GES), Boavizta, Impact CO2 (ADEME).",
+          "visual": "acvCycle",
+          "examples": [
+            { "title": "Le smartphone : fabrication vs usage", "text": "Selon la base Negaoctet (ADEME), la fabrication d'un smartphone représente ~80 % de son empreinte carbone sur 3 ans d'usage. Doubler la durée de vie revient donc presque à diviser par deux son empreinte annuelle." },
+            { "title": "Streaming vidéo : ACV publiée par Netflix", "text": "Netflix a publié en 2021 une ACV simplifiée : 1 heure de streaming = ~36 g CO₂ éq (chiffre Europe), dont 30 % réseau, 20 % terminal, 10 % datacenter, 40 % autres (fabrication des équipements amortie). Très éloigné des estimations alarmistes initiales de The Shift Project (~3 kg CO₂)." }
+          ],
           "keyPoints": [
-            "Du berceau à la tombe : extraction → fabrication → distribution → utilisation → fin de vie",
-            "Unité fonctionnelle : base de comparaison",
-            "Impacts évalués : GES, acidification, eutrophisation, épuisement ressources",
-            "Pertinence Green IT : éco-conception services numériques, empreinte carbone IT"
+            "ISO 14040 (principes) + ISO 14044 (exigences) : méthodologie de référence",
+            "4 phases : objectifs/champ → inventaire → impacts → interprétation",
+            "Unité fonctionnelle : base de comparaison rigoureuse",
+            "Pour les terminaux IT : 70-80 % de l'empreinte vient de la fabrication",
+            "Outils accessibles : Bilan Carbone, Boavizta, Impact CO2 (ADEME)"
+          ],
+          "goFurther": [
+            "ISO 14040:2006 + ISO 14044:2006",
+            "ADEME — Base Negaoctet (impacts numériques)",
+            "Boavizta.org — outils ACV numériques open source"
           ]
         },
         {
           "id": "3.4",
-          "title": "ISO 50001 : Management de l'énergie",
-          "content": "ISO 50001:2018 spécifie les exigences pour un Système de Management de l'Énergie (SMÉ). Elle permet d'améliorer la performance énergétique de manière continue et systématique. Économies typiques de 10-30% sur les coûts énergie. Éléments clés : revue énergétique, situation de référence, objectifs et cibles, IPÉ (Indicateurs de Performance Énergétique).",
+          "title": "ISO 50001 : management de l'énergie",
+          "intro": "Pour toute organisation énergivore — au premier rang desquelles les opérateurs de datacenters — ISO 50001 est la norme qui structure une démarche d'efficacité énergétique mesurable, durable et… souvent très rentable.",
+          "content": "ISO 50001:2018 spécifie les exigences pour un Système de Management de l'Énergie (SMÉ). Comme ISO 14001, elle s'appuie sur la structure HLS et le cycle PDCA. Sa spécificité : se concentrer exclusivement sur la performance énergétique, avec une méthodologie rigoureuse de mesure.\n\nLa démarche commence par une revue énergétique : cartographier les usages, identifier les Usages Énergétiques Significatifs (UES) qui concentrent la majorité de la consommation, établir une situation de référence (baseline). Sur cette base, l'organisation définit des Indicateurs de Performance Énergétique (IPÉ) — par exemple kWh par To stocké, ou PUE pour un datacenter — et fixe des objectifs et cibles chiffrés.\n\nLe SMÉ exige ensuite la mise en œuvre d'un plan d'amélioration : renouvellement d'équipements (climatisation, alimentation), changement de pratiques (consolidation de serveurs, free cooling), formation des équipes. Le suivi régulier des IPÉ, la mesure des écarts par rapport à la baseline, et la revue de direction périodique structurent l'amélioration continue.\n\nLes retours d'expérience documentés sont éloquents : selon les chiffres consolidés par l'AFNOR et l'ADEME, les organisations certifiées ISO 50001 réalisent en moyenne 10 à 30 % d'économies sur leurs coûts énergétiques en 3 ans. Pour un datacenter de taille moyenne (5 MW), cela peut représenter 200 000 à 600 000 € par an d'économies — un ROI immédiat. Par ailleurs, la directive EED (cf. unité 2) dispense de l'audit énergétique obligatoire les organisations certifiées ISO 50001 : une raison supplémentaire de s'engager.",
+          "details": [
+            { "subtitle": "Le rôle clé de la baseline et des IPÉ", "text": "Sans baseline rigoureuse, impossible de prouver une amélioration : un hiver plus doux, une activité en baisse peuvent suffire à expliquer une consommation moindre. ISO 50001 impose donc des IPÉ normalisés (par exemple kWh corrigés du DJU pour le chauffage) qui isolent l'effet réel des actions d'efficacité." },
+            { "subtitle": "Articulation avec EN 50600", "text": "Pour un datacenter, ISO 50001 fournit le cadre managérial général, EN 50600-4 fournit les indicateurs techniques spécifiques (PUE, REF, WUE, etc.). Les deux normes se complètent — la première dit comment piloter, la seconde quoi mesurer." }
+          ],
           "keyPoints": [
-            "SMÉ : Système de Management de l'Énergie",
-            "IPÉ : Indicateurs de Performance Énergétique",
-            "Économies typiques : 10-30%",
-            "Pertinence Green IT : datacenters, optimisation PUE, réponse à la directive EED"
+            "ISO 50001:2018 — Système de Management de l'Énergie",
+            "Économies typiques : 10-30 % en 3 ans",
+            "Concept clé : Usages Énergétiques Significatifs (UES) + IPÉ + baseline",
+            "Dispense de l'audit énergétique obligatoire EED",
+            "Couplage logique avec EN 50600 pour les datacenters"
+          ],
+          "goFurther": [
+            "ISO 50001:2018 — texte officiel ISO",
+            "Directive (UE) 2023/1791 (EED), articles 11 et 12",
+            "AFNOR — retours d'expérience ISO 50001"
           ]
         },
         {
           "id": "3.5",
-          "title": "EN 50600 : Datacenters",
-          "content": "Série de normes européennes spécifiques aux datacenters couvrant la conception, construction et exploitation. EN 50600-1 : concepts généraux. EN 50600-2-x : construction (bâtiment, alimentation, climatisation, câblage, sécurité). EN 50600-3-1 : management opérationnel. EN 50600-4-x : indicateurs KPI (PUE, REF, ERF, WUE, CUE).",
+          "title": "EN 50600 : la norme européenne des datacenters",
+          "intro": "EN 50600 est la « bible » technique des datacenters européens. Élaborée par le CENELEC, elle couvre conception, exploitation et indicateurs de performance — et alimente directement le reporting EED imposé depuis 2024.",
+          "content": "La série EN 50600 est une famille de normes européennes spécifiques aux datacenters, publiée à partir de 2012 et progressivement enrichie. Elle est aujourd'hui la référence européenne sur ce périmètre, en complément (et non en remplacement) des classifications américaines de l'Uptime Institute (Tier I à IV).\n\nLa structure de la série est modulaire. EN 50600-1 introduit les concepts généraux et la terminologie. EN 50600-2-x couvre la construction : bâtiment et environnement (-2-1), distribution électrique (-2-2), contrôle environnemental et climatisation (-2-3), câblage des télécommunications (-2-4), systèmes de sécurité (-2-5). EN 50600-3-1 traite du management opérationnel. Enfin, EN 50600-4-x définit les indicateurs clés de performance environnementale : PUE (Power Usage Effectiveness), REF (Renewable Energy Factor), ERF (Energy Reuse Factor), WUE (Water Usage Effectiveness), CUE (Carbon Usage Effectiveness).\n\nLe PUE — ratio entre la consommation électrique totale du datacenter et la consommation strictement IT — est devenu l'indicateur emblématique de l'efficacité énergétique. Un PUE de 1.0 serait théoriquement idéal (toute l'énergie sert à l'IT, rien aux auxiliaires). En pratique, les meilleurs datacenters européens atteignent 1.1 à 1.2 ; le « EU Code of Conduct for Data Centres » vise 1.4 ; la moyenne mondiale est aux alentours de 1.55 (Uptime Institute Global Data Center Survey 2024).\n\nDepuis 2024, la directive EED impose à tous les datacenters > 500 kW de reporter publiquement ces indicateurs. EN 50600-4 fournit le cadre méthodologique pour calculer ces métriques de manière comparable. Les certifications EN 50600 (notamment via TÜV) deviennent un argument commercial fort pour les opérateurs.",
+          "visual": "pueScale",
+          "details": [
+            { "subtitle": "Au-delà du PUE : penser l'écosystème", "text": "Le PUE ignore certains aspects critiques : un datacenter alimenté au charbon avec un PUE de 1.1 est plus carboné qu'un datacenter hydroélectrique avec un PUE de 1.4. D'où l'importance des indicateurs complémentaires REF/ERF (énergies renouvelables et réutilisation), et CUE (intensité carbone). EN 50600-4 propose une vision multi-critères." },
+            { "subtitle": "WUE — l'enjeu eau", "text": "Le refroidissement adiabatique économise l'électricité mais consomme de l'eau. Avec les épisodes de sécheresse récents (Europe 2022-2023), le WUE devient un indicateur stratégique. Les opérateurs européens convergent vers des solutions « free cooling » privilégiant l'air ambiant en hiver et limitant le recours à l'eau l'été." }
+          ],
+          "examples": [
+            { "title": "Reporting EED — la base européenne", "text": "Depuis 2024, les données EN 50600-4 des datacenters européens sont collectées par la Commission via une base centralisée. Premier rapport public attendu courant 2025 : il permettra de classer publiquement les opérateurs par performance, ce qui exercera une forte pression d'alignement." }
+          ],
           "keyPoints": [
-            "PUE (Power Usage Effectiveness) : idéal < 1.4, excellent < 1.2",
-            "REF/ERF (Renewable Energy Factor) : part d'énergie renouvelable",
-            "WUE (Water Usage Effectiveness) : consommation eau",
-            "Base du reporting EED et du EU Code of Conduct for Datacenters"
+            "EN 50600 : famille de normes européennes CENELEC, datacenters",
+            "EN 50600-4 : indicateurs PUE, REF, ERF, WUE, CUE",
+            "PUE : idéal < 1.2, EU Code < 1.4, moyenne mondiale 1.55",
+            "Base méthodologique du reporting EED 2024+",
+            "Complémentaire de la classification Uptime Tier (résilience)"
+          ],
+          "goFurther": [
+            "EN 50600-4-2 — Power Usage Effectiveness",
+            "Uptime Institute — Global Data Center Survey (édition annuelle)",
+            "EU Code of Conduct for Data Centre Energy Efficiency (JRC)"
           ]
         },
         {
           "id": "3.6",
-          "title": "Pourquoi se faire certifier ?",
-          "content": "La certification représente un investissement mais les bénéfices sont multiples. Elle permet de structurer sa démarche avec un cadre méthodologique éprouvé, d'entrer dans une dynamique d'amélioration continue (PDCA), de gagner en crédibilité externe grâce à l'audit par un tiers indépendant, d'accéder à certains marchés (appels d'offres publics), de réduire les risques réglementaires, et de se différencier de la concurrence.",
+          "title": "Faut-il se faire certifier ? Une décision stratégique",
+          "intro": "Certifier coûte du temps et de l'argent. Avant de se lancer, il faut peser sérieusement les bénéfices attendus et la maturité de l'organisation.",
+          "content": "La décision de certifier — et quelles normes choisir — relève d'une analyse stratégique. Les bénéfices sont multiples mais ne sont pas automatiques.\n\nLes bénéfices internes sont d'abord méthodologiques : la certification impose une structuration (responsabilités, procédures, indicateurs) qui survit aux changements d'équipe. Elle force la mesure et donc le pilotage par les chiffres. Elle institutionnalise l'amélioration continue (PDCA), évitant le syndrome du « projet one-shot » sans suivi.\n\nLes bénéfices externes sont commerciaux et réglementaires. Les appels d'offres publics exigent de plus en plus ISO 14001 ou EN 50600 (certains marchés DSI publics français en font même un critère éliminatoire). Les grands donneurs d'ordre privés font de même dans leur due diligence fournisseurs. Côté financier, la certification facilite l'accès à des financements verts (green loans, green bonds) et aux dispositifs publics d'aide. Côté assurances, elle peut réduire les primes (risque environnemental mieux maîtrisé).\n\nLes coûts sont à mettre en regard. Pour une PME : 5 à 15 k€ pour l'audit initial ISO 14001, 2 à 5 k€ par an pour les surveillances, plus le temps interne (typiquement 30 à 100 jours-personnes pour la mise en place). Pour un datacenter visant EN 50600, le coût initial peut atteindre 50 à 150 k€ selon la complexité.\n\nUne erreur fréquente consiste à viser la certification comme un objectif final plutôt que comme un outil. La certification doit s'inscrire dans une stratégie : améliorer la performance ? Conquérir un marché ? Anticiper une réglementation ? Sans réponse claire à cette question, le risque est de produire de la documentation pour l'auditeur sans changer les pratiques — c'est le « syndrome du classeur ».",
+          "examples": [
+            { "title": "EBRC — un parcours multi-certifications réussi", "text": "EBRC détient 5 certifications ISO (14001, 50001, 27001, 22301, 9001) en plus de Tier IV. Cet empilement n'est pas une coquetterie : chaque client (banque, hôpital, institution UE) a ses exigences propres, et la certification est devenue le ticket d'entrée pour les marchés stratégiques." },
+            { "title": "Un ratio coût/bénéfice à 18 mois", "text": "Étude de cas LuxConnect : ISO 50001 mise en place en 2018, coût total 80 k€ sur 3 ans (interne + externe), économies d'énergie cumulées identifiées et tracées : 410 k€ sur la même période. ROI net sur 18 mois." }
+          ],
           "keyPoints": [
-            "Coût typique ISO 14001 : 5 000-15 000 € (audit initial)",
-            "Coût annuel : 2 000-5 000 € (surveillance)",
-            "ROI moyen : 12-18 mois",
-            "Certifications souvent exigées dans les appels d'offres publics"
+            "Bénéfices internes : structuration, mesure, amélioration continue",
+            "Bénéfices externes : appels d'offres, financements verts, assurances",
+            "Coûts PME ISO 14001 : 15-30 k€ sur 3 ans + temps interne",
+            "Coûts datacenter EN 50600 : 50-150 k€ selon complexité",
+            "À éviter : la certification-trophée déconnectée des pratiques opérationnelles"
+          ],
+          "goFurther": [
+            "ADEME — Guide « Faut-il se faire certifier ? »",
+            "ISO — Survey of Management System Standard Certifications (annuelle)",
+            "Études de cas Luxinnovation : entreprises certifiées luxembourgeoises"
           ]
         }
       ]
     },
+
     {
       "id": 4,
       "unite": "UNITÉ 4",
-      "title": "Labels environnementaux IT",
-      "subtitle": "EPEAT, Energy Star, Blue Angel",
+      "title": "Labels environnementaux pour l'IT",
+      "subtitle": "EPEAT, Energy Star, Blue Angel, EU Ecolabel, TCO Certified",
       "image": "🏷️",
       "bgColor": "#9f7aea",
       "estimatedTime": "00:30:00",
       "sections": [
         {
           "id": "4.1",
-          "title": "Qu'est-ce qu'un label environnemental ?",
-          "content": "Un label environnemental est un signe distinctif (logo, mention) apposé sur un produit ou service, attestant que celui-ci répond à un ensemble de critères environnementaux définis dans un référentiel et vérifiés par un organisme indépendant. Trois caractéristiques essentielles : un référentiel (critères précis, mesurables, publics), une vérification tierce (contrôle indépendant du fabricant), un signe de reconnaissance (logo visible).",
+          "title": "Anatomie d'un label environnemental",
+          "intro": "Avant d'arbitrer entre EPEAT, Energy Star ou Blue Angel, il faut comprendre ce qui distingue un véritable label d'une simple allégation marketing. Trois critères font la différence.",
+          "content": "Un label environnemental est un signe distinctif apposé sur un produit (ou service) attestant qu'il satisfait à un ensemble de critères environnementaux définis dans un référentiel public et vérifiés par un organisme indépendant. La norme ISO 14024 (étiquetage environnemental de type I) en formalise les exigences.\n\nTrois caractéristiques essentielles distinguent un label sérieux d'une auto-déclaration marketing :\n\n• Un référentiel précis et public : les critères doivent être chiffrés, mesurables, et accessibles à toute partie prenante. Le référentiel est révisé périodiquement pour rester à l'état de l'art.\n• Une vérification par tierce partie : un organisme indépendant du fabricant audite la conformité. Ce contrôle peut être réalisé sur dossier, en laboratoire, ou par audit sur site.\n• Un signe de reconnaissance unique : un logo protégé, dont l'usage est strictement contrôlé.\n\nISO 14024 distingue trois types d'étiquetage. Type I (multi-critères, tierce partie) : les vrais labels — EPEAT, Energy Star, Blue Angel, EU Ecolabel, Nordic Swan, TCO Certified. Type II (auto-déclaration) : allégations du fabricant lui-même, sans tierce partie (« 100 % recyclable », « éco-responsable »), encadrées par ISO 14021 mais souvent contestables. Type III (déclaration environnementale produit / EPD) : fiches techniques quantifiées basées sur ACV, normées ISO 14025.\n\nLe label porte sur un produit (par opposition à la certification qui porte sur une organisation). Cette distinction est fondamentale : un fabricant non certifié ISO 14001 peut produire des modèles labellisés EPEAT Or, et inversement.",
+          "visual": "labelsComparison",
+          "details": [
+            { "subtitle": "Le piège des allégations « green »", "text": "Selon l'enquête de la Commission européenne (2020), 53 % des allégations environnementales évaluées étaient vagues, trompeuses ou infondées. La directive « Green Claims » (proposition 2023, adoption attendue 2024-2025) imposera bientôt une vérification systématique de toute allégation environnementale dans l'UE. Privilégier les labels Type I est déjà la meilleure protection." },
+            { "subtitle": "Les EPD : transparence radicale", "text": "Les Déclarations Environnementales Produit (EPD) basées sur ISO 14025 fournissent toutes les données ACV d'un produit (carbone, eau, ressources, etc.) selon des règles de calcul standardisées (PCR — Product Category Rules). Plus exigeantes qu'un label binaire, elles permettent une comparaison rigoureuse entre produits d'une même catégorie." }
+          ],
           "keyPoints": [
-            "Le label porte sur le PRODUIT",
-            "La certification porte sur l'ORGANISATION",
-            "À ne pas confondre avec l'auto-déclaration (sans vérification externe)",
-            "Vérification par organisme indépendant obligatoire"
+            "Label sérieux (Type I, ISO 14024) : référentiel public + vérification tierce + logo protégé",
+            "À distinguer : auto-déclaration (Type II), EPD (Type III)",
+            "Label = produit ; certification = organisation",
+            "Vigilance : 53 % des allégations « green » sont vagues ou trompeuses (Commission UE, 2020)",
+            "Directive « Green Claims » à venir : encadrement renforcé"
+          ],
+          "goFurther": [
+            "ISO 14024:2018 — Étiquetage environnemental — Principes Type I",
+            "Commission européenne — Initiative « Green Claims » (2023)",
+            "Ecolabel Index — index.ecolabelindex.com (panorama mondial)"
           ]
         },
         {
           "id": "4.2",
-          "title": "EPEAT : Évaluation environnementale",
-          "content": "EPEAT (Electronic Product Environmental Assessment Tool) est un système mondial d'évaluation de la performance environnementale des produits électroniques, géré par le Global Electronics Council (GEC). Trois niveaux : Bronze (critères requis uniquement), Argent (requis + 50% optionnels), Or (requis + 75% optionnels). Critères : réduction substances dangereuses, matériaux durables, conception durable, gestion déchets, efficacité énergétique, responsabilité entreprise.",
+          "title": "EPEAT : référence mondiale pour le matériel IT",
+          "intro": "EPEAT est devenu de facto le label de référence pour les achats publics et les grandes entreprises souhaitant arbitrer rapidement leurs équipements informatiques. Son système à trois niveaux permet une exigence graduée.",
+          "content": "Le label EPEAT (Electronic Product Environmental Assessment Tool) est géré par le Global Electronics Council (GEC), organisation à but non lucratif basée aux États-Unis. Lancé en 2006, il évalue les produits électroniques sur huit catégories de critères : réduction des substances dangereuses, sélection de matériaux durables, conception pour la fin de vie, longévité, efficacité énergétique, gestion du cycle de vie de l'emballage, performance de l'entreprise en matière de RSE, et gestion des déchets.\n\nLe référentiel s'appuie sur des normes IEEE (notamment IEEE 1680.1 pour les ordinateurs et écrans). Chaque famille de produits (ordinateurs, serveurs, écrans, imprimantes, smartphones, équipements réseau) dispose de critères spécifiques régulièrement révisés.\n\nLe système EPEAT à trois niveaux est sa marque de fabrique : niveau Bronze (le produit respecte tous les critères obligatoires, environ 23 selon les catégories), niveau Argent (Bronze + 50 % des critères optionnels), niveau Or (Bronze + 75 % des critères optionnels). En 2023, plus de 4 600 produits de 60 fabricants étaient référencés dans le registre EPEAT.\n\nL'impact commercial est massif. Aux États-Unis, le décret présidentiel 13693 (2015, confirmé en 2021) impose 95 % d'achats EPEAT pour le gouvernement fédéral. En Europe, les directives sur les marchés publics 2014/24/UE et 2014/25/UE encouragent fortement les achats verts, et de nombreuses commandes publiques en France, en Allemagne et au Luxembourg exigent EPEAT Argent au minimum. Pour un fabricant, l'absence d'EPEAT ferme l'accès à des centaines de millions d'euros de marchés.",
+          "visual": "epeatLevels",
+          "examples": [
+            { "title": "La politique d'achat de l'État luxembourgeois", "text": "Depuis 2022, le plan d'action national pour les achats publics responsables (PNAD) du Luxembourg recommande systématiquement les niveaux EPEAT Argent ou Or pour les achats IT de l'administration. Plusieurs marchés cadres récents (Centre des Technologies de l'Information de l'État, CTIE) ont fait de ce critère une exigence éliminatoire." },
+            { "title": "Apple, Dell, HP : la course à l'Or", "text": "Pour les marchés publics américains et européens, les grands constructeurs proposent désormais des gammes intégralement EPEAT Or. Apple a obtenu pour la première fois en 2024 une notation EPEAT Or sur l'intégralité de sa gamme Mac et iPad — un argument largement mis en avant commercialement." }
+          ],
           "keyPoints": [
-            "Bronze : critères obligatoires seulement",
-            "Argent : obligatoires + 50% optionnels",
-            "Or : obligatoires + 75% optionnels",
-            "Couvre : ordinateurs, serveurs, écrans, téléphones"
+            "Géré par le Global Electronics Council (GEC)",
+            "8 catégories de critères, référentiel basé sur IEEE 1680.1",
+            "3 niveaux : Bronze (obligatoires), Argent (+50 % opt.), Or (+75 % opt.)",
+            "4 600+ produits enregistrés, 60+ fabricants",
+            "De facto exigé dans la commande publique (États-Unis, France, Luxembourg)"
+          ],
+          "goFurther": [
+            "epeat.net — registre officiel des produits",
+            "IEEE 1680.1-2018 — critères pour ordinateurs et écrans",
+            "Décret américain Executive Order 14057 (2021) — achats fédéraux durables"
           ]
         },
         {
           "id": "4.3",
-          "title": "Energy Star : Efficacité énergétique",
-          "content": "Programme de certification créé en 1992 par l'EPA (USA) pour identifier les produits les plus économes en énergie. Reconnu internationalement (UE, Canada, Japon, Australie, Suisse). Couvre : ordinateurs, moniteurs, imprimantes, serveurs, datacenters, électroménager, bâtiments. En moyenne -30% de consommation énergétique par rapport aux produits standards.",
+          "title": "Energy Star : l'efficacité énergétique avant tout",
+          "intro": "Plus ancien programme d'étiquetage énergétique au monde, Energy Star reste la référence pour identifier rapidement les produits économes en énergie — du PC portable au datacenter.",
+          "content": "Le programme Energy Star a été créé en 1992 par l'Environmental Protection Agency (EPA) américaine, initialement pour identifier les ordinateurs économes en énergie. Il s'est ensuite étendu à plus de 75 catégories de produits : électroménager, éclairage, équipements de bureau, équipements de chauffage et climatisation, bâtiments. Reconnu mondialement (États-Unis, Canada, Mexique, Japon, Australie, Suisse), il l'a été en Europe jusqu'en 2018 ; depuis, l'UE encourage plutôt l'EU Ecolabel mais Energy Star reste la référence pour le matériel IT, où peu d'alternatives existent.\n\nLe principe est simple : un produit Energy Star consomme typiquement 25 à 35 % d'énergie de moins qu'un produit standard de même catégorie, sans compromis sur la performance. Les critères incluent : consommation en mode actif et en veille, efficacité de l'alimentation interne (≥ 85 %), mode d'économie d'énergie configuré par défaut, etc. Pour les ordinateurs portables, par exemple, la version 8.0 (en vigueur depuis 2020) impose une consommation typique annuelle (TEC) plafonnée selon les caractéristiques techniques.\n\nL'évolution est continue : les seuils sont régulièrement durcis, ce qui pousse les fabricants à innover. Un ordinateur Energy Star de 2010 ne respecterait plus les critères actuels. Le label fonctionne donc comme un mécanisme d'amélioration continue de l'ensemble du marché.\n\nPour les datacenters et serveurs, Energy Star propose des spécifications dédiées (« Energy Star for Servers », « Energy Star for Data Center Storage »). L'EPA propose également des outils gratuits : Portfolio Manager (benchmarking énergétique des bâtiments) et plusieurs calculateurs d'économies.",
+          "examples": [
+            { "title": "Energy Star Portfolio Manager", "text": "Outil web gratuit de l'EPA, Portfolio Manager permet de mesurer la performance énergétique d'un bâtiment et de la comparer à un benchmark national. Plus de 300 000 bâtiments américains y sont enregistrés. Bien que centré USA, il est utilisé internationalement pour ses méthodologies." },
+            { "title": "Économie cumulée", "text": "L'EPA estime qu'Energy Star a permis aux foyers et entreprises américains d'économiser plus de 500 milliards de dollars de coûts énergétiques et d'éviter 4 milliards de tonnes de CO₂ depuis 1992. C'est l'un des programmes environnementaux les plus rentables jamais déployés." }
+          ],
           "keyPoints": [
-            "Créé par l'EPA en 1992",
-            "-30% de consommation vs produits standards",
-            "Critères : consommation mode actif, veille < 1W, efficacité alimentation ≥ 85%",
-            "Spécifications mises à jour régulièrement"
+            "Créé en 1992 par l'EPA (USA), reconnu mondialement",
+            "Réduction typique de consommation : 25-35 % vs produits standards",
+            "Critères régulièrement durcis (révision tous les 3-5 ans)",
+            "Couvre IT, datacenters, électroménager, bâtiments",
+            "Outils gratuits : Portfolio Manager, calculateurs d'économies"
+          ],
+          "goFurther": [
+            "energystar.gov — site officiel du programme",
+            "Energy Star for Servers — spécifications version 4.0",
+            "EPA — Annual Report Energy Star (économies cumulées)"
           ]
         },
         {
           "id": "4.4",
-          "title": "Blue Angel : Le pionnier des écolabels",
-          "content": "Blue Angel (Blauer Engel) est le plus ancien écolabel au monde, créé en 1978 en Allemagne. Plus de 20 000 produits certifiés dans 120+ catégories. Particulièrement reconnu pour les équipements IT. Critères pour IT (DE-UZ 78, 219) : efficacité énergétique supérieure à Energy Star, sans mercure, conception durable et réparable, recyclabilité, faibles émissions, longévité garantie (pièces et mises à jour 5 ans minimum).",
+          "title": "Blue Angel : le pionnier exigeant",
+          "intro": "Plus ancien écolabel mondial, Blue Angel (Blauer Engel) est devenu une référence d'exigence — notamment pour les équipements IT pensés pour durer. Ses critères de durabilité dépassent largement Energy Star.",
+          "content": "Lancé en 1978 en Allemagne par le ministère fédéral de l'Environnement, Blue Angel est le plus ancien écolabel environnemental au monde. Géré par l'Umweltbundesamt (Agence allemande pour l'environnement) avec le RAL (institut allemand d'assurance qualité), il couvre aujourd'hui plus de 120 catégories de produits et services, avec plus de 20 000 produits certifiés à travers ~1 600 entreprises.\n\nPour les équipements informatiques, deux référentiels font autorité : DE-UZ 78 (ordinateurs portables, tablettes, postes de travail) et DE-UZ 219 (logiciels). Les exigences vont nettement au-delà d'Energy Star :\n\n• Efficacité énergétique supérieure aux exigences Energy Star en vigueur ;\n• Absence de substances dangereuses (au-delà des seuils RoHS), avec notamment l'exclusion de retardateurs de flammes halogénés problématiques ;\n• Conception pour la durabilité : démontabilité, accès aux pièces critiques, batteries amovibles si possible ;\n• Disponibilité garantie de pièces détachées pendant minimum 5 ans après commercialisation ;\n• Disponibilité garantie de mises à jour logicielles (sécurité, OS) pendant minimum 5 ans ;\n• Recyclabilité élevée et étiquetage des matières plastiques pour faciliter le tri ;\n• Faibles émissions sonores et de substances volatiles.\n\nLe référentiel DE-UZ 219 sur les logiciels est unique : il impose des critères de sobriété logicielle (efficience des ressources, transparence du code, compatibilité avec du matériel ancien), ouvrant la voie au « Green Software ». Le label, valide 4 ans, est obtenu en 2 à 4 mois après audit. Son coût est modéré (quelques milliers d'euros par référence produit) mais sa difficulté technique le rend rare hors d'Allemagne — où il a une notoriété et un poids commercial considérables.",
+          "examples": [
+            { "title": "Fairphone : Blue Angel et engagement durabilité", "text": "Le Fairphone 4 a été le premier smartphone à obtenir le label Blue Angel (catégorie « Conception durable des téléphones mobiles ») en 2022. Cette reconnaissance valide les choix de conception du fabricant néerlandais : modularité, réparabilité, garantie longue, supply chain éthique." },
+            { "title": "DE-UZ 219 et le Green Software", "text": "Le référentiel DE-UZ 219 (logiciels durables), lancé en 2020, a inspiré la création de la Green Software Foundation et de plusieurs initiatives européennes de mesure de l'efficience logicielle. Encore peu de logiciels labellisés, mais une dynamique en croissance." }
+          ],
           "keyPoints": [
-            "Plus ancien écolabel mondial (1978)",
-            "20 000+ produits certifiés",
-            "Exigences plus strictes qu'Energy Star",
-            "Délai d'obtention : 2-4 mois, validité 4 ans"
+            "Créé en 1978 — plus ancien écolabel mondial",
+            "20 000+ produits certifiés, 1 600+ entreprises",
+            "DE-UZ 78 (matériel IT) et DE-UZ 219 (logiciel) : références strictes",
+            "Garantie pièces détachées ≥ 5 ans, mises à jour ≥ 5 ans",
+            "Validité 4 ans, coût modéré, exigence technique élevée"
+          ],
+          "goFurther": [
+            "blauer-engel.de — site officiel (versions DE, EN, FR)",
+            "RAL — institut d'assurance qualité allemand",
+            "Green Software Foundation — greensoftware.foundation"
           ]
         },
         {
           "id": "4.5",
-          "title": "Pourquoi choisir un label ?",
-          "content": "Pour une organisation, exiger des labels dans ses achats présente plusieurs avantages. Simplification de la décision d'achat : le label permet d'identifier rapidement les produits performants sans analyser chaque fiche technique. Économies directes : un équipement Energy Star consomme en moyenne 30% d'électricité en moins. Documentation RSE : preuves tangibles pour le reporting extra-financier (CSRD). Reconnaissance internationale : EPEAT et Energy Star sont reconnus mondialement.",
+          "title": "Choisir et utiliser les labels en pratique",
+          "intro": "Multiplier les labels exigés n'a pas de sens. La bonne approche consiste à articuler quelques labels complémentaires en fonction de la nature des achats — et à les inscrire dans une politique d'achat responsable formalisée.",
+          "content": "Au-delà d'EPEAT, Energy Star et Blue Angel, plusieurs autres labels méritent d'être connus : l'EU Ecolabel (label officiel européen, critères solides mais peu présent en IT), Nordic Swan (référence scandinave, exigeant), TCO Certified (label suédois historique pour les écrans et postes de travail, intégrant des critères sociaux), et plus récemment des labels sectoriels comme Cradle to Cradle (économie circulaire) ou Energy Star Cool Roof.\n\nPour une organisation, la question n'est pas « quel est le meilleur label ? » mais « quels labels exiger pour quels achats ? ». Quelques principes pratiques :\n\n• Pour le matériel utilisateur (PC, écrans, smartphones) : exiger EPEAT Argent ou Or comme exigence minimale, avec Energy Star comme complément. Pour des achats premium ou des secteurs sensibles, ajouter TCO Certified ou Blue Angel.\n• Pour les serveurs et équipements datacenter : exiger Energy Star for Servers, croiser avec les spécifications EU Code of Conduct for Data Centres, et privilégier les fabricants détenant un EPD.\n• Pour les logiciels : exiger autant que possible des éditeurs adhérant à la Green Software Foundation, vérifier les pratiques d'efficience documentées, et privilégier les solutions Blue Angel DE-UZ 219 quand elles existent.\n\nLes labels alimentent directement le reporting CSRD (ESRS E5 sur l'économie circulaire et les ressources). Pour un acheteur, formaliser une politique d'achat responsable avec critères labelisés permet de transférer la charge de la preuve aux fournisseurs, ce qui simplifie radicalement l'audit. Les outils sont nombreux : INDR au Luxembourg propose un modèle de charte d'achats responsables téléchargeable gratuitement.",
+          "details": [
+            { "subtitle": "Articulation labels + clauses contractuelles", "text": "Le label seul ne suffit pas : il fixe un niveau de performance à un instant T. Pour aller plus loin, les contrats peuvent ajouter des clauses (durée de vie minimale garantie, taux de réparabilité, indice de durabilité, engagement de reprise en fin de vie). Le couple « label + clause » offre une bien meilleure couverture." },
+            { "subtitle": "Le piège du « plus c'est cher, plus c'est vert »", "text": "Faux. Plusieurs études (ADEME 2023, OECD 2022) montrent que sur un total cost of ownership de 5 ans, les équipements labellisés sont souvent moins chers (énergie économisée, durée de vie supérieure, valeur résiduelle en revente). Le label est un investissement, pas un surcoût." }
+          ],
           "keyPoints": [
-            "Simplification des achats responsables",
-            "Économies énergétiques mesurables",
-            "Preuves pour le reporting CSRD",
-            "Le label transfère la charge de la preuve au fabricant"
+            "Pas un seul « meilleur label » : choisir selon la nature de l'achat",
+            "Matériel utilisateur : EPEAT Argent/Or + Energy Star",
+            "Datacenter : Energy Star Servers + EU Code of Conduct + EPD",
+            "Logiciel : Blue Angel DE-UZ 219, Green Software Foundation",
+            "Articulation label + clauses contractuelles = couverture optimale",
+            "TCO 5 ans : les équipements labellisés sont souvent moins chers"
+          ],
+          "goFurther": [
+            "INDR — modèle de charte d'achats responsables téléchargeable",
+            "ADEME — guide « Achats numériques responsables »",
+            "TCO Certified — tcocertified.com (référence écrans/postes)"
           ]
         }
       ]
     },
+
     {
       "id": 5,
       "unite": "UNITÉ 5",
-      "title": "Codes de conduite et chartes",
-      "subtitle": "EU Code DC, CNDCP, Chartes internes",
+      "title": "Codes de conduite, chartes et engagements volontaires",
+      "subtitle": "EU Code DC, CNDCP, Charte NR, RBA",
       "image": "📜",
       "bgColor": "#f56565",
-      "estimatedTime": "00:20:00",
+      "estimatedTime": "00:30:00",
       "sections": [
         {
           "id": "5.1",
-          "title": "Qu'est-ce qu'un code de conduite ?",
-          "content": "Un code de conduite est un engagement volontaire par lequel une organisation s'engage publiquement à respecter un ensemble de bonnes pratiques environnementales. Contrairement aux normes certifiées, il n'y a pas d'audit obligatoire, mais un engagement moral et réputationnel. Caractéristiques : volontaire (adhésion libre), public (engagement visible, signataires listés), progressif (amélioration continue), évolutif (bonnes pratiques mises à jour).",
+          "title": "Le rôle des engagements volontaires dans la régulation",
+          "intro": "Pourquoi des entreprises s'imposent-elles des contraintes que la loi ne leur impose pas ? Loin d'être de la philanthropie, les codes de conduite répondent à des logiques stratégiques précises — et préfigurent souvent la régulation future.",
+          "content": "Un code de conduite est un engagement public, volontaire et collectif par lequel les signataires s'engagent à respecter un ensemble de bonnes pratiques sur un sujet donné. Contrairement aux normes certifiables, il n'y a généralement pas d'audit obligatoire ni de sanction juridique en cas de manquement — la force du code repose sur la pression réputationnelle et sur la transparence (engagements et résultats souvent publics).\n\nPlusieurs logiques poussent à l'adhésion volontaire :\n\n• Anticipation réglementaire : démontrer aux régulateurs que la profession s'autodiscipline pour éviter, ou orienter, une réglementation contraignante. L'histoire récente regorge d'exemples où des engagements volontaires ont finalement été codifiés en droit (reporting extra-financier, écoconception).\n• Différenciation commerciale : afficher une démarche proactive face à des clients et investisseurs de plus en plus exigeants sur l'ESG.\n• Coordination sectorielle : éviter qu'un concurrent ne tire avantage d'un comportement non vertueux (« course vers le bas »), en alignant les pratiques par le haut.\n• Apprentissage progressif : pour un sujet émergent, un code permet de tester des indicateurs et des bonnes pratiques avant de les figer dans la loi.\n\nLes codes ont des limites bien identifiées. L'absence d'audit obligatoire peut conduire à des engagements creux (« greenwashing »). Le caractère volontaire signifie que les acteurs les plus problématiques n'adhèrent généralement pas. Et les engagements à long terme (2030, 2050) sont parfois pris par des dirigeants qui ne seront plus en poste pour en répondre.\n\nMalgré ces limites, les codes de conduite jouent un rôle structurant. Pour le Green IT, trois d'entre eux ont une portée particulière : l'EU Code of Conduct for Data Centres, le Climate Neutral Data Centre Pact, et — pour les acheteurs — la Charte Numérique Responsable de l'INR.",
           "keyPoints": [
-            "Engagement volontaire et public",
-            "Pas d'audit obligatoire",
-            "Signal de proactivité",
-            "Ce qui est volontaire aujourd'hui devient souvent obligatoire demain"
+            "Code = engagement volontaire, collectif, public, sans audit obligatoire",
+            "Logiques d'adhésion : anticipation, différenciation, coordination, apprentissage",
+            "Force = pression réputationnelle + transparence des engagements",
+            "Limites : risque de greenwashing, autosélection des « bons élèves »",
+            "Souvent, le volontaire d'aujourd'hui devient l'obligatoire de demain"
+          ],
+          "goFurther": [
+            "OECD — Voluntary approaches to environmental policy (étude de référence)",
+            "Conseil d'État, Étude annuelle 2013 — Le droit souple",
+            "European Environmental Bureau — Analyses critiques des engagements volontaires"
           ]
         },
         {
           "id": "5.2",
-          "title": "Code de conduite européen pour les datacenters",
-          "content": "Initiative de la Commission européenne lancée en 2008 par le JRC (Joint Research Centre) pour améliorer l'efficacité énergétique des datacenters européens. Plus de 500 datacenters signataires. Engagements : mesurer et reporter le PUE annuellement, mettre en œuvre les bonnes pratiques du référentiel, démontrer une amélioration continue, accepter un audit possible par le JRC.",
+          "title": "EU Code of Conduct for Data Centres : le pionnier européen",
+          "intro": "Lancé en 2008 par le JRC, le Code of Conduct européen pour les datacenters est devenu le référentiel de bonnes pratiques le plus utilisé sur le continent. Il alimente directement le reporting EED 2024+.",
+          "content": "Le « EU Code of Conduct for Data Centre Energy Efficiency » est une initiative lancée en 2008 par le Joint Research Centre (JRC) de la Commission européenne, dans le contexte de la directive 2006/32/CE sur l'efficacité énergétique. Son objectif : améliorer l'efficacité énergétique des datacenters européens par un engagement volontaire des opérateurs.\n\nLe Code comporte deux statuts : « Participant » (l'opérateur s'engage à mesurer son PUE annuellement, à mettre en œuvre les bonnes pratiques recommandées, et à démontrer une amélioration continue) et « Endorser » (fournisseur ou consultant qui s'engage à promouvoir les bonnes pratiques auprès de ses clients). Plus de 500 datacenters européens sont aujourd'hui Participants — un volume qui en fait, de facto, le standard de référence en Europe.\n\nLe document « Best Practices » publié annuellement par le JRC est probablement le plus précieux du dispositif. Il recense plus de 100 bonnes pratiques opérationnelles, classées par domaine (gestion de l'air froid, alimentation électrique, infrastructure IT, monitoring, sourcing énergétique…) et par niveau de difficulté. C'est une mine d'informations techniques utilisable par tout opérateur, signataire ou non.\n\nLe lien avec la réglementation s'est resserré depuis 2024 : la directive EED refondue exige le reporting d'indicateurs (PUE, REF, WUE, etc.) qui correspondent très largement à ceux suivis dans le cadre du Code. Pour un opérateur déjà signataire, la mise en conformité EED est largement triviale. C'est l'exemple typique d'un code volontaire devenu pré-requis de la régulation contraignante.",
+          "examples": [
+            { "title": "EBRC, lauréat 2011 et 2016 du EU Code Award", "text": "Le prix annuel EU Code of Conduct for Data Centres récompense les meilleurs élèves. EBRC l'a obtenu deux fois (2011 et 2016), validant sa démarche d'amélioration continue. Ce prix est devenu un argument commercial fort dans les appels d'offres européens." },
+            { "title": "Le « Best Practices » comme manuel opérationnel", "text": "Plusieurs opérateurs européens utilisent le document « Best Practices » du JRC comme grille d'audit interne, indépendamment de toute adhésion formelle. Sa rigueur technique et sa mise à jour annuelle en font une référence quasi-normative." }
+          ],
           "keyPoints": [
-            "Lancé en 2008 par le JRC",
-            "500+ datacenters signataires",
-            "Reporting PUE annuel obligatoire",
-            "Base du reporting exigé par la directive EED"
+            "Lancé en 2008 par le JRC (Commission européenne)",
+            "500+ datacenters européens signataires",
+            "Engagement : mesurer PUE annuel + bonnes pratiques + amélioration continue",
+            "Document « Best Practices » : 100+ recommandations techniques annuelles",
+            "Base directe du reporting EED 2024+ (continuité méthodologique)"
+          ],
+          "goFurther": [
+            "JRC — EU Code of Conduct for Data Centre Energy Efficiency (site)",
+            "Best Practices Guide (dernière édition annuelle)",
+            "Liste des Participants et Endorsers — publiée annuellement"
           ]
         },
         {
           "id": "5.3",
-          "title": "Climate Neutral Data Centre Pact (CNDCP)",
-          "content": "Pacte signé en 2021 par les acteurs majeurs du cloud et des datacenters européens (Google, AWS, OVHcloud, Equinix...) avec un objectif ambitieux : des datacenters climatiquement neutres d'ici 2030. Jalons 2025 : PUE ≤ 1.3 pour les nouveaux datacenters, 75% d'énergie décarbonée. Jalons 2030 : 100% énergie renouvelable, neutralité carbone, réutilisation chaleur fatale, économie circulaire serveurs.",
+          "title": "Climate Neutral Data Centre Pact : l'engagement à 2030",
+          "intro": "Signé en 2021 par les principaux opérateurs cloud et datacenters européens, le CNDCP est l'engagement collectif le plus ambitieux du secteur : neutralité carbone des datacenters européens d'ici 2030.",
+          "content": "Le Climate Neutral Data Centre Pact (CNDCP) a été lancé en janvier 2021 par 25 opérateurs européens majeurs, sous l'égide de deux associations professionnelles (CISPE pour les fournisseurs cloud, EUDCA pour les opérateurs de datacenters). Aujourd'hui plus de 100 entreprises et 25 associations sont signataires, couvrant la grande majorité de la capacité datacenter européenne.\n\nLes signataires incluent les hyperscalers américains (Google, AWS, Microsoft, Meta), les acteurs européens (OVHcloud, Scaleway, T-Systems, Equinix EMEA, Digital Realty, Iron Mountain), et de nombreux opérateurs nationaux dont LuxConnect.\n\nLe Pacte fixe des jalons précis et publiquement vérifiables :\n\nÀ horizon 2025 :\n• PUE ≤ 1.3 pour les nouveaux datacenters en climat tempéré (1.4 en climat chaud) ;\n• Approvisionnement à 75 % en énergies décarbonées ;\n• Plans concrets de réutilisation de la chaleur fatale ;\n• Audits annuels selon EN 50600 ou équivalent.\n\nÀ horizon 2030 :\n• 100 % d'énergie renouvelable ;\n• Neutralité carbone (scopes 1 et 2) ;\n• Économie circulaire généralisée pour les serveurs (réemploi, recyclage) ;\n• Conservation et optimisation de l'eau (suivi WUE) ;\n• Soutien aux écosystèmes énergétiques locaux.\n\nLe Pacte se distingue par sa gouvernance transparente : reporting annuel public, comité de suivi indépendant, et publication des indicateurs agrégés par CISPE et EUDCA. C'est l'un des engagements volontaires les plus structurés du secteur numérique mondial — au point que la Commission européenne le cite régulièrement comme modèle.",
+          "visual": "cndcpTrajectory",
+          "examples": [
+            { "title": "Microsoft : « carbon negative » en 2030", "text": "Microsoft a annoncé en 2020 viser non seulement la neutralité mais la négativité carbone d'ici 2030 (retirer plus de CO₂ qu'il n'en émet), et à terme effacer son empreinte historique cumulée depuis 1975. Cet engagement va plus loin que le CNDCP et inspire le secteur." },
+            { "title": "LuxConnect, signataire fondateur luxembourgeois", "text": "LuxConnect a signé dès 2021 le CNDCP. Avec un PUE déjà aux alentours de 1.3 et 100 % d'énergie hydroélectrique, l'opérateur luxembourgeois est en avance sur les jalons 2025, et utilise activement le Pacte comme cadre stratégique." }
+          ],
           "keyPoints": [
-            "Signataires : Google, AWS, Microsoft, OVHcloud, Equinix...",
-            "2025 : PUE ≤ 1.3, 75% énergie décarbonée",
-            "2030 : 100% renouvelable, neutralité carbone",
-            "Pertinent pour le Luxembourg : hub de datacenters européen"
+            "Signé en 2021 par 25 opérateurs européens, 100+ aujourd'hui",
+            "Signataires : Google, AWS, Microsoft, OVHcloud, Equinix, LuxConnect…",
+            "2025 : PUE ≤ 1.3, 75 % énergie décarbonée, réutilisation chaleur",
+            "2030 : 100 % renouvelable, neutralité carbone, économie circulaire",
+            "Reporting annuel public — modèle cité par la Commission européenne"
+          ],
+          "goFurther": [
+            "climateneutraldatacentre.net — site officiel du Pacte",
+            "CISPE — Cloud Infrastructure Service Providers in Europe",
+            "EUDCA — European Data Centre Association"
           ]
         },
         {
           "id": "5.4",
-          "title": "Autres codes et chartes",
-          "content": "La Charte Numérique Responsable de l'INR (France) propose 10 engagements couvrant les achats responsables, la prolongation de durée de vie, l'éco-conception, la sensibilisation et la mesure. Le RBA Code of Conduct (Responsible Business Alliance, ex-EICC) est un code pour la supply chain électronique adopté par Apple, Dell, HP, Intel, Microsoft, couvrant conditions de travail, éthique, et environnement. Des chartes internes existent aussi : Google (carbon-free 24/7 en 2030), Microsoft (carbon negative en 2030), OVHcloud (PUE < 1.2).",
+          "title": "Charte Numérique Responsable et autres engagements",
+          "intro": "Au-delà des datacenters, plusieurs chartes structurent les engagements des entreprises sur leurs pratiques numériques globales. La Charte NR de l'INR (France) est probablement la plus diffusée francophonement.",
+          "content": "La Charte Numérique Responsable a été élaborée par l'Institut du Numérique Responsable (INR), association française fondée en 2018 et largement diffusée en Europe francophone. Elle propose 10 engagements concrets que les entreprises peuvent prendre publiquement :\n\n1. Élire un responsable Numérique Responsable\n2. Mesurer l'empreinte du numérique\n3. Optimiser les achats : éco-conception et achats responsables\n4. Allonger la durée d'usage des équipements\n5. Lutter contre l'obsolescence (matérielle, logicielle, culturelle)\n6. Concevoir des services numériques responsables (éco-conception logicielle)\n7. Adopter une démarche d'inclusion numérique\n8. Sensibiliser et former en interne\n9. Manager les données de façon responsable\n10. Adopter une démarche d'amélioration continue\n\nPlus de 800 organisations ont signé la Charte depuis son lancement, incluant des grandes entreprises (Société Générale, Orange, BNP Paribas), des PME, des administrations et des collectivités. Au Luxembourg, plusieurs cabinets de conseil et entreprises IT l'ont adoptée.\n\nD'autres engagements complètent ce paysage. Le Responsible Business Alliance Code of Conduct (RBA, anciennement EICC) est un code dédié à la supply chain électronique, signé par Apple, Dell, HP, Intel, Microsoft, IBM et d'autres. Il couvre les conditions de travail, l'éthique, la santé-sécurité, et l'environnement chez les sous-traitants. Pour des acheteurs publics ou des grandes entreprises, exiger contractuellement la conformité RBA permet d'externaliser une partie de la diligence raisonnable sur la chaîne d'approvisionnement.\n\nDes chartes internes spécifiques aux grandes entreprises s'ajoutent : Google vise « 24/7 carbon free » d'ici 2030 (toute la consommation électrique couverte heure par heure par du renouvelable), Microsoft « carbon negative » 2030, OVHcloud annonce un PUE moyen flotte < 1.2. Ces engagements unilatéraux, parce qu'ils émanent de leaders du marché, jouent un rôle d'entraînement considérable sur leurs concurrents et fournisseurs.",
+          "examples": [
+            { "title": "Société Générale et la Charte NR", "text": "Signataire de la Charte NR, Société Générale a structuré son programme « Green IT » autour des 10 engagements, avec un reporting public annuel. Résultat publié : -23 % d'empreinte carbone du parc IT entre 2019 et 2023, principalement via l'allongement de la durée de vie des équipements." },
+            { "title": "Google et le 24/7 carbon free", "text": "Google s'engage à ce que, d'ici 2030, chaque heure d'électricité consommée par ses datacenters et bureaux soit couverte par de l'énergie sans carbone produite localement. Un défi technique et logistique majeur (intermittence du renouvelable), qui pousse à des innovations sur le stockage et la production géolocalisée." }
+          ],
           "keyPoints": [
-            "Charte NR (INR) : 10 engagements numériques responsables",
-            "RBA : code supply chain (Apple, Dell, HP, Intel, Microsoft)",
-            "Chartes internes : engagements publics des entreprises",
-            "Valeur : premier pas vers une démarche structurée"
+            "Charte NR (INR) : 10 engagements, 800+ signataires",
+            "RBA Code of Conduct : supply chain électronique (Apple, Dell, HP, Intel…)",
+            "Chartes internes des leaders : Google (24/7 carbon free 2030), Microsoft (carbon negative)",
+            "Valeur principale : structurer une démarche progressive et publique",
+            "Premier pas naturel avant ISO 14001 ou CSRD"
+          ],
+          "goFurther": [
+            "Charte Numérique Responsable — institutnr.org/charte",
+            "Responsible Business Alliance — responsiblebusiness.org",
+            "Google — Sustainability report (annuel)"
           ]
         }
       ]
     },
+
     {
       "id": 6,
       "unite": "UNITÉ 6",
       "title": "Cas pratiques au Luxembourg",
-      "subtitle": "LuxConnect, EBRC, bonnes pratiques",
+      "subtitle": "LuxConnect, EBRC, enseignements et perspectives",
       "image": "🇱🇺",
       "bgColor": "#38b2ac",
-      "estimatedTime": "00:25:00",
+      "estimatedTime": "00:30:00",
       "sections": [
         {
           "id": "6.1",
-          "title": "LuxConnect : Datacenter vert pionnier",
-          "content": "Créé en 2006 par l'État luxembourgeois, LuxConnect exploite 4 datacenters (Bettembourg, Bissen) totalisant 15 000 m² de surface IT, certifiés Tier II, III et IV (Uptime Institute). Engagements Green IT : membre du CNDCP, adhérent EU Code of Conduct for Data Centres, 100% énergie verte (hydroélectrique Norvège), free cooling quand T° < 11°C, récupération chaleur serveurs pour chauffage, cogénération biomasse (DC Bissen).",
+          "title": "LuxConnect : datacenter vert sous impulsion publique",
+          "intro": "Créée par l'État luxembourgeois en 2006, LuxConnect est l'un des plus anciens exemples européens d'une politique industrielle alignant ambition numérique et exigence environnementale. Son DC2 de Bissen est reconnu comme l'un des datacenters les plus innovants au monde.",
+          "content": "LuxConnect SA a été créée en 2006 par l'État luxembourgeois pour soutenir la stratégie nationale de hub numérique européen. Aujourd'hui, l'opérateur exploite quatre datacenters totalisant environ 15 000 m² de surface IT, répartis sur deux sites : Bettembourg (DC1, DC3) et Bissen (DC2, DC4). Les datacenters sont certifiés Tier II, III et IV par l'Uptime Institute, couvrant tous les niveaux de criticité.\n\nLes engagements environnementaux de LuxConnect sont structurants :\n\n• Signataire du Climate Neutral Data Centre Pact (depuis 2021) ;\n• Adhérent du EU Code of Conduct for Data Centres (depuis 2010) ;\n• 100 % d'énergie verte, exclusivement hydroélectrique (importée de Norvège, contrats long terme) ;\n• Free cooling activé dès que la température extérieure < 11°C — réduisant significativement le recours à la climatisation mécanique ;\n• Récupération de la chaleur fatale des serveurs pour le chauffage des bureaux et de l'eau sanitaire ;\n• Cogénération biomasse sur le site de Bissen (DC2), via la centrale Kiowatt voisine alimentée en plaquettes forestières locales.\n\nLe DC2 de Bissen a été célébré dès son inauguration en 2010 comme « le premier datacenter vert au monde » : sa conception intègre nativement la cogénération biomasse Kiowatt, ce qui permet d'éviter environ 27 000 tonnes de CO₂ par an par rapport à une alimentation gaz naturel classique. Le PUE moyen des datacenters LuxConnect oscille entre 1.3 et 1.4, conforme aux objectifs du EU Code of Conduct et aligné avec les jalons 2025 du CNDCP.\n\nL'investissement public initial a été conséquent (plus de 100 M€ cumulés), mais le retour est tangible : positionnement de Luxembourg comme hub crédible (clients institutionnels européens, agences de l'UE), création d'emplois qualifiés, et démonstration que le « green by design » est techniquement et économiquement viable à grande échelle.",
+          "details": [
+            { "subtitle": "Le modèle Kiowatt — co-construction industrielle", "text": "La centrale de cogénération biomasse Kiowatt, voisine du DC2, produit simultanément électricité et chaleur à partir de plaquettes forestières locales. Cette synergie inhabituelle entre opérateur datacenter et centrale énergétique a été pensée dès la planification du site — illustration parfaite du « green by design » au-delà du seul datacenter." },
+            { "subtitle": "Vers le DC5 ?", "text": "LuxConnect annonce régulièrement des projets d'extension. Le DC5, en cours de planification, intégrerait un design encore plus avancé : refroidissement par immersion liquide, intégration photovoltaïque, et un objectif de PUE < 1.2. Le Luxembourg consolide ainsi sa position de laboratoire européen." }
+          ],
           "keyPoints": [
-            "PUE moyen : 1.3-1.4 (objectif EU Code)",
-            "100% énergie renouvelable",
-            "27 000 tonnes CO₂ évitées/an (DC Bissen)",
-            "Innovation : premier datacenter vert au monde (cogénération Kiowatt)"
+            "Créée en 2006 par l'État luxembourgeois — politique industrielle assumée",
+            "4 datacenters, 15 000 m² IT, certifiés Tier II/III/IV",
+            "100 % énergie hydroélectrique (Norvège) + cogénération biomasse Kiowatt",
+            "PUE moyen 1.3-1.4 — aligné EU Code et CNDCP 2025",
+            "27 000 t CO₂ évitées/an grâce à la cogénération (DC2 Bissen)",
+            "Free cooling activé < 11°C, récupération chaleur fatale"
+          ],
+          "goFurther": [
+            "luxconnect.lu — fiches techniques détaillées des datacenters",
+            "Kiowatt — centrale biomasse partenaire",
+            "Rapports annuels LuxConnect — données environnementales chiffrées"
           ]
         },
         {
           "id": "6.2",
-          "title": "EBRC : Excellence et certifications multiples",
-          "content": "Créé en 2000, filiale du groupe POST, EBRC exploite 3 datacenters Tier IV (17 000 m²) à Windhof, Kayl et Betzdorf. Statut PSF régulé par la CSSF, clients dans la finance, santé, institutions. Certifications obtenues : ISO 14001, ISO 50001, ISO 27001, ISO 22301, ISO 9001, Tier IV Design & Constructed Facility. Lauréat 2011 et 2016 du prix European Code of Conduct.",
+          "title": "EBRC : excellence multi-certifications pour un marché exigeant",
+          "intro": "Filiale du groupe POST, EBRC s'est positionnée sur les marchés les plus exigeants — finance, santé, institutions UE — où le multi-certifications n'est pas un luxe mais un prérequis contractuel. Son palmarès est l'un des plus complets d'Europe.",
+          "content": "EBRC (European Business Reliance Centre) a été créée en 2000 par le groupe POST Luxembourg pour proposer des services de datacenter et de cloud d'entreprise. L'opérateur exploite trois datacenters Tier IV (la plus haute certification Uptime) à Windhof, Kayl et Betzdorf, totalisant environ 17 000 m² de surface IT. EBRC est par ailleurs PSF (Professionnel du Secteur Financier) supervisé par la CSSF, ce qui en fait un acteur de référence pour les clients financiers exigeants.\n\nLe portefeuille de certifications d'EBRC est exceptionnellement complet :\n• ISO 14001 — Management environnemental\n• ISO 50001 — Management de l'énergie\n• ISO 27001 — Management de la sécurité de l'information\n• ISO 22301 — Management de la continuité d'activité\n• ISO 9001 — Management de la qualité\n• Uptime Institute Tier IV Design & Constructed Facility\n• ITIL, PCI-DSS, et plusieurs certifications sectorielles complémentaires\n\nCe « parcours du combattant » certificatoire n'est pas anodin. Pour servir une banque internationale, un hôpital, ou une institution européenne, ces certifications ne sont pas négociables : elles conditionnent l'accès aux marchés. EBRC a fait le choix stratégique d'investir massivement dans la conformité, ce qui lui permet aujourd'hui de capter des contrats que des concurrents moins outillés ne peuvent prétendre.\n\nLauréate à deux reprises du prix EU Code of Conduct for Data Centres (en 2011 et 2016), EBRC affiche également des résultats environnementaux concrets : utilisation de la technologie « Roues de Kyoto » (refroidissement adiabatique économe en eau), 100 % d'électricité hydroélectrique (mêmes contrats Norvège que LuxConnect), récupération de la chaleur pour le chauffage du voisinage. Selon ses chiffres publics, EBRC permet à ses clients de réduire d'environ 50 % leur empreinte carbone par rapport à une infrastructure équivalente en gestion propre, soit ~10 000 tonnes de CO₂ évitées par an pour l'ensemble du parc.",
+          "examples": [
+            { "title": "EBRC et les institutions européennes", "text": "Plusieurs agences de l'UE basées au Luxembourg (Cour de Justice, EIB, Eurostat partiellement) hébergent des charges critiques chez EBRC. Pour ces clients, la combinaison Tier IV + ISO 27001/22301 + PSF est éliminatoire dans les appels d'offres — d'où la stratégie de différenciation par la conformité." },
+            { "title": "Roues de Kyoto — technologie low-tech ingénieuse", "text": "Inventées dans les années 1970, les Roues de Kyoto exploitent les écarts de température entre l'air entrant et sortant pour pré-conditionner l'air, sans utiliser d'eau ni de fluide frigorigène. Particulièrement efficaces dans le climat tempéré luxembourgeois, elles permettent à EBRC d'atteindre un WUE proche de zéro." }
+          ],
           "keyPoints": [
-            "Multi-certifié : ISO 14001, 50001, 27001, 22301, 9001",
-            "Lauréat EU Code of Conduct (2011, 2016)",
-            "100% électricité hydroélectrique",
-            "Résultat : -50% empreinte carbone clients (-10 000 t CO₂/an)"
+            "Créée en 2000, filiale du groupe POST, statut PSF (CSSF)",
+            "3 datacenters Tier IV, ~17 000 m² IT",
+            "5 certifications ISO majeures (14001, 50001, 27001, 22301, 9001)",
+            "Lauréate EU Code of Conduct for Data Centres en 2011 et 2016",
+            "100 % hydroélectrique + Roues de Kyoto (refroidissement quasi sans eau)",
+            "~10 000 t CO₂ évitées/an pour ses clients (-50 % vs propre)"
+          ],
+          "goFurther": [
+            "ebrc.com — fiches techniques et certifications",
+            "Groupe POST Luxembourg — rapport RSE annuel",
+            "Uptime Institute Tier Classification (méthodologie)"
           ]
         },
         {
           "id": "6.3",
-          "title": "Enseignements et facteurs clés de succès",
-          "content": "L'analyse comparative de LuxConnect et EBRC révèle des facteurs clés de succès : engagement dès la conception (green by design), soutien institutionnel fort (État, groupe POST) pour les investissements long terme, combinaison multi-certifications pour répondre à différentes exigences clients, innovation continue (cogénération, free cooling, récupération chaleur). Le Luxembourg se positionne comme hub européen du numérique durable grâce à son écosystème d'acteurs et sa culture de la qualité.",
+          "title": "Enseignements transversaux et facteurs clés de succès",
+          "intro": "L'expérience LuxConnect et EBRC permet d'extraire des principes opérationnels valables au-delà du Luxembourg, applicables à toute organisation qui ambitionne une démarche Green IT structurée.",
+          "content": "L'analyse comparée des deux opérateurs phares luxembourgeois fait ressortir plusieurs facteurs clés de succès reproductibles ailleurs :\n\n1. Green by design plutôt que green by retrofit. LuxConnect et EBRC n'ont pas « verdi » progressivement des installations existantes : leurs datacenters ont été pensés dès la conception architecturale pour minimiser l'empreinte (orientation, isolation, free cooling, récupération de chaleur, sourcing énergétique). Cette approche est nettement plus efficace et économique qu'un retrofit ultérieur.\n\n2. Soutien institutionnel et vision long terme. Le datacenter durable est un investissement lourd dont le retour s'apprécie sur 10 à 20 ans. Le statut public (LuxConnect) ou l'adossement à un groupe long-termiste (POST pour EBRC) permettent des arbitrages qui seraient impossibles dans une logique purement court-termiste actionnariale.\n\n3. Multi-certifications stratégique. Chaque certification (Tier IV, ISO 14001, 50001, 27001, EN 50600…) répond à un cahier des charges client spécifique. L'empilement n'est pas une coquetterie mais une condition d'accès à des segments de marché à forte valeur ajoutée.\n\n4. Innovation continue. Cogénération biomasse, Roues de Kyoto, free cooling étendu, contrats d'achat d'énergie verte de long terme (PPA) : les opérateurs ne se contentent pas du standard mais expérimentent en continu. Cette R&D opérationnelle alimente la différenciation.\n\n5. Transparence et reporting. Publication régulière des indicateurs (PUE, REF, WUE), participation aux prix EU Code, communication ouverte. Cette transparence est à la fois exigeante (elle expose aux comparaisons) et payante (elle construit la crédibilité).\n\nLe Luxembourg illustre ainsi la possibilité d'un « hub numérique vert » à l'échelle d'un petit pays. Sa stratégie associe régulation alignée (PNEC ambitieux, transposition rapide des directives UE), accompagnement public actif (aides Luxinnovation, label ESR INDR), et acteurs économiques de référence (LuxConnect, EBRC). Cette articulation publique-privée constitue un modèle européen reconnu.\n\nPour une organisation d'une autre nature — administration, PME, cabinet — les enseignements restent transposables : intégrer le Green IT dans la stratégie dès la conception, adopter un cadre méthodologique (ISO 14001 ou Charte NR), mesurer avant d'agir, et communiquer transparemment sur les résultats. Le Green IT n'est pas un sujet pour spécialistes : c'est un enjeu de gouvernance.",
+          "examples": [
+            { "title": "Le « modèle luxembourgeois » comme cas d'école", "text": "Lors des conférences européennes sur le datacenter durable (Datacenter World, DCD>Connect), les opérateurs luxembourgeois sont régulièrement invités à présenter leur démarche. Le Luxembourg apparaît dans plusieurs rapports européens (Commission, Eurostat) comme un benchmark de bonnes pratiques." },
+            { "title": "Et après : datacenters submergés et IA frugale", "text": "Les prochaines frontières du Green IT incluent : datacenters refroidis par immersion liquide (gain de PUE jusqu'à 1.05), réutilisation systématique de la chaleur (chauffage urbain via les datacenters comme à Stockholm), et « frugal AI » (modèles d'IA optimisés pour minimiser l'empreinte computationnelle). LuxConnect et EBRC explorent activement ces pistes." }
+          ],
           "keyPoints": [
-            "Green by design : intégrer dès la conception",
-            "Soutien institutionnel : investissements long terme",
-            "Multi-certifications : répondre aux différentes exigences",
-            "Innovation continue : cogénération, free cooling, récupération chaleur"
+            "Green by design : pensé dès la conception, pas en retrofit",
+            "Vision long terme : portée par un acteur public ou un groupe stable",
+            "Multi-certifications : chaque label répond à un segment de marché",
+            "Innovation continue : R&D opérationnelle (cogénération, immersion, etc.)",
+            "Transparence : reporting public régulier construit la crédibilité",
+            "Modèle luxembourgeois reconnu européennement : articulation public-privé"
+          ],
+          "goFurther": [
+            "Commission européenne — Energy Efficient Cloud Computing Technologies (rapport)",
+            "Uptime Institute — Global Data Center Survey annuel",
+            "Stockholm Data Parks — référence mondiale du chauffage urbain par datacenters"
+          ]
+        },
+        {
+          "id": "6.4",
+          "title": "Synthèse : du parcours au passage à l'acte",
+          "intro": "Vous arrivez au terme du parcours. Récapitulons les leviers que vous pouvez désormais actionner — dans votre organisation, ou dans votre rôle d'acheteur, de manager, ou de citoyen.",
+          "content": "Ce parcours a couvert l'écosystème complet des instruments d'encadrement du Green IT, du droit dur au plus volontaire :\n\n• La réglementation (unité 2) : Green Deal, CSRD, Taxonomie, EED, DEEE, RoHS, Écoconception, SFDR, DORA. C'est le socle obligatoire. À court terme, l'obligation la plus structurante pour la plupart des organisations est la CSRD (reporting durabilité), qui force la mesure de l'empreinte numérique.\n\n• Les normes ISO (unité 3) : ISO 14001 (management environnemental), ISO 50001 (énergie), ISO 14040/44 (ACV), EN 50600 (datacenters). Ce sont les outils méthodologiques. Pour une PME, ISO 14001 est généralement le premier pas. Pour un datacenter, EN 50600 + ISO 50001 est le couple gagnant.\n\n• Les labels (unité 4) : EPEAT, Energy Star, Blue Angel, TCO Certified. Outils d'achat. Pour un acheteur, formaliser une politique exigeant EPEAT Argent/Or + Energy Star transforme radicalement la performance environnementale de la flotte IT, sans coût marginal significatif.\n\n• Les engagements volontaires (unité 5) : EU Code of Conduct, CNDCP, Charte NR, RBA. Outils de structuration et de signal. Pour démarrer, signer la Charte NR de l'INR est une étape accessible qui structure la démarche.\n\nQuelques principes opérationnels traversent l'ensemble :\n\n• Mesurer avant d'agir : sans baseline, pas d'amélioration vérifiable.\n• Articuler les niveaux : la réglementation seule ne suffit pas (greenwashing défensif) ; les chartes seules non plus (greenwashing offensif). C'est la combinaison qui crée la valeur.\n• Anticiper plutôt que subir : ce qui est volontaire aujourd'hui devient obligatoire demain — les early adopters convertissent leur avance en avantage compétitif.\n• Penser cycle de vie : l'ACV révèle souvent des leviers d'action contre-intuitifs (allonger la durée de vie d'un PC, plutôt qu'optimiser sa consommation en usage).\n• Communiquer avec rigueur : transparence chiffrée et auditable, jamais d'allégations vagues. Le futur encadrement « Green Claims » sera impitoyable pour les approximations.\n\nLe Green IT n'est pas une affaire d'experts isolés : c'est une démarche d'entreprise, transverse, qui croise stratégie, achats, IT, finance, RH, communication. Les outils que ce parcours vous a présentés sont aujourd'hui matures, documentés et testés. À chacun de les mobiliser à sa juste mesure.",
+          "details": [
+            { "subtitle": "Trois actions concrètes à mener cette semaine", "text": "1. Demander à votre DSI / hébergeur le PUE de l'infrastructure que vous utilisez (et son contrat d'approvisionnement électrique). 2. Auditer la durée de vie moyenne du parc IT de votre organisation — la prolonger d'un an, c'est diviser d'environ 25 % l'empreinte fabrication annualisée. 3. Identifier dans votre politique d'achat les exigences environnementales en place (ou l'absence d'exigences) et proposer un standard minimal type EPEAT Argent." },
+            { "subtitle": "Pour aller plus loin que ce parcours", "text": "Suivre la veille de l'INR (institutnr.org) et de l'ADEME pour la France, du JRC pour la Commission européenne, de l'ILNAS et de l'INDR pour le Luxembourg. Participer aux groupes de travail des clusters (ICT Cluster, Cleantech Cluster). Envisager une formation certifiante (DPO + Green IT, ou Certified Sustainability Practitioner)." }
+          ],
+          "keyPoints": [
+            "4 familles d'instruments à articuler : réglementation, normes, labels, codes",
+            "À court terme : la CSRD oblige presque tous à mesurer leur empreinte numérique",
+            "Premier pas accessible : Charte NR + politique d'achat EPEAT",
+            "Mesurer avant d'agir, anticiper la régulation, penser cycle de vie complet",
+            "Le Green IT est une démarche transverse, pas un sujet de spécialistes"
+          ],
+          "goFurther": [
+            "ADEME — guide « Numérique responsable, 25 questions / 25 réponses »",
+            "INR — Maturity Model Numérique Responsable (auto-évaluation)",
+            "Commission européenne — Digital Sustainability Index (en construction)"
           ]
         }
       ]

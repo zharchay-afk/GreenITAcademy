@@ -699,6 +699,286 @@
       "correctIndex": 1,
       "explanation": "Les principaux signataires du CNDCP incluent Google, AWS, Microsoft, OVHcloud, Equinix, Scaleway et de nombreux autres acteurs majeurs du cloud.",
       "source": "Module 5 - CNDCP"
+    },
+    {
+      "id": "q071",
+      "moduleId": 1,
+      "level": "intermediaire",
+      "question": "Selon le Global E-waste Monitor 2024, combien de tonnes de DEEE ont été générées dans le monde en 2022 ?",
+      "answers": ["12 millions", "32 millions", "62 millions", "120 millions"],
+      "correctIndex": 2,
+      "explanation": "Selon le Global E-waste Monitor (UNITAR / ONU, 2024), 62 millions de tonnes de DEEE ont été générées en 2022 dans le monde, dont seulement 22,3 % ont été collectées et recyclées de manière formelle.",
+      "source": "Module 1 - Empreinte numérique"
+    },
+    {
+      "id": "q072",
+      "moduleId": 1,
+      "level": "avance",
+      "question": "Quel arrêt fondateur de la CJUE pose le principe de primauté du droit de l'Union européenne ?",
+      "answers": ["Van Duyn (1974)", "Costa c/ ENEL (1964)", "Cassis de Dijon (1979)", "Francovich (1991)"],
+      "correctIndex": 1,
+      "explanation": "L'arrêt Costa c/ ENEL du 15 juillet 1964 a posé le principe de primauté du droit communautaire (aujourd'hui droit de l'UE) sur les droits nationaux, y compris constitutionnels.",
+      "source": "Module 1 - Directive vs Règlement"
+    },
+    {
+      "id": "q073",
+      "moduleId": 1,
+      "level": "debutant",
+      "question": "Que désigne l'acronyme DPP introduit par le règlement Écoconception 2024 ?",
+      "answers": ["Data Privacy Protocol", "Digital Product Passport", "Directive Production Propre", "Dynamic Power Profile"],
+      "correctIndex": 1,
+      "explanation": "Le Digital Product Passport (Passeport numérique produit) tracera, dès 2027 pour les premiers produits, le cycle de vie complet d'un équipement : matières, empreinte carbone, réparabilité, recyclage.",
+      "source": "Module 2 - Écoconception"
+    },
+    {
+      "id": "q074",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "Quel standard européen définit le contenu obligatoire du rapport de durabilité CSRD ?",
+      "answers": ["GRI", "SASB", "ESRS", "TCFD"],
+      "correctIndex": 2,
+      "explanation": "Les ESRS (European Sustainability Reporting Standards), élaborés par l'EFRAG et adoptés par règlement délégué, sont obligatoires pour le reporting CSRD et couvrent 12 domaines (E1 climat, E5 économie circulaire, etc.).",
+      "source": "Module 2 - CSRD"
+    },
+    {
+      "id": "q075",
+      "moduleId": 2,
+      "level": "avance",
+      "question": "Quel principe méthodologique fondamental la CSRD impose-t-elle pour analyser les enjeux à reporter ?",
+      "answers": ["Le principe de précaution", "La double matérialité", "Le principe pollueur-payeur", "La hiérarchie des déchets"],
+      "correctIndex": 1,
+      "explanation": "La double matérialité oblige à analyser à la fois les impacts de l'entreprise sur l'environnement (matérialité d'impact) et les risques que l'environnement fait peser sur l'activité (matérialité financière).",
+      "source": "Module 2 - CSRD"
+    },
+    {
+      "id": "q076",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "À quelle date le règlement DORA est-il devenu applicable aux entités financières ?",
+      "answers": ["1er janvier 2023", "17 janvier 2025", "1er juillet 2026", "1er janvier 2027"],
+      "correctIndex": 1,
+      "explanation": "Le règlement DORA (UE 2022/2554) est devenu applicable le 17 janvier 2025. Il impose aux entités financières un cadre uniforme de gestion des risques numériques, y compris la supervision des prestataires cloud critiques.",
+      "source": "Module 2 - DORA"
+    },
+    {
+      "id": "q077",
+      "moduleId": 2,
+      "level": "debutant",
+      "question": "Le SFDR classifie les produits financiers en trois catégories. Laquelle correspond à un produit ayant un objectif d'investissement durable ?",
+      "answers": ["Article 6", "Article 8", "Article 9", "Article 11"],
+      "correctIndex": 2,
+      "explanation": "Le SFDR distingue : article 6 (pas d'objectif durable), article 8 (promeut des caractéristiques ESG), article 9 (objectif d'investissement durable, exigences les plus strictes).",
+      "source": "Module 2 - SFDR"
+    },
+    {
+      "id": "q078",
+      "moduleId": 2,
+      "level": "intermediaire",
+      "question": "Quelle norme dispense les organisations de l'audit énergétique obligatoire imposé par la directive EED ?",
+      "answers": ["ISO 14001", "ISO 9001", "ISO 50001", "ISO 27001"],
+      "correctIndex": 2,
+      "explanation": "Les organisations certifiées ISO 50001 (système de management de l'énergie) sont dispensées de l'audit énergétique obligatoire prévu par la directive EED, car le SMÉ couvre déjà ces exigences.",
+      "source": "Module 2 - EED"
+    },
+    {
+      "id": "q079",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Quelle norme encadre la compétence des organismes certificateurs eux-mêmes ?",
+      "answers": ["ISO 9001", "ISO 14001", "ISO/IEC 17021", "ISO 19011"],
+      "correctIndex": 2,
+      "explanation": "ISO/IEC 17021-1 définit les exigences pour les organismes auditant et certifiant des systèmes de management. C'est cette norme qui sert de base à l'accréditation des certificateurs par OLAS, COFRAC, DAkkS, etc.",
+      "source": "Module 3 - Norme vs Certification"
+    },
+    {
+      "id": "q080",
+      "moduleId": 3,
+      "level": "debutant",
+      "question": "Quel organisme délivre l'accréditation aux certificateurs au Luxembourg ?",
+      "answers": ["ILNAS", "INDR", "OLAS", "Luxinnovation"],
+      "correctIndex": 2,
+      "explanation": "OLAS (Office Luxembourgeois d'Accréditation et de Surveillance) est l'organisme national d'accréditation luxembourgeois, équivalent du COFRAC français ou de la DAkkS allemande.",
+      "source": "Module 3 - Accréditation"
+    },
+    {
+      "id": "q081",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Qu'est-ce que la « High Level Structure » (HLS) appliquée aux normes ISO de management ?",
+      "answers": ["Un standard de gouvernance pour les comités ISO", "Une structure de chapitres commune à toutes les normes de management ISO", "Une certification haut de gamme", "Un label pour les grandes entreprises"],
+      "correctIndex": 1,
+      "explanation": "La HLS est la structure harmonisée commune à toutes les normes de management ISO (9001, 14001, 27001, 45001, 50001...). Elle facilite l'intégration de plusieurs systèmes de management au sein d'une même organisation.",
+      "source": "Module 3 - ISO 14001"
+    },
+    {
+      "id": "q082",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Selon les études ADEME, quelle part de l'empreinte carbone d'un ordinateur portable provient typiquement de sa fabrication ?",
+      "answers": ["Environ 20 %", "Environ 50 %", "Environ 80 %", "Plus de 95 %"],
+      "correctIndex": 2,
+      "explanation": "Pour un ordinateur portable, environ 80 % de l'empreinte carbone sur son cycle de vie provient de la phase de fabrication. D'où l'importance d'allonger la durée de vie des terminaux pour réduire l'empreinte annualisée.",
+      "source": "Module 3 - ACV"
+    },
+    {
+      "id": "q083",
+      "moduleId": 3,
+      "level": "intermediaire",
+      "question": "Quelle base de données ADEME fournit les facteurs d'impact ACV des équipements numériques ?",
+      "answers": ["Bilan Carbone", "Base Carbone", "Negaoctet", "Boavizta"],
+      "correctIndex": 2,
+      "explanation": "Negaoctet est la base de données ADEME spécifiquement dédiée aux impacts environnementaux des équipements et services numériques, utilisable pour réaliser des ACV simplifiées.",
+      "source": "Module 3 - ACV"
+    },
+    {
+      "id": "q084",
+      "moduleId": 3,
+      "level": "avance",
+      "question": "Quel indicateur EN 50600 mesure la part d'énergie renouvelable utilisée par un datacenter ?",
+      "answers": ["PUE", "WUE", "REF (Renewable Energy Factor)", "CUE"],
+      "correctIndex": 2,
+      "explanation": "Le REF (Renewable Energy Factor) ou son équivalent ERF (Energy Reuse Factor pour la chaleur réutilisée) sont définis par EN 50600-4 pour mesurer la part d'énergie renouvelable et la réutilisation énergétique d'un datacenter.",
+      "source": "Module 3 - EN 50600"
+    },
+    {
+      "id": "q085",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "Quelle norme ISO encadre les exigences pour un label environnemental « Type I » comme EPEAT ou Blue Angel ?",
+      "answers": ["ISO 14001", "ISO 14024", "ISO 14040", "ISO 9001"],
+      "correctIndex": 1,
+      "explanation": "ISO 14024 formalise les exigences pour les labels environnementaux de Type I : multi-critères, vérifiés par tierce partie, avec référentiel public et logo protégé. EPEAT, Blue Angel, EU Ecolabel suivent cette norme.",
+      "source": "Module 4 - Anatomie d'un label"
+    },
+    {
+      "id": "q086",
+      "moduleId": 4,
+      "level": "avance",
+      "question": "À quoi correspond une Déclaration Environnementale Produit (EPD) de Type III ?",
+      "answers": ["Une auto-déclaration marketing", "Un label binaire conforme/non conforme", "Une fiche quantifiée basée sur ACV selon ISO 14025", "Une certification ISO 14001 du fabricant"],
+      "correctIndex": 2,
+      "explanation": "Les EPD (Environmental Product Declarations) de Type III sont des fiches techniques quantifiées issues d'une ACV selon ISO 14025. Plus exigeantes qu'un label binaire, elles permettent une comparaison rigoureuse entre produits.",
+      "source": "Module 4 - Anatomie d'un label"
+    },
+    {
+      "id": "q087",
+      "moduleId": 4,
+      "level": "intermediaire",
+      "question": "Quel référentiel Blue Angel concerne spécifiquement la sobriété logicielle ?",
+      "answers": ["DE-UZ 78", "DE-UZ 219", "DE-UZ 144", "DE-UZ 78a"],
+      "correctIndex": 1,
+      "explanation": "Le référentiel DE-UZ 219 de Blue Angel (lancé en 2020) est unique au monde : il certifie la sobriété des logiciels (efficience des ressources, compatibilité matériel ancien, transparence du code). Il a inspiré la Green Software Foundation.",
+      "source": "Module 4 - Blue Angel"
+    },
+    {
+      "id": "q088",
+      "moduleId": 4,
+      "level": "avance",
+      "question": "Quel smartphone a été le premier à obtenir le label Blue Angel en 2022 ?",
+      "answers": ["iPhone 14", "Samsung Galaxy S22", "Fairphone 4", "Google Pixel 7"],
+      "correctIndex": 2,
+      "explanation": "Le Fairphone 4 a été le premier smartphone à obtenir le label Blue Angel en 2022, validant ses choix de conception : modularité, réparabilité, garantie longue, supply chain éthique.",
+      "source": "Module 4 - Blue Angel"
+    },
+    {
+      "id": "q089",
+      "moduleId": 4,
+      "level": "debutant",
+      "question": "Quelle directive européenne à venir va renforcer l'encadrement des allégations environnementales (« green claims ») ?",
+      "answers": ["La directive Écoblanchiment", "La directive Green Claims", "La directive ESG", "La directive Transparence"],
+      "correctIndex": 1,
+      "explanation": "La directive « Green Claims » (proposée en 2023, adoption attendue 2024-2025) imposera une vérification systématique de toute allégation environnementale dans l'UE. Selon la Commission, 53 % des allégations actuelles sont vagues ou trompeuses.",
+      "source": "Module 4 - Anatomie d'un label"
+    },
+    {
+      "id": "q090",
+      "moduleId": 5,
+      "level": "intermediaire",
+      "question": "Quelles deux associations professionnelles européennes ont co-lancé le Climate Neutral Data Centre Pact en 2021 ?",
+      "answers": ["CISPE et EUDCA", "ETSI et CENELEC", "GAIA-X et ENISA", "EFRAG et JRC"],
+      "correctIndex": 0,
+      "explanation": "Le CNDCP a été lancé sous l'égide de CISPE (Cloud Infrastructure Service Providers in Europe) et EUDCA (European Data Centre Association). Ces deux associations assurent également le reporting public annuel des engagements.",
+      "source": "Module 5 - CNDCP"
+    },
+    {
+      "id": "q091",
+      "moduleId": 5,
+      "level": "avance",
+      "question": "Quel engagement de la Charte Numérique Responsable cible l'éco-conception des services numériques ?",
+      "answers": ["Engagement n°2 : mesurer l'empreinte", "Engagement n°4 : allonger la durée d'usage", "Engagement n°6 : concevoir des services numériques responsables", "Engagement n°9 : management des données"],
+      "correctIndex": 2,
+      "explanation": "L'engagement n°6 de la Charte NR de l'INR porte spécifiquement sur la conception de services numériques responsables (éco-conception logicielle). Au total, la Charte comporte 10 engagements.",
+      "source": "Module 5 - Charte NR"
+    },
+    {
+      "id": "q092",
+      "moduleId": 5,
+      "level": "debutant",
+      "question": "Quel engagement Google a-t-il pris pour 2030 concernant son approvisionnement électrique ?",
+      "answers": ["50 % d'énergie renouvelable", "Neutralité carbone simple", "« 24/7 carbon free »", "Indépendance énergétique totale"],
+      "correctIndex": 2,
+      "explanation": "Google vise à ce que, d'ici 2030, chaque heure d'électricité consommée par ses datacenters et bureaux soit couverte par de l'énergie sans carbone produite localement — un défi bien supérieur à la simple compensation annuelle.",
+      "source": "Module 5 - Chartes internes"
+    },
+    {
+      "id": "q093",
+      "moduleId": 5,
+      "level": "intermediaire",
+      "question": "En quoi consiste le statut « Endorser » dans le EU Code of Conduct for Data Centres ?",
+      "answers": ["Un opérateur de datacenter signataire", "Un fournisseur ou consultant qui s'engage à promouvoir les bonnes pratiques", "Un certificateur officiel", "Un organisme de financement européen"],
+      "correctIndex": 1,
+      "explanation": "Un Endorser est un fournisseur de technologies ou un consultant qui s'engage à promouvoir les bonnes pratiques du Code auprès de ses clients. Le statut Participant est, lui, réservé aux opérateurs de datacenters.",
+      "source": "Module 5 - EU Code DC"
+    },
+    {
+      "id": "q094",
+      "moduleId": 6,
+      "level": "intermediaire",
+      "question": "Quel statut réglementaire luxembourgeois EBRC détient-il en plus de ses certifications ISO ?",
+      "answers": ["Banque agréée", "PSF (Professionnel du Secteur Financier)", "Opérateur d'importance vitale", "Établissement de paiement"],
+      "correctIndex": 1,
+      "explanation": "EBRC est PSF (Professionnel du Secteur Financier) supervisé par la CSSF. Ce statut lui permet de servir les clients financiers luxembourgeois (banques, fonds, assurances) avec un niveau d'exigence réglementaire renforcé.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q095",
+      "moduleId": 6,
+      "level": "avance",
+      "question": "Quelle technologie de refroidissement low-tech EBRC a-t-elle adoptée pour minimiser sa consommation d'eau ?",
+      "answers": ["Free cooling à air pulsé", "Roues de Kyoto", "Refroidissement adiabatique direct", "Immersion liquide diélectrique"],
+      "correctIndex": 1,
+      "explanation": "Les Roues de Kyoto, inventées dans les années 1970, exploitent les écarts thermiques entre l'air entrant et sortant. Elles permettent à EBRC d'atteindre un WUE proche de zéro tout en gardant une efficacité énergétique élevée dans le climat tempéré luxembourgeois.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q096",
+      "moduleId": 6,
+      "level": "debutant",
+      "question": "Comment se nomme la centrale de cogénération biomasse adossée au datacenter DC2 de LuxConnect à Bissen ?",
+      "answers": ["Greenwatt", "Kiowatt", "Biotech-Lux", "Sustainowatt"],
+      "correctIndex": 1,
+      "explanation": "La centrale Kiowatt, voisine du DC2 de Bissen, produit simultanément électricité et chaleur à partir de plaquettes forestières locales. Cette synergie permet d'éviter ~27 000 tonnes de CO₂ par an.",
+      "source": "Module 6 - LuxConnect"
+    },
+    {
+      "id": "q097",
+      "moduleId": 6,
+      "level": "intermediaire",
+      "question": "Quel niveau Tier de l'Uptime Institute correspond à la plus haute résilience (redondance 2N+1) ?",
+      "answers": ["Tier I", "Tier II", "Tier III", "Tier IV"],
+      "correctIndex": 3,
+      "explanation": "Tier IV est le niveau le plus élevé de la classification Uptime Institute : redondance totale (2N+1), tolérance aux pannes, disponibilité ≥ 99,995 %. Les trois datacenters EBRC sont Tier IV Design & Constructed Facility.",
+      "source": "Module 6 - EBRC"
+    },
+    {
+      "id": "q098",
+      "moduleId": 6,
+      "level": "avance",
+      "question": "Quelle technologie de refroidissement émergente promet un PUE proche de 1,05 ?",
+      "answers": ["Refroidissement par air à très basse vitesse", "Immersion liquide diélectrique", "Compression par CO₂ supercritique", "Pompes à chaleur géothermiques"],
+      "correctIndex": 1,
+      "explanation": "Le refroidissement par immersion liquide diélectrique (où les serveurs sont plongés dans un fluide non conducteur) permet d'atteindre des PUE de l'ordre de 1,05 — une rupture technologique explorée notamment par LuxConnect pour ses futurs datacenters.",
+      "source": "Module 6 - Enseignements"
     }
   ]
 }
