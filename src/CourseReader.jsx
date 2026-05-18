@@ -16,11 +16,11 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
 
   return (
     <div style={{
-      display: 'flex', minHeight: '100vh', backgroundColor: '#f1f5f9',
+      display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Sidebar */}
-      <aside style={{ width: '240px', backgroundColor: '#1e3a5f', minHeight: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <aside style={{ width: '240px', backgroundColor: '#1e3a5f', height: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         {/* Logo */}
         <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

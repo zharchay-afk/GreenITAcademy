@@ -19,7 +19,7 @@ const Sidebar = ({ activePage, onNavigate }) => (
   <aside style={{
     width: '180px',
     backgroundColor: '#1e3a5f',
-    minHeight: '100vh',
+    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
     flexShrink: 0,
@@ -255,13 +255,14 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
   return (
     <div style={{
       display: 'flex',
-      minHeight: '100vh',
+      height: '100vh',
+      overflow: 'hidden',
       backgroundColor: '#f1f5f9',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       <Sidebar activePage={activePage} onNavigate={handleNavigate} />
-      
-      <main style={{ flex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+
+      <main style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
         <header style={{
           backgroundColor: '#fff',
@@ -287,7 +288,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
         </header>
 
         {/* Contenu */}
-        <div style={{ padding: '20px 24px', flex: 1 }}>
+        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto' }}>
           {/* Bouton retour */}
           <button style={{
             backgroundColor: '#22c55e',

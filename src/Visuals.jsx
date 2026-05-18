@@ -379,8 +379,6 @@ const DigitalFootprint = () => (
         <path d="M 0 0 L -41.1 56.6 A 70 70 0 0 1 -67.9 -17.5 Z" fill="#3182ce" />
         {/* Datacenters 13% */}
         <path d="M 0 0 L -67.9 -17.5 A 70 70 0 0 1 0 -70 Z" fill="#9f7aea" />
-
-        <text x="0" y="-100" textAnchor="middle" fill="#1e3a5f" fontSize="11" fontWeight="700" fontFamily="system-ui">Répartition mondiale</text>
       </g>
 
       {/* Légende */}
