@@ -67,34 +67,58 @@ Chaque module comporte :
 
 | Couche | Technologie | Justification |
 |--------|-------------|---------------|
-| Framework | React 18 + React Native (Expo 52) | Cross-platform web/iOS/Android sans duplication de code |
-| Build web | Vite 7 | Build ultra-rapide, bundle minimal, HMR efficace |
-| Stockage local | AsyncStorage (mobile) / localStorage (web) | Pas de backend = pas de serveur à alimenter en énergie |
+| Framework | React 18 | Mature, performant, large écosystème |
+| Build / dev | Vite 7 | Build ultra-rapide, bundle minimal, HMR efficace |
+| Distribution | **Progressive Web App (PWA)** | Une seule base de code, installable sur web, iOS et Android |
+| Service Worker | Manuel (sans Workbox) | Mode hors-ligne, mise en cache des assets, sans dépendance lourde |
+| Stockage local | `localStorage` | Persistance de la progression, zéro backend, zéro serveur à alimenter |
 | Export | JSZip + format SCORM 1.2 | Standard d'interopérabilité reconnu par les LMS |
-| Style | StyleSheet inline (pas de framework CSS) | Évite l'overhead d'un framework type Tailwind/Bootstrap |
+| Style | Inline (style objects) | Évite l'overhead d'un framework type Tailwind/Bootstrap |
 
-### 2.2 Structure du projet
+### 2.2 Stratégie web ET mobile : la PWA
+
+L'exigence du cahier des charges est une application disponible « à la fois en version web et en version mobile (iOS et Android) ». Plutôt que de maintenir **deux codebases distinctes** (React Native d'une part, React Web d'autre part), nous avons fait le choix d'une **Progressive Web App**.
+
+Une PWA est un site web qui, grâce à trois éléments standards, se comporte comme une application native :
+
+1. Un **manifeste** (`manifest.webmanifest`) décrivant l'application (nom, icônes, couleurs, orientation, mode d'affichage) ;
+2. Un **service worker** (`sw.js`) qui met en cache les ressources et permet le fonctionnement **hors-ligne** ;
+3. Des **meta tags** dédiés (iOS, Android, Windows) pour adapter l'expérience à chaque plateforme.
+
+L'utilisateur peut alors **installer l'application** depuis le navigateur (« Ajouter à l'écran d'accueil » sur iOS, « Installer l'application » sur Chrome Android) — elle apparaît avec son icône, démarre en plein écran sans barre d'URL, fonctionne sans connexion, et offre une expérience équivalente à une application native.
+
+**Pourquoi pas React Native ?** L'écosystème React Native impose en pratique une codebase distincte (composants `<View>` / `<Text>` au lieu de `<div>` / `<span>`, navigation séparée, gestion des styles différente). Cela double le travail de maintenance, alourdit l'infrastructure de build, et impose des stores d'applications (Apple App Store, Google Play) avec leurs coûts et délais de validation. Pour un parcours pédagogique éco-conçu, la PWA est nettement plus alignée avec les principes Green IT : **un seul build, distribution directe, mise à jour instantanée**.
+
+### 2.3 Structure du projet
 
 ```
 GreenITAcademy/
+├── index.html                  # Hôte HTML + meta PWA + enregistrement SW
 ├── App.jsx                     # Routeur principal
 ├── GreenIT_Academie_Final.jsx  # Écran d'accueil avec grille de modules
+├── public/                     # Assets servis tels quels
+│   ├── manifest.webmanifest    # Manifeste PWA
+│   ├── sw.js                   # Service worker (hors-ligne)
+│   └── icon.svg                # Icône installable (vectorielle, < 1 Ko)
 ├── src/
+│   ├── main.jsx                # Bootstrap React
 │   ├── CourseReader.jsx        # Lecteur de cours par module
-│   ├── QuizScreen.jsx          # Moteur de quiz
+│   ├── QuizScreen.jsx          # Quiz adaptatif (difficulté ajustée)
+│   ├── Visuals.jsx             # Bibliothèque de 14 schémas SVG inline
 │   ├── AttestationPage.jsx     # Attestation de réussite
 │   ├── ProfilePage.jsx         # Suivi de progression
+│   ├── ReferencesPage.jsx      # Bibliographie complète
 │   ├── ScormPlayer.jsx         # Lecteur SCORM importé
 │   └── utils/
 │       ├── scormExport.js      # Génération du package SCORM
 │       └── scormImport.js      # Lecture d'un package SCORM
 ├── data/
 │   ├── modules.json            # 6 modules, contenu pédagogique
-│   └── questions.json          # Base de questions du quiz
+│   └── questions.json          # Base de 98 questions du quiz
 └── package.json
 ```
 
-### 2.3 Justification des choix techniques au regard du Green IT
+### 2.4 Justification des choix techniques au regard du Green IT
 
 | Choix | Impact environnemental |
 |-------|------------------------|
