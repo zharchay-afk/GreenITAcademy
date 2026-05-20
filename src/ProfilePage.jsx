@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
+import Sidebar from './Sidebar';
 
 function timeToSecs(str) {
   const [h, m, s] = (str || '00:00:00').split(':').map(Number);
@@ -10,11 +11,53 @@ function secsToTime(total) {
     .map(n => String(n).padStart(2, '0')).join(':');
 }
 
-export default function ProfilePage({ modules, onBack, onReset }) {
+export default function ProfilePage({ modules, onNavigate, onReset, onImport }) {
   const savedName = localStorage.getItem('greenitacademie-name') || '';
   const [name, setName] = useState(savedName);
   const [saved, setSaved] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [importMsg, setImportMsg] = useState(null);
+  const fileInputRef = React.useRef(null);
+
+  // Export : sauvegarde de la progression au format JSON
+  const handleExport = () => {
+    const payload = {
+      app: 'green-it-academie',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      displayName: name || null,
+      modules: modules.map(m => ({ id: m.id, started: m.started, score: m.score, tempsPasse: m.tempsPasse })),
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `green-it-academie-progression-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  // Import : restauration de la progression depuis un JSON
+  const handleImportFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.app !== 'green-it-academie' || !Array.isArray(data.modules)) {
+          setImportMsg({ type: 'error', text: 'Fichier non reconnu.' });
+          return;
+        }
+        if (onImport) onImport(data.modules);
+        setImportMsg({ type: 'success', text: `Progression restaurée (export du ${new Date(data.exportedAt).toLocaleDateString('fr-FR')}).` });
+      } catch {
+        setImportMsg({ type: 'error', text: 'Fichier JSON invalide.' });
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
 
   const validatedModules = modules.filter(m => m.score >= 70);
   const startedModules = modules.filter(m => m.started);
@@ -43,36 +86,16 @@ export default function ProfilePage({ modules, onBack, onReset }) {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      {/* Sidebar */}
-      <aside style={{ width: '180px', backgroundColor: '#1e3a5f', minHeight: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-        <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '36px', height: '36px', backgroundColor: '#2d5a87', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>🌿</div>
-            <div>
-              <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-              <div style={{ color: '#7cb3d9', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
-            </div>
-          </div>
-        </div>
-        <div style={{ padding: '16px', flex: 1 }}>
-          <button
-            onClick={onBack}
-            style={{ width: '100%', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '10px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
-          >
-            ← Retour à l'accueil
-          </button>
-        </div>
-      </aside>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      <Sidebar activePage="profil" onNavigate={onNavigate} />
 
-      {/* Contenu */}
-      <main style={{ flex: 1, padding: '32px' }}>
+      <main style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
-          <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: '#1e3a5f' }}>Mon profil</h1>
+          <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: '#064e3b' }}>Mon profil</h1>
 
           {/* Nom */}
           <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#1e3a5f' }}>👤 Informations</h2>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>👤 Informations</h2>
             <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#64748b', marginBottom: '6px' }}>
               Ton prénom / nom
             </label>
@@ -82,12 +105,12 @@ export default function ProfilePage({ modules, onBack, onReset }) {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSaveName()}
-                placeholder="Ex : Ziad Harchay"
+                placeholder="Ex : Camille Martin"
                 style={{ flex: 1, padding: '10px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '14px', outline: 'none' }}
               />
               <button
                 onClick={handleSaveName}
-                style={{ padding: '10px 18px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', whiteSpace: 'nowrap' }}
+                style={{ padding: '10px 18px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', whiteSpace: 'nowrap' }}
               >
                 {saved ? '✓ Enregistré' : 'Enregistrer'}
               </button>
@@ -96,13 +119,13 @@ export default function ProfilePage({ modules, onBack, onReset }) {
 
           {/* Statistiques */}
           <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#1e3a5f' }}>📊 Mes statistiques</h2>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>📊 Mes statistiques</h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               {stats.map((s, i) => (
                 <div key={i} style={{ backgroundColor: '#f8fafc', borderRadius: '8px', padding: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <span style={{ fontSize: '24px' }}>{s.icon}</span>
                   <div>
-                    <div style={{ fontSize: '18px', fontWeight: '800', color: '#1e3a5f' }}>{s.value}</div>
+                    <div style={{ fontSize: '18px', fontWeight: '800', color: '#064e3b' }}>{s.value}</div>
                     <div style={{ fontSize: '11px', color: '#64748b' }}>{s.label}</div>
                   </div>
                 </div>
@@ -112,7 +135,7 @@ export default function ProfilePage({ modules, onBack, onReset }) {
 
           {/* Barre de progression globale */}
           <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#1e3a5f' }}>🎯 Progression globale</h2>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>🎯 Progression globale</h2>
             {modules.map(m => (
               <div key={m.id} style={{ marginBottom: '12px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
@@ -126,6 +149,37 @@ export default function ProfilePage({ modules, onBack, onReset }) {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Synchronisation multi-appareils */}
+          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #bbf7d0' }}>
+            <h2 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>🔄 Sauvegarde &amp; synchronisation multi-appareils</h2>
+            <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: '#64748b', lineHeight: '1.55' }}>
+              L'application étant éco-conçue sans serveur, la synchronisation s'effectue via un fichier de sauvegarde que vous transférez vous-même d'un appareil à l'autre. Aucune donnée n'est envoyée à un tiers.
+            </p>
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <button
+                onClick={handleExport}
+                style={{ padding: '9px 16px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              >
+                ⬇ Exporter ma progression (.json)
+              </button>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                style={{ padding: '9px 16px', backgroundColor: '#fff', color: '#064e3b', border: '1px solid #064e3b', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              >
+                ⬆ Importer une sauvegarde
+              </button>
+              <input ref={fileInputRef} type="file" accept="application/json,.json" onChange={handleImportFile} style={{ display: 'none' }} />
+            </div>
+            {importMsg && (
+              <div style={{ marginTop: '12px', padding: '10px 12px', borderRadius: '6px', fontSize: '12px', backgroundColor: importMsg.type === 'success' ? '#ecfdf5' : '#fee2e2', color: importMsg.type === 'success' ? '#166534' : '#991b1b', border: `1px solid ${importMsg.type === 'success' ? '#86efac' : '#fca5a5'}` }}>
+                {importMsg.text}
+              </div>
+            )}
+            <p style={{ margin: '12px 0 0 0', fontSize: '11px', color: '#94a3b8', lineHeight: '1.5' }}>
+              💡 Conseil : exportez régulièrement votre fichier de progression. Sur un autre appareil, installez l'application puis utilisez « Importer » pour restaurer votre avancement.
+            </p>
           </div>
 
           {/* Zone danger */}

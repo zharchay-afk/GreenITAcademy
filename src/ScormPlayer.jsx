@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { loadScormPackage } from './utils/scormImport';
+import Sidebar from './Sidebar';
 
 const STATUS_LABELS = {
   'passed':    { label: '✓ Réussi',          color: '#22c55e', bg: '#dcfce7' },
@@ -9,7 +10,7 @@ const STATUS_LABELS = {
   'not attempted': { label: '○ Non commencé', color: '#94a3b8', bg: '#f1f5f9' },
 };
 
-export default function ScormPlayer({ onBack }) {
+export default function ScormPlayer({ onNavigate }) {
   const [status, setStatus] = useState('idle');    // idle | loading | ready | error
   const [packageInfo, setPackageInfo] = useState(null);
   const [score, setScore] = useState(null);
@@ -51,60 +52,35 @@ export default function ScormPlayer({ onBack }) {
   const passed = packageInfo && score !== null && score >= packageInfo.masteryscore;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      {/* Sidebar */}
-      <aside style={{ width: '180px', backgroundColor: '#1e3a5f', minHeight: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-        <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '36px', height: '36px', backgroundColor: '#2d5a87', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>🌿</div>
-            <div>
-              <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-              <div style={{ color: '#7cb3d9', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Infos du package chargé */}
-        {packageInfo && (
-          <div style={{ padding: '14px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', fontWeight: '600', marginBottom: '6px' }}>PACKAGE CHARGÉ</div>
-            <div style={{ color: '#fff', fontSize: '12px', fontWeight: '600', lineHeight: '1.4', marginBottom: '10px' }}>{packageInfo.title}</div>
-            <div style={{ backgroundColor: statusInfo.bg, borderRadius: '6px', padding: '6px 10px', fontSize: '11px', fontWeight: '600', color: statusInfo.color }}>
-              {statusInfo.label}
-            </div>
-            {score !== null && (
-              <div style={{ marginTop: '8px', color: passed ? '#4ade80' : '#fca5a5', fontSize: '20px', fontWeight: '800', textAlign: 'center' }}>
-                {score}%
-              </div>
-            )}
-          </div>
-        )}
-
-        <div style={{ padding: '16px', flex: 1 }}>
-          <button
-            onClick={onBack}
-            style={{ width: '100%', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '10px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
-          >
-            ← Retour à l'accueil
-          </button>
-        </div>
-      </aside>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      <Sidebar activePage="scorm" onNavigate={onNavigate} />
 
       {/* Contenu principal */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
         <header style={{ backgroundColor: '#fff', padding: '14px 24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h1 style={{ margin: 0, fontSize: '17px', fontWeight: '700', color: '#1e3a5f' }}>
+          <h1 style={{ margin: 0, fontSize: '17px', fontWeight: '700', color: '#064e3b' }}>
             📦 {packageInfo ? packageInfo.title : 'Lecteur SCORM'}
           </h1>
           <button
             onClick={() => fileInputRef.current.click()}
-            style={{ padding: '8px 16px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+            style={{ padding: '8px 16px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
           >
             {status === 'ready' ? '↻ Changer de package' : '📂 Charger un package SCORM'}
           </button>
           <input ref={fileInputRef} type="file" accept=".zip" style={{ display: 'none' }} onChange={handleFile} />
         </header>
+
+        {/* Bandeau d'état du package (visible si chargé) */}
+        {packageInfo && (
+          <div style={{ backgroundColor: '#fff', padding: '10px 24px', borderBottom: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
+            <span style={{ color: '#64748b', fontWeight: '600' }}>État du package :</span>
+            <span style={{ backgroundColor: statusInfo.bg, borderRadius: '12px', padding: '4px 10px', fontWeight: '600', color: statusInfo.color }}>{statusInfo.label}</span>
+            {score !== null && (
+              <span style={{ color: passed ? '#16a34a' : '#dc2626', fontWeight: '700' }}>Score : {score}%</span>
+            )}
+          </div>
+        )}
 
         {/* Zone principale */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -112,14 +88,14 @@ export default function ScormPlayer({ onBack }) {
           {status === 'idle' && (
             <div style={{ textAlign: 'center', maxWidth: '480px', padding: '40px' }}>
               <div style={{ fontSize: '64px', marginBottom: '16px' }}>📦</div>
-              <h2 style={{ margin: '0 0 10px 0', fontSize: '20px', color: '#1e3a5f', fontWeight: '700' }}>Charger un package SCORM</h2>
+              <h2 style={{ margin: '0 0 10px 0', fontSize: '20px', color: '#064e3b', fontWeight: '700' }}>Charger un package SCORM</h2>
               <p style={{ color: '#64748b', fontSize: '14px', lineHeight: '1.7', marginBottom: '24px' }}>
                 Importe n'importe quel package SCORM 1.2 (.zip) pour le lire directement dans l'application.
                 Les scores et l'état de complétion sont suivis automatiquement.
               </p>
               <button
                 onClick={() => fileInputRef.current.click()}
-                style={{ padding: '14px 32px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '15px' }}
+                style={{ padding: '14px 32px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '15px' }}
               >
                 📂 Sélectionner un fichier .zip
               </button>
@@ -145,7 +121,7 @@ export default function ScormPlayer({ onBack }) {
               <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px', lineHeight: '1.6' }}>{errorMsg}</p>
               <button
                 onClick={() => fileInputRef.current.click()}
-                style={{ padding: '12px 24px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+                style={{ padding: '12px 24px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
               >
                 Réessayer avec un autre fichier
               </button>

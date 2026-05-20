@@ -1,4 +1,5 @@
-import React from 'react';
+﻿import React from 'react';
+import Sidebar from './Sidebar';
 
 const sections = [
   {
@@ -75,53 +76,50 @@ const sections = [
   },
 ];
 
-export default function ReferencesPage({ onBack }) {
+export default function ReferencesPage({ onNavigate }) {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <header style={{ backgroundColor: '#1e3a5f', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '32px', height: '32px', backgroundColor: '#2d5a87', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📚</div>
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Sources & Références bibliographiques</span>
-        </div>
-        <button
-          onClick={onBack}
-          style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.8)', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
-        >
-          ← Retour
-        </button>
-      </header>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      <Sidebar activePage="references" onNavigate={onNavigate} />
 
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '32px 24px' }}>
-        <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px 28px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-          <h1 style={{ margin: '0 0 8px 0', fontSize: '22px', color: '#1e3a5f', fontWeight: '700' }}>
-            Bibliographie du parcours
-          </h1>
-          <p style={{ margin: 0, color: '#64748b', fontSize: '14px', lineHeight: '1.6' }}>
-            L'ensemble du contenu pédagogique de Green IT Académie s'appuie sur les sources réglementaires, normatives et institutionnelles ci-dessous. Toutes les données chiffrées et juridiques ont été vérifiées au regard des textes officiels.
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <header style={{ backgroundColor: '#fff', padding: '16px 32px', borderBottom: '1px solid #e2e8f0' }}>
+          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>Sources &amp; Références bibliographiques</h1>
+          <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#64748b' }}>
+            Sources réglementaires, normatives et institutionnelles utilisées dans le parcours
           </p>
-        </div>
+        </header>
 
-        {sections.map((section, idx) => (
-          <div key={idx} style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px 24px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 14px 0', fontSize: '16px', color: '#1e3a5f', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '20px' }}>{section.icon}</span>
-              {section.title}
-            </h2>
-            <ul style={{ margin: 0, paddingLeft: '20px', listStyle: 'none' }}>
-              {section.items.map((item, i) => (
-                <li key={i} style={{ marginBottom: '10px', paddingLeft: '12px', borderLeft: '2px solid #4ade80' }}>
-                  <div style={{ fontWeight: '600', color: '#1a202c', fontSize: '13px', marginBottom: '2px' }}>{item.ref}</div>
-                  <div style={{ color: '#64748b', fontSize: '12px', lineHeight: '1.5' }}>{item.detail}</div>
-                </li>
-              ))}
-            </ul>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px' }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+              <p style={{ margin: 0, color: '#64748b', fontSize: '14px', lineHeight: '1.6' }}>
+                L'ensemble du contenu pédagogique de Green IT Académie s'appuie sur les sources ci-dessous. Toutes les données chiffrées et juridiques ont été vérifiées au regard des textes officiels.
+              </p>
+            </div>
+
+            {sections.map((section, idx) => (
+              <div key={idx} style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px 24px', marginBottom: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+                <h2 style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#064e3b', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>{section.icon}</span>
+                  {section.title}
+                </h2>
+                <ul style={{ margin: 0, paddingLeft: '0', listStyle: 'none' }}>
+                  {section.items.map((item, i) => (
+                    <li key={i} style={{ marginBottom: '10px', paddingLeft: '12px', borderLeft: '2px solid #4ade80' }}>
+                      <div style={{ fontWeight: '600', color: '#1a202c', fontSize: '13px', marginBottom: '2px' }}>{item.ref}</div>
+                      <div style={{ color: '#64748b', fontSize: '12px', lineHeight: '1.5' }}>{item.detail}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '14px 18px', marginTop: '20px', border: '1px solid #86efac', fontSize: '12px', color: '#166534', lineHeight: '1.6' }}>
+              🌱 <strong>Eco-conception :</strong> cette page est entièrement statique, sans image bitmap, et utilise la police système afin de minimiser l'empreinte réseau.
+            </div>
           </div>
-        ))}
-
-        <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '16px 20px', marginTop: '24px', border: '1px solid #86efac', fontSize: '12px', color: '#166534', lineHeight: '1.6' }}>
-          🌱 <strong>Eco-conception :</strong> cette page de références est entièrement statique, sans image bitmap, et utilise la police système afin de minimiser l'empreinte réseau.
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -6,6 +6,8 @@ import AttestationPage from './src/AttestationPage';
 import ProfilePage from './src/ProfilePage';
 import ScormPlayer from './src/ScormPlayer';
 import ReferencesPage from './src/ReferencesPage';
+import LandingPage from './src/LandingPage';
+import LegalPages from './src/LegalPages';
 
 const initialModules = [
   { id: 1, unite: 'UNITÉ 1', title: 'Cadres conceptuels et typologie', image: '🌐', bgColor: '#4299e1', tempsPasse: '00:00:00', score: 0, started: false },
@@ -16,11 +18,12 @@ const initialModules = [
   { id: 6, unite: 'UNITÉ 6', title: 'Cas pratiques Luxembourg', image: '🇱🇺', bgColor: '#38b2ac', tempsPasse: '00:00:00', score: 0, started: false },
 ];
 
+const STORAGE_KEY = 'greenitacademie-progress';
+
 function secsToTime(total) {
   return [Math.floor(total / 3600), Math.floor((total % 3600) / 60), total % 60]
     .map(n => String(n).padStart(2, '0')).join(':');
 }
-
 function timeToSecs(str) {
   const [h, m, s] = (str || '00:00:00').split(':').map(Number);
   return h * 3600 + m * 60 + s;
@@ -28,7 +31,7 @@ function timeToSecs(str) {
 
 function loadProgress() {
   try {
-    const saved = localStorage.getItem('greenitacademie-progress');
+    const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       return initialModules.map(m => {
@@ -41,20 +44,23 @@ function loadProgress() {
 }
 
 export default function App() {
-  const [screen, setScreen] = useState('home'); // 'home' | 'module' | 'quiz' | 'attestation'
+  // 'landing' | 'home' | 'module' | 'quiz' | 'attestation' | 'profil' | 'scorm-player' | 'references' | 'legal'
+  const [screen, setScreen] = useState('landing');
+  const [legalTab, setLegalTab] = useState('notice');
+  const [legalReturnTo, setLegalReturnTo] = useState('landing');
   const [selectedModuleId, setSelectedModuleId] = useState(null);
   const [modules, setModules] = useState(loadProgress);
-  const startTimeRef = useRef(null); // horodatage du début de la lecture
+  const startTimeRef = useRef(null);
 
-  // Sauvegarde automatique (inclut maintenant tempsPasse)
+  // Sauvegarde automatique
   useEffect(() => {
     localStorage.setItem(
-      'greenitacademie-progress',
+      STORAGE_KEY,
       JSON.stringify(modules.map(m => ({ id: m.id, started: m.started, score: m.score, tempsPasse: m.tempsPasse })))
     );
   }, [modules]);
 
-  // Quand on quitte l'écran du cours, enregistre le temps écoulé
+  // Suivi du temps passé sur les cours
   useEffect(() => {
     if (screen !== 'module' && startTimeRef.current && selectedModuleId) {
       const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
@@ -66,37 +72,52 @@ export default function App() {
     }
   }, [screen]);
 
+  // ---- Navigation handlers ----
   const handleStart = (id) => {
-    startTimeRef.current = Date.now(); // démarre le chronomètre
+    startTimeRef.current = Date.now();
     setSelectedModuleId(id);
     setModules(prev => prev.map(m => m.id === id ? { ...m, started: true } : m));
     setScreen('module');
   };
-
-  const handleEvaluate = (id) => {
-    setSelectedModuleId(id);
-    setScreen('quiz');
-  };
-
-  // Conserve le meilleur score (ne remplace pas si le nouveau est inférieur)
+  const handleEvaluate = (id) => { setSelectedModuleId(id); setScreen('quiz'); };
   const handleQuizComplete = (moduleId, score) => {
-    setModules(prev => prev.map(m =>
-      m.id === moduleId ? { ...m, score: Math.max(m.score, score) } : m
-    ));
+    setModules(prev => prev.map(m => m.id === moduleId ? { ...m, score: Math.max(m.score, score) } : m));
     setScreen('home');
   };
-
   const handleNavigate = (page) => {
+    if (page === 'landing') setScreen('landing');
+    if (page === 'accueil') setScreen('home');
     if (page === 'attestation') setScreen('attestation');
     if (page === 'profil') setScreen('profil');
     if (page === 'scorm-player') setScreen('scorm-player');
     if (page === 'references') setScreen('references');
   };
-
   const handleReset = () => {
     setModules(initialModules);
+    localStorage.removeItem(STORAGE_KEY);
     setScreen('home');
   };
+  const showLegal = (tab) => {
+    setLegalTab(tab);
+    // On mémorise l'écran de départ pour que le bouton « Retour » y ramène,
+    // qu'il vienne de la landing ou d'une autre page (dashboard, etc.).
+    if (screen !== 'legal') setLegalReturnTo(screen);
+    setScreen('legal');
+  };
+
+  // ----- Rendering -----
+  if (screen === 'landing') {
+    return (
+      <LandingPage
+        onStart={() => setScreen('home')}
+        onShowLegal={showLegal}
+      />
+    );
+  }
+
+  if (screen === 'legal') {
+    return <LegalPages initial={legalTab} onBack={() => setScreen(legalReturnTo)} />;
+  }
 
   if (screen === 'module') {
     return (
@@ -104,6 +125,7 @@ export default function App() {
         moduleId={selectedModuleId}
         onBack={() => setScreen('home')}
         onStartQuiz={() => setScreen('quiz')}
+        onShowLanding={() => setScreen('landing')}
       />
     );
   }
@@ -123,39 +145,40 @@ export default function App() {
     );
   }
 
-  if (screen === 'attestation') {
-    return (
-      <AttestationPage
-        modules={modules}
-        onBack={() => setScreen('home')}
-      />
-    );
-  }
-
-  if (screen === 'scorm-player') {
-    return <ScormPlayer onBack={() => setScreen('home')} />;
-  }
-
-  if (screen === 'references') {
-    return <ReferencesPage onBack={() => setScreen('home')} />;
-  }
+  if (screen === 'attestation') return <AttestationPage modules={modules} onNavigate={handleNavigate} />;
+  if (screen === 'scorm-player') return <ScormPlayer onNavigate={handleNavigate} />;
+  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} />;
 
   if (screen === 'profil') {
     return (
       <ProfilePage
         modules={modules}
-        onBack={() => setScreen('home')}
+        onNavigate={handleNavigate}
         onReset={handleReset}
+        onImport={(imported) => {
+          setModules(prev => prev.map(m => {
+            const found = imported.find(i => i.id === m.id);
+            if (!found) return m;
+            return {
+              ...m,
+              started: m.started || found.started,
+              score: Math.max(m.score, found.score || 0),
+              tempsPasse: found.tempsPasse || m.tempsPasse,
+            };
+          }));
+        }}
       />
     );
   }
 
+  // home (dashboard)
   return (
     <GreenITAcademie
       modules={modules}
       onStart={handleStart}
       onEvaluate={handleEvaluate}
       onNavigate={handleNavigate}
+      onShowLegal={showLegal}
     />
   );
 }

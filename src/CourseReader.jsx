@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import modulesData from '../data/modules.json';
 import Visual from './Visuals';
 
-export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
+export default function CourseReader({ moduleId, onBack, onStartQuiz, onShowLanding }) {
   const module = modulesData.modules.find(m => m.id === moduleId);
   const [currentIdx, setCurrentIdx] = useState(0);
 
@@ -20,17 +20,21 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Sidebar */}
-      <aside style={{ width: '240px', backgroundColor: '#1e3a5f', height: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-        {/* Logo */}
-        <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <aside style={{ width: '240px', backgroundColor: '#064e3b', height: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+        {/* Logo cliquable */}
+        <button
+          onClick={() => onShowLanding && onShowLanding()}
+          title="Retour à la page d'accueil"
+          style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
+        >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '36px', height: '36px', backgroundColor: '#2d5a87', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>🌿</div>
+            <div style={{ width: '36px', height: '36px', backgroundColor: '#15803d', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>🌿</div>
             <div>
               <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-              <div style={{ color: '#7cb3d9', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
+              <div style={{ color: '#86efac', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
             </div>
           </div>
-        </div>
+        </button>
 
         {/* Module info */}
         <div style={{ padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
@@ -65,14 +69,22 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
           ))}
         </nav>
 
-        {/* Retour */}
-        <div style={{ padding: '16px' }}>
+        {/* Navigation retour */}
+        <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button
             onClick={onBack}
             style={{ width: '100%', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '8px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
           >
-            ← Retour à l'accueil
+            ← Mes modules
           </button>
+          {onShowLanding && (
+            <button
+              onClick={onShowLanding}
+              style={{ width: '100%', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '8px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
+            >
+              🏡 Page d'accueil
+            </button>
+          )}
         </div>
       </aside>
 
@@ -84,7 +96,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>
               {module.unite} · Section {currentIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
             </div>
-            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#1e3a5f' }}>{section.title}</h1>
+            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>{section.title}</h1>
             {module.subtitle && (
               <div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
             )}
@@ -129,7 +141,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
               <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '24px 28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
                 {section.details.map((d, i) => (
                   <div key={i} style={{ marginBottom: i < section.details.length - 1 ? '18px' : 0, paddingBottom: i < section.details.length - 1 ? '18px' : 0, borderBottom: i < section.details.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
-                    <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#1e3a5f' }}>{d.subtitle}</h4>
+                    <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#064e3b' }}>{d.subtitle}</h4>
                     <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.7', color: '#374151', whiteSpace: 'pre-line' }}>{d.text}</p>
                   </div>
                 ))}
@@ -174,7 +186,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: '18px', listStyle: 'disc' }}>
                   {section.goFurther.map((g, i) => (
-                    <li key={i} style={{ fontSize: '12px', color: '#1e3a5f', lineHeight: '1.6', marginBottom: i < section.goFurther.length - 1 ? '4px' : 0 }}>{g}</li>
+                    <li key={i} style={{ fontSize: '12px', color: '#064e3b', lineHeight: '1.6', marginBottom: i < section.goFurther.length - 1 ? '4px' : 0 }}>{g}</li>
                   ))}
                 </ul>
               </div>
@@ -188,7 +200,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
           <button
             onClick={() => setCurrentIdx(i => i - 1)}
             disabled={isFirst}
-            style={{ padding: '10px 20px', backgroundColor: isFirst ? '#f8fafc' : '#fff', color: isFirst ? '#a0aec0' : '#1e3a5f', border: `1px solid ${isFirst ? '#e2e8f0' : '#1e3a5f'}`, borderRadius: '6px', cursor: isFirst ? 'not-allowed' : 'pointer', fontWeight: '600', fontSize: '14px' }}
+            style={{ padding: '10px 20px', backgroundColor: isFirst ? '#f8fafc' : '#fff', color: isFirst ? '#a0aec0' : '#064e3b', border: `1px solid ${isFirst ? '#e2e8f0' : '#064e3b'}`, borderRadius: '6px', cursor: isFirst ? 'not-allowed' : 'pointer', fontWeight: '600', fontSize: '14px' }}
           >
             ← Précédent
           </button>
@@ -205,7 +217,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
           ) : (
             <button
               onClick={() => setCurrentIdx(i => i + 1)}
-              style={{ padding: '10px 20px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+              style={{ padding: '10px 20px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
             >
               Suivant →
             </button>

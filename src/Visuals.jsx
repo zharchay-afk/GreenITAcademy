@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 // =============================================================================
 // Bibliothèque de visuels SVG inline pour Green IT Académie.
@@ -21,7 +21,7 @@ const InstrumentHierarchy = () => (
   <Wrapper caption="Figure — Pyramide des instruments du Green IT, du plus contraignant au plus volontaire">
     <svg viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
       {/* Tier 1 — trapèze tronqué pour laisser la place au texte */}
-      <polygon points="240,40 380,40 405,110 215,110" fill="#1e3a5f" />
+      <polygon points="240,40 380,40 405,110 215,110" fill="#064e3b" />
       <text x="310" y="72" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Réglementation</text>
       <text x="310" y="92" textAnchor="middle" fill="#cbd5e0" fontSize="10" fontFamily="system-ui">Obligatoire — sanctions</text>
 
@@ -40,11 +40,6 @@ const InstrumentHierarchy = () => (
       <text x="310" y="282" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Codes de conduite et chartes</text>
       <text x="310" y="302" textAnchor="middle" fill="#feebc8" fontSize="10" fontFamily="system-ui">Engagement libre</text>
 
-      {/* Axe latéral à gauche, bien dégagé de la pyramide */}
-      <line x1="50" y1="80" x2="50" y2="280" stroke="#94a3b8" strokeWidth="1.5" />
-      <polygon points="50,286 46,278 54,278" fill="#94a3b8" />
-      <text x="15" y="70" fill="#1e3a5f" fontSize="11" fontWeight="600" fontFamily="system-ui">+ contraint</text>
-      <text x="15" y="305" fill="#ed8936" fontSize="11" fontWeight="600" fontFamily="system-ui">+ libre</text>
     </svg>
   </Wrapper>
 );
@@ -92,7 +87,7 @@ const PUEScale = () => (
         </linearGradient>
       </defs>
 
-      <text x="280" y="24" textAnchor="middle" fill="#1e3a5f" fontSize="12" fontWeight="700" fontFamily="system-ui">
+      <text x="280" y="24" textAnchor="middle" fill="#064e3b" fontSize="12" fontWeight="700" fontFamily="system-ui">
         PUE = Énergie totale du datacenter ÷ Énergie consommée par l'IT
       </text>
       <text x="280" y="42" textAnchor="middle" fill="#64748b" fontSize="10" fontStyle="italic" fontFamily="system-ui">
@@ -110,16 +105,16 @@ const PUEScale = () => (
         { v: '2.0', x: 510, label: 'à améliorer' },
       ].map(g => (
         <g key={g.v}>
-          <line x1={g.x} y1="75" x2={g.x} y2="115" stroke="#1e3a5f" strokeWidth="1" />
-          <text x={g.x} y="70" textAnchor="middle" fill="#1e3a5f" fontSize="11" fontWeight="700" fontFamily="system-ui">{g.v}</text>
+          <line x1={g.x} y1="75" x2={g.x} y2="115" stroke="#064e3b" strokeWidth="1" />
+          <text x={g.x} y="70" textAnchor="middle" fill="#064e3b" fontSize="11" fontWeight="700" fontFamily="system-ui">{g.v}</text>
           <text x={g.x} y="130" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="system-ui">{g.label}</text>
         </g>
       ))}
 
       <g>
-        <circle cx="188" cy="95" r="6" fill="#1e3a5f" stroke="#fff" strokeWidth="2" />
-        <line x1="188" y1="102" x2="188" y2="155" stroke="#1e3a5f" strokeDasharray="2 2" />
-        <text x="188" y="170" textAnchor="middle" fill="#1e3a5f" fontSize="10" fontWeight="700" fontFamily="system-ui">LuxConnect / EBRC</text>
+        <circle cx="188" cy="95" r="6" fill="#064e3b" stroke="#fff" strokeWidth="2" />
+        <line x1="188" y1="102" x2="188" y2="155" stroke="#064e3b" strokeDasharray="2 2" />
+        <text x="188" y="170" textAnchor="middle" fill="#064e3b" fontSize="10" fontWeight="700" fontFamily="system-ui">LuxConnect / EBRC</text>
         <text x="188" y="184" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="system-ui">PUE ≈ 1.3</text>
       </g>
       <g>
@@ -169,7 +164,7 @@ const ACVCycle = () => (
       <path d="M 220 192 Q 70 165 70 110" fill="none" stroke="#9f7aea" strokeWidth="1.5" strokeDasharray="3 3" />
       <polygon points="73,114 67,108 76,108" fill="#9f7aea" />
 
-      <text x="300" y="36" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="300" y="36" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         ISO 14040 / 14044 — Cycle de vie complet d'un produit
       </text>
       <text x="300" y="245" textAnchor="middle" fill="#64748b" fontSize="10" fontStyle="italic" fontFamily="system-ui">
@@ -183,11 +178,11 @@ const ACVCycle = () => (
 const GreenDealTimeline = () => (
   <Wrapper caption="Figure — Calendrier des principales réglementations européennes Green IT">
     <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="30" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="30" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         Du Green Deal à l'écoconception : un cadre Green IT bâti en cinq ans
       </text>
 
-      <line x1="40" y1="125" x2="540" y2="125" stroke="#1e3a5f" strokeWidth="2" />
+      <line x1="40" y1="125" x2="540" y2="125" stroke="#064e3b" strokeWidth="2" />
 
       {[
         { x: 70,  y: 85,  yr: '2019', label: 'Green Deal',     color: '#22c55e' },
@@ -217,7 +212,7 @@ const GreenDealTimeline = () => (
 const EpeatLevels = () => (
   <Wrapper caption="Figure — Les trois niveaux du label EPEAT">
     <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="280" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="12" fontWeight="700" fontFamily="system-ui">
+      <text x="280" y="28" textAnchor="middle" fill="#064e3b" fontSize="12" fontWeight="700" fontFamily="system-ui">
         Exigence environnementale croissante
       </text>
 
@@ -249,7 +244,7 @@ const EpeatLevels = () => (
 const PDCACycle = () => (
   <Wrapper caption="Figure — Cycle PDCA (Plan-Do-Check-Act), base de tous les systèmes de management ISO">
     <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="260" y="26" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="260" y="26" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         Amélioration continue (modèle Deming)
       </text>
 
@@ -269,17 +264,17 @@ const PDCACycle = () => (
       ))}
 
       {/* Flèches circulaires */}
-      <path d="M 210 105 L 310 105" stroke="#1e3a5f" strokeWidth="1.5" fill="none" />
-      <polygon points="310,105 304,101 304,109" fill="#1e3a5f" />
+      <path d="M 210 105 L 310 105" stroke="#064e3b" strokeWidth="1.5" fill="none" />
+      <polygon points="310,105 304,101 304,109" fill="#064e3b" />
 
-      <path d="M 370 180 L 370 188" stroke="#1e3a5f" strokeWidth="1.5" fill="none" />
-      <polygon points="370,190 366,184 374,184" fill="#1e3a5f" />
+      <path d="M 370 180 L 370 188" stroke="#064e3b" strokeWidth="1.5" fill="none" />
+      <polygon points="370,190 366,184 374,184" fill="#064e3b" />
 
-      <path d="M 310 240 L 210 240" stroke="#1e3a5f" strokeWidth="1.5" fill="none" />
-      <polygon points="210,240 216,236 216,244" fill="#1e3a5f" />
+      <path d="M 310 240 L 210 240" stroke="#064e3b" strokeWidth="1.5" fill="none" />
+      <polygon points="210,240 216,236 216,244" fill="#064e3b" />
 
-      <path d="M 150 188 L 150 180" stroke="#1e3a5f" strokeWidth="1.5" fill="none" />
-      <polygon points="150,170 146,178 154,178" fill="#1e3a5f" />
+      <path d="M 150 188 L 150 180" stroke="#064e3b" strokeWidth="1.5" fill="none" />
+      <polygon points="150,170 146,178 154,178" fill="#064e3b" />
 
       {/* Descriptions sous chaque case */}
       {[
@@ -298,7 +293,7 @@ const PDCACycle = () => (
 const LabelsComparison = () => (
   <Wrapper caption="Figure — Comparatif des trois principaux labels environnementaux IT">
     <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <rect x="10" y="20" width="560" height="32" fill="#1e3a5f" />
+      <rect x="10" y="20" width="560" height="32" fill="#064e3b" />
       <text x="130" y="40" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">Critère</text>
       <text x="270" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">EPEAT</text>
       <text x="390" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">Energy Star</text>
@@ -314,9 +309,9 @@ const LabelsComparison = () => (
         <g key={i}>
           {i % 2 === 0 && <rect x="10" y={row.y - 17} width="560" height="30" fill="#f8fafc" />}
           <text x="20" y={row.y} fill="#374151" fontSize="11" fontWeight="600" fontFamily="system-ui">{row.label}</text>
-          <text x="270" y={row.y} textAnchor="middle" fill="#1e3a5f" fontSize="11" fontFamily="system-ui">{row.v1}</text>
-          <text x="390" y={row.y} textAnchor="middle" fill="#1e3a5f" fontSize="11" fontFamily="system-ui">{row.v2}</text>
-          <text x="510" y={row.y} textAnchor="middle" fill="#1e3a5f" fontSize="11" fontFamily="system-ui">{row.v3}</text>
+          <text x="270" y={row.y} textAnchor="middle" fill="#064e3b" fontSize="11" fontFamily="system-ui">{row.v1}</text>
+          <text x="390" y={row.y} textAnchor="middle" fill="#064e3b" fontSize="11" fontFamily="system-ui">{row.v2}</text>
+          <text x="510" y={row.y} textAnchor="middle" fill="#064e3b" fontSize="11" fontFamily="system-ui">{row.v3}</text>
         </g>
       ))}
 
@@ -331,7 +326,7 @@ const LabelsComparison = () => (
 const CNDCPTrajectory = () => (
   <Wrapper caption="Figure — Engagements du Climate Neutral Data Centre Pact (signé en 2021)">
     <svg viewBox="0 0 580 270" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="28" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         Trajectoire vers la neutralité carbone des datacenters européens
       </text>
 
@@ -344,7 +339,7 @@ const CNDCPTrajectory = () => (
           <rect x={c.x} y="50" width="150" height="210" rx="8" fill="#fff" stroke={c.color} strokeWidth="1.5" />
           <rect x={c.x} y="50" width="150" height="38" rx="8" fill={c.color} />
           <text x={c.x + 75} y="74" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="700" fontFamily="system-ui">{c.yr}</text>
-          <text x={c.x + 75} y="108" textAnchor="middle" fill="#1e3a5f" fontSize="11" fontWeight="700" fontFamily="system-ui">{c.title}</text>
+          <text x={c.x + 75} y="108" textAnchor="middle" fill="#064e3b" fontSize="11" fontWeight="700" fontFamily="system-ui">{c.title}</text>
           {c.items.map((it, j) => (
             <text key={j} x={c.x + 12} y={132 + j * 22} fill="#374151" fontSize="10" fontFamily="system-ui">• {it}</text>
           ))}
@@ -364,7 +359,7 @@ const CNDCPTrajectory = () => (
 const DigitalFootprint = () => (
   <Wrapper caption="Figure — Répartition de l'empreinte carbone du numérique (sources ADEME/ARCEP 2022)">
     <svg viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="28" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         Le numérique = 3-4 % des émissions mondiales de GES
       </text>
       <text x="290" y="45" textAnchor="middle" fill="#64748b" fontSize="10" fontStyle="italic" fontFamily="system-ui">
@@ -390,8 +385,8 @@ const DigitalFootprint = () => (
         ].map((item, i) => (
           <g key={i} transform={`translate(0, ${i * 50})`}>
             <rect x="0" y="0" width="18" height="18" rx="3" fill={item.color} />
-            <text x="28" y="13" fill="#1e3a5f" fontSize="12" fontWeight="700" fontFamily="system-ui">{item.label}</text>
-            <text x="220" y="13" textAnchor="end" fill="#1e3a5f" fontSize="14" fontWeight="700" fontFamily="system-ui">{item.pct}</text>
+            <text x="28" y="13" fill="#064e3b" fontSize="12" fontWeight="700" fontFamily="system-ui">{item.label}</text>
+            <text x="220" y="13" textAnchor="end" fill="#064e3b" fontSize="14" fontWeight="700" fontFamily="system-ui">{item.pct}</text>
             <text x="28" y="30" fill="#64748b" fontSize="10" fontFamily="system-ui">{item.sub}</text>
           </g>
         ))}
@@ -408,12 +403,12 @@ const DigitalFootprint = () => (
 const DoubleMaterialite = () => (
   <Wrapper caption="Figure — Le principe de double matérialité (CSRD)">
     <svg viewBox="0 0 580 280" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="28" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         La double matérialité impose deux regards complémentaires
       </text>
 
       {/* Cercle entreprise au centre */}
-      <circle cx="290" cy="155" r="42" fill="#1e3a5f" />
+      <circle cx="290" cy="155" r="42" fill="#064e3b" />
       <text x="290" y="152" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700" fontFamily="system-ui">Entreprise</text>
       <text x="290" y="168" textAnchor="middle" fill="#fff" fontSize="10" fontFamily="system-ui" opacity="0.9">(activité IT)</text>
 
@@ -437,10 +432,10 @@ const DoubleMaterialite = () => (
 
       {/* Encadré bas */}
       <rect x="120" y="215" width="340" height="50" rx="6" fill="#eff6ff" stroke="#bfdbfe" />
-      <text x="290" y="234" textAnchor="middle" fill="#1e3a5f" fontSize="11" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="234" textAnchor="middle" fill="#064e3b" fontSize="11" fontWeight="700" fontFamily="system-ui">
         La CSRD impose les DEUX analyses simultanément
       </text>
-      <text x="290" y="252" textAnchor="middle" fill="#1e3a5f" fontSize="10" fontStyle="italic" fontFamily="system-ui">
+      <text x="290" y="252" textAnchor="middle" fill="#064e3b" fontSize="10" fontStyle="italic" fontFamily="system-ui">
         Reporting via les standards ESRS, audité par un commissaire aux comptes
       </text>
     </svg>
@@ -451,7 +446,7 @@ const DoubleMaterialite = () => (
 const TrustChain = () => (
   <Wrapper caption="Figure — La chaîne de confiance : norme, certification, accréditation">
     <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="28" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         Trois niveaux à ne pas confondre
       </text>
 
@@ -464,7 +459,7 @@ const TrustChain = () => (
           <rect x={c.x} y="60" width="140" height="135" rx="8" fill="#fff" stroke={c.color} strokeWidth="1.5" />
           <rect x={c.x} y="60" width="140" height="38" rx="8" fill={c.color} />
           <text x={c.x + 70} y="84" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="system-ui">{c.title}</text>
-          <text x={c.x + 70} y="125" textAnchor="middle" fill="#1e3a5f" fontSize="11" fontWeight="700" fontFamily="system-ui">{c.actor}</text>
+          <text x={c.x + 70} y="125" textAnchor="middle" fill="#064e3b" fontSize="11" fontWeight="700" fontFamily="system-ui">{c.actor}</text>
           <text x={c.x + 70} y="155" textAnchor="middle" fill="#374151" fontSize="10" fontFamily="system-ui">{c.detail}</text>
           <text x={c.x + 70} y="180" textAnchor="middle" fontSize="20" fontFamily="system-ui">{c.icon}</text>
         </g>
@@ -490,7 +485,7 @@ const TrustChain = () => (
 const PNECLuxembourg = () => (
   <Wrapper caption="Figure — Objectifs climat 2030 du Luxembourg (PNEC, mise à jour 2024)">
     <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="28" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         Le Luxembourg vise plus haut que la moyenne UE
       </text>
 
@@ -505,7 +500,7 @@ const PNECLuxembourg = () => (
           {/* Valeur dans la barre */}
           <text x={kpi.x + 50} y={210 - kpi.barH + 28} textAnchor="middle" fill="#fff" fontSize="22" fontWeight="700" fontFamily="system-ui">{kpi.value}</text>
           {/* Légende sous la barre */}
-          <text x={kpi.x + 50} y="225" textAnchor="middle" fill="#1e3a5f" fontSize="11" fontWeight="700" fontFamily="system-ui">{kpi.label}</text>
+          <text x={kpi.x + 50} y="225" textAnchor="middle" fill="#064e3b" fontSize="11" fontWeight="700" fontFamily="system-ui">{kpi.label}</text>
           <text x={kpi.x + 50} y="237" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="system-ui">{kpi.sub}</text>
         </g>
       ))}
@@ -521,12 +516,12 @@ const PNECLuxembourg = () => (
 const CSRDTimeline = () => (
   <Wrapper caption="Figure — Calendrier d'entrée en vigueur progressive de la CSRD">
     <svg viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="290" y="28" textAnchor="middle" fill="#1e3a5f" fontSize="13" fontWeight="700" fontFamily="system-ui">
+      <text x="290" y="28" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
         La CSRD touche progressivement ~50 000 entreprises européennes
       </text>
 
       {[
-        { y: 60,  yr: '2025', exo: 'exercice 2024', who: 'Grandes entreprises déjà NFRD', detail: '> 500 salariés + EIP', color: '#1e3a5f' },
+        { y: 60,  yr: '2025', exo: 'exercice 2024', who: 'Grandes entreprises déjà NFRD', detail: '> 500 salariés + EIP', color: '#064e3b' },
         { y: 110, yr: '2026', exo: 'exercice 2025', who: 'Autres grandes entreprises', detail: '≥ 250 sal. OU > 50 M€ CA OU > 25 M€ bilan', color: '#3182ce' },
         { y: 160, yr: '2027', exo: 'exercice 2026', who: 'PME cotées', detail: '(opt-out possible jusqu\'en 2028)', color: '#48bb78' },
         { y: 210, yr: '2029', exo: 'exercice 2028', who: 'Filiales non-UE > 150 M€ CA UE', detail: 'Groupes étrangers actifs en Europe', color: '#ed8936' },
@@ -537,7 +532,7 @@ const CSRDTimeline = () => (
           <text x="70" y={row.y + 12} textAnchor="middle" fill="#fff" fontSize="9" fontFamily="system-ui" opacity="0.9">{row.exo}</text>
 
           <rect x="125" y={row.y - 18} width="425" height="36" rx="6" fill="#f8fafc" stroke={row.color} strokeWidth="1" />
-          <text x="138" y={row.y - 3} fill="#1e3a5f" fontSize="12" fontWeight="700" fontFamily="system-ui">{row.who}</text>
+          <text x="138" y={row.y - 3} fill="#064e3b" fontSize="12" fontWeight="700" fontFamily="system-ui">{row.who}</text>
           <text x="138" y={row.y + 12} fill="#64748b" fontSize="10" fontFamily="system-ui">{row.detail}</text>
         </g>
       ))}

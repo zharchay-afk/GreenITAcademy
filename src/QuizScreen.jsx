@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import questionsData from '../data/questions.json';
 
 // --- Logique adaptative ---
@@ -129,7 +129,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
           <div style={{ fontSize: '56px', marginBottom: '12px' }}>{passed ? '🏆' : '📚'}</div>
           <div style={{ fontSize: '44px', fontWeight: '800', color: passed ? '#22c55e' : '#e53e3e', marginBottom: '4px' }}>{finalScore}%</div>
           <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '12px', letterSpacing: '0.5px' }}>SCORE PONDÉRÉ PAR DIFFICULTÉ</div>
-          <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: '#1e3a5f', fontWeight: '700' }}>
+          <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: '#064e3b', fontWeight: '700' }}>
             {passed ? 'Module validé !' : 'À retravailler'}
           </h2>
           <p style={{ color: '#64748b', fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6' }}>
@@ -143,7 +143,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
               {levelStats.map(s => (
                 <div key={s.level} style={{ flex: 1, textAlign: 'center' }}>
                   <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '4px' }}>{LEVEL_LABEL[s.level]}</div>
-                  <div style={{ fontSize: '15px', fontWeight: '700', color: s.total === 0 ? '#cbd5e0' : '#1e3a5f' }}>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: s.total === 0 ? '#cbd5e0' : '#064e3b' }}>
                     {s.total === 0 ? '—' : `${s.correct}/${s.total}`}
                   </div>
                 </div>
@@ -168,7 +168,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
                   const first = pickNextQuestion(pool, 0, new Set());
                   if (first) { setCurrentQuestion(first); setAskedIds(new Set([first.id])); }
                 }}
-                style={{ padding: '12px 18px', backgroundColor: '#fff', color: '#1e3a5f', border: '1px solid #1e3a5f', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+                style={{ padding: '12px 18px', backgroundColor: '#fff', color: '#064e3b', border: '1px solid #064e3b', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
               >
                 Réessayer
               </button>
@@ -183,7 +183,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
             )}
             <button
               onClick={() => onComplete(moduleId, finalScore)}
-              style={{ padding: '12px 20px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
+              style={{ padding: '12px 20px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
             >
               Retour à l'accueil
             </button>
@@ -225,9 +225,9 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
-      <header style={{ backgroundColor: '#1e3a5f', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <header style={{ backgroundColor: '#064e3b', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '32px', height: '32px', backgroundColor: '#2d5a87', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🌿</div>
+          <div style={{ width: '32px', height: '32px', backgroundColor: '#15803d', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🌿</div>
           <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Green IT académie — Quiz adaptatif</span>
         </div>
         <button
@@ -247,7 +247,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
       <div style={{ backgroundColor: '#fff', padding: '10px 32px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
           <span style={{ color: '#64748b', fontWeight: '600' }}>Question {questionNumber} / {totalToAsk}</span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#f1f5f9', borderRadius: '12px', color: '#1e3a5f', fontWeight: '600' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#f1f5f9', borderRadius: '12px', color: '#064e3b', fontWeight: '600' }}>
             {LEVEL_LABEL[currentQuestion.level]}
           </span>
           {streak >= 2 && (
@@ -264,7 +264,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
         <div style={{ width: '100%', maxWidth: '680px' }}>
           {/* Question */}
           <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '28px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-            <p style={{ margin: 0, fontSize: '17px', fontWeight: '600', color: '#1e3a5f', lineHeight: '1.6' }}>
+            <p style={{ margin: 0, fontSize: '17px', fontWeight: '600', color: '#064e3b', lineHeight: '1.6' }}>
               {currentQuestion.question}
             </p>
           </div>
@@ -314,7 +314,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
             <div style={{ textAlign: 'right' }}>
               <button
                 onClick={handleNext}
-                style={{ padding: '12px 28px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '14px' }}
+                style={{ padding: '12px 28px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '14px' }}
               >
                 {history.length < totalToAsk ? 'Question suivante →' : 'Voir mes résultats'}
               </button>
