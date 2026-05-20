@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import GreenITAcademie from './GreenIT_Academie_Final';
 import CourseReader from './src/CourseReader';
 import QuizScreen from './src/QuizScreen';
@@ -10,12 +10,12 @@ import LandingPage from './src/LandingPage';
 import LegalPages from './src/LegalPages';
 
 const initialModules = [
-  { id: 1, unite: 'UNITÉ 1', title: 'Cadres conceptuels et typologie', image: '🌐', bgColor: '#4299e1', tempsPasse: '00:00:00', score: 0, started: false },
-  { id: 2, unite: 'UNITÉ 2', title: 'Cadre réglementaire UE & Luxembourg', image: '⚖️', bgColor: '#ed8936', tempsPasse: '00:00:00', score: 0, started: false },
-  { id: 3, unite: 'UNITÉ 3', title: 'Normes et certifications ISO', image: '📋', bgColor: '#48bb78', tempsPasse: '00:00:00', score: 0, started: false },
-  { id: 4, unite: 'UNITÉ 4', title: 'Labels environnementaux IT', image: '🏷️', bgColor: '#9f7aea', tempsPasse: '00:00:00', score: 0, started: false },
-  { id: 5, unite: 'UNITÉ 5', title: 'Codes de conduite et chartes', image: '📜', bgColor: '#f56565', tempsPasse: '00:00:00', score: 0, started: false },
-  { id: 6, unite: 'UNITÉ 6', title: 'Cas pratiques Luxembourg', image: '🇱🇺', bgColor: '#38b2ac', tempsPasse: '00:00:00', score: 0, started: false },
+  { id: 1, unite: 'MODULE 1', title: 'Cadres conceptuels et typologie', image: '🌐', bgColor: '#4299e1', tempsPasse: '00:00:00', score: 0, started: false },
+  { id: 2, unite: 'MODULE 2', title: 'Cadre réglementaire UE & Luxembourg', image: '⚖️', bgColor: '#ed8936', tempsPasse: '00:00:00', score: 0, started: false },
+  { id: 3, unite: 'MODULE 3', title: 'Normes et certifications ISO', image: '📋', bgColor: '#48bb78', tempsPasse: '00:00:00', score: 0, started: false },
+  { id: 4, unite: 'MODULE 4', title: 'Labels environnementaux IT', image: '🏷️', bgColor: '#9f7aea', tempsPasse: '00:00:00', score: 0, started: false },
+  { id: 5, unite: 'MODULE 5', title: 'Codes de conduite et chartes', image: '📜', bgColor: '#f56565', tempsPasse: '00:00:00', score: 0, started: false },
+  { id: 6, unite: 'MODULE 6', title: 'Cas pratiques Luxembourg', image: '🇱🇺', bgColor: '#38b2ac', tempsPasse: '00:00:00', score: 0, started: false },
 ];
 
 const STORAGE_KEY = 'greenitacademie-progress';
@@ -116,7 +116,13 @@ export default function App() {
   }
 
   if (screen === 'legal') {
-    return <LegalPages initial={legalTab} onBack={() => setScreen(legalReturnTo)} />;
+    return (
+      <LegalPages
+        initial={legalTab}
+        onBack={() => setScreen(legalReturnTo)}
+        onShowScormPlayer={() => setScreen('scorm-player')}
+      />
+    );
   }
 
   if (screen === 'module') {
@@ -125,7 +131,12 @@ export default function App() {
         moduleId={selectedModuleId}
         onBack={() => setScreen('home')}
         onStartQuiz={() => setScreen('quiz')}
-        onShowLanding={() => setScreen('landing')}
+        onSelectModule={(id) => {
+          // Démarre le nouveau module et reset le chrono de lecture
+          startTimeRef.current = Date.now();
+          setSelectedModuleId(id);
+          setModules(prev => prev.map(m => m.id === id ? { ...m, started: true } : m));
+        }}
       />
     );
   }

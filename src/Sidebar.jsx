@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from './Logo';
 
 // Sidebar réutilisable pour toutes les pages internes (dashboard, attestation,
 // profil, références, scorm). Le menu liste uniquement les espaces de travail :
@@ -36,10 +37,7 @@ export default function Sidebar({ activePage, onNavigate }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '36px', height: '36px', backgroundColor: '#15803d', borderRadius: '8px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px'
-          }}>🌿</div>
+          <Logo size={36} />
           <div>
             <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
             <div style={{ color: '#86efac', fontSize: '10px', fontStyle: 'italic' }}>académie</div>

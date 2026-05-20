@@ -1,5 +1,6 @@
 ﻿import React, { useState, useMemo, useEffect } from 'react';
 import questionsData from '../data/questions.json';
+import Logo from './Logo';
 
 // --- Logique adaptative ---
 // Niveaux : 0 = débutant, 1 = intermédiaire, 2 = avancé
@@ -227,7 +228,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
       {/* Header */}
       <header style={{ backgroundColor: '#064e3b', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '32px', height: '32px', backgroundColor: '#15803d', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🌿</div>
+          <Logo size={32} />
           <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Green IT académie — Quiz adaptatif</span>
         </div>
         <button

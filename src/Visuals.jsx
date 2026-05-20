@@ -19,27 +19,28 @@ const Wrapper = ({ children, caption }) => (
 // -------------------------------------------------- Pyramide des instruments
 const InstrumentHierarchy = () => (
   <Wrapper caption="Figure — Pyramide des instruments du Green IT, du plus contraignant au plus volontaire">
+    {/* Vraie pyramide à pointe : pentes continues de l'apex (310,25) à la base (40,320)-(580,320).
+        Les textes sont placés dans la partie basse de chaque palier pour rester lisibles. */}
     <svg viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      {/* Tier 1 — trapèze tronqué pour laisser la place au texte */}
-      <polygon points="240,40 380,40 405,110 215,110" fill="#064e3b" />
-      <text x="310" y="72" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Réglementation</text>
-      <text x="310" y="92" textAnchor="middle" fill="#cbd5e0" fontSize="10" fontFamily="system-ui">Obligatoire — sanctions</text>
+      {/* Tier 1 — vraie pointe (triangle) */}
+      <polygon points="310,25 392,115 228,115" fill="#064e3b" />
+      <text x="310" y="92" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="system-ui">Réglementation</text>
+      <text x="310" y="108" textAnchor="middle" fill="#a7f3d0" fontSize="9" fontFamily="system-ui">Obligatoire — sanctions</text>
 
-      {/* Tier 2 */}
-      <polygon points="215,110 405,110 435,180 185,180" fill="#3182ce" />
-      <text x="310" y="142" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Normes ISO / CEN</text>
-      <text x="310" y="162" textAnchor="middle" fill="#bee3f8" fontSize="10" fontFamily="system-ui">Volontaire, souvent exigée</text>
+      {/* Tier 2 — trapèze, pentes continues avec tier 1 */}
+      <polygon points="228,115 392,115 461,190 159,190" fill="#3182ce" />
+      <text x="310" y="150" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Normes ISO / CEN</text>
+      <text x="310" y="168" textAnchor="middle" fill="#bee3f8" fontSize="10" fontFamily="system-ui">Volontaire, souvent exigée</text>
 
-      {/* Tier 3 */}
-      <polygon points="185,180 435,180 470,250 150,250" fill="#48bb78" />
-      <text x="310" y="212" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Labels environnementaux</text>
-      <text x="310" y="232" textAnchor="middle" fill="#c6f6d5" fontSize="10" fontFamily="system-ui">Vérifiés par tierce partie</text>
+      {/* Tier 3 — trapèze */}
+      <polygon points="159,190 461,190 521,255 99,255" fill="#48bb78" />
+      <text x="310" y="222" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Labels environnementaux</text>
+      <text x="310" y="240" textAnchor="middle" fill="#dcfce7" fontSize="10" fontFamily="system-ui">Vérifiés par tierce partie</text>
 
-      {/* Tier 4 */}
-      <polygon points="150,250 470,250 510,320 110,320" fill="#ed8936" />
-      <text x="310" y="282" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Codes de conduite et chartes</text>
-      <text x="310" y="302" textAnchor="middle" fill="#feebc8" fontSize="10" fontFamily="system-ui">Engagement libre</text>
-
+      {/* Tier 4 — base */}
+      <polygon points="99,255 521,255 580,320 40,320" fill="#ed8936" />
+      <text x="310" y="287" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700" fontFamily="system-ui">Codes de conduite et chartes</text>
+      <text x="310" y="305" textAnchor="middle" fill="#feebc8" fontSize="10" fontFamily="system-ui">Engagement libre</text>
     </svg>
   </Wrapper>
 );
@@ -208,37 +209,40 @@ const GreenDealTimeline = () => (
   </Wrapper>
 );
 
-// -------------------------------------------------- Niveaux EPEAT
-const EpeatLevels = () => (
-  <Wrapper caption="Figure — Les trois niveaux du label EPEAT">
-    <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <text x="280" y="28" textAnchor="middle" fill="#064e3b" fontSize="12" fontWeight="700" fontFamily="system-ui">
-        Exigence environnementale croissante
-      </text>
-
-      {[
-        { x: 60,  level: 'Bronze', color: '#a16207', bg: '#fef3c7', crit: 'Critères obligatoires uniquement', pct: '≈ 23 critères' },
-        { x: 210, level: 'Argent', color: '#64748b', bg: '#e2e8f0', crit: 'Obligatoires + 50 % optionnels', pct: 'requis + 50 %' },
-        { x: 360, level: 'Or',     color: '#b45309', bg: '#fde68a', crit: 'Obligatoires + 75 % optionnels', pct: 'requis + 75 %' },
-      ].map((n, i) => (
-        <g key={i}>
-          <rect x={n.x} y="50" width="140" height="150" rx="8" fill={n.bg} stroke={n.color} strokeWidth="1.5" />
-          <circle cx={n.x + 70} cy="88" r="24" fill={n.color} />
-          <text x={n.x + 70} y="94" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="700" fontFamily="system-ui">{n.level[0]}</text>
-          <text x={n.x + 70} y="132" textAnchor="middle" fill={n.color} fontSize="14" fontWeight="700" fontFamily="system-ui">{n.level}</text>
-          <text x={n.x + 70} y="155" textAnchor="middle" fill="#1f2937" fontSize="10" fontFamily="system-ui">{n.crit}</text>
-          <text x={n.x + 70} y="180" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="system-ui">{n.pct}</text>
-        </g>
-      ))}
-
-      {/* Flèches de gradation */}
-      <line x1="205" y1="125" x2="215" y2="125" stroke="#94a3b8" strokeWidth="1.5" />
-      <polygon points="215,125 209,121 209,129" fill="#94a3b8" />
-      <line x1="355" y1="125" x2="365" y2="125" stroke="#94a3b8" strokeWidth="1.5" />
-      <polygon points="365,125 359,121 359,129" fill="#94a3b8" />
-    </svg>
-  </Wrapper>
-);
+// -------------------------------------------------- Niveaux EPEAT (HTML)
+const EpeatLevels = () => {
+  const levels = [
+    { letter: 'B', level: 'Bronze', color: '#a16207', bg: '#fef3c7', border: '#d97706', crit: 'Critères obligatoires uniquement',  pct: '≈ 23 critères requis' },
+    { level: 'Argent', letter: 'A', color: '#64748b', bg: '#e2e8f0', border: '#94a3b8', crit: 'Obligatoires + 50 % des optionnels', pct: 'requis + 50 %' },
+    { level: 'Or',     letter: 'O', color: '#b45309', bg: '#fde68a', border: '#d97706', crit: 'Obligatoires + 75 % des optionnels', pct: 'requis + 75 %' },
+  ];
+  return (
+    <Wrapper caption="Figure — Les trois niveaux du label EPEAT">
+      <div style={{ display: 'block' }}>
+        <div style={{ textAlign: 'center', fontSize: '13px', fontWeight: 700, color: '#064e3b', marginBottom: '14px' }}>
+          Exigence environnementale croissante
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '12px', alignItems: 'stretch' }}>
+          {levels.map((n, i) => (
+            <div key={i} style={{
+              backgroundColor: n.bg, border: `1.5px solid ${n.border}`, borderRadius: '10px',
+              padding: '18px 12px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
+            }}>
+              <div style={{
+                width: '48px', height: '48px', borderRadius: '50%', backgroundColor: n.color,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', fontSize: '20px', fontWeight: '700',
+              }}>{n.letter}</div>
+              <div style={{ color: n.color, fontSize: '15px', fontWeight: 700 }}>{n.level}</div>
+              <div style={{ color: '#1f2937', fontSize: '12px', lineHeight: '1.4' }}>{n.crit}</div>
+              <div style={{ color: '#64748b', fontSize: '11px', fontStyle: 'italic' }}>{n.pct}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
 
 // -------------------------------------------------- Cycle PDCA (redessiné)
 const PDCACycle = () => (
@@ -276,51 +280,46 @@ const PDCACycle = () => (
       <path d="M 150 188 L 150 180" stroke="#064e3b" strokeWidth="1.5" fill="none" />
       <polygon points="150,170 146,178 154,178" fill="#064e3b" />
 
-      {/* Descriptions sous chaque case */}
-      {[
-        { x: 100, y: 290, text: 'Identifier enjeux et objectifs' },
-        { x: 320, y: 290, text: 'Mettre en œuvre' },
-        { x: 100, y: 308, text: 'Corriger et ajuster' },
-        { x: 320, y: 308, text: 'Mesurer et auditer' },
-      ].map((t, i) => (
-        <text key={i} x={t.x + 50} y={t.y} textAnchor="middle" fill="#64748b" fontSize="9" fontStyle="italic" fontFamily="system-ui">{t.text}</text>
-      ))}
     </svg>
   </Wrapper>
 );
 
-// -------------------------------------------------- Comparaison labels
-const LabelsComparison = () => (
-  <Wrapper caption="Figure — Comparatif des trois principaux labels environnementaux IT">
-    <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      <rect x="10" y="20" width="560" height="32" fill="#064e3b" />
-      <text x="130" y="40" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">Critère</text>
-      <text x="270" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">EPEAT</text>
-      <text x="390" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">Energy Star</text>
-      <text x="510" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" fontFamily="system-ui">Blue Angel</text>
-
-      {[
-        { y: 75,  label: 'Origine',         v1: 'USA (GEC)',         v2: 'USA (EPA, 1992)', v3: 'Allemagne, 1978' },
-        { y: 110, label: 'Périmètre',       v1: 'Multi-critères',    v2: 'Énergie',         v3: 'Multi-critères + durabilité' },
-        { y: 145, label: 'Niveau d\'exigence', v1: 'Bronze / Argent / Or', v2: 'Standard', v3: 'Strict (≥ Energy Star)' },
-        { y: 180, label: 'Garantie pièces', v1: '—',                 v2: '—',               v3: '≥ 5 ans' },
-        { y: 215, label: 'Reconnaissance',  v1: 'Mondiale',          v2: 'Mondiale',        v3: 'UE forte' },
-      ].map((row, i) => (
-        <g key={i}>
-          {i % 2 === 0 && <rect x="10" y={row.y - 17} width="560" height="30" fill="#f8fafc" />}
-          <text x="20" y={row.y} fill="#374151" fontSize="11" fontWeight="600" fontFamily="system-ui">{row.label}</text>
-          <text x="270" y={row.y} textAnchor="middle" fill="#064e3b" fontSize="11" fontFamily="system-ui">{row.v1}</text>
-          <text x="390" y={row.y} textAnchor="middle" fill="#064e3b" fontSize="11" fontFamily="system-ui">{row.v2}</text>
-          <text x="510" y={row.y} textAnchor="middle" fill="#064e3b" fontSize="11" fontFamily="system-ui">{row.v3}</text>
-        </g>
-      ))}
-
-      <line x1="220" y1="52" x2="220" y2="230" stroke="#e2e8f0" />
-      <line x1="340" y1="52" x2="340" y2="230" stroke="#e2e8f0" />
-      <line x1="460" y1="52" x2="460" y2="230" stroke="#e2e8f0" />
-    </svg>
-  </Wrapper>
-);
+// -------------------------------------------------- Comparaison labels (HTML)
+const LabelsComparison = () => {
+  const rows = [
+    { label: 'Origine',          v1: 'USA (GEC)',             v2: 'USA (EPA, 1992)', v3: 'Allemagne, 1978' },
+    { label: 'Périmètre',        v1: 'Multi-critères',        v2: 'Énergie',         v3: 'Multi-critères + durabilité' },
+    { label: "Niveau d'exigence", v1: 'Bronze / Argent / Or', v2: 'Standard',        v3: 'Strict (≥ Energy Star)' },
+    { label: 'Garantie pièces',  v1: '—',                     v2: '—',               v3: '≥ 5 ans' },
+    { label: 'Reconnaissance',   v1: 'Mondiale',              v2: 'Mondiale',        v3: 'UE forte' },
+  ];
+  const td = { padding: '10px 12px', borderBottom: '1px solid #e2e8f0', fontSize: '12px', color: '#064e3b', textAlign: 'center', verticalAlign: 'middle' };
+  const th = { padding: '12px', backgroundColor: '#064e3b', color: '#fff', fontSize: '13px', fontWeight: 700, textAlign: 'center' };
+  return (
+    <Wrapper caption="Figure — Comparatif des trois principaux labels environnementaux IT">
+      <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, borderRadius: '8px', overflow: 'hidden', tableLayout: 'fixed' }}>
+        <thead>
+          <tr>
+            <th style={{ ...th, textAlign: 'left', width: '24%' }}>Critère</th>
+            <th style={{ ...th, width: '24%' }}>EPEAT</th>
+            <th style={{ ...th, width: '24%' }}>Energy Star</th>
+            <th style={{ ...th, width: '28%' }}>Blue Angel</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#f8fafc' : '#fff' }}>
+              <td style={{ ...td, textAlign: 'left', fontWeight: 600, color: '#1e293b' }}>{row.label}</td>
+              <td style={td}>{row.v1}</td>
+              <td style={td}>{row.v2}</td>
+              <td style={td}>{row.v3}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Wrapper>
+  );
+};
 
 // -------------------------------------------------- Trajectoire CNDCP
 const CNDCPTrajectory = () => (

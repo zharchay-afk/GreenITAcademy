@@ -1,12 +1,13 @@
 ﻿import React from 'react';
+import { exportScorm } from './utils/scormExport';
 
 // Page-wrapper et tabs
-export default function LegalPages({ initial = 'notice', onBack }) {
+export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer }) {
   const [current, setCurrent] = React.useState(initial);
 
   React.useEffect(() => { setCurrent(initial); }, [initial]);
 
-  const Pane = { notice: LegalNotice, privacy: PrivacyShort, cookies: CookiesPolicy }[current];
+  const Pane = { notice: LegalNotice, privacy: PrivacyShort, cookies: CookiesPolicy, ecoconception: () => <EcoConception onShowScormPlayer={onShowScormPlayer} />, accessibilite: Accessibilite }[current];
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
@@ -19,11 +20,13 @@ export default function LegalPages({ initial = 'notice', onBack }) {
       </header>
 
       {/* Tabs */}
-      <nav style={{ backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', padding: '0 32px', display: 'flex', gap: '4px' }}>
+      <nav style={{ backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', padding: '0 32px', display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
         {[
-          { id: 'notice',  label: 'Mentions légales' },
-          { id: 'privacy', label: 'Données personnelles' },
-          { id: 'cookies', label: 'Cookies & stockage local' },
+          { id: 'notice',        label: 'Mentions légales' },
+          { id: 'privacy',       label: 'Données personnelles' },
+          { id: 'cookies',       label: 'Cookies & stockage' },
+          { id: 'ecoconception', label: '🌱 Éco-conception' },
+          { id: 'accessibilite', label: '♿ Accessibilité' },
         ].map((t) => (
           <button key={t.id} onClick={() => setCurrent(t.id)} style={{
             padding: '14px 18px', backgroundColor: 'transparent', border: 'none',
@@ -264,7 +267,183 @@ function CookiesPolicy() {
       </Section>
 
       <Section title="Pour aller plus loin">
-        <p>Les principes appliqués ici (minimisation, locality first, privacy by design) sont l'application concrète d'enseignements du module 4 du parcours sur les labels et de l'unité 2 sur le cadre réglementaire européen. Une application Green IT bien conçue est aussi une application qui respecte la vie privée par construction.</p>
+        <p>Les principes appliqués ici (minimisation, locality first, privacy by design) sont l'application concrète d'enseignements du module 4 du parcours sur les labels et de le module 2 sur le cadre réglementaire européen. Une application Green IT bien conçue est aussi une application qui respecte la vie privée par construction.</p>
+      </Section>
+    </Article>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Éco-conception
+// -----------------------------------------------------------------------------
+function EcoConception({ onShowScormPlayer }) {
+  return (
+    <Article title="Éco-conception de l'application" updated="Dernière mise à jour : mai 2026">
+      <Section title="Préambule">
+        <Highlight>
+          Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent.
+        </Highlight>
+      </Section>
+
+      <Section title="1. Architecture sans serveur ni base de données">
+        <p>L'application est une <strong>Progressive Web App (PWA)</strong> dont l'intégralité du code et des données s'exécute dans le navigateur de l'utilisateur. Aucun serveur applicatif n'est interrogé, aucune base de données n'est mobilisée, aucune requête réseau n'est émise vers les éditeurs après le chargement initial.</p>
+        <p>L'impact direct est la suppression du poste « datacenter » dans le bilan d'une session utilisateur. À titre indicatif, une visite sur un site contemporain déclenche couramment 60 à 100 requêtes HTTP additionnelles à destination de tiers (mesure d'audience, polices, scripts publicitaires, chat support, etc.) ; ce nombre est ramené à zéro ici, hors chargement initial.</p>
+      </Section>
+
+      <Section title="2. Absence de traceurs et de tiers">
+        <p>Aucun script tiers n'est intégré (Google Analytics, Tag Manager, pixels marketing, services de cartographie, CDN externes…). Cette décision produit deux effets convergents :</p>
+        <ul>
+          <li><strong>Réduction de l'empreinte réseau</strong> : aucune connexion sortante n'est ouverte pour transmettre de la télémétrie ;</li>
+          <li><strong>Conformité <em>privacy by design</em></strong> : aucune donnée personnelle n'est transmise à des tiers (cf. politique « Données personnelles »).</li>
+        </ul>
+      </Section>
+
+      <Section title="3. Schémas vectoriels intégrés (SVG inline)">
+        <p>Les 14 schémas pédagogiques du parcours (pyramide des instruments, cycle ACV, échelle PUE, frise du Green Deal, etc.) sont définis sous forme de <strong>SVG inline</strong>, embarqués directement dans le code source. Ils s'affichent sans requête HTTP supplémentaire et restent nets à toute résolution.</p>
+        <p>Une comparaison synthétique : une image bitmap haute résolution équivalente pèse en moyenne 200 à 500 Ko ; les 14 schémas SVG inline représentent ensemble moins de 30 Ko, soit une réduction de poids de l'ordre de 90 %.</p>
+      </Section>
+
+      <Section title="4. Polices système, absence de webfont">
+        <p>L'application s'appuie sur la <strong>police système</strong> du terminal (San Francisco sur macOS et iOS, Segoe UI sur Windows, Roboto sur Android, polices par défaut sur Linux). Aucune webfont externe n'est téléchargée.</p>
+        <p>Une webfont standard (Google Fonts, Adobe Fonts) pèse typiquement entre 100 et 300 Ko et exige plusieurs requêtes réseau supplémentaires. Cette dépendance est ici entièrement évitée.</p>
+      </Section>
+
+      <Section title="5. Dépendances limitées au strict nécessaire">
+        <p>Trois dépendances seulement sont mobilisées : <code>react</code> et <code>react-dom</code> pour l'interface, <code>jszip</code> pour la génération du package SCORM. Aucun framework UI (Material UI, Ant Design, Bootstrap), aucune bibliothèque d'animation, aucun moteur d'icônes externe — les pictogrammes utilisés sont des emojis Unicode déjà présents dans le système.</p>
+        <p>Le bundle JavaScript distribué pèse approximativement <strong>150 Ko gzippé</strong>, à comparer à 500 Ko – 2 Mo couramment observés sur une application React moyenne.</p>
+      </Section>
+
+      <Section title="6. Fonctionnement hors-ligne via service worker">
+        <p>Un service worker met en cache l'intégralité de l'application au premier chargement. Les visites suivantes s'exécutent sans connexion réseau et ne re-téléchargent pas les ressources statiques tant qu'une nouvelle version n'est pas publiée.</p>
+      </Section>
+
+      <Section title="7. Codebase unique web et mobile">
+        <p>L'application fonctionne à l'identique sur ordinateur, tablette et smartphone à partir d'un <strong>codebase unique</strong>. Aucune version native Android ou iOS distincte n'est maintenue : la maintenance, la duplication de code et le passage par les magasins d'applications sont entièrement évités.</p>
+      </Section>
+
+      <Section title="8. Hébergement statique">
+        <p>Lorsque l'application est publiée pour démonstration, elle est servie par un hébergeur de pages statiques (GitHub Pages, Vercel, Netlify) couplé à une distribution CDN. Aucun traitement applicatif n'est exécuté côté serveur pour servir une visite, ce qui correspond à l'un des modèles d'hébergement les moins énergivores disponibles aujourd'hui.</p>
+      </Section>
+
+      <Section title="Limites et arbitrages assumés">
+        <p>Plusieurs optimisations supplémentaires sont identifiées dans la littérature de l'éco-conception. Leur non-mise en œuvre dans le présent projet résulte d'arbitrages explicites, exposés ci-dessous.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Lazy-loading des modules</p>
+        <p>L'ensemble du contenu pédagogique (modules.json, questions.json, schémas) est aujourd'hui chargé en une seule passe. Une stratégie de chargement à la demande aurait pu être mise en place via le découpage Vite.</p>
+        <p><em>Raison de l'arbitrage</em> : la totalité du contenu pédagogique pèse environ 80 Ko gzippés. Le découpage introduirait plusieurs requêtes supplémentaires et une complexité de cache non triviale, pour un gain net marginal — voire négatif sur un usage typique où l'apprenant parcourt l'ensemble des modules. Le seuil d'utilité du lazy-loading est plutôt atteint sur des applications de plusieurs Mo de contenu.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mode sombre</p>
+        <p>Sur écrans OLED, un mode sombre permet une économie d'énergie pouvant atteindre 30 % pour l'affichage. Aucun mode sombre n'est actuellement proposé.</p>
+        <p><em>Raison de l'arbitrage</em> : le projet est un livrable pédagogique à périmètre fini. La mise en œuvre rigoureuse d'un thème sombre (couleurs duales pour chaque visuel SVG, contrastes recalculés, prise en charge de <code>prefers-color-scheme</code>) représente une charge significative pour un gain qui ne concerne qu'une fraction des terminaux. Cette piste est consignée comme évolution prioritaire si le projet est repris.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Compression Brotli</p>
+        <p>La compression Brotli offre typiquement un gain de 15 à 20 % sur le poids transféré par rapport à gzip.</p>
+        <p><em>Raison de l'arbitrage</em> : la compression dépend de la configuration de l'hébergeur, pas du code applicatif. Les principaux hébergeurs statiques visés (Vercel, Netlify, Cloudflare Pages) activent Brotli par défaut lorsque le navigateur le supporte ; le gain est donc obtenu automatiquement lors d'un déploiement réel. Aucune action côté code n'est nécessaire ou même possible.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mesure d'audience écoresponsable</p>
+        <p>Aucune mesure d'audience n'est implémentée, y compris parmi les solutions souveraines et sobres (Plausible, Matomo auto-hébergé).</p>
+        <p><em>Raison de l'arbitrage</em> : ajouter de la mesure d'audience contredirait directement les principes affichés (« aucune donnée ne quitte le terminal »). Le compromis a été tranché en faveur de la sobriété maximale, au prix de l'absence de statistiques d'usage pour les éditeurs.</p>
+      </Section>
+
+      <Section title="Interopérabilité : export SCORM 1.2">
+        <p>Le parcours peut être exporté au format <strong>SCORM 1.2</strong>, standard de l'<em>Advanced Distributed Learning Initiative</em>, et intégré dans tout système de gestion d'apprentissage compatible (Moodle, Canvas, Blackboard, 360Learning, etc.). L'interopérabilité avec les LMS institutionnels existants évite la duplication d'infrastructures pédagogiques et réduit la charge d'hébergement supplémentaire associée à un parcours autonome.</p>
+        <p>Une fonction d'import est également proposée : tout package SCORM 1.2 tiers peut être chargé et lu directement dans l'application, sans envoi de données à un serveur externe.</p>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '14px' }}>
+          <button
+            onClick={() => exportScorm()}
+            style={{ backgroundColor: '#166534', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
+          >
+            ⬇ Télécharger le package SCORM
+          </button>
+          {onShowScormPlayer && (
+            <button
+              onClick={onShowScormPlayer}
+              style={{ backgroundColor: '#fff', color: '#166534', border: '1px solid #166534', padding: '10px 18px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
+            >
+              📂 Importer un SCORM tiers
+            </button>
+          )}
+        </div>
+      </Section>
+
+      <Section title="Réutilisabilité : un parcours servant de gabarit">
+        <p>L'architecture du projet sépare strictement le <strong>cadre applicatif</strong> (composants d'interface, lecteur de cours, moteur de quiz adaptatif, sidebar, pages légales) du <strong>contenu pédagogique</strong>, intégralement décrit dans deux fichiers JSON : <code>data/modules.json</code> pour les cours et <code>data/questions.json</code> pour le quiz.</p>
+        <p>Cette séparation permet de réutiliser l'ensemble du dispositif pour une formation différente sans réécrire la moindre ligne de code applicatif. Le remplacement du contenu des deux fichiers JSON, accompagné de l'ajustement de quelques éléments de marque (titre, palette, illustration) et d'un redéploiement, suffit. Il s'agit de la mise en pratique d'un principe clé du Green IT : <em>conçu une fois, réutilisé largement</em>.</p>
+        <p>Le bénéfice environnemental est double. Le développement répété d'applications de formation depuis zéro, opération chronophage et énergivore, est évité. Plusieurs formations partagent par ailleurs le même socle technique, donc le même cache navigateur, le même bundle et la même distribution CDN — autant de ressources mutualisées plutôt que dupliquées.</p>
+        <p>Le guide de réutilisation détaillé est consultable dans le dépôt source du projet, sous le fichier <code>REUSE.md</code>. Il couvre quatre points :</p>
+        <ul>
+          <li><strong>Remplacement du contenu</strong> : structure attendue des fichiers <code>modules.json</code> et <code>questions.json</code>, champs obligatoires et facultatifs.</li>
+          <li><strong>Personnalisation de la marque</strong> : titre, sous-titre, illustration SVG du hero, palette principale.</li>
+          <li><strong>Adaptation des schémas pédagogiques</strong> : conservation ou substitution des visuels SVG, ajout de nouveaux visuels au registre <code>Visuals.jsx</code>.</li>
+          <li><strong>Déploiement</strong> : commandes de build, options d'hébergement statique recommandées.</li>
+        </ul>
+      </Section>
+    </Article>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Accessibilité
+// -----------------------------------------------------------------------------
+function Accessibilite() {
+  return (
+    <Article title="Accessibilité" updated="Dernière mise à jour : mai 2026">
+      <Section title="Préambule">
+        <Highlight>
+          L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés.
+        </Highlight>
+      </Section>
+
+      <Section title="Référentiel suivi">
+        <p>L'application vise le respect du référentiel <strong>WCAG 2.1 niveau AA</strong> du W3C, dont la transposition française est le RGAA (Référentiel Général d'Amélioration de l'Accessibilité). Au Luxembourg, la loi du 28 mai 2019 sur l'accessibilité des sites internet et applications mobiles transpose la directive (UE) 2016/2102 fondée sur les mêmes critères.</p>
+      </Section>
+
+      <Section title="Dispositions mises en œuvre">
+        <ul>
+          <li><strong>Contrastes des textes</strong> : le texte blanc sur fond vert sombre (#fff sur #064e3b) atteint un ratio de 9,5:1, très au-dessus du seuil AA (4,5:1). Les textes secondaires gris sur fond blanc (#64748b sur #fff) se situent à 4,8:1, au-dessus du seuil.</li>
+          <li><strong>Navigation au clavier</strong> : tous les éléments interactifs sont des éléments HTML natifs (<code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>) accessibles par la touche Tab. L'ordre de tabulation reproduit la logique visuelle.</li>
+          <li><strong>Sémantique HTML</strong> : l'arborescence repose sur des balises sémantiques (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>) afin de permettre une navigation par régions au moyen des technologies d'assistance.</li>
+          <li><strong>Schémas vectoriels</strong> : les visuels SVG décoratifs portent l'attribut <code>aria-hidden="true"</code> ; l'information qu'ils restituent est par ailleurs disponible dans le texte du cours.</li>
+          <li><strong>Police redimensionnable</strong> : la taille des textes suit les paramètres du navigateur (niveau de zoom, taille de police par défaut).</li>
+          <li><strong>Absence de mouvement automatique</strong> : aucune animation déclenchée automatiquement, aucun carrousel, aucun contenu clignotant.</li>
+          <li><strong>Fonctionnement hors-ligne</strong> : l'application reste utilisable sans connexion réseau, ce qui bénéficie également aux utilisateurs disposant d'une connectivité limitée.</li>
+        </ul>
+      </Section>
+
+      <Section title="Limites et arbitrages assumés">
+        <p>Plusieurs dispositions complémentaires n'ont pas été mises en œuvre dans le présent projet. Leur statut et la justification de cet arbitrage sont exposés ci-dessous.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Audit professionnel</p>
+        <p>Aucun audit RGAA ou WCAG conduit par un expert tiers indépendant n'a été réalisé. La présente page constitue une auto-déclaration et non une déclaration d'accessibilité officielle au sens de la directive (UE) 2016/2102.</p>
+        <p><em>Justification</em> : un audit professionnel représente un investissement significatif, sans rapport avec le périmètre d'un livrable pédagogique. La transparence sur cette limite permet à l'utilisateur de qualifier la portée du présent document.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Tests systématiques avec lecteurs d'écran</p>
+        <p>L'application n'a pas fait l'objet de tests systématiques avec les principaux lecteurs d'écran (NVDA, JAWS, VoiceOver). Certains libellés ARIA sont susceptibles d'être manquants ou perfectibles.</p>
+        <p><em>Justification</em> : ces tests requièrent un environnement et une expertise spécifiques. La sémantique HTML stricte appliquée par défaut fournit toutefois un socle d'accessibilité raisonnable pour les technologies d'assistance modernes.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Restitution textuelle des indicateurs visuels du quiz</p>
+        <p>Le suivi de progression et le résultat des questions du parcours d'évaluation reposent sur des indicateurs visuels (barre de progression, code couleur vert/rouge). Une restitution textuelle équivalente, plus explicite pour les utilisateurs de lecteurs d'écran, mériterait d'être ajoutée.</p>
+        <p><em>Justification</em> : amélioration identifiée et consignée comme évolution prioritaire.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mode à contraste élevé</p>
+        <p>Aucune bascule « contraste maximal » n'est proposée, et la requête CSS <code>prefers-contrast: more</code> n'est pas explicitement prise en charge.</p>
+        <p><em>Justification</em> : les contrastes par défaut respectent déjà le seuil AA (cf. dispositions mises en œuvre). L'ajout d'un thème dédié au contraste maximal demanderait la définition d'une palette duale couvrant l'ensemble des schémas vectoriels, charge sans commune mesure avec le bénéfice marginal observé sur les configurations conformes par défaut.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mode sombre</p>
+        <p>Aucun thème sombre n'est implémenté.</p>
+        <p><em>Justification</em> : cette piste est traitée conjointement avec la page « Éco-conception », dans laquelle la décision est documentée.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Sous-titrage et alternatives audio</p>
+        <p>Aucune disposition de sous-titrage ni d'alternative audio n'est mise en place.</p>
+        <p><em>Justification</em> : le parcours actuel ne contient ni contenu vidéo, ni contenu sonore. Cette disposition deviendrait pertinente si du contenu multimédia était introduit ultérieurement.</p>
+
+        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Tests utilisateurs en situation de handicap</p>
+        <p>Aucun test n'a été conduit avec des utilisateurs en situation de handicap.</p>
+        <p><em>Justification</em> : la mise en place de tels tests requiert un protocole formel et des partenariats associatifs hors du périmètre du projet pédagogique. La démarche serait nécessaire avant toute mise en exploitation commerciale.</p>
+      </Section>
+
+      <Section title="Signalement d'un défaut d'accessibilité">
+        <p>Toute difficulté d'accès rencontrée peut être signalée en ouvrant une <em>issue</em> sur le dépôt source du projet. La résolution sera traitée prioritairement.</p>
       </Section>
     </Article>
   );
@@ -278,7 +457,7 @@ function Article({ title, updated, children }) {
     <article style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '32px 36px', border: '1px solid #e2e8f0' }}>
       <h1 style={{ fontSize: '24px', color: '#0f172a', margin: '0 0 4px 0', fontWeight: '700' }}>{title}</h1>
       <p style={{ color: '#94a3b8', fontSize: '12px', margin: '0 0 24px 0' }}>{updated}</p>
-      <div style={{ color: '#334155', fontSize: '14px', lineHeight: '1.75' }}>{children}</div>
+      <div style={{ color: '#334155', fontSize: '14px', lineHeight: '1.75', textAlign: 'justify', hyphens: 'auto' }}>{children}</div>
     </article>
   );
 }

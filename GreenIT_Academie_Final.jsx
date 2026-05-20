@@ -1,5 +1,4 @@
 ﻿import React, { useState } from 'react';
-import { exportScorm } from './src/utils/scormExport';
 import Sidebar from './src/Sidebar';
 
 // ================================================
@@ -7,12 +6,12 @@ import Sidebar from './src/Sidebar';
 // ================================================
 
 const modulesData = [
-  { id: 1, unite: "UNITÉ 1", title: "Cadres conceptuels et typologie", image: "🌐", bgColor: "#4299e1", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 2, unite: "UNITÉ 2", title: "Cadre réglementaire UE & Luxembourg", image: "⚖️", bgColor: "#ed8936", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 3, unite: "UNITÉ 3", title: "Normes et certifications ISO", image: "📋", bgColor: "#48bb78", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 4, unite: "UNITÉ 4", title: "Labels environnementaux IT", image: "🏷️", bgColor: "#9f7aea", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 5, unite: "UNITÉ 5", title: "Codes de conduite et chartes", image: "📜", bgColor: "#f56565", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 6, unite: "UNITÉ 6", title: "Cas pratiques Luxembourg", image: "🇱🇺", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 1, unite: "MODULE 1", title: "Cadres conceptuels et typologie", image: "🌐", bgColor: "#4299e1", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 2, unite: "MODULE 2", title: "Cadre réglementaire UE & Luxembourg", image: "⚖️", bgColor: "#ed8936", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 3, unite: "MODULE 3", title: "Normes et certifications ISO", image: "📋", bgColor: "#48bb78", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 4, unite: "MODULE 4", title: "Labels environnementaux IT", image: "🏷️", bgColor: "#9f7aea", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 5, unite: "MODULE 5", title: "Codes de conduite et chartes", image: "📜", bgColor: "#f56565", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 6, unite: "MODULE 6", title: "Cas pratiques Luxembourg", image: "🇱🇺", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
 ];
 
 // Module Card Component
@@ -56,7 +55,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
         )}
       </div>
       
-      {/* Badge Unité */}
+      {/* Badge Module */}
       <div style={{ backgroundColor: '#4a5568', padding: '6px 12px' }}>
         <span style={{
           color: 'rgba(255,255,255,0.9)',
@@ -136,6 +135,8 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
+const footerBtn = { background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit' };
+
 export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
@@ -191,7 +192,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           alignItems: 'center'
         }}>
           <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>
-            Module 1 : Normes, Labels & Certifications Green IT
+            Mes modules — Normes, Labels & Certifications Green IT
           </h1>
           <div style={{
             display: 'flex',
@@ -207,24 +208,6 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
 
         {/* Contenu */}
         <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto' }}>
-          {/* Bouton retour */}
-          <button style={{
-            backgroundColor: '#22c55e',
-            color: '#fff',
-            border: 'none',
-            padding: '7px 14px',
-            borderRadius: '16px',
-            fontSize: '12px',
-            fontWeight: '500',
-            cursor: 'pointer',
-            marginBottom: '20px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '5px'
-          }}>
-            ← Accueil
-          </button>
-
           {/* Grille des modules */}
           <div style={{
             display: 'grid',
@@ -243,40 +226,6 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           </div>
 
           {/* Section SCORM */}
-          <div style={{
-            padding: '20px',
-            backgroundColor: '#ecfdf5',
-            borderRadius: '8px',
-            border: '1px solid #86efac',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '14px'
-          }}>
-            <span style={{ fontSize: '28px' }}>📦</span>
-            <div>
-              <h3 style={{ margin: '0 0 6px 0', color: '#166534', fontSize: '14px', fontWeight: '600' }}>
-                Export SCORM disponible
-              </h3>
-              <p style={{ margin: '0 0 12px 0', color: '#4d7c0f', fontSize: '12px', lineHeight: '1.5' }}>
-                Intégrez ce parcours dans Moodle, Canvas ou tout LMS compatible SCORM 1.2.
-                Une démarche conforme aux principes Green IT : réutilisabilité et sobriété numérique.
-              </p>
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <button
-                  onClick={exportScorm}
-                  style={{ backgroundColor: '#166534', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '5px', fontSize: '12px', fontWeight: '600', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                >
-                  ⬇ Télécharger le package SCORM
-                </button>
-                <button
-                  onClick={() => onNavigateProp && onNavigateProp('scorm-player')}
-                  style={{ backgroundColor: '#fff', color: '#166534', border: '1px solid #166534', padding: '8px 16px', borderRadius: '5px', fontSize: '12px', fontWeight: '600', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                >
-                  📂 Importer un SCORM
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
@@ -290,14 +239,15 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           flexWrap: 'wrap',
           gap: '12px',
         }}>
-          <span>© 2026 Charles DE MEDEIROS – Ziad HARCHAY | Master Data Science, UE Green IT LURS01</span>
+          <span>Master Data Science · UTBM · 2026</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
             {onShowLegal && <>
-              <button onClick={() => onShowLegal('notice')} style={{ background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit' }}>Mentions légales</button>
-              <button onClick={() => onShowLegal('privacy')} style={{ background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit' }}>Données personnelles</button>
-              <button onClick={() => onShowLegal('cookies')} style={{ background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit' }}>Cookies</button>
+              <button onClick={() => onShowLegal('notice')} style={footerBtn}>Mentions légales</button>
+              <button onClick={() => onShowLegal('privacy')} style={footerBtn}>Données personnelles</button>
+              <button onClick={() => onShowLegal('cookies')} style={footerBtn}>Cookies</button>
+              <button onClick={() => onShowLegal('accessibilite')} style={footerBtn}>♿ Accessibilité</button>
+              <button onClick={() => onShowLegal('ecoconception')} style={footerBtn}>🌱 Éco-conçu Green IT</button>
             </>}
-            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>🌱 Éco-conçu Green IT</span>
           </span>
         </footer>
       </main>
