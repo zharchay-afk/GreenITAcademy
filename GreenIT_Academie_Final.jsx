@@ -1,5 +1,6 @@
 ﻿import React, { useState } from 'react';
 import Sidebar from './src/Sidebar';
+import Footer from './src/Footer';
 
 // ================================================
 // GREEN IT ACADÉMIE - Style SecNum
@@ -135,8 +136,6 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
-const footerBtn = { background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit' };
-
 export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
@@ -225,31 +224,9 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
             ))}
           </div>
 
-          {/* Section SCORM */}
         </div>
 
-        {/* Footer */}
-        <footer style={{
-          padding: '14px 24px',
-          borderTop: '1px solid #e2e8f0',
-          display: 'flex',
-          justifyContent: 'space-between',
-          color: '#64748b',
-          fontSize: '11px',
-          flexWrap: 'wrap',
-          gap: '12px',
-        }}>
-          <span>Master Data Science · UTBM · 2026</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            {onShowLegal && <>
-              <button onClick={() => onShowLegal('notice')} style={footerBtn}>Mentions légales</button>
-              <button onClick={() => onShowLegal('privacy')} style={footerBtn}>Données personnelles</button>
-              <button onClick={() => onShowLegal('cookies')} style={footerBtn}>Cookies</button>
-              <button onClick={() => onShowLegal('accessibilite')} style={footerBtn}>♿ Accessibilité</button>
-              <button onClick={() => onShowLegal('ecoconception')} style={footerBtn}>🌱 Éco-conçu Green IT</button>
-            </>}
-          </span>
-        </footer>
+        <Footer onShowLegal={onShowLegal} />
       </main>
     </div>
   );

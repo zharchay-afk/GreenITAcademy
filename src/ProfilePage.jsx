@@ -1,5 +1,6 @@
 ﻿import React, { useState } from 'react';
 import Sidebar from './Sidebar';
+import Footer from './Footer';
 
 function timeToSecs(str) {
   const [h, m, s] = (str || '00:00:00').split(':').map(Number);
@@ -11,7 +12,7 @@ function secsToTime(total) {
     .map(n => String(n).padStart(2, '0')).join(':');
 }
 
-export default function ProfilePage({ modules, onNavigate, onReset, onImport }) {
+export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal }) {
   const savedName = localStorage.getItem('greenitacademie-name') || '';
   const [name, setName] = useState(savedName);
   const [saved, setSaved] = useState(false);
@@ -89,7 +90,8 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport }) 
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="profil" onNavigate={onNavigate} />
 
-      <main style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: '#064e3b' }}>Mon profil</h1>
 
@@ -214,6 +216,9 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport }) 
             )}
           </div>
         </div>
+        </div>
+
+        <Footer onShowLegal={onShowLegal} />
       </main>
     </div>
   );

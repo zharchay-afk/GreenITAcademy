@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import Sidebar from './Sidebar';
+import Footer from './Footer';
 
-export default function AttestationPage({ modules, onNavigate }) {
+export default function AttestationPage({ modules, onNavigate, onShowLegal }) {
   const validatedModules = modules.filter(m => m.score >= 70);
   const startedModules = modules.filter(m => m.started);
   const allValidated = validatedModules.length === 6;
@@ -14,7 +15,8 @@ export default function AttestationPage({ modules, onNavigate }) {
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="attestation" onNavigate={onNavigate} />
 
-      <main style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 8px 0', fontSize: '22px', fontWeight: '700', color: '#064e3b' }}>Mon attestation</h1>
           <p style={{ margin: '0 0 28px 0', color: '#64748b', fontSize: '14px' }}>
@@ -93,6 +95,9 @@ export default function AttestationPage({ modules, onNavigate }) {
             </div>
           )}
         </div>
+        </div>
+
+        <Footer onShowLegal={onShowLegal} />
       </main>
     </div>
   );

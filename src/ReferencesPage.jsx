@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar';
+import Footer from './Footer';
 
 const sections = [
   {
@@ -126,7 +127,7 @@ const sections = [
   },
 ];
 
-export default function ReferencesPage({ onNavigate }) {
+export default function ReferencesPage({ onNavigate, onShowLegal }) {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="references" onNavigate={onNavigate} />
@@ -177,6 +178,8 @@ export default function ReferencesPage({ onNavigate }) {
             </div>
           </div>
         </div>
+
+        <Footer onShowLegal={onShowLegal} />
       </main>
     </div>
   );

@@ -156,15 +156,16 @@ export default function App() {
     );
   }
 
-  if (screen === 'attestation') return <AttestationPage modules={modules} onNavigate={handleNavigate} />;
+  if (screen === 'attestation') return <AttestationPage modules={modules} onNavigate={handleNavigate} onShowLegal={showLegal} />;
   if (screen === 'scorm-player') return <ScormPlayer onNavigate={handleNavigate} />;
-  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} />;
+  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} onShowLegal={showLegal} />;
 
   if (screen === 'profil') {
     return (
       <ProfilePage
         modules={modules}
         onNavigate={handleNavigate}
+        onShowLegal={showLegal}
         onReset={handleReset}
         onImport={(imported) => {
           setModules(prev => prev.map(m => {
