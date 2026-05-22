@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fond carré (icône maskable) -->
+  <rect width="512" height="512" fill="#1e3a5f"/>
+  <!-- Cercle intérieur pour effet "badge" -->
+  <circle cx="256" cy="256" r="180" fill="#2d5a87"/>
+  <!-- Feuille verte stylisée -->
+  <g transform="translate(256, 256)">
+    <path d="M -90 60 Q -90 -90 60 -90 Q 90 -60 90 0 Q 90 90 -30 90 Q -90 90 -90 60 Z" fill="#4ade80"/>
+    <path d="M -60 60 Q 0 0 60 -60" stroke="#166534" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M -20 30 Q 0 10 30 -10" stroke="#166534" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M -40 50 Q -20 30 0 20" stroke="#166534" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

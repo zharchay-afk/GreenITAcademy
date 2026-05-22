@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import modulesData from '../data/modules.json';
+import Visual from './Visuals';
+import Logo from './Logo';
 
-export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
+export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectModule }) {
   const module = modulesData.modules.find(m => m.id === moduleId);
   const [currentIdx, setCurrentIdx] = useState(0);
+
+  // Réinitialise sur la première section quand on change de module
+  useEffect(() => { setCurrentIdx(0); }, [moduleId]);
 
   if (!module) return <div>Module non trouvé</div>;
 
@@ -13,20 +18,26 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
   const isLast = currentIdx === total - 1;
   const progressPct = Math.round(((currentIdx + 1) / total) * 100);
 
+  // Navigation module précédent / suivant
+  const allIds = modulesData.modules.map(m => m.id);
+  const mIdx = allIds.indexOf(moduleId);
+  const prevModuleId = mIdx > 0 ? allIds[mIdx - 1] : null;
+  const nextModuleId = mIdx < allIds.length - 1 ? allIds[mIdx + 1] : null;
+
   return (
     <div style={{
-      display: 'flex', minHeight: '100vh', backgroundColor: '#f1f5f9',
+      display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Sidebar */}
-      <aside style={{ width: '240px', backgroundColor: '#1e3a5f', minHeight: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <aside style={{ width: '240px', backgroundColor: '#064e3b', height: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         {/* Logo */}
         <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '36px', height: '36px', backgroundColor: '#2d5a87', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>🌿</div>
+            <Logo size={36} />
             <div>
               <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-              <div style={{ color: '#7cb3d9', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
+              <div style={{ color: '#86efac', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
             </div>
           </div>
         </div>
@@ -64,13 +75,34 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
           ))}
         </nav>
 
-        {/* Retour */}
-        <div style={{ padding: '16px' }}>
+        {/* Navigation entre MODULES (à ne pas confondre avec la navigation entre sections en bas de page) */}
+        <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '6px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '700', marginBottom: '2px' }}>
+            Changer de module
+          </div>
+          <div style={{ display: 'flex', gap: '6px' }}>
+            <button
+              onClick={() => prevModuleId && onSelectModule(prevModuleId)}
+              disabled={!prevModuleId}
+              title={prevModuleId ? 'Module précédent' : 'Aucun module précédent'}
+              style={{ flex: 1, backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: prevModuleId ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.25)', padding: '8px', borderRadius: '5px', cursor: prevModuleId ? 'pointer' : 'not-allowed', fontSize: '11px' }}
+            >
+              ⏮ Module
+            </button>
+            <button
+              onClick={() => nextModuleId && onSelectModule(nextModuleId)}
+              disabled={!nextModuleId}
+              title={nextModuleId ? 'Module suivant' : 'Aucun module suivant'}
+              style={{ flex: 1, backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: nextModuleId ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.25)', padding: '8px', borderRadius: '5px', cursor: nextModuleId ? 'pointer' : 'not-allowed', fontSize: '11px' }}
+            >
+              Module ⏭
+            </button>
+          </div>
           <button
             onClick={onBack}
-            style={{ width: '100%', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '8px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
+            style={{ width: '100%', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '8px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', marginTop: '4px' }}
           >
-            ← Retour à l'accueil
+            ← Tous mes modules
           </button>
         </div>
       </aside>
@@ -81,9 +113,12 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
         <header style={{ backgroundColor: '#fff', padding: '16px 32px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>
-              {module.unite} · Section {currentIdx + 1} sur {total}
+              {module.unite} · Section {currentIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
             </div>
-            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#1e3a5f' }}>{section.title}</h1>
+            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>{section.title}</h1>
+            {module.subtitle && (
+              <div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
+            )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span style={{ fontSize: '12px', color: '#64748b' }}>Progression</span>
@@ -96,16 +131,59 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
 
         {/* Texte du cours */}
         <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
-          <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '780px', margin: '0 auto' }}>
+
+            {/* Intro (chapeau) */}
+            {section.intro && (
+              <div style={{ marginBottom: '20px', padding: '16px 20px', borderLeft: '3px solid #4ade80', backgroundColor: '#f0fdf4', borderRadius: '0 6px 6px 0' }}>
+                <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.65', color: '#166534', fontStyle: 'italic', textAlign: 'justify', hyphens: 'auto' }}>
+                  {section.intro}
+                </p>
+              </div>
+            )}
+
             {/* Contenu principal */}
             <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-              <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.85', color: '#374151' }}>
+              <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.85', color: '#374151', whiteSpace: 'pre-line', textAlign: 'justify', hyphens: 'auto' }}>
                 {section.content}
               </p>
             </div>
 
+            {/* Visuel(s) SVG */}
+            {section.visual && (Array.isArray(section.visual)
+              ? section.visual.map((v, i) => <Visual key={i} name={v} />)
+              : <Visual name={section.visual} />
+            )}
+
+            {/* Sous-sections détaillées */}
+            {Array.isArray(section.details) && section.details.length > 0 && (
+              <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '24px 28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+                {section.details.map((d, i) => (
+                  <div key={i} style={{ marginBottom: i < section.details.length - 1 ? '18px' : 0, paddingBottom: i < section.details.length - 1 ? '18px' : 0, borderBottom: i < section.details.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
+                    <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#064e3b' }}>{d.subtitle}</h4>
+                    <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.7', color: '#374151', whiteSpace: 'pre-line', textAlign: 'justify', hyphens: 'auto' }}>{d.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Exemples concrets */}
+            {Array.isArray(section.examples) && section.examples.length > 0 && (
+              <div style={{ backgroundColor: '#fff8e1', borderRadius: '8px', padding: '20px 24px', marginBottom: '20px', border: '1px solid #fde68a' }}>
+                <h3 style={{ margin: '0 0 12px 0', fontSize: '13px', fontWeight: '700', color: '#92400e', display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.3px' }}>
+                  🔎 EXEMPLES CONCRETS
+                </h3>
+                {section.examples.map((ex, i) => (
+                  <div key={i} style={{ marginBottom: i < section.examples.length - 1 ? '12px' : 0 }}>
+                    <div style={{ fontSize: '13px', fontWeight: '700', color: '#78350f', marginBottom: '2px' }}>{ex.title}</div>
+                    <div style={{ fontSize: '13px', color: '#78350f', lineHeight: '1.55' }}>{ex.text}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Points clés */}
-            <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '20px', border: '1px solid #86efac' }}>
+            <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '20px', border: '1px solid #86efac', marginBottom: '20px' }}>
               <h3 style={{ margin: '0 0 14px 0', fontSize: '14px', fontWeight: '700', color: '#166534', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 💡 Points clés à retenir
               </h3>
@@ -118,20 +196,45 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
                 ))}
               </ul>
             </div>
+
+            {/* Pour aller plus loin */}
+            {(() => {
+              // Affiche uniquement les ressources avec une URL réelle.
+              // Les items au format string (sans URL) sont filtrés (cf. demande utilisateur).
+              const linkedItems = (section.goFurther || []).filter(g => g && typeof g === 'object' && g.url);
+              if (linkedItems.length === 0) return null;
+              return (
+                <div style={{ backgroundColor: '#eff6ff', borderRadius: '8px', padding: '18px 22px', border: '1px solid #bfdbfe' }}>
+                  <h3 style={{ margin: '0 0 10px 0', fontSize: '12px', fontWeight: '700', color: '#1e40af', letterSpacing: '0.4px' }}>
+                    📖 POUR ALLER PLUS LOIN
+                  </h3>
+                  <ul style={{ margin: 0, paddingLeft: '18px', listStyle: 'disc' }}>
+                    {linkedItems.map((g, i) => (
+                      <li key={i} style={{ fontSize: '12px', color: '#064e3b', lineHeight: '1.6', marginBottom: i < linkedItems.length - 1 ? '4px' : 0 }}>
+                        <a href={g.url} target="_blank" rel="noreferrer" style={{ color: '#1d4ed8', textDecoration: 'underline' }}>
+                          {g.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })()}
+
           </div>
         </div>
 
-        {/* Navigation bas de page */}
+        {/* Navigation bas de page — entre SECTIONS du module courant */}
         <footer style={{ padding: '16px 32px', borderTop: '1px solid #e2e8f0', backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <button
             onClick={() => setCurrentIdx(i => i - 1)}
             disabled={isFirst}
-            style={{ padding: '10px 20px', backgroundColor: isFirst ? '#f8fafc' : '#fff', color: isFirst ? '#a0aec0' : '#1e3a5f', border: `1px solid ${isFirst ? '#e2e8f0' : '#1e3a5f'}`, borderRadius: '6px', cursor: isFirst ? 'not-allowed' : 'pointer', fontWeight: '600', fontSize: '14px' }}
+            style={{ padding: '10px 20px', backgroundColor: isFirst ? '#f8fafc' : '#fff', color: isFirst ? '#a0aec0' : '#064e3b', border: `1px solid ${isFirst ? '#e2e8f0' : '#064e3b'}`, borderRadius: '6px', cursor: isFirst ? 'not-allowed' : 'pointer', fontWeight: '600', fontSize: '14px' }}
           >
-            ← Précédent
+            ← Section précédente
           </button>
 
-          <span style={{ fontSize: '13px', color: '#94a3b8' }}>{currentIdx + 1} / {total}</span>
+          <span style={{ fontSize: '13px', color: '#94a3b8' }}>Section {currentIdx + 1} / {total}</span>
 
           {isLast ? (
             <button
@@ -143,9 +246,9 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz }) {
           ) : (
             <button
               onClick={() => setCurrentIdx(i => i + 1)}
-              style={{ padding: '10px 20px', backgroundColor: '#1e3a5f', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+              style={{ padding: '10px 20px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
             >
-              Suivant →
+              Section suivante →
             </button>
           )}
         </footer>

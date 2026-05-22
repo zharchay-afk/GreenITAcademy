@@ -2,15 +2,50 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
     <title>Green IT Académie</title>
+    <meta name="description" content="Parcours pédagogique sur les normes, labels et certifications du Green IT — Master Data Science, UE LUPT01." />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#1e3a5f" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- iOS : nom et apparence quand l'app est ajoutée à l'écran d'accueil -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Green IT" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { background-color: #f1f5f9; }
+      html, body { height: 100%; }
+      body {
+        background-color: #f1f5f9;
+        /* Gestion des zones sûres (encoche iPhone, barre de navigation Android) */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      /* Empêche le rebond élastique sur iOS quand on est en mode standalone */
+      @media (display-mode: standalone) {
+        body { overscroll-behavior: none; }
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Enregistrement du service worker pour le mode hors-ligne et l'installation -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {
+            // Échec silencieux : l'application fonctionne sans le SW
+          });
+        });
+      }
+    </script>
   </body>
 </html>

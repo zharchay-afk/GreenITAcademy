@@ -1,99 +1,18 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
+import Sidebar from './src/Sidebar';
 
 // ================================================
 // GREEN IT ACADÉMIE - Style SecNum
 // ================================================
 
 const modulesData = [
-  { id: 1, unite: "UNITÉ 1", title: "Cadres conceptuels et typologie", image: "🌐", bgColor: "#4299e1", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 2, unite: "UNITÉ 2", title: "Cadre réglementaire UE & Luxembourg", image: "⚖️", bgColor: "#ed8936", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 3, unite: "UNITÉ 3", title: "Normes et certifications ISO", image: "📋", bgColor: "#48bb78", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 4, unite: "UNITÉ 4", title: "Labels environnementaux IT", image: "🏷️", bgColor: "#9f7aea", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 5, unite: "UNITÉ 5", title: "Codes de conduite et chartes", image: "📜", bgColor: "#f56565", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 6, unite: "UNITÉ 6", title: "Cas pratiques Luxembourg", image: "🇱🇺", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 1, unite: "MODULE 1", title: "Cadres conceptuels et typologie", image: "🌐", bgColor: "#4299e1", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 2, unite: "MODULE 2", title: "Cadre réglementaire UE & Luxembourg", image: "⚖️", bgColor: "#ed8936", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 3, unite: "MODULE 3", title: "Normes et certifications ISO", image: "📋", bgColor: "#48bb78", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 4, unite: "MODULE 4", title: "Labels environnementaux IT", image: "🏷️", bgColor: "#9f7aea", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 5, unite: "MODULE 5", title: "Codes de conduite et chartes", image: "📜", bgColor: "#f56565", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 6, unite: "MODULE 6", title: "Cas pratiques Luxembourg", image: "🇱🇺", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
 ];
-
-// Sidebar Component
-const Sidebar = ({ activePage, onNavigate }) => (
-  <aside style={{
-    width: '180px',
-    backgroundColor: '#1e3a5f',
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    flexShrink: 0,
-  }}>
-    {/* Logo */}
-    <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <div style={{
-          width: '36px', height: '36px', backgroundColor: '#2d5a87', borderRadius: '8px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px'
-        }}>🌿</div>
-        <div>
-          <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-          <div style={{ color: '#7cb3d9', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
-        </div>
-      </div>
-    </div>
-    
-    {/* Navigation */}
-    <nav style={{ padding: '12px 0', flex: 1 }}>
-      {[
-        { id: 'accueil', icon: '🏠', label: 'Accueil' },
-        { id: 'attestation', icon: '📄', label: 'Mon attestation' },
-        { id: 'profil', icon: '👤', label: 'Mon profil' },
-      ].map((item) => (
-        <button
-          key={item.id}
-          onClick={() => onNavigate(item.id)}
-          style={{
-            width: '100%',
-            padding: '12px 16px',
-            backgroundColor: activePage === item.id ? 'rgba(255,255,255,0.08)' : 'transparent',
-            border: 'none',
-            borderLeft: activePage === item.id ? '3px solid #4ade80' : '3px solid transparent',
-            color: activePage === item.id ? '#4ade80' : 'rgba(255,255,255,0.85)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            cursor: 'pointer',
-            fontSize: '13px',
-            fontWeight: activePage === item.id ? '600' : '400',
-            textAlign: 'left',
-          }}
-        >
-          <span style={{ fontSize: '15px' }}>{item.icon}</span>
-          <span>{item.label}</span>
-        </button>
-      ))}
-    </nav>
-    
-    {/* Aide */}
-    <div style={{ padding: '16px' }}>
-      <button style={{
-        width: '100%',
-        backgroundColor: 'transparent',
-        border: 'none',
-        color: '#4ade80',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        cursor: 'pointer',
-        fontSize: '13px',
-        padding: '8px 0'
-      }}>
-        <span style={{
-          width: '18px', height: '18px', borderRadius: '50%',
-          border: '2px solid #4ade80',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '11px'
-        }}>?</span>
-        <span>Aide</span>
-      </button>
-    </div>
-  </aside>
-);
 
 // Module Card Component
 const ModuleCard = ({ module, onStart, onEvaluate }) => {
@@ -136,7 +55,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
         )}
       </div>
       
-      {/* Badge Unité */}
+      {/* Badge Module */}
       <div style={{ backgroundColor: '#4a5568', padding: '6px 12px' }}>
         <span style={{
           color: 'rgba(255,255,255,0.9)',
@@ -216,12 +135,18 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
-export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp }) {
+const footerBtn = { background: 'none', border: 'none', color: '#64748b', textDecoration: 'underline', cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit' };
+
+export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
 
-  // Si des modules sont passés depuis App.jsx, on les utilise ; sinon on utilise l'état local
   const modules = modulesProp ?? modulesState;
+
+  const handleNavigate = (page) => {
+    setActivePage(page);
+    if (onNavigateProp) onNavigateProp(page);
+  };
 
   const handleStart = (id) => {
     if (onStartProp) {
@@ -249,13 +174,14 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
   return (
     <div style={{
       display: 'flex',
-      minHeight: '100vh',
+      height: '100vh',
+      overflow: 'hidden',
       backgroundColor: '#f1f5f9',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
-      <Sidebar activePage={activePage} onNavigate={setActivePage} />
-      
-      <main style={{ flex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Sidebar activePage={activePage} onNavigate={handleNavigate} />
+
+      <main style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
         <header style={{
           backgroundColor: '#fff',
@@ -265,8 +191,8 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#1e3a5f' }}>
-            Module 1 : Normes, Labels & Certifications Green IT
+          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>
+            Mes modules — Normes, Labels & Certifications Green IT
           </h1>
           <div style={{
             display: 'flex',
@@ -281,25 +207,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
         </header>
 
         {/* Contenu */}
-        <div style={{ padding: '20px 24px', flex: 1 }}>
-          {/* Bouton retour */}
-          <button style={{
-            backgroundColor: '#22c55e',
-            color: '#fff',
-            border: 'none',
-            padding: '7px 14px',
-            borderRadius: '16px',
-            fontSize: '12px',
-            fontWeight: '500',
-            cursor: 'pointer',
-            marginBottom: '20px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '5px'
-          }}>
-            ← Accueil
-          </button>
-
+        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto' }}>
           {/* Grille des modules */}
           <div style={{
             display: 'grid',
@@ -318,41 +226,6 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           </div>
 
           {/* Section SCORM */}
-          <div style={{
-            padding: '20px',
-            backgroundColor: '#ecfdf5',
-            borderRadius: '8px',
-            border: '1px solid #86efac',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '14px'
-          }}>
-            <span style={{ fontSize: '28px' }}>📦</span>
-            <div>
-              <h3 style={{ margin: '0 0 6px 0', color: '#166534', fontSize: '14px', fontWeight: '600' }}>
-                Export SCORM disponible
-              </h3>
-              <p style={{ margin: '0 0 12px 0', color: '#4d7c0f', fontSize: '12px', lineHeight: '1.5' }}>
-                Intégrez ce parcours dans Moodle, Canvas ou tout LMS compatible SCORM 1.2.
-                Une démarche conforme aux principes Green IT : réutilisabilité et sobriété numérique.
-              </p>
-              <button style={{
-                backgroundColor: '#166534',
-                color: '#fff',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: '5px',
-                fontSize: '12px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}>
-                ⬇ Télécharger le package SCORM
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
@@ -362,11 +235,19 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           display: 'flex',
           justifyContent: 'space-between',
           color: '#64748b',
-          fontSize: '11px'
+          fontSize: '11px',
+          flexWrap: 'wrap',
+          gap: '12px',
         }}>
-          <span>© 2026 Charles DE MEDEIROS – Ziad HARCHAY | Master Data Science, UE Green IT LURS01</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            🌱 Éco-conçu selon les principes du Green IT
+          <span>Master Data Science · UTBM · 2026</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            {onShowLegal && <>
+              <button onClick={() => onShowLegal('notice')} style={footerBtn}>Mentions légales</button>
+              <button onClick={() => onShowLegal('privacy')} style={footerBtn}>Données personnelles</button>
+              <button onClick={() => onShowLegal('cookies')} style={footerBtn}>Cookies</button>
+              <button onClick={() => onShowLegal('accessibilite')} style={footerBtn}>♿ Accessibilité</button>
+              <button onClick={() => onShowLegal('ecoconception')} style={footerBtn}>🌱 Éco-conçu Green IT</button>
+            </>}
           </span>
         </footer>
       </main>
