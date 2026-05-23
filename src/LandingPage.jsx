@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
+import { useTheme, toggleTheme } from './theme';
 
 // ============================================================================
 // LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
@@ -17,6 +18,16 @@ const MODULE_PALETTE = {
   4: { accent: '#8b5cf6', bg: '#ede9fe' },
   5: { accent: '#ef4444', bg: '#fee2e2' },
   6: { accent: '#14b8a6', bg: '#ccfbf1' },
+};
+
+// Description courte par module — sert d'accroche pédagogique sur la landing
+const MODULE_TEASER = {
+  1: 'Comprendre le gradient de contrainte entre lois, normes, labels et codes.',
+  2: 'Panorama complet des réglementations qui s\'imposent aux organisations.',
+  3: 'Mettre en œuvre les principales normes ISO et la norme EN 50600 des datacenters.',
+  4: 'Choisir et utiliser les labels pour des achats IT responsables.',
+  5: 'Les engagements volontaires des opérateurs et le rôle de la profession.',
+  6: 'Deux success stories qui illustrent concrètement la mise en œuvre.',
 };
 
 // Icônes SVG sobres line-art pour la section Intérêt
@@ -73,6 +84,8 @@ const toMinutes = (str) => {
 export default function LandingPage({ onStart, onShowLegal }) {
   const mainRef = useRef(null);
   const [activeSection, setActiveSection] = useState('accueil');
+  const [theme] = useTheme();
+  const isDark = theme === 'dark';
 
   // Suivi de la section visible pour la nav active
   useEffect(() => {
@@ -95,20 +108,19 @@ export default function LandingPage({ onStart, onShowLegal }) {
   };
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f9fafb', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
 
       {/* ============================ Header sticky ============================ */}
       <header style={{
         flexShrink: 0,
-        backgroundColor: 'rgba(255,255,255,0.96)',
-        backdropFilter: 'blur(8px)',
-        borderBottom: '1px solid #e5e7eb',
+        backgroundColor: 'var(--bg-surface)',
+        borderBottom: '1px solid var(--border)',
         padding: '12px 32px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <button onClick={() => scrollTo('accueil')} style={brandBtnStyle}>
           <Logo size={32} />
-          <span style={{ fontWeight: 700, fontSize: '15px', color: '#0f172a' }}>Green IT Académie</span>
+          <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>Green IT Académie</span>
         </button>
 
         <nav style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -134,21 +146,23 @@ export default function LandingPage({ onStart, onShowLegal }) {
 
         {/* ----------------- Section Accueil ----------------- */}
         <section id="accueil" style={sectionStyle({
-          background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 60%, #a7f3d0 100%)',
-          color: '#064e3b',
+          background: isDark
+            ? 'linear-gradient(135deg, #0a2e1f 0%, #14532d 60%, #0f3a23 100%)'
+            : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 60%, #a7f3d0 100%)',
+          color: isDark ? '#86efac' : '#064e3b',
         })}>
           <div style={containerStyle}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: '#fff', border: '1px solid #bbf7d0', borderRadius: '20px', marginBottom: '24px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#fff', border: `1px solid ${isDark ? 'rgba(134,239,172,0.3)' : '#bbf7d0'}`, borderRadius: '20px', marginBottom: '24px' }}>
               <Logo size={20} />
-              <span style={{ fontSize: '10px', fontWeight: 700, color: '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#86efac' : '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: '#064e3b' }}>
+            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#ecfdf5' : '#064e3b' }}>
               Formez-vous au<br />
-              <span style={{ color: '#15803d' }}>Numérique Responsable</span>
+              <span style={{ color: isDark ? '#86efac' : '#15803d' }}>Numérique Responsable</span>
             </h1>
 
-            <p style={{ fontSize: '17px', color: '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
+            <p style={{ fontSize: '17px', color: isDark ? '#a7f3d0' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
               Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.
             </p>
 
@@ -160,8 +174,8 @@ export default function LandingPage({ onStart, onShowLegal }) {
             <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
               {stats.map((s, i) => (
                 <div key={i}>
-                  <div style={{ fontSize: '32px', fontWeight: 800, color: '#15803d' }}>{s.value}</div>
-                  <div style={{ fontSize: '12px', color: '#166534', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
+                  <div style={{ fontSize: '32px', fontWeight: 800, color: isDark ? '#86efac' : '#15803d' }}>{s.value}</div>
+                  <div style={{ fontSize: '12px', color: isDark ? '#a7f3d0' : '#166534', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -169,13 +183,13 @@ export default function LandingPage({ onStart, onShowLegal }) {
         </section>
 
         {/* ----------------- Section Intérêt ----------------- */}
-        <section id="interet" style={sectionStyle({ background: '#fff' })}>
+        <section id="interet" style={sectionStyle({ background: 'var(--bg-surface)' })}>
           <div style={containerStyle}>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: '#0f172a', margin: '0 0 14px 0' }}>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
                 Pourquoi suivre cette formation&nbsp;?
               </h2>
-              <p style={{ fontSize: '15px', color: '#6b7280', maxWidth: '720px', margin: '0 auto', lineHeight: '1.65' }}>
+              <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '720px', margin: '0 auto', lineHeight: '1.65' }}>
                 Le Green IT ne se résume pas à de bonnes intentions : il s'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les <strong>outils opérationnels</strong>.
               </p>
             </div>
@@ -183,11 +197,11 @@ export default function LandingPage({ onStart, onShowLegal }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
               {interests.map((r, i) => (
                 <div key={i} style={{ textAlign: 'center', padding: '8px' }}>
-                  <div style={{ width: '64px', height: '64px', backgroundColor: r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
+                  <div style={{ width: '64px', height: '64px', backgroundColor: isDark ? 'rgba(134,239,172,0.15)' : r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
                     <r.Icon />
                   </div>
-                  <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#0f172a', margin: '0 0 10px 0' }}>{r.title}</h3>
-                  <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: '1.65', margin: 0 }}>{r.text}</p>
+                  <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 10px 0' }}>{r.title}</h3>
+                  <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.65', margin: 0 }}>{r.text}</p>
                 </div>
               ))}
             </div>
@@ -195,13 +209,13 @@ export default function LandingPage({ onStart, onShowLegal }) {
         </section>
 
         {/* ----------------- Section Programme ----------------- */}
-        <section id="programme" style={sectionStyle({ background: '#f9fafb' })}>
+        <section id="programme" style={sectionStyle({ background: 'var(--bg-page)' })}>
           <div style={containerStyle}>
             <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: '#0f172a', margin: '0 0 14px 0' }}>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
                 Le parcours en 6 modules
               </h2>
-              <p style={{ fontSize: '15px', color: '#6b7280', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
                 Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.
               </p>
             </div>
@@ -212,22 +226,25 @@ export default function LandingPage({ onStart, onShowLegal }) {
                 const minutes = toMinutes(m.estimatedTime);
                 return (
                   <div key={m.id} style={{
-                    backgroundColor: '#fff', borderRadius: '12px',
-                    border: '1px solid #e5e7eb', padding: '20px',
+                    backgroundColor: 'var(--bg-surface)', borderRadius: '12px',
+                    border: '1px solid var(--border)', padding: '20px',
                     display: 'flex', flexDirection: 'column',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                      <div style={{ width: '44px', height: '44px', backgroundColor: pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
+                      <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(134,239,172,0.18)' : pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
                         {m.image}
                       </div>
-                      <span style={{ fontSize: '11px', color: '#9ca3af', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                         ⏱ {minutes} min
                       </span>
                     </div>
-                    <div style={{ fontSize: '10px', fontWeight: 700, color: pal.accent, letterSpacing: '1px', marginBottom: '6px' }}>MODULE {m.id}</div>
-                    <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 700, color: '#0f172a', lineHeight: '1.35' }}>{m.title}</h3>
+                    <div style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#86efac' : pal.accent, letterSpacing: '1px', marginBottom: '6px' }}>MODULE {m.id}</div>
+                    <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: '1.35' }}>{m.title}</h3>
                     {m.subtitle && (
-                      <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', lineHeight: '1.5' }}>{m.subtitle}</p>
+                      <p style={{ margin: '0 0 6px 0', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4', fontStyle: 'italic' }}>{m.subtitle}</p>
+                    )}
+                    {MODULE_TEASER[m.id] && (
+                      <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{MODULE_TEASER[m.id]}</p>
                     )}
                   </div>
                 );
@@ -244,17 +261,31 @@ export default function LandingPage({ onStart, onShowLegal }) {
       {/* ============================ Footer sticky ============================ */}
       <footer style={{
         flexShrink: 0,
-        padding: '10px 32px', backgroundColor: '#fff', borderTop: '1px solid #e5e7eb',
-        color: '#6b7280', fontSize: '11px',
+        padding: '10px 32px', backgroundColor: 'var(--bg-surface)', borderTop: '1px solid var(--border)',
+        color: 'var(--text-secondary)', fontSize: '11px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px',
       }}>
         <span>Master Data Science · UTBM · 2026</span>
-        <span style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+        <span style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
           <button onClick={() => onShowLegal('notice')}        style={footerLink}>Mentions légales</button>
           <button onClick={() => onShowLegal('privacy')}       style={footerLink}>Données personnelles</button>
           <button onClick={() => onShowLegal('cookies')}       style={footerLink}>Cookies</button>
           <button onClick={() => onShowLegal('accessibilite')} style={footerLink}>♿ Accessibilité</button>
           <button onClick={() => onShowLegal('ecoconception')} style={footerLink}>🌱 Éco-conçu</button>
+          <button
+            onClick={toggleTheme}
+            title={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+            aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+            style={{
+              background: 'var(--bg-soft)', border: '1px solid var(--border)',
+              cursor: 'pointer', padding: '4px 10px', borderRadius: '12px',
+              fontSize: '12px', fontFamily: 'inherit',
+              color: 'var(--text-primary)',
+              display: 'inline-flex', alignItems: 'center', gap: '4px',
+            }}
+          >
+            {isDark ? '☀️' : '🌙'} {isDark ? 'Clair' : 'Sombre'}
+          </button>
         </span>
       </footer>
     </div>
@@ -283,10 +314,10 @@ const brandBtnStyle = {
 };
 
 const navLinkStyle = (active) => ({
-  background: active ? '#dcfce7' : 'transparent',
+  background: active ? 'var(--accent-soft)' : 'transparent',
   border: 'none',
   cursor: 'pointer',
-  color: active ? '#15803d' : '#6b7280',
+  color: active ? 'var(--accent)' : 'var(--text-secondary)',
   fontSize: '13px',
   fontWeight: active ? 700 : 500,
   padding: '8px 14px',
@@ -308,12 +339,12 @@ const ctaPrimaryStyle = {
 };
 
 const ctaSecondaryStyle = {
-  padding: '12px 26px', backgroundColor: '#fff', color: '#15803d',
+  padding: '12px 26px', backgroundColor: 'transparent', color: '#15803d',
   border: '1px solid #86efac', borderRadius: '10px',
   fontSize: '14px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
 };
 
 const footerLink = {
-  background: 'none', border: 'none', color: '#4b5563', textDecoration: 'underline',
+  background: 'none', border: 'none', color: 'var(--text-secondary)', textDecoration: 'underline',
   cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit',
 };

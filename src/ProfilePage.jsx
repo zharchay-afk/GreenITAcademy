@@ -87,18 +87,18 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
   ];
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="profil" onNavigate={onNavigate} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
-          <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: '#064e3b' }}>Mon profil</h1>
+          <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: 'var(--accent)' }}>Mon profil</h1>
 
           {/* Nom */}
-          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>👤 Informations</h2>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#64748b', marginBottom: '6px' }}>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>👤 Informations</h2>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: 'var(--text-secondary)', marginBottom: '6px' }}>
               Ton prénom / nom
             </label>
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -108,7 +108,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
                 onChange={e => setName(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSaveName()}
                 placeholder="Ex : Camille Martin"
-                style={{ flex: 1, padding: '10px 14px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '14px', outline: 'none' }}
+                style={{ flex: 1, padding: '10px 14px', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '14px', outline: 'none' }}
               />
               <button
                 onClick={handleSaveName}
@@ -120,15 +120,15 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
           </div>
 
           {/* Statistiques */}
-          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>📊 Mes statistiques</h2>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>📊 Mes statistiques</h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               {stats.map((s, i) => (
-                <div key={i} style={{ backgroundColor: '#f8fafc', borderRadius: '8px', padding: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div key={i} style={{ backgroundColor: 'var(--bg-muted)', borderRadius: '8px', padding: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <span style={{ fontSize: '24px' }}>{s.icon}</span>
                   <div>
-                    <div style={{ fontSize: '18px', fontWeight: '800', color: '#064e3b' }}>{s.value}</div>
-                    <div style={{ fontSize: '11px', color: '#64748b' }}>{s.label}</div>
+                    <div style={{ fontSize: '18px', fontWeight: '800', color: 'var(--accent)' }}>{s.value}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{s.label}</div>
                   </div>
                 </div>
               ))}
@@ -136,17 +136,17 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
           </div>
 
           {/* Barre de progression globale */}
-          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>🎯 Progression globale</h2>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>🎯 Progression globale</h2>
             {modules.map(m => (
               <div key={m.id} style={{ marginBottom: '12px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '12px', color: '#374151' }}>{m.unite} — {m.title}</span>
+                  <span style={{ fontSize: '12px', color: 'var(--text-primary)' }}>{m.unite} — {m.title}</span>
                   <span style={{ fontSize: '12px', fontWeight: '600', color: m.score >= 70 ? '#22c55e' : m.score > 0 ? '#f59e0b' : '#94a3b8' }}>
                     {m.score > 0 ? `${m.score}%` : m.started ? 'En cours' : 'Non commencé'}
                   </span>
                 </div>
-                <div style={{ backgroundColor: '#f1f5f9', borderRadius: '4px', height: '6px' }}>
+                <div style={{ backgroundColor: 'var(--bg-page)', borderRadius: '4px', height: '6px' }}>
                   <div style={{ width: `${m.score}%`, height: '100%', backgroundColor: m.score >= 70 ? '#22c55e' : '#f59e0b', borderRadius: '4px', transition: 'width 0.4s' }} />
                 </div>
               </div>
@@ -154,9 +154,9 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
           </div>
 
           {/* Synchronisation multi-appareils */}
-          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #bbf7d0' }}>
-            <h2 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700', color: '#064e3b' }}>🔄 Sauvegarde &amp; synchronisation multi-appareils</h2>
-            <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: '#64748b', lineHeight: '1.55' }}>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #bbf7d0' }}>
+            <h2 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>🔄 Sauvegarde &amp; synchronisation multi-appareils</h2>
+            <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.55' }}>
               L'application étant éco-conçue sans serveur, la synchronisation s'effectue via un fichier de sauvegarde que vous transférez vous-même d'un appareil à l'autre. Aucune donnée n'est envoyée à un tiers.
             </p>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -168,7 +168,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
               </button>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                style={{ padding: '9px 16px', backgroundColor: '#fff', color: '#064e3b', border: '1px solid #064e3b', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                style={{ padding: '9px 16px', backgroundColor: 'var(--bg-surface)', color: 'var(--accent)', border: '1px solid #064e3b', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
               >
                 ⬆ Importer une sauvegarde
               </button>
@@ -179,21 +179,21 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
                 {importMsg.text}
               </div>
             )}
-            <p style={{ margin: '12px 0 0 0', fontSize: '11px', color: '#94a3b8', lineHeight: '1.5' }}>
+            <p style={{ margin: '12px 0 0 0', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.5' }}>
               💡 Conseil : exportez régulièrement votre fichier de progression. Sur un autre appareil, installez l'application puis utilisez « Importer » pour restaurer votre avancement.
             </p>
           </div>
 
           {/* Zone danger */}
-          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #fecaca' }}>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #fecaca' }}>
             <h2 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: '700', color: '#991b1b' }}>⚠️ Réinitialiser la progression</h2>
-            <p style={{ margin: '0 0 14px 0', fontSize: '13px', color: '#64748b', lineHeight: '1.6' }}>
+            <p style={{ margin: '0 0 14px 0', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
               Efface tous tes scores, temps passés et modules commencés. Cette action est irréversible.
             </p>
             {!confirmReset ? (
               <button
                 onClick={() => setConfirmReset(true)}
-                style={{ padding: '9px 18px', backgroundColor: '#fff', color: '#dc2626', border: '1px solid #dc2626', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+                style={{ padding: '9px 18px', backgroundColor: 'var(--bg-surface)', color: '#dc2626', border: '1px solid #dc2626', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
               >
                 Réinitialiser
               </button>
@@ -208,7 +208,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
                 </button>
                 <button
                   onClick={() => setConfirmReset(false)}
-                  style={{ padding: '8px 16px', backgroundColor: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '13px' }}
+                  style={{ padding: '8px 16px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '13px' }}
                 >
                   Annuler
                 </button>
