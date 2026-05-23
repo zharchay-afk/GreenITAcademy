@@ -31,7 +31,7 @@ export default function Sidebar({ activePage, onNavigate }) {
   return (
     <aside style={{
       width,
-      backgroundColor: '#064e3b',
+      backgroundColor: '#15803d',
       height: '100vh',
       display: 'flex',
       flexDirection: 'column',

@@ -1,52 +1,108 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
 
-// Reasons block (Pourquoi se former)
-const IconTrending = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 9 12 13 8 21 16" /><polyline points="21 10 21 16 15 16" /></svg>
+// ============================================================================
+// LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
+// Palette : verts doux, modules en pastels (couleur d'accent sur fond clair)
+// ============================================================================
+
+// Palette adoucie (les couleurs originales des modules sont gardées comme
+// accent mais utilisées en faible quantité — fond pastel + texte coloré)
+const MODULE_PALETTE = {
+  1: { accent: '#0ea5e9', bg: '#e0f2fe' },
+  2: { accent: '#f59e0b', bg: '#fef3c7' },
+  3: { accent: '#10b981', bg: '#d1fae5' },
+  4: { accent: '#8b5cf6', bg: '#ede9fe' },
+  5: { accent: '#ef4444', bg: '#fee2e2' },
+  6: { accent: '#14b8a6', bg: '#ccfbf1' },
+};
+
+// Icônes SVG sobres line-art pour la section Intérêt
+const IconScale = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 3v18" /><path d="M3 7l4 8-2 1c-.5.5-1 .5-2 0v-1l4-8" /><path d="M17 7l4 8-2 1c-.5.5-1 .5-2 0v-1l4-8" /><path d="M5 21h14" />
+  </svg>
 );
-const IconMedal = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="15" r="5" /><polyline points="8.5 11.5 6 4 18 4 15.5 11.5" /></svg>
+const IconCheck = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+  </svg>
 );
-const IconUsers = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+const IconCompass = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0891b2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" /><polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88" />
+  </svg>
 );
 
-const reasons = [
-  { Icon: IconTrending, bg: '#dcfce7', title: 'Urgence climatique', text: 'Le secteur numérique pèse 3 à 4 % des émissions mondiales et croît rapidement. Sans inflexion, son empreinte pourrait doubler d\'ici 2030.' },
-  { Icon: IconMedal,    bg: '#dcfce7', title: 'Compétences recherchées', text: 'Toute personne portant un projet IT, RSE ou conformité a intérêt à maîtriser les normes, labels et certifications qui encadrent le numérique.' },
-  { Icon: IconUsers,    bg: '#dbeafe', title: 'Obligation légale', text: 'CSRD, EED, Taxonomie : environ 50 000 entreprises européennes doivent désormais reporter leur empreinte numérique.' },
+const interests = [
+  {
+    Icon: IconScale,
+    bg: '#dcfce7',
+    title: 'Connaître les obligations réglementaires',
+    text: 'Green Deal, CSRD, Taxonomie, EED, DEEE, Écoconception : depuis 2019, l\'Union européenne multiplie les textes qui imposent aux organisations de mesurer et de réduire leur empreinte numérique. Environ 50 000 entreprises européennes sont directement concernées.',
+  },
+  {
+    Icon: IconCheck,
+    bg: '#dcfce7',
+    title: 'Maîtriser les outils techniques',
+    text: 'Normes ISO (14001, 14040/44, 50001, EN 50600) et labels environnementaux (EPEAT, Energy Star, Blue Angel) : ces référentiels permettent d\'objectiver les choix d\'achat, de structurer une démarche, et de fournir des preuves crédibles aux parties prenantes.',
+  },
+  {
+    Icon: IconCompass,
+    bg: '#cffafe',
+    title: 'Anticiper l\'évolution du cadre légal',
+    text: 'Ce qui est volontaire aujourd\'hui devient souvent obligatoire demain. Les acteurs déjà engagés dans une démarche structurée prennent un avantage compétitif et évitent les coûts d\'une mise en conformité dans l\'urgence.',
+  },
 ];
 
-// Stats dérivées des données
 const totalSections = modulesData.modules.reduce((s, m) => s + m.sections.length, 0);
 const stats = [
-  { value: modulesData.modules.length, label: 'Modules' },
-  { value: totalSections,               label: 'Leçons' },
+  { value: modulesData.modules.length,    label: 'Modules' },
+  { value: totalSections,                  label: 'Leçons' },
   { value: questionsData.questions.length, label: 'Questions' },
 ];
 
-// Helper : scroll fluide vers une ancre
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
+// Convertit "HH:MM:SS" en minutes affichables
+const toMinutes = (str) => {
+  const [h, m] = (str || '00:00:00').split(':').map(Number);
+  return h * 60 + m;
 };
 
-// ============================================================================
-// LandingPage — 3 sections en plein écran (Accueil / Pourquoi / Modules)
-// ============================================================================
-
 export default function LandingPage({ onStart, onShowLegal }) {
+  const mainRef = useRef(null);
+  const [activeSection, setActiveSection] = useState('accueil');
+
+  // Suivi de la section visible pour la nav active
+  useEffect(() => {
+    if (!mainRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { root: mainRef.current, rootMargin: '-40% 0px -50% 0px', threshold: 0 }
+    );
+    mainRef.current.querySelectorAll('section[id]').forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f9fafb', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+
       {/* ============================ Header sticky ============================ */}
       <header style={{
-        position: 'sticky', top: 0, zIndex: 50,
+        flexShrink: 0,
         backgroundColor: 'rgba(255,255,255,0.96)',
         backdropFilter: 'blur(8px)',
-        borderBottom: '1px solid #e2e8f0',
+        borderBottom: '1px solid #e5e7eb',
         padding: '12px 32px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
@@ -55,136 +111,141 @@ export default function LandingPage({ onStart, onShowLegal }) {
           <span style={{ fontWeight: 700, fontSize: '15px', color: '#0f172a' }}>Green IT Académie</span>
         </button>
 
-        <nav style={{ display: 'flex', gap: '28px', alignItems: 'center' }}>
-          <button onClick={() => scrollTo('accueil')}      style={navLinkStyle}>Accueil</button>
-          <button onClick={() => scrollTo('presentation')} style={navLinkStyle}>Pourquoi</button>
-          <button onClick={() => scrollTo('modules')}      style={navLinkStyle}>Modules</button>
-          <button onClick={onStart} style={ctaSmallStyle}>Commencer →</button>
+        <nav style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          {[
+            { id: 'accueil',   label: 'Accueil' },
+            { id: 'interet',   label: 'Intérêt' },
+            { id: 'programme', label: 'Programme' },
+          ].map((it) => (
+            <button
+              key={it.id}
+              onClick={() => scrollTo(it.id)}
+              style={navLinkStyle(activeSection === it.id)}
+            >
+              {it.label}
+            </button>
+          ))}
+          <button onClick={onStart} style={ctaSmallStyle}>Commencer  →</button>
         </nav>
       </header>
 
-      {/* ============================ Section 1 — Hero ============================ */}
-      <section id="accueil" style={{
-        minHeight: 'calc(100vh - 58px)',
-        background: 'linear-gradient(135deg, #064e3b 0%, #166534 60%, #14532d 100%)',
-        color: '#fff', padding: '60px 32px',
-        display: 'flex', alignItems: 'center',
-      }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '6px 14px 6px 6px', backgroundColor: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)', borderRadius: '24px', marginBottom: '32px' }}>
-            <Logo size={24} />
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#bbf7d0', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
-          </div>
+      {/* ============================ Contenu scrollable ============================ */}
+      <main ref={mainRef} style={{ flex: 1, overflowY: 'auto', scrollBehavior: 'smooth' }}>
 
-          <h1 style={{ fontSize: '56px', fontWeight: 800, lineHeight: '1.1', margin: '0 0 20px 0' }}>
-            Formez-vous au<br />
-            <span style={{ color: '#86efac' }}>Numérique Responsable</span>
-          </h1>
+        {/* ----------------- Section Accueil ----------------- */}
+        <section id="accueil" style={sectionStyle({
+          background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 60%, #a7f3d0 100%)',
+          color: '#064e3b',
+        })}>
+          <div style={containerStyle}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: '#fff', border: '1px solid #bbf7d0', borderRadius: '20px', marginBottom: '24px' }}>
+              <Logo size={20} />
+              <span style={{ fontSize: '10px', fontWeight: 700, color: '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
+            </div>
 
-          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.85)', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 36px 0' }}>
-            Découvrez les enjeux environnementaux du numérique et maîtrisez les pratiques pour réduire l'empreinte écologique de vos projets IT.
-          </p>
+            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: '#064e3b' }}>
+              Formez-vous au<br />
+              <span style={{ color: '#15803d' }}>Numérique Responsable</span>
+            </h1>
 
-          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginBottom: '50px' }}>
-            <button onClick={onStart} style={ctaPrimaryStyle}>
-              Commencer la formation  →
-            </button>
-            <button onClick={() => scrollTo('modules')} style={ctaSecondaryStyle}>
-              Voir les modules
-            </button>
-          </div>
-
-          <div style={{ display: 'flex', gap: '64px', flexWrap: 'wrap' }}>
-            {stats.map((s, i) => (
-              <div key={i}>
-                <div style={{ fontSize: '38px', fontWeight: 800, color: '#bbf7d0' }}>{s.value}</div>
-                <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', marginTop: '2px' }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================ Section 2 — Pourquoi ============================ */}
-      <section id="presentation" style={{
-        minHeight: 'calc(100vh - 58px)',
-        backgroundColor: '#fff',
-        padding: '80px 32px',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-      }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-            <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#0f172a', margin: '0 0 14px 0' }}>
-              Pourquoi se former au Green IT&nbsp;?
-            </h2>
-            <p style={{ fontSize: '16px', color: '#64748b', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
-              Le numérique est devenu incontournable, mais son impact est massif. Se former, c'est agir.
+            <p style={{ fontSize: '17px', color: '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
+              Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.
             </p>
-          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '48px' }}>
-            {reasons.map((r, i) => (
-              <div key={i} style={{ textAlign: 'center' }}>
-                <div style={{ width: '72px', height: '72px', backgroundColor: r.bg, borderRadius: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                  <r.Icon />
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '40px' }}>
+              <button onClick={onStart} style={ctaPrimaryStyle}>Commencer la formation  →</button>
+              <button onClick={() => scrollTo('programme')} style={ctaSecondaryStyle}>Voir le programme</button>
+            </div>
+
+            <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
+              {stats.map((s, i) => (
+                <div key={i}>
+                  <div style={{ fontSize: '32px', fontWeight: 800, color: '#15803d' }}>{s.value}</div>
+                  <div style={{ fontSize: '12px', color: '#166534', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
                 </div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#0f172a', margin: '0 0 10px 0' }}>{r.title}</h3>
-                <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.65', margin: 0, maxWidth: '320px', marginInline: 'auto' }}>{r.text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ============================ Section 3 — Modules ============================ */}
-      <section id="modules" style={{
-        minHeight: 'calc(100vh - 58px)',
-        backgroundColor: '#f1f5f9',
-        padding: '80px 32px',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-      }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#0f172a', margin: '0 0 14px 0' }}>
-              Le parcours en 6 modules
-            </h2>
-            <p style={{ fontSize: '16px', color: '#64748b', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
-              Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.
-            </p>
-          </div>
+        {/* ----------------- Section Intérêt ----------------- */}
+        <section id="interet" style={sectionStyle({ background: '#fff' })}>
+          <div style={containerStyle}>
+            <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: '#0f172a', margin: '0 0 14px 0' }}>
+                Pourquoi suivre cette formation&nbsp;?
+              </h2>
+              <p style={{ fontSize: '15px', color: '#6b7280', maxWidth: '720px', margin: '0 auto', lineHeight: '1.65' }}>
+                Le Green IT ne se résume pas à de bonnes intentions : il s'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les <strong>outils opérationnels</strong>.
+              </p>
+            </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-            {modulesData.modules.map((m, i) => (
-              <div key={m.id} style={{
-                backgroundColor: '#fff', borderRadius: '10px', overflow: 'hidden',
-                border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-              }}>
-                <div style={{ height: '80px', backgroundColor: m.bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px' }}>
-                  {m.image}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
+              {interests.map((r, i) => (
+                <div key={i} style={{ textAlign: 'center', padding: '8px' }}>
+                  <div style={{ width: '64px', height: '64px', backgroundColor: r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
+                    <r.Icon />
+                  </div>
+                  <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#0f172a', margin: '0 0 10px 0' }}>{r.title}</h3>
+                  <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: '1.65', margin: 0 }}>{r.text}</p>
                 </div>
-                <div style={{ padding: '16px' }}>
-                  <div style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', letterSpacing: '1px', marginBottom: '6px' }}>MODULE {m.id}</div>
-                  <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 700, color: '#0f172a', lineHeight: '1.35' }}>{m.title}</h3>
-                  {m.subtitle && (
-                    <p style={{ margin: 0, fontSize: '12px', color: '#64748b', lineHeight: '1.5' }}>{m.subtitle}</p>
-                  )}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        </section>
 
-          <div style={{ textAlign: 'center' }}>
-            <button onClick={onStart} style={{ ...ctaPrimaryStyle, fontSize: '15px' }}>
-              Commencer la formation  →
-            </button>
+        {/* ----------------- Section Programme ----------------- */}
+        <section id="programme" style={sectionStyle({ background: '#f9fafb' })}>
+          <div style={containerStyle}>
+            <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: '#0f172a', margin: '0 0 14px 0' }}>
+                Le parcours en 6 modules
+              </h2>
+              <p style={{ fontSize: '15px', color: '#6b7280', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
+                Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.
+              </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '36px' }}>
+              {modulesData.modules.map((m) => {
+                const pal = MODULE_PALETTE[m.id] || { accent: '#15803d', bg: '#dcfce7' };
+                const minutes = toMinutes(m.estimatedTime);
+                return (
+                  <div key={m.id} style={{
+                    backgroundColor: '#fff', borderRadius: '12px',
+                    border: '1px solid #e5e7eb', padding: '20px',
+                    display: 'flex', flexDirection: 'column',
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                      <div style={{ width: '44px', height: '44px', backgroundColor: pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
+                        {m.image}
+                      </div>
+                      <span style={{ fontSize: '11px', color: '#9ca3af', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        ⏱ {minutes} min
+                      </span>
+                    </div>
+                    <div style={{ fontSize: '10px', fontWeight: 700, color: pal.accent, letterSpacing: '1px', marginBottom: '6px' }}>MODULE {m.id}</div>
+                    <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 700, color: '#0f172a', lineHeight: '1.35' }}>{m.title}</h3>
+                    {m.subtitle && (
+                      <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', lineHeight: '1.5' }}>{m.subtitle}</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <button onClick={onStart} style={ctaPrimaryStyle}>Commencer la formation  →</button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* ============================ Footer ============================ */}
+      {/* ============================ Footer sticky ============================ */}
       <footer style={{
-        padding: '14px 32px', backgroundColor: '#fff', borderTop: '1px solid #e2e8f0',
-        color: '#64748b', fontSize: '11px',
+        flexShrink: 0,
+        padding: '10px 32px', backgroundColor: '#fff', borderTop: '1px solid #e5e7eb',
+        color: '#6b7280', fontSize: '11px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px',
       }}>
         <span>Master Data Science · UTBM · 2026</span>
@@ -204,36 +265,55 @@ export default function LandingPage({ onStart, onShowLegal }) {
 // Styles
 // ============================================================================
 
+const sectionStyle = (extra = {}) => ({
+  minHeight: '100%',
+  padding: '60px 32px',
+  display: 'flex', alignItems: 'center',
+  ...extra,
+});
+
+const containerStyle = {
+  maxWidth: '1100px', margin: '0 auto', width: '100%',
+};
+
 const brandBtnStyle = {
   display: 'flex', alignItems: 'center', gap: '10px',
   background: 'transparent', border: 'none', cursor: 'pointer', padding: 0,
   fontFamily: 'inherit',
 };
 
-const navLinkStyle = {
-  background: 'transparent', border: 'none', cursor: 'pointer',
-  color: '#475569', fontSize: '13px', fontWeight: 600,
-  padding: '6px 4px', fontFamily: 'inherit',
-};
+const navLinkStyle = (active) => ({
+  background: active ? '#dcfce7' : 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  color: active ? '#15803d' : '#6b7280',
+  fontSize: '13px',
+  fontWeight: active ? 700 : 500,
+  padding: '8px 14px',
+  borderRadius: '6px',
+  fontFamily: 'inherit',
+  transition: 'all 0.15s',
+});
 
 const ctaSmallStyle = {
-  padding: '8px 18px', backgroundColor: '#16a34a', color: '#fff', border: 'none',
+  padding: '8px 18px', backgroundColor: '#15803d', color: '#fff', border: 'none',
   borderRadius: '8px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+  marginLeft: '12px',
 };
 
 const ctaPrimaryStyle = {
-  padding: '14px 28px', backgroundColor: '#22c55e', color: '#fff', border: 'none',
+  padding: '12px 26px', backgroundColor: '#15803d', color: '#fff', border: 'none',
   borderRadius: '10px', fontSize: '14px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-  boxShadow: '0 4px 14px rgba(34,197,94,0.3)',
+  boxShadow: '0 4px 12px rgba(21,128,61,0.18)',
 };
 
 const ctaSecondaryStyle = {
-  padding: '14px 28px', backgroundColor: 'transparent', color: '#fff',
-  border: '1px solid rgba(255,255,255,0.5)', borderRadius: '10px',
+  padding: '12px 26px', backgroundColor: '#fff', color: '#15803d',
+  border: '1px solid #86efac', borderRadius: '10px',
   fontSize: '14px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
 };
 
 const footerLink = {
-  background: 'none', border: 'none', color: '#475569', textDecoration: 'underline',
+  background: 'none', border: 'none', color: '#4b5563', textDecoration: 'underline',
   cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit',
 };
