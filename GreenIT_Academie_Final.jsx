@@ -15,121 +15,83 @@ const modulesData = [
   { id: 6, unite: "MODULE 6", title: "Cas pratiques Luxembourg", image: "🇱🇺", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
 ];
 
+// Palette adoucie (accents discrets sur fond pastel — moins de bruit visuel)
+const MODULE_PALETTE = {
+  1: { accent: '#0ea5e9', bg: '#e0f2fe' },
+  2: { accent: '#f59e0b', bg: '#fef3c7' },
+  3: { accent: '#10b981', bg: '#d1fae5' },
+  4: { accent: '#8b5cf6', bg: '#ede9fe' },
+  5: { accent: '#ef4444', bg: '#fee2e2' },
+  6: { accent: '#14b8a6', bg: '#ccfbf1' },
+};
+
 // Module Card Component
 const ModuleCard = ({ module, onStart, onEvaluate }) => {
   const canEvaluate = module.started;
-  
+  const pal = MODULE_PALETTE[module.id] || { accent: '#15803d', bg: '#dcfce7' };
+  const validated = module.score >= 70;
+
   return (
     <div style={{
-      backgroundColor: '#ffffff',
-      borderRadius: '8px',
-      overflow: 'hidden',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-      transition: 'box-shadow 0.2s',
+      backgroundColor: '#fff',
+      borderRadius: '12px',
+      border: '1px solid #e5e7eb',
+      padding: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      transition: 'box-shadow 0.2s, transform 0.2s',
     }}>
-      {/* Illustration */}
-      <div style={{
-        height: '100px',
-        backgroundColor: module.bgColor,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0, opacity: 0.12,
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(255,255,255,0.4) 6px, rgba(255,255,255,0.4) 7px)'
-        }} />
-        <span style={{
-          fontSize: '44px',
-          position: 'relative',
-          filter: 'drop-shadow(1px 1px 2px rgba(0,0,0,0.2))'
-        }}>{module.image}</span>
-        
-        {module.score >= 70 && (
-          <div style={{
-            position: 'absolute', top: '8px', right: '8px',
-            backgroundColor: '#22c55e', color: 'white',
-            padding: '3px 8px', borderRadius: '10px',
-            fontSize: '10px', fontWeight: '600'
-          }}>✓ Réussi</div>
+      {/* En-tête : icône + statut */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+        <div style={{ width: '44px', height: '44px', backgroundColor: pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
+          {module.image}
+        </div>
+        {validated && (
+          <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: 700 }}>✓ Réussi</span>
         )}
       </div>
-      
-      {/* Badge Module */}
-      <div style={{ backgroundColor: '#4a5568', padding: '6px 12px' }}>
-        <span style={{
-          color: 'rgba(255,255,255,0.9)',
-          fontSize: '11px',
-          fontWeight: '600',
-          letterSpacing: '0.4px'
-        }}>{module.unite}</span>
+
+      <div style={{ fontSize: '10px', fontWeight: 700, color: pal.accent, letterSpacing: '1px', marginBottom: '6px' }}>MODULE {module.id}</div>
+      <h3 style={{ margin: '0 0 14px 0', fontSize: '15px', fontWeight: 700, color: '#0f172a', lineHeight: '1.35' }}>{module.title}</h3>
+
+      {/* Métriques */}
+      <div style={{ marginBottom: '14px', fontSize: '12px', color: '#6b7280', display: 'flex', gap: '14px' }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>⏱ {module.tempsPasse}</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          ★ <span style={{ color: validated ? '#15803d' : module.score > 0 ? '#f59e0b' : '#9ca3af', fontWeight: 600 }}>{module.score}%</span>
+        </span>
       </div>
-      
-      {/* Contenu */}
-      <div style={{ padding: '12px' }}>
-        <h3 style={{
-          margin: '0 0 12px 0',
-          fontSize: '14px',
-          fontWeight: '700',
-          color: '#1a202c',
-          lineHeight: '1.35',
-          minHeight: '38px'
-        }}>{module.title}</h3>
-        
-        {/* Métriques */}
-        <div style={{ marginBottom: '12px', fontSize: '12px', color: '#4a5568' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-            <span style={{ color: '#3182ce' }}>⏱</span>
-            <span>Temps passé : </span>
-            <span style={{ fontWeight: '600' }}>{module.tempsPasse}</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ color: '#ecc94b' }}>★</span>
-            <span>Score : </span>
-            <span style={{
-              fontWeight: '600',
-              color: module.score > 0 ? '#22c55e' : '#e53e3e'
-            }}>{module.score}%</span>
-          </div>
-        </div>
-        
-        {/* Boutons */}
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button
-            onClick={() => onStart(module.id)}
-            style={{
-              flex: 1,
-              padding: '10px 12px',
-              backgroundColor: '#e65100',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '5px',
-              fontSize: '13px',
-              fontWeight: '600',
-              cursor: 'pointer'
-            }}
-          >
-            Commencer
-          </button>
-          <button
-            onClick={() => canEvaluate && onEvaluate(module.id)}
-            disabled={!canEvaluate}
-            style={{
-              flex: 1,
-              padding: '10px 12px',
-              backgroundColor: canEvaluate ? '#fff' : '#f1f5f9',
-              color: canEvaluate ? '#4a5568' : '#a0aec0',
-              border: canEvaluate ? '1px solid #cbd5e0' : '1px solid #e2e8f0',
-              borderRadius: '5px',
-              fontSize: '13px',
-              fontWeight: '600',
-              cursor: canEvaluate ? 'pointer' : 'not-allowed'
-            }}
-          >
-            S'évaluer
-          </button>
-        </div>
+
+      {/* Boutons */}
+      <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
+        <button
+          onClick={() => onStart(module.id)}
+          style={{
+            flex: 1, padding: '9px 12px',
+            backgroundColor: '#15803d', color: '#fff',
+            border: 'none', borderRadius: '6px',
+            fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+            fontFamily: 'inherit',
+          }}
+        >
+          Commencer
+        </button>
+        <button
+          onClick={() => canEvaluate && onEvaluate(module.id)}
+          disabled={!canEvaluate}
+          style={{
+            flex: 1, padding: '9px 12px',
+            backgroundColor: '#fff',
+            color: canEvaluate ? '#15803d' : '#9ca3af',
+            border: `1px solid ${canEvaluate ? '#86efac' : '#e5e7eb'}`,
+            borderRadius: '6px',
+            fontSize: '13px', fontWeight: 600,
+            cursor: canEvaluate ? 'pointer' : 'not-allowed',
+            fontFamily: 'inherit',
+          }}
+        >
+          S'évaluer
+        </button>
       </div>
     </div>
   );
