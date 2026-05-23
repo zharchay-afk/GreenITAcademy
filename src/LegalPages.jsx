@@ -10,17 +10,17 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
   const Pane = { notice: LegalNotice, privacy: PrivacyShort, cookies: CookiesPolicy, ecoconception: () => <EcoConception onShowScormPlayer={onShowScormPlayer} />, accessibilite: Accessibilite }[current];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <header style={{ backgroundColor: '#064e3b', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      <header style={{ backgroundColor: '#15803d', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '32px', height: '32px', backgroundColor: '#15803d', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📋</div>
+          <div style={{ width: '32px', height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📋</div>
           <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Informations légales</span>
         </div>
-        <button onClick={onBack} style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.85)', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}>← Retour</button>
+        <button onClick={onBack} style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.4)', color: '#fff', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}>← Retour</button>
       </header>
 
       {/* Tabs */}
-      <nav style={{ backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', padding: '0 32px', display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+      <nav style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border)', padding: '0 32px', display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
         {[
           { id: 'notice',        label: 'Mentions légales' },
           { id: 'privacy',       label: 'Données personnelles' },
@@ -30,8 +30,8 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
         ].map((t) => (
           <button key={t.id} onClick={() => setCurrent(t.id)} style={{
             padding: '14px 18px', backgroundColor: 'transparent', border: 'none',
-            borderBottom: current === t.id ? '3px solid #166534' : '3px solid transparent',
-            color: current === t.id ? '#166534' : '#64748b',
+            borderBottom: current === t.id ? '3px solid var(--accent)' : '3px solid transparent',
+            color: current === t.id ? 'var(--accent)' : 'var(--text-secondary)',
             fontWeight: current === t.id ? '700' : '500',
             cursor: 'pointer', fontSize: '13px', fontFamily: 'inherit',
           }}>{t.label}</button>
@@ -128,7 +128,7 @@ function PrivacyPolicy_legacy_unused() {
       <Section title="A — Statut du traitement et applicabilité du RGPD">
         <p>L'application est éditée dans un cadre strictement pédagogique par deux étudiants (cf. « Mentions légales »), sans finalité commerciale ni structure juridique propre.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a' }}>1 — Sommes-nous responsables de traitement ?</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Sommes-nous responsables de traitement ?</p>
         <p>Au sens de l'article 4 (7) du RGPD, le responsable du traitement est la personne qui <em>« détermine les finalités et les moyens du traitement »</em>. En l'espèce, la question est délicate :</p>
         <ul>
           <li>Nous avons effectivement défini les <em>moyens techniques</em> du traitement (mécanisme d'authentification, format de stockage, durée de conservation des sessions, etc.) ;</li>
@@ -136,13 +136,13 @@ function PrivacyPolicy_legacy_unused() {
         </ul>
         <p>La jurisprudence européenne (arrêts <em>Wirtschaftsakademie</em> C-210/16, <em>Fashion ID</em> C-40/17) admet qu'une entité puisse être qualifiée de responsable de traitement même sans accès aux données. Dans le doute, et par mesure de transparence pédagogique, <strong>nous appliquons volontairement le cadre du RGPD</strong> comme si nous étions responsables de traitement.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>2 — Le RGPD s'applique-t-il matériellement ?</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Le RGPD s'applique-t-il matériellement ?</p>
         <p>L'article 2 (1) du RGPD le rend applicable à tout traitement automatisé de données à caractère personnel. L'article 2 (2) (c) exclut toutefois les traitements effectués <em>« par une personne physique dans le cadre d'une activité strictement personnelle ou domestique »</em>. Lorsque vous utilisez cette application sur votre propre terminal sans interaction avec un tiers, vous pouvez vous-même être considéré comme effectuant un traitement à des fins purement personnelles, et donc hors champ.</p>
         <p>Quoi qu'il en soit, nous estimons que la <strong>meilleure pratique</strong> est de fournir une information complète et transparente sur les opérations effectuées par l'application, ce qui fait l'objet du présent document.</p>
       </Section>
 
       <Section title="B — Objet du traitement">
-        <p style={{ fontWeight: '600', color: '#0f172a' }}>1 — Finalités</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Finalités</p>
         <p>Le traitement de données mis en œuvre par l'application a pour objet :</p>
         <ul>
           <li>de permettre la <strong>création d'un compte facultatif</strong> et l'authentification de son titulaire ;</li>
@@ -152,7 +152,7 @@ function PrivacyPolicy_legacy_unused() {
         </ul>
         <p>L'application ne met en œuvre aucune autre finalité (pas de profilage, pas de publicité, pas de mesure d'audience, pas de communication marketing).</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>2 — Base légale</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Base légale</p>
         <p>Lorsque le RGPD est applicable, les bases légales mobilisées sont :</p>
         <ul>
           <li><strong>L'exécution du service</strong> (article 6 (1) b RGPD) pour les opérations indispensables (authentification, conservation de la progression) ;</li>
@@ -161,7 +161,7 @@ function PrivacyPolicy_legacy_unused() {
       </Section>
 
       <Section title="C — Données traitées">
-        <p style={{ fontWeight: '600', color: '#0f172a' }}>1 — Catégories de données</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Catégories de données</p>
         <table style={tableStyle}>
           <thead><tr><th style={th}>Donnée</th><th style={th}>Finalité</th><th style={th}>Conservation</th></tr></thead>
           <tbody>
@@ -173,13 +173,13 @@ function PrivacyPolicy_legacy_unused() {
           </tbody>
         </table>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>2 — Sources des données</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Sources des données</p>
         <p>Toutes les données sont collectées directement auprès de l'utilisateur via les formulaires d'inscription et de connexion. Aucune source tierce n'est utilisée.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>3 — Caractère obligatoire</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>3 — Caractère obligatoire</p>
         <p>L'utilisation de l'application <strong>ne requiert aucune donnée personnelle</strong>. Une option « Continuer sans compte » est mise en avant sur la page d'accueil et permet d'accéder à l'intégralité du parcours sans la moindre saisie. La création d'un compte n'est utile que pour retrouver sa progression sur plusieurs appareils.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>4 — Prise de décision automatisée</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>4 — Prise de décision automatisée</p>
         <p>Le traitement <strong>ne prévoit aucune prise de décision entièrement automatisée</strong> au sens de l'article 22 du RGPD.</p>
       </Section>
 
@@ -188,16 +188,16 @@ function PrivacyPolicy_legacy_unused() {
       </Section>
 
       <Section title="E — Destinataires des données">
-        <p style={{ fontWeight: '600', color: '#0f172a' }}>1 — Catégories de destinataires</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Catégories de destinataires</p>
         <p>Compte tenu de l'architecture exclusivement locale, <strong>aucun destinataire externe</strong> n'a accès aux données saisies dans l'application. Les éditeurs eux-mêmes n'y ont pas accès. Aucun sous-traitant n'est mobilisé pour le traitement.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>2 — Transferts hors UE</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Transferts hors UE</p>
         <p>Aucun transfert de données vers un pays tiers ou une organisation internationale n'est réalisé.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>3 — Durée de conservation</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>3 — Durée de conservation</p>
         <p>Les données sont conservées tant que l'utilisateur en conserve le bénéfice (compte actif, progression non réinitialisée). Lorsque l'utilisateur vide le stockage de son navigateur, désinstalle la PWA ou utilise les fonctions « Réinitialiser ma progression » et « Supprimer mon compte », les données sont effacées <strong>immédiatement et définitivement</strong>. Aucune sauvegarde n'est conservée par les éditeurs.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>4 — Sécurité</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>4 — Sécurité</p>
         <p>Bien que les données ne quittent pas le terminal, des mesures de sécurité robustes sont mises en œuvre :</p>
         <ul>
           <li>Mot de passe jamais stocké en clair — seulement son hash PBKDF2-HMAC-SHA-256 calculé sur <strong>600 000 itérations</strong> (recommandation OWASP, Password Storage Cheat Sheet 2023), avec un sel aléatoire de 16 octets propre à chaque compte ;</li>
@@ -207,7 +207,7 @@ function PrivacyPolicy_legacy_unused() {
           <li>Conformité aux principes de l'article 32 du RGPD et de la norme NIST SP 800-63B.</li>
         </ul>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>5 — Vos droits</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>5 — Vos droits</p>
         <p>Vous disposez à tout moment des droits prévus par les articles 15 à 22 du RGPD :</p>
         <ul>
           <li><strong>Accès</strong> et copie : la rubrique « Mon profil » affiche les données enregistrées ; vous pouvez les exporter au format JSON.</li>
@@ -218,7 +218,7 @@ function PrivacyPolicy_legacy_unused() {
         </ul>
         <p>Compte tenu de l'architecture, ces droits s'exercent <strong>directement depuis l'application</strong>, sans avoir à formuler de demande externe. En cas de difficulté, vous pouvez nous contacter à l'adresse <a href="mailto:greenit-academie@example.lu" style={linkInline}>greenit-academie@example.lu</a> et, à défaut de réponse satisfaisante, introduire une réclamation auprès de la <strong>CNPD</strong> (<a href="https://cnpd.public.lu" target="_blank" rel="noreferrer" style={linkInline}>cnpd.public.lu</a>).</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>6 — Cookies</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>6 — Cookies</p>
         <p>Aucun cookie n'est déposé. Les seuls éléments enregistrés sur le terminal sont les espaces de stockage Web (<code>localStorage</code> et <code>sessionStorage</code>) strictement nécessaires au fonctionnement du service. À ce titre, ils relèvent de l'exemption prévue à l'article 5.3 de la directive 2002/58/CE et ne nécessitent pas de recueil de consentement préalable (voir l'onglet « Cookies & stockage local »).</p>
       </Section>
 
@@ -325,22 +325,23 @@ function EcoConception({ onShowScormPlayer }) {
         <p>Lorsque l'application est publiée pour démonstration, elle est servie par un hébergeur de pages statiques (GitHub Pages, Vercel, Netlify) couplé à une distribution CDN. Aucun traitement applicatif n'est exécuté côté serveur pour servir une visite, ce qui correspond à l'un des modèles d'hébergement les moins énergivores disponibles aujourd'hui.</p>
       </Section>
 
+      <Section title="9. Mode sombre par défaut respecté">
+        <p>Sur les écrans OLED — désormais majoritaires sur smartphones et présents sur de nombreux ordinateurs portables — l'affichage de pixels noirs consomme nettement moins d'énergie que l'affichage de pixels blancs. Les études disponibles font état d'une économie pouvant atteindre 30 % pour l'affichage en mode sombre sur ces dalles.</p>
+        <p>L'application propose un <strong>thème sombre commutable</strong> via le bouton 🌙 / ☀️ présent dans le footer. La préférence système de l'utilisateur (<code>prefers-color-scheme</code>) est respectée par défaut au premier chargement, et le choix manuel est ensuite mémorisé en <code>localStorage</code>. La bascule s'opère sans rechargement de page grâce à un système de variables CSS appliquées au niveau de l'élément racine.</p>
+      </Section>
+
       <Section title="Limites et arbitrages assumés">
         <p>Plusieurs optimisations supplémentaires sont identifiées dans la littérature de l'éco-conception. Leur non-mise en œuvre dans le présent projet résulte d'arbitrages explicites, exposés ci-dessous.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Lazy-loading des modules</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Lazy-loading des modules</p>
         <p>L'ensemble du contenu pédagogique (modules.json, questions.json, schémas) est aujourd'hui chargé en une seule passe. Une stratégie de chargement à la demande aurait pu être mise en place via le découpage Vite.</p>
         <p><em>Raison de l'arbitrage</em> : la totalité du contenu pédagogique pèse environ 80 Ko gzippés. Le découpage introduirait plusieurs requêtes supplémentaires et une complexité de cache non triviale, pour un gain net marginal — voire négatif sur un usage typique où l'apprenant parcourt l'ensemble des modules. Le seuil d'utilité du lazy-loading est plutôt atteint sur des applications de plusieurs Mo de contenu.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mode sombre</p>
-        <p>Sur écrans OLED, un mode sombre permet une économie d'énergie pouvant atteindre 30 % pour l'affichage. Aucun mode sombre n'est actuellement proposé.</p>
-        <p><em>Raison de l'arbitrage</em> : le projet est un livrable pédagogique à périmètre fini. La mise en œuvre rigoureuse d'un thème sombre (couleurs duales pour chaque visuel SVG, contrastes recalculés, prise en charge de <code>prefers-color-scheme</code>) représente une charge significative pour un gain qui ne concerne qu'une fraction des terminaux. Cette piste est consignée comme évolution prioritaire si le projet est repris.</p>
-
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Compression Brotli</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Compression Brotli</p>
         <p>La compression Brotli offre typiquement un gain de 15 à 20 % sur le poids transféré par rapport à gzip.</p>
         <p><em>Raison de l'arbitrage</em> : la compression dépend de la configuration de l'hébergeur, pas du code applicatif. Les principaux hébergeurs statiques visés (Vercel, Netlify, Cloudflare Pages) activent Brotli par défaut lorsque le navigateur le supporte ; le gain est donc obtenu automatiquement lors d'un déploiement réel. Aucune action côté code n'est nécessaire ou même possible.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mesure d'audience écoresponsable</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Mesure d'audience écoresponsable</p>
         <p>Aucune mesure d'audience n'est implémentée, y compris parmi les solutions souveraines et sobres (Plausible, Matomo auto-hébergé).</p>
         <p><em>Raison de l'arbitrage</em> : ajouter de la mesure d'audience contredirait directement les principes affichés (« aucune donnée ne quitte le terminal »). Le compromis a été tranché en faveur de la sobriété maximale, au prix de l'absence de statistiques d'usage pour les éditeurs.</p>
       </Section>
@@ -358,7 +359,7 @@ function EcoConception({ onShowScormPlayer }) {
           {onShowScormPlayer && (
             <button
               onClick={onShowScormPlayer}
-              style={{ backgroundColor: '#fff', color: '#166534', border: '1px solid #166534', padding: '10px 18px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
+              style={{ backgroundColor: 'var(--bg-surface)', color: '#166534', border: '1px solid #166534', padding: '10px 18px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
             >
               📂 Importer un SCORM tiers
             </button>
@@ -395,12 +396,13 @@ function Accessibilite() {
       </Section>
 
       <Section title="Référentiel suivi">
-        <p>L'application vise le respect du référentiel <strong>WCAG 2.1 niveau AA</strong> du W3C, dont la transposition française est le RGAA (Référentiel Général d'Amélioration de l'Accessibilité). Au Luxembourg, la loi du 28 mai 2019 sur l'accessibilité des sites internet et applications mobiles transpose la directive (UE) 2016/2102 fondée sur les mêmes critères.</p>
+        <p>L'application vise le respect du référentiel <strong>WCAG 2.1 niveau AA</strong> du W3C. Au Luxembourg, la <strong>loi du 28 mai 2019</strong> sur l'accessibilité des sites internet et applications mobiles des organismes du secteur public transpose la directive (UE) 2016/2102, qui s'appuie elle-même sur la norme européenne <strong>EN 301 549</strong> reprenant les critères WCAG. La vérification de conformité relève au Luxembourg du <strong>Service Information et Presse (SIP)</strong>.</p>
       </Section>
 
       <Section title="Dispositions mises en œuvre">
         <ul>
-          <li><strong>Contrastes des textes</strong> : le texte blanc sur fond vert sombre (#fff sur #064e3b) atteint un ratio de 9,5:1, très au-dessus du seuil AA (4,5:1). Les textes secondaires gris sur fond blanc (#64748b sur #fff) se situent à 4,8:1, au-dessus du seuil.</li>
+          <li><strong>Contrastes des textes</strong> : le texte blanc sur fond vert (#fff sur #15803d) atteint un ratio de 4,9:1, au-dessus du seuil AA (4,5:1). Les textes secondaires gris (#6b7280 sur fond blanc) se situent à 4,7:1.</li>
+          <li><strong>Mode sombre disponible</strong> : un thème alternatif à dominante sombre est proposé via le bouton 🌙 / ☀️ du footer. Le choix est mémorisé et la préférence système (<code>prefers-color-scheme</code>) est respectée par défaut.</li>
           <li><strong>Navigation au clavier</strong> : tous les éléments interactifs sont des éléments HTML natifs (<code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>) accessibles par la touche Tab. L'ordre de tabulation reproduit la logique visuelle.</li>
           <li><strong>Sémantique HTML</strong> : l'arborescence repose sur des balises sémantiques (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>) afin de permettre une navigation par régions au moyen des technologies d'assistance.</li>
           <li><strong>Schémas vectoriels</strong> : les visuels SVG décoratifs portent l'attribut <code>aria-hidden="true"</code> ; l'information qu'ils restituent est par ailleurs disponible dans le texte du cours.</li>
@@ -413,31 +415,27 @@ function Accessibilite() {
       <Section title="Limites et arbitrages assumés">
         <p>Plusieurs dispositions complémentaires n'ont pas été mises en œuvre dans le présent projet. Leur statut et la justification de cet arbitrage sont exposés ci-dessous.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Audit professionnel</p>
-        <p>Aucun audit RGAA ou WCAG conduit par un expert tiers indépendant n'a été réalisé. La présente page constitue une auto-déclaration et non une déclaration d'accessibilité officielle au sens de la directive (UE) 2016/2102.</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Audit professionnel</p>
+        <p>Aucun audit WCAG conduit par un expert tiers indépendant n'a été réalisé. La présente page constitue une auto-déclaration et non une déclaration d'accessibilité officielle au sens de la directive (UE) 2016/2102 et de la loi luxembourgeoise du 28 mai 2019.</p>
         <p><em>Justification</em> : un audit professionnel représente un investissement significatif, sans rapport avec le périmètre d'un livrable pédagogique. La transparence sur cette limite permet à l'utilisateur de qualifier la portée du présent document.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Tests systématiques avec lecteurs d'écran</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Tests systématiques avec lecteurs d'écran</p>
         <p>L'application n'a pas fait l'objet de tests systématiques avec les principaux lecteurs d'écran (NVDA, JAWS, VoiceOver). Certains libellés ARIA sont susceptibles d'être manquants ou perfectibles.</p>
         <p><em>Justification</em> : ces tests requièrent un environnement et une expertise spécifiques. La sémantique HTML stricte appliquée par défaut fournit toutefois un socle d'accessibilité raisonnable pour les technologies d'assistance modernes.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Restitution textuelle des indicateurs visuels du quiz</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Restitution textuelle des indicateurs visuels du quiz</p>
         <p>Le suivi de progression et le résultat des questions du parcours d'évaluation reposent sur des indicateurs visuels (barre de progression, code couleur vert/rouge). Une restitution textuelle équivalente, plus explicite pour les utilisateurs de lecteurs d'écran, mériterait d'être ajoutée.</p>
         <p><em>Justification</em> : amélioration identifiée et consignée comme évolution prioritaire.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mode à contraste élevé</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Mode à contraste élevé</p>
         <p>Aucune bascule « contraste maximal » n'est proposée, et la requête CSS <code>prefers-contrast: more</code> n'est pas explicitement prise en charge.</p>
-        <p><em>Justification</em> : les contrastes par défaut respectent déjà le seuil AA (cf. dispositions mises en œuvre). L'ajout d'un thème dédié au contraste maximal demanderait la définition d'une palette duale couvrant l'ensemble des schémas vectoriels, charge sans commune mesure avec le bénéfice marginal observé sur les configurations conformes par défaut.</p>
+        <p><em>Justification</em> : les contrastes par défaut respectent déjà le seuil AA (cf. dispositions mises en œuvre) et un mode sombre est désormais proposé. L'ajout d'un troisième thème dédié au contraste maximal demanderait la définition d'une palette supplémentaire couvrant l'ensemble des schémas vectoriels, charge sans commune mesure avec le bénéfice marginal observé sur les configurations conformes par défaut.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Mode sombre</p>
-        <p>Aucun thème sombre n'est implémenté.</p>
-        <p><em>Justification</em> : cette piste est traitée conjointement avec la page « Éco-conception », dans laquelle la décision est documentée.</p>
-
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Sous-titrage et alternatives audio</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Sous-titrage et alternatives audio</p>
         <p>Aucune disposition de sous-titrage ni d'alternative audio n'est mise en place.</p>
         <p><em>Justification</em> : le parcours actuel ne contient ni contenu vidéo, ni contenu sonore. Cette disposition deviendrait pertinente si du contenu multimédia était introduit ultérieurement.</p>
 
-        <p style={{ fontWeight: '600', color: '#0f172a', marginTop: '12px' }}>Tests utilisateurs en situation de handicap</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Tests utilisateurs en situation de handicap</p>
         <p>Aucun test n'a été conduit avec des utilisateurs en situation de handicap.</p>
         <p><em>Justification</em> : la mise en place de tels tests requiert un protocole formel et des partenariats associatifs hors du périmètre du projet pédagogique. La démarche serait nécessaire avant toute mise en exploitation commerciale.</p>
       </Section>
@@ -454,10 +452,10 @@ function Accessibilite() {
 // -----------------------------------------------------------------------------
 function Article({ title, updated, children }) {
   return (
-    <article style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '32px 36px', border: '1px solid #e2e8f0' }}>
-      <h1 style={{ fontSize: '24px', color: '#0f172a', margin: '0 0 4px 0', fontWeight: '700' }}>{title}</h1>
-      <p style={{ color: '#94a3b8', fontSize: '12px', margin: '0 0 24px 0' }}>{updated}</p>
-      <div style={{ color: '#334155', fontSize: '14px', lineHeight: '1.75', textAlign: 'justify', hyphens: 'auto' }}>{children}</div>
+    <article style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '32px 36px', border: '1px solid var(--border)' }}>
+      <h1 style={{ fontSize: '24px', color: 'var(--text-primary)', margin: '0 0 4px 0', fontWeight: '700' }}>{title}</h1>
+      <p style={{ color: 'var(--text-muted)', fontSize: '12px', margin: '0 0 24px 0' }}>{updated}</p>
+      <div style={{ color: 'var(--text-primary)', fontSize: '14px', lineHeight: '1.75', textAlign: 'justify', hyphens: 'auto' }}>{children}</div>
     </article>
   );
 }
@@ -465,7 +463,7 @@ function Article({ title, updated, children }) {
 function Section({ title, children }) {
   return (
     <section style={{ marginBottom: '24px' }}>
-      <h2 style={{ fontSize: '15px', color: '#1e293b', margin: '0 0 10px 0', fontWeight: '700', paddingBottom: '6px', borderBottom: '1px solid #f1f5f9' }}>{title}</h2>
+      <h2 style={{ fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 10px 0', fontWeight: '700', paddingBottom: '6px', borderBottom: '1px solid var(--border-soft)' }}>{title}</h2>
       {children}
     </section>
   );
@@ -481,5 +479,5 @@ function Highlight({ children }) {
 
 const linkInline = { color: '#166534', fontWeight: '600' };
 const tableStyle = { width: '100%', borderCollapse: 'collapse', marginTop: '10px', marginBottom: '10px', fontSize: '13px' };
-const th = { textAlign: 'left', padding: '8px 10px', backgroundColor: '#f8fafc', color: '#475569', borderBottom: '2px solid #e2e8f0', fontWeight: '700' };
-const td = { padding: '8px 10px', borderBottom: '1px solid #f1f5f9', color: '#334155', verticalAlign: 'top' };
+const th = { textAlign: 'left', padding: '8px 10px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', borderBottom: '2px solid #e2e8f0', fontWeight: '700' };
+const td = { padding: '8px 10px', borderBottom: '1px solid var(--border-soft)', color: 'var(--text-primary)', verticalAlign: 'top' };

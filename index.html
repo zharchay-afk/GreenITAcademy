@@ -21,17 +21,72 @@
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { height: 100%; }
+
+      /* ---------- Thème clair (par défaut) ---------- */
+      :root {
+        --bg-page:        #f9fafb;
+        --bg-surface:     #ffffff;
+        --bg-soft:        #f1f5f9;
+        --bg-muted:       #f8fafc;
+        --text-primary:   #0f172a;
+        --text-secondary: #6b7280;
+        --text-muted:     #9ca3af;
+        --border:         #e5e7eb;
+        --border-soft:    #f1f5f9;
+        --accent:         #15803d;
+        --accent-soft:    #dcfce7;
+      }
+
+      /* ---------- Thème sombre ---------- */
+      html[data-theme="dark"] {
+        --bg-page:        #0f172a;
+        --bg-surface:     #1e293b;
+        --bg-soft:        #1e293b;
+        --bg-muted:       #111827;
+        --text-primary:   #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted:     #64748b;
+        --border:         #334155;
+        --border-soft:    #1e293b;
+        --accent:         #4ade80;
+        --accent-soft:    rgba(74,222,128,0.15);
+      }
+
       body {
-        background-color: #f1f5f9;
+        background-color: var(--bg-page);
+        color: var(--text-primary);
         /* Gestion des zones sûres (encoche iPhone, barre de navigation Android) */
         padding-top: env(safe-area-inset-top);
         padding-bottom: env(safe-area-inset-bottom);
+        transition: background-color 0.2s ease, color 0.2s ease;
       }
+
       /* Empêche le rebond élastique sur iOS quand on est en mode standalone */
       @media (display-mode: standalone) {
         body { overscroll-behavior: none; }
       }
+
+      /* Inversion automatique des fonds clairs / textes sombres en mode sombre */
+      html[data-theme="dark"] [data-themed="surface"]      { background-color: var(--bg-surface) !important; color: var(--text-primary) !important; }
+      html[data-theme="dark"] [data-themed="page"]         { background-color: var(--bg-page) !important; }
+      html[data-theme="dark"] [data-themed="soft"]         { background-color: var(--bg-soft) !important; }
+      html[data-theme="dark"] [data-themed="text-primary"] { color: var(--text-primary) !important; }
+      html[data-theme="dark"] [data-themed="text-secondary"] { color: var(--text-secondary) !important; }
+      html[data-theme="dark"] [data-themed="border"]       { border-color: var(--border) !important; }
     </style>
+    <script>
+      // Application du thème AVANT le rendu React pour éviter le flash blanc
+      (function () {
+        try {
+          var stored = localStorage.getItem('greenit-theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored || (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

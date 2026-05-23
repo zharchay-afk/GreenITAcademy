@@ -33,9 +33,9 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 
   return (
     <div style={{
-      backgroundColor: '#fff',
+      backgroundColor: 'var(--bg-surface)',
       borderRadius: '12px',
-      border: '1px solid #e5e7eb',
+      border: '1px solid var(--border)',
       padding: '20px',
       display: 'flex',
       flexDirection: 'column',
@@ -52,10 +52,10 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
       </div>
 
       <div style={{ fontSize: '10px', fontWeight: 700, color: pal.accent, letterSpacing: '1px', marginBottom: '6px' }}>MODULE {module.id}</div>
-      <h3 style={{ margin: '0 0 14px 0', fontSize: '15px', fontWeight: 700, color: '#0f172a', lineHeight: '1.35' }}>{module.title}</h3>
+      <h3 style={{ margin: '0 0 14px 0', fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: '1.35' }}>{module.title}</h3>
 
       {/* Métriques */}
-      <div style={{ marginBottom: '14px', fontSize: '12px', color: '#6b7280', display: 'flex', gap: '14px' }}>
+      <div style={{ marginBottom: '14px', fontSize: '12px', color: 'var(--text-secondary)', display: 'flex', gap: '14px' }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>⏱ {module.tempsPasse}</span>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
           ★ <span style={{ color: validated ? '#15803d' : module.score > 0 ? '#f59e0b' : '#9ca3af', fontWeight: 600 }}>{module.score}%</span>
@@ -137,7 +137,8 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
       display: 'flex',
       height: '100vh',
       overflow: 'hidden',
-      backgroundColor: '#f1f5f9',
+      backgroundColor: 'var(--bg-page)',
+      color: 'var(--text-primary)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       <Sidebar activePage={activePage} onNavigate={handleNavigate} />
@@ -145,14 +146,14 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
       <main style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
         <header style={{
-          backgroundColor: '#fff',
+          backgroundColor: 'var(--bg-surface)',
           padding: '16px 24px',
-          borderBottom: '1px solid #e2e8f0',
+          borderBottom: '1px solid var(--border)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>
+          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>
             Mes modules — Normes, Labels & Certifications Green IT
           </h1>
           <div style={{
@@ -160,7 +161,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
             alignItems: 'center',
             gap: '16px',
             fontSize: '12px',
-            color: '#64748b'
+            color: 'var(--text-secondary)'
           }}>
             <span>📚 {totalStarted}/6 modules commencés</span>
             <span>✓ {completedModules}/6 validés</span>

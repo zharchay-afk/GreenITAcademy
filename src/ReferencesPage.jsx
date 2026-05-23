@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 
@@ -129,28 +129,28 @@ const sections = [
 
 export default function ReferencesPage({ onNavigate, onShowLegal }) {
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="references" onNavigate={onNavigate} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <header style={{ backgroundColor: '#fff', padding: '16px 32px', borderBottom: '1px solid #e2e8f0' }}>
-          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>Sources &amp; Références bibliographiques</h1>
-          <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#64748b' }}>
+        <header style={{ backgroundColor: 'var(--bg-surface)', padding: '16px 32px', borderBottom: '1px solid var(--border)' }}>
+          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>Sources &amp; Références bibliographiques</h1>
+          <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: 'var(--text-secondary)' }}>
             Sources réglementaires, normatives et institutionnelles utilisées dans le parcours
           </p>
         </header>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px' }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-            <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-              <p style={{ margin: 0, color: '#64748b', fontSize: '14px', lineHeight: '1.6' }}>
+            <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+              <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px', lineHeight: '1.6' }}>
                 L'ensemble du contenu pédagogique de Green IT Académie s'appuie sur les sources ci-dessous. Toutes les données chiffrées et juridiques ont été vérifiées au regard des textes officiels. Les références cliquables ouvrent le texte officiel ou le site de référence.
               </p>
             </div>
 
             {sections.map((section, idx) => (
-              <div key={idx} style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px 24px', marginBottom: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-                <h2 style={{ margin: '0 0 14px 0', fontSize: '15px', color: '#064e3b', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div key={idx} style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 24px', marginBottom: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+                <h2 style={{ margin: '0 0 14px 0', fontSize: '15px', color: 'var(--accent)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ fontSize: '18px' }}>{section.icon}</span>
                   {section.title}
                 </h2>
@@ -166,7 +166,7 @@ export default function ReferencesPage({ onNavigate, onShowLegal }) {
                           <span style={{ color: '#1a202c' }}>{item.ref}</span>
                         )}
                       </div>
-                      <div style={{ color: '#64748b', fontSize: '12px', lineHeight: '1.5' }}>{item.detail}</div>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '12px', lineHeight: '1.5' }}>{item.detail}</div>
                     </li>
                   ))}
                 </ul>
