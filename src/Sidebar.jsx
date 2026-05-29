@@ -89,7 +89,7 @@ export default function Sidebar({ activePage, onNavigate }) {
           {!collapsed && (
             <div>
               <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-              <div style={{ color: '#86efac', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
+              <div style={{ color: 'var(--sidebar-active)', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
             </div>
           )}
         </div>
@@ -110,8 +110,8 @@ export default function Sidebar({ activePage, onNavigate }) {
                 padding: collapsed ? '11px 0' : '11px 16px',
                 backgroundColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
                 border: 'none',
-                borderLeft: isActive ? '3px solid #4ade80' : '3px solid transparent',
-                color: isActive ? '#4ade80' : 'rgba(255,255,255,0.85)',
+                borderLeft: isActive ? '3px solid var(--sidebar-active)' : '3px solid transparent',
+                color: isActive ? 'var(--sidebar-active)' : 'rgba(255,255,255,0.85)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: collapsed ? 'center' : 'flex-start',

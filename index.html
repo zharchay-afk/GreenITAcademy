@@ -37,6 +37,7 @@
         --accent-soft:    #dcfce7;
         /* Verts de marque (surfaces et boutons) */
         --sidebar-bg:     #15803d;
+        --sidebar-active: #bbf7d0;
         --brand:          #15803d;
         --brand-text:     #ffffff;
         --on-brand:       #ffffff;
@@ -53,13 +54,15 @@
         --text-muted:     #64748b;
         --border:         #334155;
         --border-soft:    #1e293b;
-        --accent:         #4ade80;
-        --accent-soft:    rgba(74,222,128,0.15);
-        /* Verts de marque adoucis et désaturés pour le mode sombre */
-        --sidebar-bg:     #13311f;
-        --brand:          #2f9e54;
-        --brand-text:     #d1fae5;
-        --on-brand:       #ffffff;
+        /* Mode sombre : on neutralise presque tout le vert. Surfaces en slate,
+           accents en vert sage discret réservé aux petits éléments. */
+        --accent:         #74b893;
+        --accent-soft:    rgba(116,184,147,0.12);
+        --sidebar-bg:     #1a2333;
+        --sidebar-active: #74b893;
+        --brand:          #1f6b40;
+        --brand-text:     #e8f3ec;
+        --on-brand:       #f1f5f9;
       }
 
       body {
