@@ -12,7 +12,7 @@ function secsToTime(total) {
     .map(n => String(n).padStart(2, '0')).join(':');
 }
 
-export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal }) {
+export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal, onShowLanding }) {
   const savedName = localStorage.getItem('greenitacademie-name') || '';
   const [name, setName] = useState(savedName);
   const [saved, setSaved] = useState(false);
@@ -218,7 +218,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
         </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
       </main>
     </div>
   );

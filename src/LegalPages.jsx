@@ -1,8 +1,9 @@
 ﻿import React from 'react';
 import { exportScorm } from './utils/scormExport';
+import Footer from './Footer';
 
 // Page-wrapper et tabs
-export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer }) {
+export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding }) {
   const [current, setCurrent] = React.useState(initial);
 
   React.useEffect(() => { setCurrent(initial); }, [initial]);
@@ -10,17 +11,17 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
   const Pane = { notice: LegalNotice, privacy: PrivacyShort, cookies: CookiesPolicy, ecoconception: () => <EcoConception onShowScormPlayer={onShowScormPlayer} />, accessibilite: Accessibilite }[current];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <header style={{ backgroundColor: '#15803d', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      <header style={{ flexShrink: 0, backgroundColor: '#15803d', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{ width: '32px', height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📋</div>
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Informations légales</span>
+          <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Informations du site</span>
         </div>
         <button onClick={onBack} style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.4)', color: '#fff', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}>← Retour</button>
       </header>
 
       {/* Tabs */}
-      <nav style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border)', padding: '0 32px', display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+      <nav style={{ flexShrink: 0, backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border)', padding: '0 32px', display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
         {[
           { id: 'notice',        label: 'Mentions légales' },
           { id: 'privacy',       label: 'Données personnelles' },
@@ -28,19 +29,32 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
           { id: 'ecoconception', label: '🌱 Éco-conception' },
           { id: 'accessibilite', label: '♿ Accessibilité' },
         ].map((t) => (
-          <button key={t.id} onClick={() => setCurrent(t.id)} style={{
-            padding: '14px 18px', backgroundColor: 'transparent', border: 'none',
-            borderBottom: current === t.id ? '3px solid var(--accent)' : '3px solid transparent',
-            color: current === t.id ? 'var(--accent)' : 'var(--text-secondary)',
-            fontWeight: current === t.id ? '700' : '500',
-            cursor: 'pointer', fontSize: '13px', fontFamily: 'inherit',
-          }}>{t.label}</button>
+          <button
+            key={t.id}
+            onClick={() => {
+              setCurrent(t.id);
+              // Synchronise l'URL : passe par onShowLegal pour mettre à jour
+              // legalTab dans App.jsx, ce qui déclenche la pushState du hash.
+              if (onShowLegal) onShowLegal(t.id);
+            }}
+            style={{
+              padding: '14px 18px', backgroundColor: 'transparent', border: 'none',
+              borderBottom: current === t.id ? '3px solid var(--accent)' : '3px solid transparent',
+              color: current === t.id ? 'var(--accent)' : 'var(--text-secondary)',
+              fontWeight: current === t.id ? '700' : '500',
+              cursor: 'pointer', fontSize: '13px', fontFamily: 'inherit',
+            }}
+          >{t.label}</button>
         ))}
       </nav>
 
-      <main style={{ maxWidth: '820px', margin: '0 auto', padding: '32px 24px 60px' }}>
-        <Pane />
+      <main style={{ flex: 1, overflowY: 'auto', padding: '32px 24px 40px' }}>
+        <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+          <Pane />
+        </div>
       </main>
+
+      <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
     </div>
   );
 }

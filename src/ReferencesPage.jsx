@@ -127,7 +127,7 @@ const sections = [
   },
 ];
 
-export default function ReferencesPage({ onNavigate, onShowLegal }) {
+export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding }) {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="references" onNavigate={onNavigate} />
@@ -179,7 +179,7 @@ export default function ReferencesPage({ onNavigate, onShowLegal }) {
           </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
       </main>
     </div>
   );

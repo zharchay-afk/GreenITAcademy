@@ -43,14 +43,83 @@ function loadProgress() {
   return initialModules;
 }
 
+// ---- Routage par hash URL ----
+// Permet au bouton « Précédent » du navigateur de fonctionner correctement.
+// Format des hash : #landing, #home, #module/3, #quiz/3, #attestation, #profil,
+// #references, #scorm, #legal/notice, #legal/privacy, etc.
+function buildHash(screen, opts = {}) {
+  switch (screen) {
+    case 'landing':      return '';
+    case 'home':         return '#home';
+    case 'module':       return opts.moduleId ? `#module/${opts.moduleId}` : '#home';
+    case 'quiz':         return opts.moduleId ? `#quiz/${opts.moduleId}` : '#home';
+    case 'attestation':  return '#attestation';
+    case 'profil':       return '#profil';
+    case 'references':   return '#references';
+    case 'scorm-player': return '#scorm';
+    case 'legal':        return `#legal/${opts.legalTab || 'notice'}`;
+    default:             return '';
+  }
+}
+
+function parseHash(hash) {
+  const h = (hash || '').replace(/^#/, '');
+  if (!h || h === 'landing')   return { screen: 'landing' };
+  if (h === 'home')            return { screen: 'home' };
+  if (h === 'attestation')     return { screen: 'attestation' };
+  if (h === 'profil')          return { screen: 'profil' };
+  if (h === 'references')      return { screen: 'references' };
+  if (h === 'scorm')           return { screen: 'scorm-player' };
+  if (h.startsWith('module/')) {
+    const id = parseInt(h.slice(7), 10);
+    return Number.isFinite(id) ? { screen: 'module', moduleId: id } : { screen: 'home' };
+  }
+  if (h.startsWith('quiz/')) {
+    const id = parseInt(h.slice(5), 10);
+    return Number.isFinite(id) ? { screen: 'quiz', moduleId: id } : { screen: 'home' };
+  }
+  if (h.startsWith('legal/')) return { screen: 'legal', legalTab: h.slice(6) };
+  return { screen: 'landing' };
+}
+
 export default function App() {
+  // État initial dérivé de l'URL (permet de partager un lien direct vers une page)
+  const initial = parseHash(window.location.hash);
+
   // 'landing' | 'home' | 'module' | 'quiz' | 'attestation' | 'profil' | 'scorm-player' | 'references' | 'legal'
-  const [screen, setScreen] = useState('landing');
-  const [legalTab, setLegalTab] = useState('notice');
+  const [screen, setScreen] = useState(initial.screen);
+  const [legalTab, setLegalTab] = useState(initial.legalTab || 'notice');
   const [legalReturnTo, setLegalReturnTo] = useState('landing');
-  const [selectedModuleId, setSelectedModuleId] = useState(null);
+  const [selectedModuleId, setSelectedModuleId] = useState(initial.moduleId || null);
   const [modules, setModules] = useState(loadProgress);
   const startTimeRef = useRef(null);
+  const skipNextHashEffect = useRef(false);
+
+  // Écoute du bouton Précédent / Suivant du navigateur
+  useEffect(() => {
+    const onPopState = () => {
+      skipNextHashEffect.current = true; // évite de re-pousser dans l'historique
+      const parsed = parseHash(window.location.hash);
+      setScreen(parsed.screen);
+      if (parsed.moduleId) setSelectedModuleId(parsed.moduleId);
+      if (parsed.legalTab) setLegalTab(parsed.legalTab);
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  // Synchronise l'URL avec l'état actuel à chaque navigation interne
+  useEffect(() => {
+    if (skipNextHashEffect.current) {
+      skipNextHashEffect.current = false;
+      return;
+    }
+    const newHash = buildHash(screen, { moduleId: selectedModuleId, legalTab });
+    const current = window.location.hash;
+    if (newHash !== current) {
+      window.history.pushState(null, '', newHash || window.location.pathname);
+    }
+  }, [screen, selectedModuleId, legalTab]);
 
   // Sauvegarde automatique
   useEffect(() => {
@@ -121,6 +190,8 @@ export default function App() {
         initial={legalTab}
         onBack={() => setScreen(legalReturnTo)}
         onShowScormPlayer={() => setScreen('scorm-player')}
+        onShowLegal={showLegal}
+        onShowLanding={() => setScreen('landing')}
       />
     );
   }
@@ -156,9 +227,9 @@ export default function App() {
     );
   }
 
-  if (screen === 'attestation') return <AttestationPage modules={modules} onNavigate={handleNavigate} onShowLegal={showLegal} />;
+  if (screen === 'attestation') return <AttestationPage modules={modules} onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} />;
   if (screen === 'scorm-player') return <ScormPlayer onNavigate={handleNavigate} />;
-  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} onShowLegal={showLegal} />;
+  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} />;
 
   if (screen === 'profil') {
     return (
@@ -166,6 +237,7 @@ export default function App() {
         modules={modules}
         onNavigate={handleNavigate}
         onShowLegal={showLegal}
+        onShowLanding={() => setScreen('landing')}
         onReset={handleReset}
         onImport={(imported) => {
           setModules(prev => prev.map(m => {
@@ -191,6 +263,7 @@ export default function App() {
       onEvaluate={handleEvaluate}
       onNavigate={handleNavigate}
       onShowLegal={showLegal}
+      onShowLanding={() => setScreen('landing')}
     />
   );
 }
