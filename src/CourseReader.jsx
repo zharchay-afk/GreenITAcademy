@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import modulesData from '../data/modules.json';
 import Visual from './Visuals';
 import Logo from './Logo';
@@ -6,17 +6,28 @@ import Logo from './Logo';
 export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectModule }) {
   const module = modulesData.modules.find(m => m.id === moduleId);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const scrollRef = useRef(null);
 
-  // Réinitialise sur la première section quand on change de module
-  useEffect(() => { setCurrentIdx(0); }, [moduleId]);
+  // Réinitialise sur la première section quand on change de module + remonte
+  useEffect(() => {
+    setCurrentIdx(0);
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [moduleId]);
+
+  // Remonte en haut à chaque changement de section
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [currentIdx]);
 
   if (!module) return <div>Module non trouvé</div>;
 
-  const section = module.sections[currentIdx];
+  // Garde contre le render intermédiaire quand moduleId change avant que l'effet reset
+  const safeIdx = Math.min(currentIdx, module.sections.length - 1);
+  const section = module.sections[safeIdx];
   const total = module.sections.length;
-  const isFirst = currentIdx === 0;
-  const isLast = currentIdx === total - 1;
-  const progressPct = Math.round(((currentIdx + 1) / total) * 100);
+  const isFirst = safeIdx === 0;
+  const isLast = safeIdx === total - 1;
+  const progressPct = Math.round(((safeIdx + 1) / total) * 100);
 
   // Navigation module précédent / suivant
   const allIds = modulesData.modules.map(m => m.id);
@@ -59,16 +70,16 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
               onClick={() => setCurrentIdx(idx)}
               style={{
                 width: '100%', padding: '10px 16px',
-                backgroundColor: idx === currentIdx ? 'rgba(255,255,255,0.08)' : 'transparent',
+                backgroundColor: idx === safeIdx ? 'rgba(255,255,255,0.08)' : 'transparent',
                 border: 'none',
-                borderLeft: idx === currentIdx ? '3px solid var(--sidebar-active)' : '3px solid transparent',
-                color: idx === currentIdx ? 'var(--sidebar-active)' : idx < currentIdx ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.4)',
+                borderLeft: idx === safeIdx ? '3px solid var(--sidebar-active)' : '3px solid transparent',
+                color: idx === safeIdx ? 'var(--sidebar-active)' : idx < safeIdx ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.4)',
                 textAlign: 'left', cursor: 'pointer', fontSize: '12px',
                 display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: '1.4',
               }}
             >
               <span style={{ flexShrink: 0 }}>
-                {idx < currentIdx ? '✓' : idx === currentIdx ? '▶' : '○'}
+                {idx < safeIdx ? '✓' : idx === safeIdx ? '▶' : '○'}
               </span>
               <span>{s.title}</span>
             </button>
@@ -113,7 +124,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
         <header style={{ backgroundColor: 'var(--bg-surface)', padding: '16px 32px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '4px' }}>
-              {module.unite} · Section {currentIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
+              {module.unite} · Section {safeIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
             </div>
             <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>{section.title}</h1>
             {module.subtitle && (
@@ -130,7 +141,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
         </header>
 
         {/* Texte du cours */}
-        <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
+        <div ref={scrollRef} style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
           <div style={{ maxWidth: '780px', margin: '0 auto' }}>
 
             {/* Intro (chapeau) */}
@@ -234,7 +245,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
             ← Section précédente
           </button>
 
-          <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Section {currentIdx + 1} / {total}</span>
+          <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Section {safeIdx + 1} / {total}</span>
 
           {isLast ? (
             <button
