@@ -102,15 +102,32 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
 
-    <!-- Enregistrement du service worker pour le mode hors-ligne et l'installation -->
+    <!-- Enregistrement du service worker — UNIQUEMENT en production.
+         En développement (localhost), le SW est désenregistré pour ne pas
+         servir un cache obsolète qui court-circuiterait le HMR de Vite. -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {
+      (function () {
+        if (!('serviceWorker' in navigator)) return;
+        var host = window.location.hostname;
+        var isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+
+        if (isLocalhost) {
+          // Désinscrit tout SW résiduel + vide les caches en dev
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) { r.unregister(); });
+          });
+          if (window.caches && caches.keys) {
+            caches.keys().then(function (keys) { keys.forEach(function (k) { caches.delete(k); }); });
+          }
+          return;
+        }
+
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').catch(function () {
             // Échec silencieux : l'application fonctionne sans le SW
           });
         });
-      }
+      })();
     </script>
   </body>
 </html>
