@@ -192,6 +192,7 @@ export default function App() {
         onShowScormPlayer={() => setScreen('scorm-player')}
         onShowLegal={showLegal}
         onShowLanding={() => setScreen('landing')}
+        onShowHome={() => setScreen('home')}
       />
     );
   }
