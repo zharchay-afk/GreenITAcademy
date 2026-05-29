@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme, toggleTheme } from './theme';
+import ThemeSelector from './ThemeSelector';
 
 // Footer partagé entre toutes les pages internes (dashboard, attestation, profil,
 // références). Placé en dehors de la zone scrollable pour rester toujours visible.
@@ -16,9 +16,6 @@ const linkStyle = {
 };
 
 export default function Footer({ onShowLegal, onShowLanding }) {
-  const [theme] = useTheme();
-  const isDark = theme === 'dark';
-
   return (
     <footer
       data-themed="surface"
@@ -51,26 +48,7 @@ export default function Footer({ onShowLegal, onShowLanding }) {
             <button onClick={() => onShowLegal('ecoconception')} style={linkStyle}>🌱 Éco-conçu</button>
           </>
         )}
-        <button
-          onClick={toggleTheme}
-          title={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-          aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-          style={{
-            background: 'var(--bg-soft)',
-            border: '1px solid var(--border)',
-            cursor: 'pointer',
-            padding: '4px 10px',
-            borderRadius: '12px',
-            fontSize: '12px',
-            fontFamily: 'inherit',
-            color: 'var(--text-primary)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '4px',
-          }}
-        >
-          {isDark ? '☀️' : '🌙'} {isDark ? 'Clair' : 'Sombre'}
-        </button>
+        <ThemeSelector />
       </span>
     </footer>
   );
