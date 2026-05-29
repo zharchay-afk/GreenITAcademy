@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
-import { useTheme, toggleTheme } from './theme';
+import { useTheme } from './theme';
+import ThemeSelector from './ThemeSelector';
 
 // ============================================================================
 // LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
@@ -272,20 +273,7 @@ export default function LandingPage({ onStart, onShowLegal }) {
           <button onClick={() => onShowLegal('cookies')}       style={footerLink}>Cookies</button>
           <button onClick={() => onShowLegal('accessibilite')} style={footerLink}>♿ Accessibilité</button>
           <button onClick={() => onShowLegal('ecoconception')} style={footerLink}>🌱 Éco-conçu</button>
-          <button
-            onClick={toggleTheme}
-            title={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-            aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-            style={{
-              background: 'var(--bg-soft)', border: '1px solid var(--border)',
-              cursor: 'pointer', padding: '4px 10px', borderRadius: '12px',
-              fontSize: '12px', fontFamily: 'inherit',
-              color: 'var(--text-primary)',
-              display: 'inline-flex', alignItems: 'center', gap: '4px',
-            }}
-          >
-            {isDark ? '☀️' : '🌙'} {isDark ? 'Clair' : 'Sombre'}
-          </button>
+          <ThemeSelector />
         </span>
       </footer>
     </div>
