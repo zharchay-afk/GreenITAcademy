@@ -15,7 +15,7 @@ const linkStyle = {
   fontFamily: 'inherit',
 };
 
-export default function Footer({ onShowLegal }) {
+export default function Footer({ onShowLegal, onShowLanding }) {
   const [theme] = useTheme();
   const isDark = theme === 'dark';
 
@@ -39,6 +39,9 @@ export default function Footer({ onShowLegal }) {
     >
       <span>Master Data Science · UTBM · 2026</span>
       <span style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+        {onShowLanding && (
+          <button onClick={onShowLanding} style={linkStyle}>↩ Page de présentation</button>
+        )}
         {onShowLegal && (
           <>
             <button onClick={() => onShowLegal('notice')}        style={linkStyle}>Mentions légales</button>

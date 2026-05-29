@@ -132,34 +132,6 @@ export default function Sidebar({ activePage, onNavigate }) {
         })}
       </nav>
 
-      {/* Lien discret vers la page de présentation */}
-      <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: collapsed ? 'center' : 'flex-start' }}>
-        {collapsed ? (
-          <button
-            onClick={() => onNavigate('landing')}
-            title="Page de présentation"
-            aria-label="Page de présentation"
-            style={{
-              background: 'transparent', border: 'none',
-              color: 'rgba(255,255,255,0.5)', cursor: 'pointer',
-              padding: '4px', fontSize: '15px', fontFamily: 'inherit',
-            }}
-          >
-            ↩
-          </button>
-        ) : (
-          <button
-            onClick={() => onNavigate('landing')}
-            style={{
-              background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.5)',
-              padding: 0, cursor: 'pointer', fontSize: '11px', fontFamily: 'inherit',
-              textDecoration: 'underline',
-            }}
-          >
-            ↩ Page de présentation
-          </button>
-        )}
-      </div>
     </aside>
   );
 }

@@ -12,7 +12,7 @@ const MODULE_PALETTE = {
   6: { accent: '#14b8a6', bg: '#ccfbf1' },
 };
 
-export default function AttestationPage({ modules, onNavigate, onShowLegal }) {
+export default function AttestationPage({ modules, onNavigate, onShowLegal, onShowLanding }) {
   const validatedModules = modules.filter(m => m.score >= 70);
   const startedModules = modules.filter(m => m.started);
   const allValidated = validatedModules.length === 6;
@@ -107,7 +107,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal }) {
         </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
       </main>
     </div>
   );
