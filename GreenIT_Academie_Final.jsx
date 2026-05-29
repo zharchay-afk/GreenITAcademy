@@ -47,7 +47,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
           {module.image}
         </div>
         {validated && (
-          <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: 700 }}>✓ Réussi</span>
+          <span style={{ backgroundColor: 'var(--accent-soft)', color: 'var(--accent)', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: 700 }}>✓ Réussi</span>
         )}
       </div>
 
@@ -58,7 +58,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
       <div style={{ marginBottom: '14px', fontSize: '12px', color: 'var(--text-secondary)', display: 'flex', gap: '14px' }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>⏱ {module.tempsPasse}</span>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          ★ <span style={{ color: validated ? '#15803d' : module.score > 0 ? '#f59e0b' : '#9ca3af', fontWeight: 600 }}>{module.score}%</span>
+          ★ <span style={{ color: validated ? 'var(--accent)' : module.score > 0 ? '#f59e0b' : 'var(--text-muted)', fontWeight: 600 }}>{module.score}%</span>
         </span>
       </div>
 
@@ -68,7 +68,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
           onClick={() => onStart(module.id)}
           style={{
             flex: 1, padding: '9px 12px',
-            backgroundColor: '#15803d', color: '#fff',
+            backgroundColor: 'var(--brand)', color: 'var(--on-brand)',
             border: 'none', borderRadius: '6px',
             fontSize: '13px', fontWeight: 600, cursor: 'pointer',
             fontFamily: 'inherit',
@@ -81,9 +81,9 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
           disabled={!canEvaluate}
           style={{
             flex: 1, padding: '9px 12px',
-            backgroundColor: '#fff',
-            color: canEvaluate ? '#15803d' : '#9ca3af',
-            border: `1px solid ${canEvaluate ? '#86efac' : '#e5e7eb'}`,
+            backgroundColor: 'transparent',
+            color: canEvaluate ? 'var(--accent)' : 'var(--text-muted)',
+            border: `1px solid ${canEvaluate ? 'var(--accent)' : 'var(--border)'}`,
             borderRadius: '6px',
             fontSize: '13px', fontWeight: 600,
             cursor: canEvaluate ? 'pointer' : 'not-allowed',

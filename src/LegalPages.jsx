@@ -12,7 +12,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <header style={{ flexShrink: 0, backgroundColor: '#15803d', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header style={{ flexShrink: 0, backgroundColor: 'var(--sidebar-bg)', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{ width: '32px', height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📋</div>
           <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Informations du site</span>

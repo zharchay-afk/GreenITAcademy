@@ -31,7 +31,7 @@ export default function Sidebar({ activePage, onNavigate }) {
   return (
     <aside style={{
       width,
-      backgroundColor: '#15803d',
+      backgroundColor: 'var(--sidebar-bg)',
       height: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -51,9 +51,9 @@ export default function Sidebar({ activePage, onNavigate }) {
           width: '24px',
           height: '24px',
           borderRadius: '50%',
-          backgroundColor: '#fff',
-          color: '#064e3b',
-          border: '1px solid #d1d5db',
+          backgroundColor: 'var(--bg-surface)',
+          color: 'var(--accent)',
+          border: '1px solid var(--border)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',

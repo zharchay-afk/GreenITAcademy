@@ -315,20 +315,20 @@ const navLinkStyle = (active) => ({
 });
 
 const ctaSmallStyle = {
-  padding: '8px 18px', backgroundColor: '#15803d', color: '#fff', border: 'none',
+  padding: '8px 18px', backgroundColor: 'var(--brand)', color: 'var(--on-brand)', border: 'none',
   borderRadius: '8px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
   marginLeft: '12px',
 };
 
 const ctaPrimaryStyle = {
-  padding: '12px 26px', backgroundColor: '#15803d', color: '#fff', border: 'none',
+  padding: '12px 26px', backgroundColor: 'var(--brand)', color: 'var(--on-brand)', border: 'none',
   borderRadius: '10px', fontSize: '14px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
   boxShadow: '0 4px 12px rgba(21,128,61,0.18)',
 };
 
 const ctaSecondaryStyle = {
-  padding: '12px 26px', backgroundColor: 'transparent', color: '#15803d',
-  border: '1px solid #86efac', borderRadius: '10px',
+  padding: '12px 26px', backgroundColor: 'transparent', color: 'var(--accent)',
+  border: '1px solid var(--accent)', borderRadius: '10px',
   fontSize: '14px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
 };
 
