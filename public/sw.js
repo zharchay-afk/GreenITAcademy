@@ -2,7 +2,7 @@
 // Stratégie sobre, sans librairie : cache-first pour les assets statiques,
 // network-first pour les pages HTML (mise à jour transparente du contenu).
 
-const CACHE_VERSION = 'greenit-academie-v1';
+const CACHE_VERSION = 'greenit-academie-v2';
 const CORE_ASSETS = [
   '/',
   '/index.html',
