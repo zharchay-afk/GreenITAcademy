@@ -3,7 +3,7 @@ import { exportScorm } from './utils/scormExport';
 import Footer from './Footer';
 
 // Page-wrapper et tabs
-export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding }) {
+export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding, onShowHome }) {
   const [current, setCurrent] = React.useState(initial);
 
   React.useEffect(() => { setCurrent(initial); }, [initial]);
@@ -17,7 +17,12 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
           <div style={{ width: '32px', height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📋</div>
           <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Informations du site</span>
         </div>
-        <button onClick={onBack} style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.4)', color: '#fff', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}>← Retour</button>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {onShowHome && (
+            <button onClick={onShowHome} style={{ backgroundColor: '#fff', border: 'none', color: '#15803d', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 700 }}>📚 Retour à la formation</button>
+          )}
+          <button onClick={onBack} style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.4)', color: '#fff', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}>← Retour</button>
+        </div>
       </header>
 
       {/* Tabs */}
