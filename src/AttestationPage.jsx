@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import { useTheme } from './theme';
 
 // Palette adoucie (cohérente avec landing et dashboard)
 const MODULE_PALETTE = {
@@ -13,6 +14,8 @@ const MODULE_PALETTE = {
 };
 
 export default function AttestationPage({ modules, onNavigate, onShowLegal, onShowLanding }) {
+  const [theme] = useTheme();
+  const isDark = theme === 'dark';
   const validatedModules = modules.filter(m => m.score >= 70);
   const startedModules = modules.filter(m => m.started);
   const allValidated = validatedModules.length === 6;
@@ -42,7 +45,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal, onSh
               return (
                 <div key={m.id} style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '16px', border: '1px solid var(--border)', borderLeft: `4px solid ${validated ? '#22c55e' : inProgress ? '#f59e0b' : 'var(--border)'}` }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                    <div style={{ width: '40px', height: '40px', backgroundColor: (MODULE_PALETTE[m.id] || {}).bg || '#dcfce7', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
+                    <div style={{ width: '40px', height: '40px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : ((MODULE_PALETTE[m.id] || {}).bg || '#dcfce7'), borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
                       {m.image}
                     </div>
                     <div>

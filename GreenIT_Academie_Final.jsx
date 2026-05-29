@@ -1,6 +1,7 @@
 ﻿import React, { useState } from 'react';
 import Sidebar from './src/Sidebar';
 import Footer from './src/Footer';
+import { useTheme } from './src/theme';
 
 // ================================================
 // GREEN IT ACADÉMIE - Style SecNum
@@ -27,6 +28,8 @@ const MODULE_PALETTE = {
 
 // Module Card Component
 const ModuleCard = ({ module, onStart, onEvaluate }) => {
+  const [theme] = useTheme();
+  const isDark = theme === 'dark';
   const canEvaluate = module.started;
   const pal = MODULE_PALETTE[module.id] || { accent: '#15803d', bg: '#dcfce7' };
   const validated = module.score >= 70;
@@ -43,7 +46,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
     }}>
       {/* En-tête : icône + statut */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-        <div style={{ width: '44px', height: '44px', backgroundColor: pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
+        <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
           {module.image}
         </div>
         {validated && (
