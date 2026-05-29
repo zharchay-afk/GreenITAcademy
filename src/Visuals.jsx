@@ -539,6 +539,177 @@ const CSRDTimeline = () => (
   </Wrapper>
 );
 
+// -------------------------------------------------- LuxIT Ecosystem (Module 6 — animé)
+const LuxITEcosystem = () => {
+  const actors = [
+    { cx: 290, cy: 60,  label: 'LuxConnect', sub: 'DC gov. Tier IV',        color: '#3182ce', delay: 0.3 },
+    { cx: 480, cy: 148, label: 'EBRC',        sub: 'Multi-certifié',         color: '#22c55e', delay: 0.5 },
+    { cx: 420, cy: 268, label: 'ILNAS',       sub: 'Normes & accréditation', color: '#9333ea', delay: 0.7 },
+    { cx: 160, cy: 268, label: 'CASES',       sub: 'Cybersécurité',          color: '#ed8936', delay: 0.9 },
+    { cx: 100, cy: 148, label: 'POST Lux',    sub: 'Fibre & Cloud',          color: '#e53e3e', delay: 1.1 },
+  ];
+  return (
+    <Wrapper caption="Figure — Écosystème numérique luxembourgeois : cinq acteurs d'une stratégie hub européen coordonnée">
+      <svg viewBox="0 0 580 316" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
+        <style>{`
+          @keyframes ecosFade { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes ecosLine { from { stroke-dashoffset: 220; } to { stroke-dashoffset: 0; } }
+        `}</style>
+        <text x="290" y="18" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
+          Luxembourg, hub numérique européen
+        </text>
+        {actors.map((a, i) => (
+          <line key={`l${i}`}
+            x1="290" y1="174" x2={a.cx} y2={a.cy}
+            stroke={a.color} strokeWidth="1.5" strokeDasharray="220" strokeDashoffset="220" opacity="0.5"
+            style={{ animation: `ecosLine 0.7s ease-out ${a.delay}s both` }}
+          />
+        ))}
+        <g style={{ animation: 'ecosFade 0.5s ease-out 0s both' }}>
+          <circle cx="290" cy="174" r="44" fill="#064e3b" />
+          <text x="290" y="168" textAnchor="middle" fill="#fff" fontSize="20" fontFamily="system-ui">🇱🇺</text>
+          <text x="290" y="186" textAnchor="middle" fill="#86efac" fontSize="9" fontWeight="700" fontFamily="system-ui">DIGITAL HUB</text>
+        </g>
+        {actors.map((a, i) => (
+          <g key={`n${i}`} style={{ animation: `ecosFade 0.4s ease-out ${a.delay + 0.1}s both` }}>
+            <rect x={a.cx - 50} y={a.cy - 20} width="100" height="40" rx="7" fill={a.color} />
+            <text x={a.cx} y={a.cy - 4} textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700" fontFamily="system-ui">{a.label}</text>
+            <text x={a.cx} y={a.cy + 11} textAnchor="middle" fill="#fff" fontSize="9" fontFamily="system-ui" opacity="0.85">{a.sub}</text>
+          </g>
+        ))}
+        <g style={{ animation: 'ecosFade 0.5s ease-out 1.5s both' }}>
+          <rect x="140" y="298" width="300" height="14" rx="4" fill="#f0fdf4" stroke="#86efac" strokeWidth="1" />
+          <text x="290" y="309" textAnchor="middle" fill="#166534" fontSize="9" fontWeight="600" fontFamily="system-ui">
+            PUE moyen 1.3 · 100 % énergie verte · Hub cloud certifié UE
+          </text>
+        </g>
+      </svg>
+    </Wrapper>
+  );
+};
+
+// -------------------------------------------------- Green IT Maturity Model (barres animées)
+const GreenITMaturity = () => {
+  const baseline = 230;
+  const levels = [
+    { label: 'Réactif',     sub: 'Conformité',   h: 44,  color: '#ef4444' },
+    { label: 'Sensibilisé', sub: 'Awareness',     h: 88,  color: '#f59e0b' },
+    { label: 'Structuré',   sub: 'Processus',     h: 132, color: '#eab308' },
+    { label: 'Optimisé',    sub: 'Mesure',        h: 176, color: '#84cc16' },
+    { label: 'Leader',      sub: 'Innovation',    h: 200, color: '#22c55e' },
+  ];
+  return (
+    <Wrapper caption="Figure — Modèle de maturité Green IT : progression de la conformité réactive au leadership responsable">
+      <svg viewBox="0 0 580 278" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
+        <style>{`
+          @keyframes matGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+          @keyframes matFade { from { opacity: 0; } to { opacity: 1; } }
+        `}</style>
+        <text x="290" y="18" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
+          Modèle de maturité Green IT — 5 niveaux
+        </text>
+        <line x1="60" y1={baseline} x2="522" y2={baseline} stroke="#e2e8f0" strokeWidth="1" />
+        {levels.map((lv, i) => {
+          const x = 70 + i * 90;
+          const d = 0.1 + i * 0.2;
+          return (
+            <g key={i}>
+              <rect
+                x={x} y={baseline - lv.h} width="80" height={lv.h} rx="4" fill={lv.color}
+                style={{ transformBox: 'fill-box', transformOrigin: '50% 100%', animation: `matGrow 0.5s ease-out ${d}s both` }}
+              />
+              <text x={x + 40} y={baseline - lv.h + 20} textAnchor="middle" fill="#fff" fontSize="18" fontWeight="700" fontFamily="system-ui"
+                style={{ animation: `matFade 0.3s ease-out ${d + 0.3}s both` }}>{i + 1}</text>
+              <text x={x + 40} y={baseline + 16} textAnchor="middle" fill="#064e3b" fontSize="10" fontWeight="700" fontFamily="system-ui"
+                style={{ animation: `matFade 0.3s ease-out ${d}s both` }}>{lv.label}</text>
+              <text x={x + 40} y={baseline + 29} textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="system-ui"
+                style={{ animation: `matFade 0.3s ease-out ${d}s both` }}>{lv.sub}</text>
+            </g>
+          );
+        })}
+        <g style={{ animation: 'matFade 0.5s ease-out 1.2s both' }}>
+          <line x1="70" y1="250" x2="506" y2="250" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="4 3" />
+          <polygon points="508,250 502,246 502,254" fill="#22c55e" />
+          <text x="290" y="265" textAnchor="middle" fill="#22c55e" fontSize="10" fontWeight="600" fontFamily="system-ui">
+            Progression vers la maturité responsable →
+          </text>
+        </g>
+      </svg>
+    </Wrapper>
+  );
+};
+
+// -------------------------------------------------- ISO 50001 EnPI Trend (graphique animé)
+const EnPITrend = () => {
+  const baseline = 205, chartTop = 40, yMin = 70, yMax = 110;
+  const chartH = baseline - chartTop;
+  const toY = (v) => Math.round(baseline - ((v - yMin) / (yMax - yMin)) * chartH);
+  const PX = [100, 200, 300, 400, 500];
+  const data = [
+    { yr: '2020', v: 100, cert: false },
+    { yr: '2021', v: 97,  cert: false },
+    { yr: '2022', v: 91,  cert: true  },
+    { yr: '2023', v: 85,  cert: false },
+    { yr: '2024', v: 79,  cert: false },
+  ];
+  const pts = data.map((d, i) => ({ ...d, x: PX[i], y: toY(d.v) }));
+  const polyPts = pts.map(p => `${p.x},${p.y}`).join(' ');
+  const DASH = 420;
+  const targetY = toY(80);
+  return (
+    <Wrapper caption="Figure — ISO 50001 : évolution type de l'indicateur de performance énergétique (EnPI) après certification">
+      <svg viewBox="0 0 580 250" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
+        <style>{`
+          @keyframes enpiDraw { from { stroke-dashoffset: ${DASH}; } to { stroke-dashoffset: 0; } }
+          @keyframes enpiFade { from { opacity: 0; } to { opacity: 1; } }
+        `}</style>
+        <text x="290" y="18" textAnchor="middle" fill="#064e3b" fontSize="13" fontWeight="700" fontFamily="system-ui">
+          ISO 50001 — Amélioration de la performance énergétique (EnPI)
+        </text>
+        {[110, 100, 90, 80, 70].map((v) => {
+          const y = toY(v);
+          return (
+            <g key={v}>
+              <line x1="80" y1={y} x2="540" y2={y}
+                stroke={v === 80 ? '#86efac' : '#e2e8f0'}
+                strokeWidth={v === 80 ? 1.5 : 0.75}
+                strokeDasharray={v === 80 ? '5 4' : undefined} />
+              <text x="72" y={y + 4} textAnchor="end" fill="#64748b" fontSize="10" fontFamily="system-ui">{v}</text>
+            </g>
+          );
+        })}
+        <text x="538" y={targetY - 5} textAnchor="end" fill="#166534" fontSize="9" fontWeight="600" fontFamily="system-ui">Objectif 80 kWh</text>
+        <line x1="80" y1={baseline} x2="540" y2={baseline} stroke="#374151" strokeWidth="1.5" />
+        <line x1="80" y1={chartTop} x2="80"  y2={baseline} stroke="#374151" strokeWidth="1.5" />
+        <text x="310" y="240" textAnchor="middle" fill="#064e3b" fontSize="10" fontStyle="italic" fontFamily="system-ui">
+          kWh / unité — indicateur de performance énergétique (EnPI)
+        </text>
+        {data.map((d, i) => (
+          <text key={i} x={PX[i]} y={baseline + 14} textAnchor="middle" fill="#374151" fontSize="10" fontFamily="system-ui">{d.yr}</text>
+        ))}
+        <polyline
+          points={polyPts} fill="none" stroke="#22c55e" strokeWidth="2.5"
+          strokeDasharray={DASH} strokeDashoffset={DASH}
+          style={{ animation: `enpiDraw 2s ease-in-out 0.5s both` }}
+        />
+        {pts.map((p, i) => (
+          <g key={i} style={{ animation: `enpiFade 0.3s ease-out ${0.5 + i * 0.38}s both` }}>
+            <circle cx={p.x} cy={p.y} r={p.cert ? 7 : 5}
+              fill={p.cert ? '#064e3b' : '#22c55e'} stroke="#fff" strokeWidth="2" />
+            <text x={p.x} y={p.y - 11} textAnchor="middle" fill="#064e3b" fontSize="10" fontWeight="700" fontFamily="system-ui">{p.v}</text>
+            {p.cert && (
+              <>
+                <text x={p.x} y={p.y + 21} textAnchor="middle" fill="#064e3b" fontSize="9" fontWeight="700" fontFamily="system-ui">↑ Certification</text>
+                <text x={p.x} y={p.y + 33} textAnchor="middle" fill="#64748b" fontSize="8" fontFamily="system-ui">ISO 50001</text>
+              </>
+            )}
+          </g>
+        ))}
+      </svg>
+    </Wrapper>
+  );
+};
+
 // -------------------------------------------------- Registry
 const VISUALS = {
   instrumentHierarchy: InstrumentHierarchy,
@@ -555,6 +726,9 @@ const VISUALS = {
   trustChain: TrustChain,
   pnecLuxembourg: PNECLuxembourg,
   csrdTimeline: CSRDTimeline,
+  luxITEcosystem: LuxITEcosystem,
+  greenITMaturity: GreenITMaturity,
+  enpiTrend: EnPITrend,
 };
 
 export default function Visual({ name }) {
