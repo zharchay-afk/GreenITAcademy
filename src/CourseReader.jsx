@@ -26,11 +26,11 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
 
   return (
     <div style={{
-      display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: '#f1f5f9',
+      display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Sidebar */}
-      <aside style={{ width: '240px', backgroundColor: '#064e3b', height: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <aside style={{ width: '240px', backgroundColor: 'var(--sidebar-bg)', height: '100vh', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         {/* Logo */}
         <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -110,22 +110,22 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
       {/* Contenu principal */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Header */}
-        <header style={{ backgroundColor: '#fff', padding: '16px 32px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <header style={{ backgroundColor: 'var(--bg-surface)', padding: '16px 32px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '4px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '4px' }}>
               {module.unite} · Section {currentIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
             </div>
-            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: '#064e3b' }}>{section.title}</h1>
+            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>{section.title}</h1>
             {module.subtitle && (
-              <div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
             )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: '12px', color: '#64748b' }}>Progression</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Progression</span>
             <div style={{ width: '120px', height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px' }}>
               <div style={{ width: `${progressPct}%`, height: '100%', backgroundColor: '#22c55e', borderRadius: '3px', transition: 'width 0.3s' }} />
             </div>
-            <span style={{ fontSize: '12px', color: '#64748b', minWidth: '36px' }}>{progressPct}%</span>
+            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', minWidth: '36px' }}>{progressPct}%</span>
           </div>
         </header>
 
@@ -143,8 +143,8 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
             )}
 
             {/* Contenu principal */}
-            <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-              <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.85', color: '#374151', whiteSpace: 'pre-line', textAlign: 'justify', hyphens: 'auto' }}>
+            <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '8px', padding: '28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+              <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.85', color: 'var(--text-primary)', whiteSpace: 'pre-line', textAlign: 'justify', hyphens: 'auto' }}>
                 {section.content}
               </p>
             </div>
@@ -157,11 +157,11 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
 
             {/* Sous-sections détaillées */}
             {Array.isArray(section.details) && section.details.length > 0 && (
-              <div style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '24px 28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+              <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '8px', padding: '24px 28px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
                 {section.details.map((d, i) => (
                   <div key={i} style={{ marginBottom: i < section.details.length - 1 ? '18px' : 0, paddingBottom: i < section.details.length - 1 ? '18px' : 0, borderBottom: i < section.details.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
-                    <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#064e3b' }}>{d.subtitle}</h4>
-                    <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.7', color: '#374151', whiteSpace: 'pre-line', textAlign: 'justify', hyphens: 'auto' }}>{d.text}</p>
+                    <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: 'var(--accent)' }}>{d.subtitle}</h4>
+                    <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.7', color: 'var(--text-primary)', whiteSpace: 'pre-line', textAlign: 'justify', hyphens: 'auto' }}>{d.text}</p>
                   </div>
                 ))}
               </div>
@@ -210,7 +210,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
                   </h3>
                   <ul style={{ margin: 0, paddingLeft: '18px', listStyle: 'disc' }}>
                     {linkedItems.map((g, i) => (
-                      <li key={i} style={{ fontSize: '12px', color: '#064e3b', lineHeight: '1.6', marginBottom: i < linkedItems.length - 1 ? '4px' : 0 }}>
+                      <li key={i} style={{ fontSize: '12px', color: 'var(--accent)', lineHeight: '1.6', marginBottom: i < linkedItems.length - 1 ? '4px' : 0 }}>
                         <a href={g.url} target="_blank" rel="noreferrer" style={{ color: '#1d4ed8', textDecoration: 'underline' }}>
                           {g.text}
                         </a>
@@ -225,7 +225,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
         </div>
 
         {/* Navigation bas de page — entre SECTIONS du module courant */}
-        <footer style={{ padding: '16px 32px', borderTop: '1px solid #e2e8f0', backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <footer style={{ padding: '16px 32px', borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg-surface)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <button
             onClick={() => setCurrentIdx(i => i - 1)}
             disabled={isFirst}
@@ -234,19 +234,19 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
             ← Section précédente
           </button>
 
-          <span style={{ fontSize: '13px', color: '#94a3b8' }}>Section {currentIdx + 1} / {total}</span>
+          <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Section {currentIdx + 1} / {total}</span>
 
           {isLast ? (
             <button
               onClick={onStartQuiz}
-              style={{ padding: '10px 24px', backgroundColor: '#e65100', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '14px' }}
+              style={{ padding: '10px 24px', backgroundColor: '#e65100', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '14px' }}
             >
               S'évaluer sur ce module →
             </button>
           ) : (
             <button
               onClick={() => setCurrentIdx(i => i + 1)}
-              style={{ padding: '10px 20px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+              style={{ padding: '10px 20px', backgroundColor: 'var(--sidebar-bg)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
             >
               Section suivante →
             </button>

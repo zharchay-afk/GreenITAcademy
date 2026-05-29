@@ -112,7 +112,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
               />
               <button
                 onClick={handleSaveName}
-                style={{ padding: '10px 18px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', whiteSpace: 'nowrap' }}
+                style={{ padding: '10px 18px', backgroundColor: 'var(--brand)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', whiteSpace: 'nowrap' }}
               >
                 {saved ? '✓ Enregistré' : 'Enregistrer'}
               </button>
@@ -162,13 +162,13 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button
                 onClick={handleExport}
-                style={{ padding: '9px 16px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                style={{ padding: '9px 16px', backgroundColor: 'var(--brand)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
               >
                 ⬇ Exporter ma progression (.json)
               </button>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                style={{ padding: '9px 16px', backgroundColor: 'var(--bg-surface)', color: 'var(--accent)', border: '1px solid #064e3b', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                style={{ padding: '9px 16px', backgroundColor: 'var(--bg-surface)', color: 'var(--accent)', border: '1px solid var(--accent)', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
               >
                 ⬆ Importer une sauvegarde
               </button>
@@ -202,7 +202,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
                 <span style={{ fontSize: '13px', color: '#dc2626', fontWeight: '600' }}>Confirmer ?</span>
                 <button
                   onClick={handleReset}
-                  style={{ padding: '8px 16px', backgroundColor: '#dc2626', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
+                  style={{ padding: '8px 16px', backgroundColor: '#dc2626', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
                 >
                   Oui, tout effacer
                 </button>

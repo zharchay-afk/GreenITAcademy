@@ -125,26 +125,26 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
     });
 
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-        <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '40px 36px', maxWidth: '560px', width: '100%', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+      <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-page)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+        <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '12px', padding: '40px 36px', maxWidth: '560px', width: '100%', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
           <div style={{ fontSize: '56px', marginBottom: '12px' }}>{passed ? '🏆' : '📚'}</div>
           <div style={{ fontSize: '44px', fontWeight: '800', color: passed ? '#22c55e' : '#e53e3e', marginBottom: '4px' }}>{finalScore}%</div>
-          <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '12px', letterSpacing: '0.5px' }}>SCORE PONDÉRÉ PAR DIFFICULTÉ</div>
-          <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: '#064e3b', fontWeight: '700' }}>
+          <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '12px', letterSpacing: '0.5px' }}>SCORE PONDÉRÉ PAR DIFFICULTÉ</div>
+          <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: 'var(--accent)', fontWeight: '700' }}>
             {passed ? 'Module validé !' : 'À retravailler'}
           </h2>
-          <p style={{ color: '#64748b', fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '14px', margin: '0 0 20px 0', lineHeight: '1.6' }}>
             {correctCount} bonne{correctCount > 1 ? 's' : ''} réponse{correctCount > 1 ? 's' : ''} sur {history.length} questions · seuil de réussite : 70 %
           </p>
 
           {/* Répartition par niveau */}
-          <div style={{ backgroundColor: '#f8fafc', borderRadius: '8px', padding: '14px', marginBottom: '20px', border: '1px solid #e2e8f0' }}>
-            <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '10px', fontWeight: '600', letterSpacing: '0.4px' }}>RÉPARTITION PAR NIVEAU</div>
+          <div style={{ backgroundColor: 'var(--bg-muted)', borderRadius: '8px', padding: '14px', marginBottom: '20px', border: '1px solid var(--border)' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '10px', fontWeight: '600', letterSpacing: '0.4px' }}>RÉPARTITION PAR NIVEAU</div>
             <div style={{ display: 'flex', justifyContent: 'space-around', gap: '8px' }}>
               {levelStats.map(s => (
                 <div key={s.level} style={{ flex: 1, textAlign: 'center' }}>
-                  <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '4px' }}>{LEVEL_LABEL[s.level]}</div>
-                  <div style={{ fontSize: '15px', fontWeight: '700', color: s.total === 0 ? '#cbd5e0' : '#064e3b' }}>
+                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '4px' }}>{LEVEL_LABEL[s.level]}</div>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: s.total === 0 ? '#cbd5e0' : 'var(--accent)' }}>
                     {s.total === 0 ? '—' : `${s.correct}/${s.total}`}
                   </div>
                 </div>
@@ -169,7 +169,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
                   const first = pickNextQuestion(pool, 0, new Set());
                   if (first) { setCurrentQuestion(first); setAskedIds(new Set([first.id])); }
                 }}
-                style={{ padding: '12px 18px', backgroundColor: '#fff', color: '#064e3b', border: '1px solid #064e3b', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+                style={{ padding: '12px 18px', backgroundColor: 'var(--bg-surface)', color: 'var(--accent)', border: '1px solid var(--accent)', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
               >
                 Réessayer
               </button>
@@ -177,14 +177,14 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
             {onReviewCourse && (
               <button
                 onClick={() => onReviewCourse(moduleId, finalScore)}
-                style={{ padding: '12px 18px', backgroundColor: '#fff', color: '#166534', border: '1px solid #166534', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+                style={{ padding: '12px 18px', backgroundColor: 'var(--bg-surface)', color: '#166534', border: '1px solid #166534', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
               >
                 📖 Revoir le cours
               </button>
             )}
             <button
               onClick={() => onComplete(moduleId, finalScore)}
-              style={{ padding: '12px 20px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
+              style={{ padding: '12px 20px', backgroundColor: 'var(--sidebar-bg)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
             >
               Retour à l'accueil
             </button>
@@ -206,10 +206,10 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
   }
 
   const answerColors = {
-    default: { bg: '#fff', border: '#e2e8f0', color: '#374151' },
+    default: { bg: '#fff', border: '#e2e8f0', color: 'var(--text-primary)' },
     correct: { bg: '#ecfdf5', border: '#22c55e', color: '#166534' },
     wrong: { bg: '#fff5f5', border: '#ef4444', color: '#991b1b' },
-    disabled: { bg: '#f8fafc', border: '#e2e8f0', color: '#94a3b8' },
+    disabled: { bg: '#f8fafc', border: '#e2e8f0', color: 'var(--text-muted)' },
   };
 
   const getStyle = (idx) => {
@@ -224,9 +224,9 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
   const progressPct = (history.length / totalToAsk) * 100;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
-      <header style={{ backgroundColor: '#064e3b', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <header style={{ backgroundColor: 'var(--sidebar-bg)', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <Logo size={32} />
           <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Green IT académie — Quiz adaptatif</span>
@@ -245,17 +245,17 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
       </div>
 
       {/* Bandeau adaptatif */}
-      <div style={{ backgroundColor: '#fff', padding: '10px 32px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
+      <div style={{ backgroundColor: 'var(--bg-surface)', padding: '10px 32px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <span style={{ color: '#64748b', fontWeight: '600' }}>Question {questionNumber} / {totalToAsk}</span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: '#f1f5f9', borderRadius: '12px', color: '#064e3b', fontWeight: '600' }}>
+          <span style={{ color: 'var(--text-secondary)', fontWeight: '600' }}>Question {questionNumber} / {totalToAsk}</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: 'var(--bg-page)', borderRadius: '12px', color: 'var(--accent)', fontWeight: '600' }}>
             {LEVEL_LABEL[currentQuestion.level]}
           </span>
           {streak >= 2 && (
             <span style={{ color: '#e65100', fontWeight: '600' }}>🔥 Série de {streak}</span>
           )}
         </div>
-        <div style={{ color: '#94a3b8', fontSize: '11px' }}>
+        <div style={{ color: 'var(--text-muted)', fontSize: '11px' }}>
           Difficulté ajustée à vos réponses
         </div>
       </div>
@@ -264,8 +264,8 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
       <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '32px 20px' }}>
         <div style={{ width: '100%', maxWidth: '680px' }}>
           {/* Question */}
-          <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '28px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-            <p style={{ margin: 0, fontSize: '17px', fontWeight: '600', color: '#064e3b', lineHeight: '1.6' }}>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '28px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+            <p style={{ margin: 0, fontSize: '17px', fontWeight: '600', color: 'var(--accent)', lineHeight: '1.6' }}>
               {currentQuestion.question}
             </p>
           </div>
@@ -315,7 +315,7 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
             <div style={{ textAlign: 'right' }}>
               <button
                 onClick={handleNext}
-                style={{ padding: '12px 28px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '14px' }}
+                style={{ padding: '12px 28px', backgroundColor: 'var(--sidebar-bg)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '14px' }}
               >
                 {history.length < totalToAsk ? 'Question suivante →' : 'Voir mes résultats'}
               </button>

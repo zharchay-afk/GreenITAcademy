@@ -83,7 +83,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal, onSh
               <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Émis le {today}</div>
               <button
                 onClick={() => window.print()}
-                style={{ marginTop: '20px', padding: '10px 24px', backgroundColor: '#064e3b', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+                style={{ marginTop: '20px', padding: '10px 24px', backgroundColor: 'var(--brand)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
               >
                 🖨️ Imprimer l'attestation
               </button>
