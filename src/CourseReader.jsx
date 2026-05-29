@@ -37,7 +37,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
             <Logo size={36} />
             <div>
               <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-              <div style={{ color: '#86efac', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
+              <div style={{ color: 'var(--sidebar-active)', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
             </div>
           </div>
         </div>
@@ -61,8 +61,8 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
                 width: '100%', padding: '10px 16px',
                 backgroundColor: idx === currentIdx ? 'rgba(255,255,255,0.08)' : 'transparent',
                 border: 'none',
-                borderLeft: idx === currentIdx ? '3px solid #4ade80' : '3px solid transparent',
-                color: idx === currentIdx ? '#4ade80' : idx < currentIdx ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.4)',
+                borderLeft: idx === currentIdx ? '3px solid var(--sidebar-active)' : '3px solid transparent',
+                color: idx === currentIdx ? 'var(--sidebar-active)' : idx < currentIdx ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.4)',
                 textAlign: 'left', cursor: 'pointer', fontSize: '12px',
                 display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: '1.4',
               }}

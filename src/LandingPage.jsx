@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
@@ -148,22 +148,22 @@ export default function LandingPage({ onStart, onShowLegal }) {
         {/* ----------------- Section Accueil ----------------- */}
         <section id="accueil" style={sectionStyle({
           background: isDark
-            ? 'linear-gradient(135deg, #0a2e1f 0%, #14532d 60%, #0f3a23 100%)'
+            ? 'linear-gradient(135deg, #0f172a 0%, #16241d 100%)'
             : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 60%, #a7f3d0 100%)',
-          color: isDark ? '#86efac' : '#064e3b',
+          color: isDark ? '#e8edf4' : '#064e3b',
         })}>
           <div style={containerStyle}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#fff', border: `1px solid ${isDark ? 'rgba(134,239,172,0.3)' : '#bbf7d0'}`, borderRadius: '20px', marginBottom: '24px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : '#fff', border: `1px solid ${isDark ? 'rgba(255,255,255,0.12)' : '#bbf7d0'}`, borderRadius: '20px', marginBottom: '24px' }}>
               <Logo size={20} />
-              <span style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#86efac' : '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#74b893' : '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#ecfdf5' : '#064e3b' }}>
+            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#e8edf4' : '#064e3b' }}>
               Formez-vous au<br />
-              <span style={{ color: isDark ? '#86efac' : '#15803d' }}>Numérique Responsable</span>
+              <span style={{ color: isDark ? '#74b893' : '#15803d' }}>Numérique Responsable</span>
             </h1>
 
-            <p style={{ fontSize: '17px', color: isDark ? '#a7f3d0' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
+            <p style={{ fontSize: '17px', color: isDark ? '#94a3b8' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
               Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.
             </p>
 
@@ -175,8 +175,8 @@ export default function LandingPage({ onStart, onShowLegal }) {
             <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
               {stats.map((s, i) => (
                 <div key={i}>
-                  <div style={{ fontSize: '32px', fontWeight: 800, color: isDark ? '#86efac' : '#15803d' }}>{s.value}</div>
-                  <div style={{ fontSize: '12px', color: isDark ? '#a7f3d0' : '#166534', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
+                  <div style={{ fontSize: '32px', fontWeight: 800, color: isDark ? '#74b893' : '#15803d' }}>{s.value}</div>
+                  <div style={{ fontSize: '12px', color: isDark ? '#94a3b8' : '#166534', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -198,7 +198,7 @@ export default function LandingPage({ onStart, onShowLegal }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
               {interests.map((r, i) => (
                 <div key={i} style={{ textAlign: 'center', padding: '8px' }}>
-                  <div style={{ width: '64px', height: '64px', backgroundColor: isDark ? 'rgba(134,239,172,0.15)' : r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
+                  <div style={{ width: '64px', height: '64px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
                     <r.Icon />
                   </div>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 10px 0' }}>{r.title}</h3>
@@ -232,7 +232,7 @@ export default function LandingPage({ onStart, onShowLegal }) {
                     display: 'flex', flexDirection: 'column',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                      <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(134,239,172,0.18)' : pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
+                      <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
                         {m.image}
                       </div>
                       <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
