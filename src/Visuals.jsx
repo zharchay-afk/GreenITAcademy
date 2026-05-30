@@ -1,20 +1,40 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 
 // =============================================================================
 // Bibliothèque de visuels SVG inline pour Green IT Académie.
 // Tous les schémas sont 100 % SVG, sans dépendance, sans webfont, sans bitmap.
 // =============================================================================
 
-const Wrapper = ({ children, caption }) => (
-  <figure style={{ margin: '0 0 20px 0', backgroundColor: '#fff', borderRadius: '8px', padding: '20px', border: '1px solid #e2e8f0' }}>
-    {children}
-    {caption && (
-      <figcaption style={{ marginTop: '12px', fontSize: '11px', color: '#64748b', fontStyle: 'italic', textAlign: 'center' }}>
-        {caption}
-      </figcaption>
-    )}
-  </figure>
-);
+const Wrapper = ({ children, caption, animated }) => {
+  const [replayKey, setReplayKey] = useState(0);
+  return (
+    <figure style={{ margin: '0 0 20px 0', backgroundColor: '#fff', borderRadius: '8px', padding: '20px', border: '1px solid #e2e8f0' }}>
+      <div key={replayKey}>{children}</div>
+      <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+        {caption && (
+          <figcaption style={{ flex: 1, fontSize: '11px', color: '#64748b', fontStyle: 'italic' }}>
+            {caption}
+          </figcaption>
+        )}
+        {animated && (
+          <button
+            onClick={() => setReplayKey(k => k + 1)}
+            title="Rejouer l'animation"
+            style={{
+              flexShrink: 0, padding: '4px 10px',
+              backgroundColor: '#f0fdf4', color: '#166534',
+              border: '1px solid #86efac', borderRadius: '5px',
+              fontSize: '11px', fontWeight: '600',
+              cursor: 'pointer', fontFamily: 'inherit',
+            }}
+          >
+            ↺ Rejouer
+          </button>
+        )}
+      </div>
+    </figure>
+  );
+};
 
 // -------------------------------------------------- Pyramide des instruments
 const InstrumentHierarchy = () => (
@@ -549,7 +569,7 @@ const LuxITEcosystem = () => {
     { cx: 100, cy: 148, label: 'POST Lux',    sub: 'Fibre & Cloud',          color: '#e53e3e', delay: 1.1 },
   ];
   return (
-    <Wrapper caption="Figure — Écosystème numérique luxembourgeois : cinq acteurs d'une stratégie hub européen coordonnée">
+    <Wrapper caption="Figure — Écosystème numérique luxembourgeois : cinq acteurs d'une stratégie hub européen coordonnée" animated>
       <svg viewBox="0 0 580 316" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
         <style>{`
           @keyframes ecosFade { from { opacity: 0; } to { opacity: 1; } }
@@ -599,7 +619,7 @@ const GreenITMaturity = () => {
     { label: 'Leader',      sub: 'Innovation',    h: 200, color: '#22c55e' },
   ];
   return (
-    <Wrapper caption="Figure — Modèle de maturité Green IT : progression de la conformité réactive au leadership responsable">
+    <Wrapper caption="Figure — Modèle de maturité Green IT : progression de la conformité réactive au leadership responsable" animated>
       <svg viewBox="0 0 580 278" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
         <style>{`
           @keyframes matGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
@@ -657,7 +677,7 @@ const EnPITrend = () => {
   const DASH = 420;
   const targetY = toY(80);
   return (
-    <Wrapper caption="Figure — ISO 50001 : évolution type de l'indicateur de performance énergétique (EnPI) après certification">
+    <Wrapper caption="Figure — ISO 50001 : évolution type de l'indicateur de performance énergétique (EnPI) après certification" animated>
       <svg viewBox="0 0 580 250" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', display: 'block' }}>
         <style>{`
           @keyframes enpiDraw { from { stroke-dashoffset: ${DASH}; } to { stroke-dashoffset: 0; } }
