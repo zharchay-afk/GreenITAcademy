@@ -2,12 +2,14 @@
 // Stratégie sobre, sans librairie : cache-first pour les assets statiques,
 // network-first pour les pages HTML (mise à jour transparente du contenu).
 
-const CACHE_VERSION = 'greenit-academie-v2';
+const CACHE_VERSION = 'greenit-academie-v3';
+// Chemins absolus correspondant au base path de déploiement GitHub Pages
+const BASE = '/GreenITAcademy';
 const CORE_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/icon.svg',
+  BASE + '/',
+  BASE + '/index.html',
+  BASE + '/manifest.webmanifest',
+  BASE + '/icon.svg',
 ];
 
 // Installation : précache des fichiers essentiels
@@ -46,7 +48,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
           return response;
         })
-        .catch(() => caches.match(request).then((r) => r || caches.match('/')))
+        .catch(() => caches.match(request).then((r) => r || caches.match(BASE + '/')))
     );
     return;
   }

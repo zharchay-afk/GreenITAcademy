@@ -131,7 +131,14 @@
         }
 
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/GreenITAcademy/sw.js').catch(function () {
+          navigator.serviceWorker.register('/GreenITAcademy/sw.js').then(function (reg) {
+            // Recharge la page dès qu'un nouveau SW prend le contrôle
+            // (le SW appelle skipWaiting + clients.claim → le rechargement est
+            //  quasi-instantané et transparent pour l'utilisateur).
+            navigator.serviceWorker.addEventListener('controllerchange', function () {
+              window.location.reload();
+            });
+          }).catch(function () {
             // Échec silencieux : l'application fonctionne sans le SW
           });
         });
