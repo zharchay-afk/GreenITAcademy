@@ -3,8 +3,8 @@ import Logo from './Logo';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
 import { useTheme } from './theme';
-import ThemeSelector from './ThemeSelector';
 import useIsMobile from './useIsMobile';
+import Footer from './Footer';
 
 // ============================================================================
 // LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
@@ -267,24 +267,7 @@ export default function LandingPage({ onStart, onShowLegal }) {
       </main>
 
       {/* ============================ Footer sticky ============================ */}
-      <footer style={{
-        flexShrink: 0,
-        padding: isMobile ? '8px 16px' : '10px 32px',
-        paddingBottom: isMobile ? 'calc(8px + env(safe-area-inset-bottom))' : '10px',
-        backgroundColor: 'var(--bg-surface)', borderTop: '1px solid var(--border)',
-        color: 'var(--text-secondary)', fontSize: '11px',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px',
-      }}>
-        <span>Master Data Science · UTBM · 2026</span>
-        <span style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <button onClick={() => onShowLegal('notice')}        style={footerLink}>Mentions légales</button>
-          <button onClick={() => onShowLegal('privacy')}       style={footerLink}>Données personnelles</button>
-          <button onClick={() => onShowLegal('cookies')}       style={footerLink}>Cookies</button>
-          <button onClick={() => onShowLegal('accessibilite')} style={footerLink}>♿ Accessibilité</button>
-          <button onClick={() => onShowLegal('ecoconception')} style={footerLink}>🌱 Éco-conçu</button>
-          <ThemeSelector />
-        </span>
-      </footer>
+      <Footer onShowLegal={onShowLegal} />
     </div>
   );
 }
@@ -341,7 +324,3 @@ const ctaSecondaryStyle = {
   fontSize: '14px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
 };
 
-const footerLink = {
-  background: 'none', border: 'none', color: 'var(--text-secondary)', textDecoration: 'underline',
-  cursor: 'pointer', padding: 0, fontSize: '11px', fontFamily: 'inherit',
-};

@@ -3,12 +3,19 @@ import { exportScorm } from './utils/scormExport';
 import Footer from './Footer';
 
 // Page-wrapper et tabs
-export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding, onShowHome }) {
+export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding, onShowHome, onNavigate }) {
   const [current, setCurrent] = React.useState(initial);
 
   React.useEffect(() => { setCurrent(initial); }, [initial]);
 
-  const Pane = { notice: LegalNotice, privacy: PrivacyShort, cookies: CookiesPolicy, ecoconception: () => <EcoConception onShowScormPlayer={onShowScormPlayer} />, accessibilite: Accessibilite }[current];
+  const Pane = {
+    notice:        LegalNotice,
+    privacy:       PrivacyShort,
+    cookies:       CookiesPolicy,
+    ecoconception: () => <EcoConception onShowScormPlayer={onShowScormPlayer} />,
+    accessibilite: Accessibilite,
+    sitemap:       () => <SitemapPane onShowLanding={onShowLanding} onShowHome={onShowHome} onShowLegal={onShowLegal} onNavigate={onNavigate} />,
+  }[current] || LegalNotice;
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
@@ -33,6 +40,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
           { id: 'cookies',       label: 'Cookies & stockage' },
           { id: 'ecoconception', label: '🌱 Éco-conception' },
           { id: 'accessibilite', label: '♿ Accessibilité' },
+          { id: 'sitemap',       label: '🗺️ Plan du site' },
         ].map((t) => (
           <button
             key={t.id}
@@ -500,3 +508,99 @@ const linkInline = { color: '#166534', fontWeight: '600' };
 const tableStyle = { width: '100%', borderCollapse: 'collapse', marginTop: '10px', marginBottom: '10px', fontSize: '13px' };
 const th = { textAlign: 'left', padding: '8px 10px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', borderBottom: '2px solid #e2e8f0', fontWeight: '700' };
 const td = { padding: '8px 10px', borderBottom: '1px solid var(--border-soft)', color: 'var(--text-primary)', verticalAlign: 'top' };
+
+// -----------------------------------------------------------------------------
+// Plan du site
+// -----------------------------------------------------------------------------
+function SitemapPane({ onShowLanding, onShowHome, onShowLegal, onNavigate }) {
+  const navBtn = {
+    background: 'none', border: 'none', cursor: 'pointer',
+    color: 'var(--accent)', textDecoration: 'underline',
+    fontSize: '14px', fontFamily: 'inherit', padding: 0,
+    textAlign: 'left',
+  };
+  const staticItem = {
+    fontSize: '14px', color: 'var(--text-secondary)',
+  };
+  const listStyle = {
+    listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px',
+    padding: 0, margin: 0,
+  };
+
+  return (
+    <Article title="Plan du site" updated="">
+      <Section title="Pages principales">
+        <ul style={listStyle}>
+          <li>
+            {onShowLanding
+              ? <button onClick={onShowLanding} style={navBtn}>🏠 Page de présentation</button>
+              : <span style={staticItem}>🏠 Page de présentation</span>}
+          </li>
+          <li>
+            {onShowHome
+              ? <button onClick={onShowHome} style={navBtn}>📊 Dashboard de formation</button>
+              : <span style={staticItem}>📊 Dashboard de formation</span>}
+          </li>
+        </ul>
+      </Section>
+
+      <Section title="Modules de formation">
+        <ul style={{ ...listStyle, gap: '6px' }}>
+          {[
+            { id: 1, title: 'Cadres conceptuels et typologie' },
+            { id: 2, title: 'Cadre réglementaire UE & Luxembourg' },
+            { id: 3, title: 'Normes et certifications ISO' },
+            { id: 4, title: 'Labels environnementaux IT' },
+            { id: 5, title: 'Codes de conduite et chartes' },
+            { id: 6, title: 'Cas pratiques Luxembourg' },
+          ].map((m) => (
+            <li key={m.id} style={staticItem}>
+              📖 Module {m.id} — {m.title}
+            </li>
+          ))}
+        </ul>
+        <p style={{ marginTop: '10px', fontSize: '13px', color: 'var(--text-muted)' }}>
+          Les modules sont accessibles depuis le dashboard de formation.
+        </p>
+      </Section>
+
+      <Section title="Pages personnelles">
+        <ul style={listStyle}>
+          <li>
+            {onNavigate
+              ? <button onClick={() => onNavigate('attestation')} style={navBtn}>🎓 Attestation de réussite</button>
+              : <span style={staticItem}>🎓 Attestation de réussite</span>}
+          </li>
+          <li>
+            {onNavigate
+              ? <button onClick={() => onNavigate('profil')} style={navBtn}>👤 Mon profil</button>
+              : <span style={staticItem}>👤 Mon profil</span>}
+          </li>
+          <li>
+            {onNavigate
+              ? <button onClick={() => onNavigate('references')} style={navBtn}>📚 Références bibliographiques</button>
+              : <span style={staticItem}>📚 Références bibliographiques</span>}
+          </li>
+        </ul>
+      </Section>
+
+      <Section title="Informations légales et techniques">
+        <ul style={listStyle}>
+          {[
+            { id: 'notice',        label: '📋 Mentions légales' },
+            { id: 'privacy',       label: '🔒 Données personnelles (RGPD)' },
+            { id: 'cookies',       label: '🍪 Cookies & stockage local' },
+            { id: 'accessibilite', label: '♿ Accessibilité (WCAG 2.1)' },
+            { id: 'ecoconception', label: '🌱 Éco-conception' },
+          ].map((item) => (
+            <li key={item.id}>
+              {onShowLegal
+                ? <button onClick={() => onShowLegal(item.id)} style={navBtn}>{item.label}</button>
+                : <span style={staticItem}>{item.label}</span>}
+            </li>
+          ))}
+        </ul>
+      </Section>
+    </Article>
+  );
+}

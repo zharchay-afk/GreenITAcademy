@@ -3,6 +3,8 @@ import { useTheme, setTheme } from './theme';
 
 // Sélecteur de thème : affiche le mode COURANT + un chevron.
 // Au clic, ouvre un petit menu avec les deux options sélectionnables.
+// Le menu est rendu en position:fixed pour ne jamais être clippé par un parent
+// overflow:hidden (ex. footer sticky dans un conteneur flex).
 
 const OPTIONS = [
   { id: 'light', icon: '☀️', label: 'Clair' },
@@ -12,22 +14,56 @@ const OPTIONS = [
 export default function ThemeSelector() {
   const [theme] = useTheme();
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const btnRef = useRef(null);
+  const dropRef = useRef(null);
+  const [pos, setPos] = useState(null);
+
+  // Calcule la position fixe du dropdown au-dessus du bouton
+  function calcPos() {
+    if (!btnRef.current) return null;
+    const rect = btnRef.current.getBoundingClientRect();
+    return {
+      // bottom = distance depuis le bas du viewport jusqu'au bas du dropdown
+      // On place le bas du dropdown légèrement au-dessus du haut du bouton
+      bottom: window.innerHeight - rect.top + 4,
+      right: window.innerWidth - rect.right,
+    };
+  }
+
+  const toggle = () => {
+    setOpen((o) => {
+      if (!o) setPos(calcPos());
+      return !o;
+    });
+  };
 
   // Fermeture au clic à l'extérieur
   useEffect(() => {
     if (!open) return;
-    const onClick = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    const onClick = (e) => {
+      if (btnRef.current && btnRef.current.contains(e.target)) return;
+      if (dropRef.current && dropRef.current.contains(e.target)) return;
+      setOpen(false);
+    };
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
+  }, [open]);
+
+  // Fermeture au redimensionnement (la position fixe serait décalée)
+  useEffect(() => {
+    if (!open) return;
+    const onResize = () => setOpen(false);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, [open]);
 
   const current = OPTIONS.find((o) => o.id === theme) || OPTIONS[0];
 
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
+    <div style={{ display: 'inline-block' }}>
       <button
-        onClick={() => setOpen((o) => !o)}
+        ref={btnRef}
+        onClick={toggle}
         title="Changer de thème"
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -39,17 +75,29 @@ export default function ThemeSelector() {
         }}
       >
         <span>{current.icon} {current.label}</span>
-        <span style={{ fontSize: '9px', opacity: 0.7, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s' }}>▾</span>
+        <span style={{
+          fontSize: '9px', opacity: 0.7,
+          transform: open ? 'rotate(180deg)' : 'none',
+          transition: 'transform 0.15s',
+          display: 'inline-block',
+        }}>▾</span>
       </button>
 
-      {open && (
+      {open && pos && (
         <div
+          ref={dropRef}
           role="listbox"
           style={{
-            position: 'absolute', bottom: 'calc(100% + 6px)', right: 0,
-            backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border)',
-            borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            overflow: 'hidden', minWidth: '120px', zIndex: 100,
+            position: 'fixed',
+            bottom: pos.bottom,
+            right: pos.right,
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border)',
+            borderRadius: '8px',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+            overflow: 'hidden',
+            minWidth: '120px',
+            zIndex: 9999,
           }}
         >
           {OPTIONS.map((o) => {

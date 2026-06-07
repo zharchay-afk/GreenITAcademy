@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Green IT Académie — Single Page Application (PWA) -->
+  <!-- Toutes les sections sont accessibles via hash-routing depuis l'URL racine -->
+  <url>
+    <loc>https://zharchay-afk.github.io/GreenITAcademy/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

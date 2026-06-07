@@ -206,6 +206,7 @@ export default function App() {
         onShowLegal={showLegal}
         onShowLanding={() => setScreen('landing')}
         onShowHome={() => setScreen('home')}
+        onNavigate={handleNavigate}
       />
     );
   }
