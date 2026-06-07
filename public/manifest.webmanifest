@@ -2,8 +2,8 @@
   "name": "Green IT Académie",
   "short_name": "Green IT",
   "description": "Parcours pédagogique sur les normes, labels et certifications du Green IT (Master Data Science, UE LUPT01).",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/GreenITAcademy/",
+  "scope": "/GreenITAcademy/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#f1f5f9",
@@ -12,19 +12,19 @@
   "categories": ["education", "productivity", "sustainability"],
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "/GreenITAcademy/icon.svg",
       "type": "image/svg+xml",
       "sizes": "any",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-192.png",
+      "src": "/GreenITAcademy/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/GreenITAcademy/icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
