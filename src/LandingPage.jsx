@@ -118,7 +118,10 @@ export default function LandingPage({ onStart, onShowLegal }) {
         flexShrink: 0,
         backgroundColor: 'var(--bg-surface)',
         borderBottom: '1px solid var(--border)',
-        padding: isMobile ? '10px 16px' : '12px 32px',
+        paddingTop: isMobile ? 'calc(10px + env(safe-area-inset-top))' : 'calc(12px + env(safe-area-inset-top))',
+        paddingRight: isMobile ? '16px' : '32px',
+        paddingBottom: isMobile ? '10px' : '12px',
+        paddingLeft: isMobile ? '16px' : '32px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <button onClick={() => scrollTo('accueil')} style={brandBtnStyle}>

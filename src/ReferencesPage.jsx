@@ -133,7 +133,7 @@ export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding 
       <Sidebar activePage="references" onNavigate={onNavigate} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <header style={{ backgroundColor: 'var(--bg-surface)', padding: '16px 32px', borderBottom: '1px solid var(--border)' }}>
+        <header style={{ backgroundColor: 'var(--bg-surface)', paddingTop: 'calc(16px + env(safe-area-inset-top))', paddingRight: '32px', paddingBottom: '16px', paddingLeft: '32px', borderBottom: '1px solid var(--border)' }}>
           <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>Sources &amp; Références bibliographiques</h1>
           <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: 'var(--text-secondary)' }}>
             Sources réglementaires, normatives et institutionnelles utilisées dans le parcours
@@ -179,7 +179,7 @@ export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding 
           </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} hasSidebar />
       </main>
     </div>
   );

@@ -230,7 +230,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="profil" onNavigate={onNavigate} />
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: 'var(--accent)' }}>Mon profil</h1>
@@ -361,7 +361,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
         </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} hasSidebar />
       </main>
     </div>
   );

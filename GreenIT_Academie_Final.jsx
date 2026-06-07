@@ -152,7 +152,10 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
         {/* Header */}
         <header style={{
           backgroundColor: 'var(--bg-surface)',
-          padding: isMobile ? '12px 16px' : '16px 24px',
+          paddingTop: isMobile ? 'calc(12px + env(safe-area-inset-top))' : 'calc(16px + env(safe-area-inset-top))',
+          paddingRight: isMobile ? '16px' : '24px',
+          paddingBottom: isMobile ? '12px' : '16px',
+          paddingLeft: isMobile ? '16px' : '24px',
           borderBottom: '1px solid var(--border)',
           display: 'flex',
           justifyContent: 'space-between',
@@ -196,7 +199,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
 
         </div>
 
-        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} hasSidebar />
       </main>
     </div>
   );

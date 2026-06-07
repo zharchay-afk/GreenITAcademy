@@ -28,7 +28,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal, onSh
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="attestation" onNavigate={onNavigate} />
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 8px 0', fontSize: '22px', fontWeight: '700', color: 'var(--accent)' }}>Mon attestation</h1>
@@ -110,7 +110,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal, onSh
         </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} hasSidebar />
       </main>
     </div>
   );

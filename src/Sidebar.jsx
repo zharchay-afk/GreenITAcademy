@@ -69,7 +69,7 @@ export default function Sidebar({ activePage, onNavigate }) {
           bottom: 0,
           left: 0,
           right: 0,
-          height: '56px',
+          height: 'calc(56px + env(safe-area-inset-bottom))',
           backgroundColor: 'var(--sidebar-bg)',
           display: 'flex',
           alignItems: 'stretch',
@@ -126,6 +126,7 @@ export default function Sidebar({ activePage, onNavigate }) {
       flexShrink: 0,
       transition: 'width 0.2s ease',
       position: 'relative',
+      paddingTop: 'env(safe-area-inset-top)',
     }}>
       {/* Bouton de bascule (chevron) */}
       <button
