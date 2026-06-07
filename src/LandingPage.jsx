@@ -4,6 +4,7 @@ import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
 import { useTheme } from './theme';
 import ThemeSelector from './ThemeSelector';
+import useIsMobile from './useIsMobile';
 
 // ============================================================================
 // LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
@@ -87,6 +88,7 @@ export default function LandingPage({ onStart, onShowLegal }) {
   const [activeSection, setActiveSection] = useState('accueil');
   const [theme] = useTheme();
   const isDark = theme === 'dark';
+  const isMobile = useIsMobile();
 
   // Suivi de la section visible pour la nav active
   useEffect(() => {
@@ -109,23 +111,28 @@ export default function LandingPage({ onStart, onShowLegal }) {
   };
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ height: '100dvh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
 
       {/* ============================ Header sticky ============================ */}
       <header style={{
         flexShrink: 0,
         backgroundColor: 'var(--bg-surface)',
         borderBottom: '1px solid var(--border)',
-        padding: '12px 32px',
+        padding: isMobile ? '10px 16px' : '12px 32px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <button onClick={() => scrollTo('accueil')} style={brandBtnStyle}>
-          <Logo size={32} />
-          <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>Green IT Académie</span>
+          <Logo size={isMobile ? 26 : 32} />
+          {!isMobile && (
+            <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>Green IT Académie</span>
+          )}
+          {isMobile && (
+            <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)' }}>Green IT</span>
+          )}
         </button>
 
-        <nav style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          {[
+        <nav style={{ display: 'flex', gap: isMobile ? '6px' : '8px', alignItems: 'center' }}>
+          {!isMobile && [
             { id: 'accueil',   label: 'Accueil' },
             { id: 'interet',   label: 'Intérêt' },
             { id: 'programme', label: 'Programme' },
@@ -138,7 +145,7 @@ export default function LandingPage({ onStart, onShowLegal }) {
               {it.label}
             </button>
           ))}
-          <button onClick={onStart} style={ctaSmallStyle}>Commencer  →</button>
+          <button onClick={onStart} style={ctaSmallStyle}>Commencer →</button>
         </nav>
       </header>
 
@@ -262,9 +269,11 @@ export default function LandingPage({ onStart, onShowLegal }) {
       {/* ============================ Footer sticky ============================ */}
       <footer style={{
         flexShrink: 0,
-        padding: '10px 32px', backgroundColor: 'var(--bg-surface)', borderTop: '1px solid var(--border)',
+        padding: isMobile ? '8px 16px' : '10px 32px',
+        paddingBottom: isMobile ? 'calc(8px + env(safe-area-inset-bottom))' : '10px',
+        backgroundColor: 'var(--bg-surface)', borderTop: '1px solid var(--border)',
         color: 'var(--text-secondary)', fontSize: '11px',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px',
       }}>
         <span>Master Data Science · UTBM · 2026</span>
         <span style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
