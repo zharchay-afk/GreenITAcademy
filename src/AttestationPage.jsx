@@ -29,7 +29,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal, onSh
       <Sidebar activePage="attestation" onNavigate={onNavigate} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
+        <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 8px 0', fontSize: '22px', fontWeight: '700', color: 'var(--accent)' }}>Mon attestation</h1>
           <p style={{ margin: '0 0 28px 0', color: 'var(--text-secondary)', fontSize: '14px' }}>

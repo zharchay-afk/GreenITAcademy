@@ -79,6 +79,11 @@
         body { overscroll-behavior: none; }
       }
 
+      /* Espace pour la barre de navigation basse sur mobile */
+      @media (max-width: 767px) {
+        .m-pb-nav { padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important; }
+      }
+
       /* Inversion automatique des fonds clairs / textes sombres en mode sombre */
       html[data-theme="dark"] [data-themed="surface"]      { background-color: var(--bg-surface) !important; color: var(--text-primary) !important; }
       html[data-theme="dark"] [data-themed="page"]         { background-color: var(--bg-page) !important; }

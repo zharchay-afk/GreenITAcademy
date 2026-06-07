@@ -267,56 +267,94 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
 
         {/* Header */}
-        <header style={{
-          backgroundColor: 'var(--bg-surface)',
-          padding: isMobile ? '10px 16px' : '16px 32px',
-          borderBottom: '1px solid var(--border)',
-          display: 'flex', justifyContent: 'space-between',
-          alignItems: 'center', gap: '12px',
-          flexShrink: 0,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, minWidth: 0 }}>
-            {/* Hamburger mobile — dans le header */}
-            {isMobile && (
-              <button
-                onClick={() => setSidebarOpen(o => !o)}
-                aria-label="Ouvrir le menu de navigation"
-                style={{
-                  flexShrink: 0,
-                  width: '36px', height: '36px', borderRadius: '8px',
-                  backgroundColor: 'var(--sidebar-bg)',
-                  border: 'none', cursor: 'pointer',
-                  display: 'flex', flexDirection: 'column',
-                  alignItems: 'center', justifyContent: 'center', gap: '4px',
-                }}
-              >
-                <span style={{ display: 'block', width: '16px', height: '2px', backgroundColor: '#fff', borderRadius: '2px' }} />
-                <span style={{ display: 'block', width: '16px', height: '2px', backgroundColor: '#fff', borderRadius: '2px' }} />
-                <span style={{ display: 'block', width: '16px', height: '2px', backgroundColor: '#fff', borderRadius: '2px' }} />
-              </button>
-            )}
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {module.unite} · Section {safeIdx + 1} sur {total} · ⏱ {module.estimatedTime}
+        {isMobile ? (
+          /* ---- Header MOBILE ---- */
+          <header style={{
+            backgroundColor: 'var(--bg-surface)',
+            padding: '10px 12px',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex', alignItems: 'center', gap: '8px',
+            flexShrink: 0,
+          }}>
+            {/* Retour direct au dashboard */}
+            <button
+              onClick={onBack}
+              aria-label="Retour aux modules"
+              style={{
+                flexShrink: 0,
+                padding: '6px 10px',
+                backgroundColor: 'transparent',
+                border: '1px solid var(--border)',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '12px', fontWeight: '600',
+                color: 'var(--accent)', fontFamily: 'inherit',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              ← Modules
+            </button>
+
+            {/* Info module + section */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '10px', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {module.unite} · {safeIdx + 1}/{total}
               </div>
-              <h1 style={{ margin: 0, fontSize: isMobile ? '14px' : '18px', fontWeight: '700', color: 'var(--accent)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: isMobile ? 'nowrap' : 'normal' }}>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--accent)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {section.title}
-              </h1>
-              {!isMobile && module.subtitle && (
+              </div>
+            </div>
+
+            {/* Progression */}
+            <span style={{ flexShrink: 0, fontSize: '11px', color: 'var(--text-secondary)', fontWeight: '600' }}>{progressPct}%</span>
+
+            {/* Bouton sections overlay */}
+            <button
+              onClick={() => setSidebarOpen(o => !o)}
+              aria-label="Liste des sections"
+              title="Voir toutes les sections"
+              style={{
+                flexShrink: 0,
+                width: '34px', height: '34px', borderRadius: '8px',
+                backgroundColor: 'var(--sidebar-bg)',
+                border: 'none', cursor: 'pointer',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center', gap: '3px',
+              }}
+            >
+              <span style={{ display: 'block', width: '14px', height: '2px', backgroundColor: '#fff', borderRadius: '2px' }} />
+              <span style={{ display: 'block', width: '14px', height: '2px', backgroundColor: '#fff', borderRadius: '2px' }} />
+              <span style={{ display: 'block', width: '14px', height: '2px', backgroundColor: '#fff', borderRadius: '2px' }} />
+            </button>
+          </header>
+        ) : (
+          /* ---- Header DESKTOP ---- */
+          <header style={{
+            backgroundColor: 'var(--bg-surface)',
+            padding: '16px 32px',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex', justifyContent: 'space-between',
+            alignItems: 'center', gap: '12px',
+            flexShrink: 0,
+          }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '4px' }}>
+                {module.unite} · Section {safeIdx + 1} sur {total} · ⏱ Durée estimée : {module.estimatedTime}
+              </div>
+              <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>{section.title}</h1>
+              {module.subtitle && (
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
               )}
             </div>
-          </div>
-
-          {/* Barre de progression */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-            {!isMobile && <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Progression</span>}
-            <div style={{ width: isMobile ? '54px' : '120px', height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px' }}>
-              <div style={{ width: `${progressPct}%`, height: '100%', backgroundColor: '#22c55e', borderRadius: '3px', transition: 'width 0.3s' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+              <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Progression</span>
+              <div style={{ width: '120px', height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px' }}>
+                <div style={{ width: `${progressPct}%`, height: '100%', backgroundColor: '#22c55e', borderRadius: '3px', transition: 'width 0.3s' }} />
+              </div>
+              <span style={{ fontSize: '12px', color: 'var(--text-secondary)', minWidth: '36px' }}>{progressPct}%</span>
             </div>
-            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', minWidth: '30px' }}>{progressPct}%</span>
-          </div>
-        </header>
+          </header>
+        )}
 
         {/* Zone de défilement du cours */}
         <div ref={scrollRef} style={{ flex: 1, padding: isMobile ? '16px' : '32px', overflowY: 'auto' }}>
