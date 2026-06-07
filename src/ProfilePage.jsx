@@ -1,6 +1,146 @@
 ﻿import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
+import { auth, isConfigured } from './firebase';
+
+// Section authentification Firebase (login / inscription / déconnexion)
+function FirebaseAuthSection({ firebaseUser }) {
+  const [tab, setTab]         = useState('login');   // 'login' | 'signup'
+  const [email, setEmail]     = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  const clearMessages = () => { setError(null); setSuccess(null); };
+
+  const handleLogin = async () => {
+    if (!email || !password) { setError('Remplis l\'e-mail et le mot de passe.'); return; }
+    setLoading(true); clearMessages();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setSuccess('Connecté ! Ta progression est synchronisée.');
+      setEmail(''); setPassword('');
+    } catch (e) {
+      const msg = {
+        'auth/user-not-found':   'Aucun compte avec cet e-mail.',
+        'auth/wrong-password':   'Mot de passe incorrect.',
+        'auth/invalid-email':    'Adresse e-mail invalide.',
+        'auth/too-many-requests':'Trop de tentatives. Réessaie dans quelques minutes.',
+        'auth/invalid-credential': 'E-mail ou mot de passe incorrect.',
+      }[e.code] || 'Erreur de connexion. Vérifie tes identifiants.';
+      setError(msg);
+    } finally { setLoading(false); }
+  };
+
+  const handleSignup = async () => {
+    if (!email || !password) { setError('Remplis l\'e-mail et le mot de passe.'); return; }
+    if (password.length < 6)  { setError('Le mot de passe doit faire au moins 6 caractères.'); return; }
+    setLoading(true); clearMessages();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setSuccess('Compte créé ! Ta progression sera désormais sauvegardée dans le cloud.');
+      setEmail(''); setPassword('');
+    } catch (e) {
+      const msg = {
+        'auth/email-already-in-use': 'Un compte existe déjà avec cet e-mail.',
+        'auth/invalid-email':        'Adresse e-mail invalide.',
+        'auth/weak-password':        'Mot de passe trop faible (6 caractères minimum).',
+      }[e.code] || 'Erreur lors de la création du compte.';
+      setError(msg);
+    } finally { setLoading(false); }
+  };
+
+  const handleLogout = async () => {
+    try { await signOut(auth); setSuccess('Déconnecté.'); }
+    catch { /* ignore */ }
+  };
+
+  // Firebase non configuré
+  if (!isConfigured) {
+    return (
+      <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px dashed #94a3b8' }}>
+        <h2 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>☁️ Compte cloud & synchronisation</h2>
+        <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+          Firebase n'est pas encore configuré. Suis les instructions dans <code>src/firebase.js</code> et crée ton fichier <code>.env.local</code> pour activer la synchronisation multi-appareils.
+        </p>
+      </div>
+    );
+  }
+
+  // Utilisateur connecté
+  if (firebaseUser) {
+    return (
+      <div style={{ backgroundColor: '#f0fdf4', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #86efac' }}>
+        <h2 style={{ margin: '0 0 10px 0', fontSize: '15px', fontWeight: '700', color: '#166534' }}>☁️ Synchronisation cloud active</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '13px', color: '#166534', fontWeight: '600' }}>✅ Connecté</div>
+            <div style={{ fontSize: '12px', color: '#166534', opacity: 0.8 }}>{firebaseUser.email}</div>
+            <div style={{ fontSize: '11px', color: '#166534', opacity: 0.7, marginTop: '4px' }}>
+              Ta progression est automatiquement sauvegardée dans le cloud.
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            style={{ padding: '8px 14px', backgroundColor: 'white', color: '#991b1b', border: '1px solid #fca5a5', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px', whiteSpace: 'nowrap' }}
+          >
+            Se déconnecter
+          </button>
+        </div>
+        {success && <div style={{ marginTop: '10px', fontSize: '12px', color: '#166534' }}>{success}</div>}
+      </div>
+    );
+  }
+
+  // Non connecté → formulaire
+  const inputStyle = { width: '100%', padding: '9px 12px', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box', marginBottom: '8px' };
+  return (
+    <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #bfdbfe' }}>
+      <h2 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>☁️ Compte cloud & synchronisation</h2>
+      <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.55' }}>
+        Crée un compte pour sauvegarder ta progression dans le cloud et y accéder depuis n'importe quel appareil.
+      </p>
+
+      {/* Onglets */}
+      <div style={{ display: 'flex', marginBottom: '14px', gap: '4px' }}>
+        {[['login','Se connecter'],['signup','Créer un compte']].map(([t, label]) => (
+          <button key={t} onClick={() => { setTab(t); clearMessages(); }}
+            style={{ flex: 1, padding: '7px', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px',
+              backgroundColor: tab === t ? 'var(--brand)' : 'var(--bg-muted)',
+              color: tab === t ? 'var(--on-brand)' : 'var(--text-secondary)' }}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <input type="email" placeholder="Adresse e-mail" value={email}
+        onChange={e => { setEmail(e.target.value); clearMessages(); }}
+        onKeyDown={e => e.key === 'Enter' && (tab === 'login' ? handleLogin() : handleSignup())}
+        style={inputStyle} />
+      <input type="password" placeholder="Mot de passe (6 caractères min.)" value={password}
+        onChange={e => { setPassword(e.target.value); clearMessages(); }}
+        onKeyDown={e => e.key === 'Enter' && (tab === 'login' ? handleLogin() : handleSignup())}
+        style={inputStyle} />
+
+      <button
+        onClick={tab === 'login' ? handleLogin : handleSignup}
+        disabled={loading}
+        style={{ width: '100%', padding: '10px', backgroundColor: 'var(--brand)', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: loading ? 'wait' : 'pointer', fontWeight: '700', fontSize: '13px' }}
+      >
+        {loading ? '…' : tab === 'login' ? 'Se connecter' : 'Créer mon compte'}
+      </button>
+
+      {error   && <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '6px', fontSize: '12px' }}>{error}</div>}
+      {success && <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: '#ecfdf5', color: '#166534', borderRadius: '6px', fontSize: '12px' }}>{success}</div>}
+    </div>
+  );
+}
 
 function timeToSecs(str) {
   const [h, m, s] = (str || '00:00:00').split(':').map(Number);
@@ -12,7 +152,7 @@ function secsToTime(total) {
     .map(n => String(n).padStart(2, '0')).join(':');
 }
 
-export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal, onShowLanding }) {
+export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal, onShowLanding, firebaseUser }) {
   const savedName = localStorage.getItem('greenitacademie-name') || '';
   const [name, setName] = useState(savedName);
   const [saved, setSaved] = useState(false);
@@ -94,6 +234,9 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
         <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: 'var(--accent)' }}>Mon profil</h1>
+
+          {/* Compte cloud Firebase */}
+          <FirebaseAuthSection firebaseUser={firebaseUser} />
 
           {/* Nom */}
           <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>

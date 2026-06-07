@@ -8,6 +8,9 @@ import ScormPlayer from './src/ScormPlayer';
 import ReferencesPage from './src/ReferencesPage';
 import LandingPage from './src/LandingPage';
 import LegalPages from './src/LegalPages';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './src/firebase';
+import { useFirebaseSync } from './src/useFirebaseSync';
 
 const initialModules = [
   { id: 1, unite: 'MODULE 1', title: 'Cadres conceptuels et typologie', image: '🌐', bgColor: '#4299e1', tempsPasse: '00:00:00', score: 0, started: false },
@@ -94,6 +97,16 @@ export default function App() {
   const [modules, setModules] = useState(loadProgress);
   const startTimeRef = useRef(null);
   const skipNextHashEffect = useRef(false);
+
+  // Firebase Auth — suivi de l'état de connexion
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  useEffect(() => {
+    if (!auth) return; // Firebase non configuré → mode localStorage uniquement
+    return onAuthStateChanged(auth, setFirebaseUser);
+  }, []);
+
+  // Synchronisation bidirectionnelle progression ↔ Firestore
+  useFirebaseSync(firebaseUser, modules, setModules);
 
   // Écoute du bouton Précédent / Suivant du navigateur
   useEffect(() => {
@@ -240,6 +253,7 @@ export default function App() {
         onShowLegal={showLegal}
         onShowLanding={() => setScreen('landing')}
         onReset={handleReset}
+        firebaseUser={firebaseUser}
         onImport={(imported) => {
           setModules(prev => prev.map(m => {
             const found = imported.find(i => i.id === m.id);
