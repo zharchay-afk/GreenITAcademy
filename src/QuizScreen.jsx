@@ -1,6 +1,7 @@
 ﻿import React, { useState, useMemo, useEffect } from 'react';
 import questionsData from '../data/questions.json';
 import Logo from './Logo';
+import useIsMobile from './useIsMobile';
 
 // --- Logique adaptative ---
 // Niveaux : 0 = débutant, 1 = intermédiaire, 2 = avancé
@@ -41,6 +42,7 @@ function pickNextQuestion(pool, targetLevelIdx, askedIds) {
 }
 
 export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCourse }) {
+  const isMobile = useIsMobile();
   // Banque de questions du module
   const pool = useMemo(() => questionsData.questions.filter(q => q.moduleId === moduleId), [moduleId]);
 
@@ -226,14 +228,16 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
-      <header style={{ backgroundColor: 'var(--sidebar-bg)', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Logo size={32} />
-          <span style={{ color: '#fff', fontWeight: '700', fontSize: '15px' }}>Green IT académie — Quiz adaptatif</span>
+      <header style={{ backgroundColor: 'var(--sidebar-bg)', padding: isMobile ? '10px 14px' : '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+          <Logo size={isMobile ? 24 : 32} />
+          <span style={{ color: '#fff', fontWeight: '700', fontSize: isMobile ? '13px' : '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {isMobile ? 'Quiz adaptatif' : 'Green IT académie — Quiz adaptatif'}
+          </span>
         </div>
         <button
           onClick={onBack}
-          style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.8)', padding: '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px' }}
+          style={{ flexShrink: 0, backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.8)', padding: isMobile ? '6px 10px' : '6px 14px', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontFamily: 'inherit', whiteSpace: 'nowrap' }}
         >
           ← Abandonner
         </button>
@@ -245,23 +249,27 @@ export default function QuizScreen({ moduleId, onComplete, onBack, onReviewCours
       </div>
 
       {/* Bandeau adaptatif */}
-      <div style={{ backgroundColor: 'var(--bg-surface)', padding: '10px 32px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <span style={{ color: 'var(--text-secondary)', fontWeight: '600' }}>Question {questionNumber} / {totalToAsk}</span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', backgroundColor: 'var(--bg-page)', borderRadius: '12px', color: 'var(--accent)', fontWeight: '600' }}>
+      <div style={{ backgroundColor: 'var(--bg-surface)', padding: isMobile ? '8px 14px' : '10px 32px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: isMobile ? '8px' : '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <span style={{ color: 'var(--text-secondary)', fontWeight: '600' }}>
+            {isMobile ? `Q ${questionNumber}/${totalToAsk}` : `Question ${questionNumber} / ${totalToAsk}`}
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '3px 8px', backgroundColor: 'var(--bg-page)', borderRadius: '12px', color: 'var(--accent)', fontWeight: '600', fontSize: isMobile ? '11px' : '12px' }}>
             {LEVEL_LABEL[currentQuestion.level]}
           </span>
           {streak >= 2 && (
-            <span style={{ color: '#e65100', fontWeight: '600' }}>🔥 Série de {streak}</span>
+            <span style={{ color: '#e65100', fontWeight: '600' }}>🔥{isMobile ? ` ×${streak}` : ` Série de ${streak}`}</span>
           )}
         </div>
-        <div style={{ color: 'var(--text-muted)', fontSize: '11px' }}>
-          Difficulté ajustée à vos réponses
-        </div>
+        {!isMobile && (
+          <div style={{ color: 'var(--text-muted)', fontSize: '11px' }}>
+            Difficulté ajustée à vos réponses
+          </div>
+        )}
       </div>
 
       {/* Corps */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '32px 20px' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: isMobile ? '14px' : '32px 20px', overflowY: 'auto' }}>
         <div style={{ width: '100%', maxWidth: '680px' }}>
           {/* Question */}
           <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '28px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>

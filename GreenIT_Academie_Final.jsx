@@ -2,6 +2,7 @@
 import Sidebar from './src/Sidebar';
 import Footer from './src/Footer';
 import { useTheme } from './src/theme';
+import useIsMobile from './src/useIsMobile';
 
 // ================================================
 // GREEN IT ACADÉMIE - Style SecNum
@@ -132,6 +133,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
     }
   };
 
+  const isMobile = useIsMobile();
   const totalStarted = modules.filter(m => m.started).length;
   const completedModules = modules.filter(m => m.score >= 70).length;
 
@@ -150,29 +152,31 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
         {/* Header */}
         <header style={{
           backgroundColor: 'var(--bg-surface)',
-          padding: '16px 24px',
+          padding: isMobile ? '12px 16px' : '16px 24px',
           borderBottom: '1px solid var(--border)',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          gap: '12px',
         }}>
-          <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--accent)' }}>
-            Mes modules — Normes, Labels & Certifications Green IT
+          <h1 style={{ margin: 0, fontSize: isMobile ? '16px' : '18px', fontWeight: '700', color: 'var(--accent)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: isMobile ? 'nowrap' : 'normal' }}>
+            {isMobile ? '📚 Mes modules' : 'Mes modules — Normes, Labels & Certifications Green IT'}
           </h1>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            fontSize: '12px',
-            color: 'var(--text-secondary)'
-          }}>
-            <span>📚 {totalStarted}/6 modules commencés</span>
-            <span>✓ {completedModules}/6 validés</span>
-          </div>
+          {!isMobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px', color: 'var(--text-secondary)', flexShrink: 0 }}>
+              <span>📚 {totalStarted}/6 modules commencés</span>
+              <span>✓ {completedModules}/6 validés</span>
+            </div>
+          )}
+          {isMobile && (
+            <div style={{ flexShrink: 0, fontSize: '11px', color: 'var(--text-secondary)' }}>
+              {completedModules}/6 validés
+            </div>
+          )}
         </header>
 
         {/* Contenu */}
-        <div style={{ padding: '20px 24px', flex: 1, overflowY: 'auto' }}>
+        <div className="m-pb-nav" style={{ padding: isMobile ? '12px 16px' : '20px 24px', flex: 1, overflowY: 'auto' }}>
           {/* Grille des modules */}
           <div style={{
             display: 'grid',

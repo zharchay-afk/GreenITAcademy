@@ -91,7 +91,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
       <Sidebar activePage="profil" onNavigate={onNavigate} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <div style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
+        <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
           <h1 style={{ margin: '0 0 24px 0', fontSize: '22px', fontWeight: '700', color: 'var(--accent)' }}>Mon profil</h1>
 

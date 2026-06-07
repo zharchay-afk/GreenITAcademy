@@ -140,7 +140,7 @@ export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding 
           </p>
         </header>
 
-        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px' }}>
+        <div className="m-pb-nav" style={{ flex: 1, overflowY: 'auto', padding: '24px 32px' }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
               <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px', lineHeight: '1.6' }}>
