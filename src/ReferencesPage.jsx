@@ -129,7 +129,7 @@ const sections = [
 
 export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding }) {
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div className="with-sidebar-nav" style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Sidebar activePage="references" onNavigate={onNavigate} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -179,7 +179,7 @@ export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding 
           </div>
         </div>
 
-        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} hasSidebar />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
       </main>
     </div>
   );

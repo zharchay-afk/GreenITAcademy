@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ThemeSelector from './ThemeSelector';
-import useIsMobile from './useIsMobile';
 
 // Footer partagé entre toutes les pages internes (dashboard, attestation, profil,
 // références, légal). Toujours sur 1 ligne — les liens légaux sont accessibles
@@ -18,14 +17,8 @@ const linkStyle = {
   whiteSpace: 'nowrap',
 };
 
-export default function Footer({ onShowLegal, onShowLanding, hasSidebar }) {
+export default function Footer({ onShowLegal, onShowLanding }) {
   const [open, setOpen] = useState(false);
-  const isMobile = useIsMobile();
-  // On mobile pages that have the bottom Sidebar nav bar, we push the Footer's
-  // visible content up so it sits above the fixed nav bar (56 px) + home indicator.
-  const compactPadding = hasSidebar && isMobile
-    ? 'calc(56px + env(safe-area-inset-bottom))'
-    : 'env(safe-area-inset-bottom)';
 
   return (
     <footer
@@ -76,7 +69,7 @@ export default function Footer({ onShowLegal, onShowLanding, hasSidebar }) {
           alignItems: 'center',
           paddingTop: '8px',
           paddingRight: '24px',
-          paddingBottom: compactPadding,
+          paddingBottom: 'calc(8px + env(safe-area-inset-bottom))',
           paddingLeft: '24px',
           gap: '12px',
         }}

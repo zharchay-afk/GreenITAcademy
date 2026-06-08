@@ -138,7 +138,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
   const completedModules = modules.filter(m => m.score >= 70).length;
 
   return (
-    <div style={{
+    <div className="with-sidebar-nav" style={{
       display: 'flex',
       height: '100vh',
       overflow: 'hidden',
@@ -199,7 +199,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
 
         </div>
 
-        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} hasSidebar />
+        <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
       </main>
     </div>
   );

@@ -79,6 +79,18 @@
       /* Espace pour la barre de navigation basse sur mobile */
       @media (max-width: 767px) {
         .m-pb-nav { padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important; }
+
+        /* Pages avec barre de navigation basse (Sidebar mobile fixée) :
+           on réduit la hauteur du conteneur racine pour que le Footer reste
+           toujours visible juste au-dessus de la barre de navigation. */
+        .with-sidebar-nav {
+          height: calc(100dvh - 56px - env(safe-area-inset-bottom)) !important;
+        }
+        /* Force le <main> à hériter cette hauteur,
+           même s'il déclare height:100vh en inline style. */
+        .with-sidebar-nav > main {
+          height: 100% !important;
+        }
       }
 
       /* Inversion automatique des fonds clairs / textes sombres en mode sombre */
