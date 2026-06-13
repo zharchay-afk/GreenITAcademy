@@ -76,7 +76,7 @@ export default function Footer({ onShowLegal, onShowLanding }) {
       >
         <button
           onClick={() => setOpen((o) => !o)}
-          title={open ? 'Masquer les liens' : 'Afficher les liens'}
+          title={open ? 'Masquer les informations' : 'Afficher les informations'}
           aria-expanded={open}
           style={{
             background: 'none',
@@ -99,7 +99,7 @@ export default function Footer({ onShowLegal, onShowLanding }) {
               transition: 'transform 0.2s',
             }}
           >▲</span>
-          Liens
+          Informations
         </button>
 
         <ThemeSelector />

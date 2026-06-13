@@ -69,7 +69,7 @@ export default function Sidebar({ activePage, onNavigate }) {
           bottom: 0,
           left: 0,
           right: 0,
-          height: 'calc(56px + env(safe-area-inset-bottom))',
+          height: 'calc(48px + env(safe-area-inset-bottom))',
           backgroundColor: 'var(--sidebar-bg)',
           display: 'flex',
           alignItems: 'stretch',
