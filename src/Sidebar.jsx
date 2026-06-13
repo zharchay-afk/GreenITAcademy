@@ -69,13 +69,12 @@ export default function Sidebar({ activePage, onNavigate }) {
           bottom: 0,
           left: 0,
           right: 0,
-          height: 'calc(48px + env(safe-area-inset-bottom))',
+          height: '48px',
           backgroundColor: 'var(--sidebar-bg)',
           display: 'flex',
           alignItems: 'stretch',
           zIndex: 100,
           boxShadow: '0 -1px 6px rgba(0,0,0,0.2)',
-          paddingBottom: 'env(safe-area-inset-bottom)',
         }}
       >
         {ITEMS.map((item) => {
