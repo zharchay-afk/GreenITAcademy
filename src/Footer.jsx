@@ -69,7 +69,7 @@ export default function Footer({ onShowLegal, onShowLanding }) {
           alignItems: 'center',
           paddingTop: '8px',
           paddingRight: '24px',
-          paddingBottom: 'calc(8px + env(safe-area-inset-bottom))',
+          paddingBottom: 'env(safe-area-inset-bottom)',
           paddingLeft: '24px',
           gap: '12px',
         }}
