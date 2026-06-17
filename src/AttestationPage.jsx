@@ -13,7 +13,7 @@ const MODULE_PALETTE = {
   6: { accent: '#14b8a6', bg: '#ccfbf1' },
 };
 
-export default function AttestationPage({ modules, onNavigate, onShowLegal, onShowLanding }) {
+export default function AttestationPage({ modules, onNavigate, onShowLegal, onShowLanding, isAdmin, firebaseUser, onSignOut }) {
   const [theme] = useTheme();
   const isDark = theme === 'dark';
   const validatedModules = modules.filter(m => m.score >= 70);
@@ -26,7 +26,7 @@ export default function AttestationPage({ modules, onNavigate, onShowLegal, onSh
 
   return (
     <div className="with-sidebar-nav" style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <Sidebar activePage="attestation" onNavigate={onNavigate} />
+      <Sidebar activePage="attestation" onNavigate={onNavigate} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={onSignOut} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>

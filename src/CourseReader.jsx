@@ -3,14 +3,30 @@ import modulesData from '../data/modules.json';
 import Visual from './Visuals';
 import Logo from './Logo';
 import useIsMobile from './useIsMobile';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectModule }) {
-  const module = modulesData.modules.find(m => m.id === moduleId);
+  const jsonModule = modulesData.modules.find(m => m.id === moduleId);
+  const [firestoreOverride, setFirestoreOverride] = useState(null);
   const [currentIdx, setCurrentIdx] = useState(0);
   const scrollRef = useRef(null);
   const isMobile = useIsMobile();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false); // desktop collapse
   const [sidebarOpen, setSidebarOpen] = useState(false);           // mobile overlay
+
+  // Charge les overrides Firestore pour ce module
+  useEffect(() => {
+    if (!db || !moduleId) return;
+    getDoc(doc(db, 'content_modules', String(moduleId))).then(snap => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setFirestoreOverride(data._deleted ? null : data);
+      } else {
+        setFirestoreOverride(null);
+      }
+    }).catch(() => setFirestoreOverride(null));
+  }, [moduleId]);
 
   // Réinitialise sur la première section quand on change de module + remonte
   useEffect(() => {
@@ -27,6 +43,26 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
   useEffect(() => {
     if (!isMobile) setSidebarOpen(false);
   }, [isMobile]);
+
+  // Fusionne JSON + overrides Firestore
+  const module = jsonModule
+    ? {
+        ...jsonModule,
+        ...(firestoreOverride ? {
+          title:    firestoreOverride.title    || jsonModule.title,
+          subtitle: firestoreOverride.subtitle || jsonModule.subtitle,
+          image:    firestoreOverride.image    || jsonModule.image,
+          imageUrl: firestoreOverride.imageUrl || null,
+          intro:    firestoreOverride.intro    || jsonModule.intro,
+          sections: firestoreOverride.sections
+            ? jsonModule.sections.map(base => {
+                const ov = firestoreOverride.sections.find(s => s.id === base.id);
+                return ov ? { ...base, ...ov } : base;
+              })
+            : jsonModule.sections,
+        } : {}),
+      }
+    : null;
 
   if (!module) return <div>Module non trouvé</div>;
 

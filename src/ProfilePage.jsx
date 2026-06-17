@@ -7,9 +7,12 @@ import {
   signOut,
 } from 'firebase/auth';
 import { auth, isConfigured } from './firebase';
+import { useTheme } from './theme';
 
 // Section authentification Firebase (login / inscription / déconnexion)
 function FirebaseAuthSection({ firebaseUser }) {
+  const [theme]               = useTheme();
+  const dark                  = theme === 'dark';
   const [tab, setTab]         = useState('login');   // 'login' | 'signup'
   const [email, setEmail]     = useState('');
   const [password, setPassword] = useState('');
@@ -75,31 +78,35 @@ function FirebaseAuthSection({ firebaseUser }) {
 
   // Utilisateur connecté
   if (firebaseUser) {
+    const gcBg     = dark ? 'rgba(34,197,94,0.08)'  : '#f0fdf4';
+    const gcBorder = dark ? 'rgba(34,197,94,0.25)'  : '#86efac';
+    const gcText   = dark ? '#4ade80'                : '#166534';
+    const gcSub    = dark ? 'rgba(74,222,128,0.75)' : 'rgba(22,101,52,0.75)';
     return (
-      <div style={{ backgroundColor: '#f0fdf4', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #86efac' }}>
-        <h2 style={{ margin: '0 0 10px 0', fontSize: '15px', fontWeight: '700', color: '#166534' }}>☁️ Synchronisation cloud active</h2>
+      <div style={{ backgroundColor: gcBg, borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', border: `1px solid ${gcBorder}` }}>
+        <h2 style={{ margin: '0 0 10px 0', fontSize: '15px', fontWeight: '700', color: gcText }}>☁️ Synchronisation cloud active</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '13px', color: '#166534', fontWeight: '600' }}>✅ Connecté</div>
-            <div style={{ fontSize: '12px', color: '#166534', opacity: 0.8 }}>{firebaseUser.email}</div>
-            <div style={{ fontSize: '11px', color: '#166534', opacity: 0.7, marginTop: '4px' }}>
+            <div style={{ fontSize: '13px', color: gcText, fontWeight: '600' }}>✅ Connecté</div>
+            <div style={{ fontSize: '12px', color: gcSub }}>{firebaseUser.email}</div>
+            <div style={{ fontSize: '11px', color: gcSub, marginTop: '4px' }}>
               Ta progression est automatiquement sauvegardée dans le cloud.
             </div>
           </div>
           <button
             onClick={handleLogout}
-            style={{ padding: '8px 14px', backgroundColor: 'white', color: '#991b1b', border: '1px solid #fca5a5', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px', whiteSpace: 'nowrap' }}
+            style={{ padding: '8px 14px', backgroundColor: 'transparent', color: dark ? '#f87171' : '#991b1b', border: `1px solid ${dark ? 'rgba(248,113,113,0.4)' : '#fca5a5'}`, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px', whiteSpace: 'nowrap' }}
           >
             Se déconnecter
           </button>
         </div>
-        {success && <div style={{ marginTop: '10px', fontSize: '12px', color: '#166534' }}>{success}</div>}
+        {success && <div style={{ marginTop: '10px', fontSize: '12px', color: gcText }}>{success}</div>}
       </div>
     );
   }
 
   // Non connecté → formulaire
-  const inputStyle = { width: '100%', padding: '9px 12px', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box', marginBottom: '8px' };
+  const inputStyle = { width: '100%', padding: '9px 12px', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box', marginBottom: '8px', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)' };
   return (
     <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #bfdbfe' }}>
       <h2 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>☁️ Compte cloud & synchronisation</h2>
@@ -136,8 +143,8 @@ function FirebaseAuthSection({ firebaseUser }) {
         {loading ? '…' : tab === 'login' ? 'Se connecter' : 'Créer mon compte'}
       </button>
 
-      {error   && <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '6px', fontSize: '12px' }}>{error}</div>}
-      {success && <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: '#ecfdf5', color: '#166534', borderRadius: '6px', fontSize: '12px' }}>{success}</div>}
+      {error   && <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: dark ? 'rgba(239,68,68,0.12)'  : '#fee2e2', color: dark ? '#f87171' : '#991b1b', borderRadius: '6px', fontSize: '12px', border: `1px solid ${dark ? 'rgba(239,68,68,0.25)' : '#fca5a5'}` }}>{error}</div>}
+      {success && <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: dark ? 'rgba(34,197,94,0.1)'  : '#ecfdf5', color: dark ? '#4ade80' : '#166534', borderRadius: '6px', fontSize: '12px', border: `1px solid ${dark ? 'rgba(34,197,94,0.25)' : '#86efac'}` }}>{success}</div>}
     </div>
   );
 }
@@ -152,7 +159,9 @@ function secsToTime(total) {
     .map(n => String(n).padStart(2, '0')).join(':');
 }
 
-export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal, onShowLanding, firebaseUser }) {
+export default function ProfilePage({ modules, onNavigate, onReset, onImport, onShowLegal, onShowLanding, firebaseUser, isAdmin, onSignOut }) {
+  const [theme]   = useTheme();
+  const dark      = theme === 'dark';
   const savedName = localStorage.getItem('greenitacademie-name') || '';
   const [name, setName] = useState(savedName);
   const [saved, setSaved] = useState(false);
@@ -228,7 +237,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
 
   return (
     <div className="with-sidebar-nav" style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <Sidebar activePage="profil" onNavigate={onNavigate} />
+      <Sidebar activePage="profil" onNavigate={onNavigate} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={onSignOut} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="m-pb-nav" style={{ flex: 1, padding: '32px', overflowY: 'auto' }}>
@@ -251,7 +260,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
                 onChange={e => setName(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSaveName()}
                 placeholder="Ex : Camille Martin"
-                style={{ flex: 1, padding: '10px 14px', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '14px', outline: 'none' }}
+                style={{ flex: 1, padding: '10px 14px', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '14px', outline: 'none', backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)' }}
               />
               <button
                 onClick={handleSaveName}
@@ -297,7 +306,7 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
           </div>
 
           {/* Synchronisation multi-appareils */}
-          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #bbf7d0' }}>
+          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid var(--border)' }}>
             <h2 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700', color: 'var(--accent)' }}>🔄 Sauvegarde &amp; synchronisation multi-appareils</h2>
             <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.55' }}>
               L'application étant éco-conçue sans serveur, la synchronisation s'effectue via un fichier de sauvegarde que vous transférez vous-même d'un appareil à l'autre. Aucune donnée n'est envoyée à un tiers.
@@ -318,7 +327,17 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
               <input ref={fileInputRef} type="file" accept="application/json,.json" onChange={handleImportFile} style={{ display: 'none' }} />
             </div>
             {importMsg && (
-              <div style={{ marginTop: '12px', padding: '10px 12px', borderRadius: '6px', fontSize: '12px', backgroundColor: importMsg.type === 'success' ? '#ecfdf5' : '#fee2e2', color: importMsg.type === 'success' ? '#166534' : '#991b1b', border: `1px solid ${importMsg.type === 'success' ? '#86efac' : '#fca5a5'}` }}>
+              <div style={{ marginTop: '12px', padding: '10px 12px', borderRadius: '6px', fontSize: '12px',
+                backgroundColor: importMsg.type === 'success'
+                  ? (dark ? 'rgba(34,197,94,0.1)'  : '#ecfdf5')
+                  : (dark ? 'rgba(239,68,68,0.1)'  : '#fee2e2'),
+                color: importMsg.type === 'success'
+                  ? (dark ? '#4ade80' : '#166534')
+                  : (dark ? '#f87171' : '#991b1b'),
+                border: `1px solid ${importMsg.type === 'success'
+                  ? (dark ? 'rgba(34,197,94,0.25)'  : '#86efac')
+                  : (dark ? 'rgba(239,68,68,0.25)'  : '#fca5a5')}`,
+              }}>
                 {importMsg.text}
               </div>
             )}
@@ -328,36 +347,45 @@ export default function ProfilePage({ modules, onNavigate, onReset, onImport, on
           </div>
 
           {/* Zone danger */}
-          <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #fecaca' }}>
-            <h2 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: '700', color: '#991b1b' }}>⚠️ Réinitialiser la progression</h2>
-            <p style={{ margin: '0 0 14px 0', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-              Efface tous tes scores, temps passés et modules commencés. Cette action est irréversible.
-            </p>
-            {!confirmReset ? (
-              <button
-                onClick={() => setConfirmReset(true)}
-                style={{ padding: '9px 18px', backgroundColor: 'var(--bg-surface)', color: '#dc2626', border: '1px solid #dc2626', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
-              >
-                Réinitialiser
-              </button>
-            ) : (
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <span style={{ fontSize: '13px', color: '#dc2626', fontWeight: '600' }}>Confirmer ?</span>
-                <button
-                  onClick={handleReset}
-                  style={{ padding: '8px 16px', backgroundColor: '#dc2626', color: 'var(--on-brand)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
-                >
-                  Oui, tout effacer
-                </button>
-                <button
-                  onClick={() => setConfirmReset(false)}
-                  style={{ padding: '8px 16px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '13px' }}
-                >
-                  Annuler
-                </button>
+          {(() => {
+            const dangerBorder = dark ? 'rgba(239,68,68,0.25)' : '#fecaca';
+            const dangerTitle  = dark ? '#f87171'               : '#991b1b';
+            const dangerBtn    = dark ? '#f87171'               : '#dc2626';
+            const dangerBtnBorder = dark ? 'rgba(248,113,113,0.4)' : '#dc2626';
+            return (
+              <div style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: `1px solid ${dangerBorder}` }}>
+                <h2 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: '700', color: dangerTitle }}>⚠️ Réinitialiser la progression</h2>
+                <p style={{ margin: '0 0 14px 0', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                  Efface tous tes scores, temps passés et modules commencés. Cette action est irréversible.
+                </p>
+                {!confirmReset ? (
+                  <button
+                    onClick={() => setConfirmReset(true)}
+                    style={{ padding: '9px 18px', backgroundColor: 'transparent', color: dangerBtn, border: `1px solid ${dangerBtnBorder}`, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }}
+                  >
+                    Réinitialiser
+                  </button>
+                ) : (
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <span style={{ fontSize: '13px', color: dangerTitle, fontWeight: '600' }}>Confirmer ?</span>
+                    <button
+                      onClick={handleReset}
+                      style={{ padding: '8px 16px', backgroundColor: dark ? 'rgba(220,38,38,0.8)' : '#dc2626', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px' }}
+                    >
+                      Oui, tout effacer
+                    </button>
+                    <button
+                      onClick={() => setConfirmReset(false)}
+                      style={{ padding: '8px 16px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '13px' }}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            );
+          })()}
+
         </div>
         </div>
 

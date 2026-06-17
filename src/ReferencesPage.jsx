@@ -127,10 +127,10 @@ const sections = [
   },
 ];
 
-export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding }) {
+export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding, isAdmin, firebaseUser, onSignOut }) {
   return (
     <div className="with-sidebar-nav" style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <Sidebar activePage="references" onNavigate={onNavigate} />
+      <Sidebar activePage="references" onNavigate={onNavigate} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={onSignOut} />
 
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <header style={{ backgroundColor: 'var(--bg-surface)', paddingTop: 'calc(16px + env(safe-area-inset-top))', paddingRight: '32px', paddingBottom: '16px', paddingLeft: '32px', borderBottom: '1px solid var(--border)' }}>
@@ -173,9 +173,6 @@ export default function ReferencesPage({ onNavigate, onShowLegal, onShowLanding 
               </div>
             ))}
 
-            <div style={{ backgroundColor: '#ecfdf5', borderRadius: '8px', padding: '14px 18px', marginTop: '20px', border: '1px solid #86efac', fontSize: '12px', color: '#166534', lineHeight: '1.6' }}>
-              🌱 <strong>Eco-conception :</strong> cette page est entièrement statique, sans image bitmap, et utilise la police système afin de minimiser l'empreinte réseau.
-            </div>
           </div>
         </div>
 

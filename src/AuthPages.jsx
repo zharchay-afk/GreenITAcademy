@@ -122,17 +122,22 @@ function SuccessBanner({ msg }) {
 }
 
 // Firebase error codes → messages en français
-function fbError(code) {
+function fbError(err) {
+  const code = err?.code;
   return {
-    'auth/user-not-found':         'E-mail ou mot de passe incorrect.',
-    'auth/wrong-password':         'E-mail ou mot de passe incorrect.',
-    'auth/invalid-credential':     'E-mail ou mot de passe incorrect.',
-    'auth/email-already-in-use':   'Un compte existe déjà avec cette adresse.',
-    'auth/invalid-email':          'Adresse e-mail invalide.',
-    'auth/too-many-requests':      'Trop de tentatives — réessayez dans quelques minutes.',
-    'auth/network-request-failed': 'Erreur réseau — vérifiez votre connexion.',
-    'auth/weak-password':          'Mot de passe trop faible (6 caractères min.).',
-  }[code] || 'Une erreur inattendue s\'est produite.';
+    'auth/user-not-found':            'E-mail ou mot de passe incorrect.',
+    'auth/wrong-password':            'E-mail ou mot de passe incorrect.',
+    'auth/invalid-credential':        'E-mail ou mot de passe incorrect.',
+    'auth/email-already-in-use':      'Un compte existe déjà avec cette adresse e-mail.',
+    'auth/invalid-email':             'Adresse e-mail invalide.',
+    'auth/too-many-requests':         'Trop de tentatives — réessayez dans quelques minutes.',
+    'auth/network-request-failed':    'Erreur réseau — vérifiez votre connexion.',
+    'auth/weak-password':             'Mot de passe trop faible (6 caractères min.).',
+    'auth/operation-not-allowed':     'La connexion par e-mail n\'est pas activée dans Firebase Console.',
+    'auth/requires-recent-login':     'Veuillez vous reconnecter avant d\'effectuer cette action.',
+    'auth/user-disabled':             'Ce compte a été désactivé.',
+    'auth/popup-closed-by-user':      'Fenêtre fermée — réessayez.',
+  }[code] || (err?.message ? `Erreur : ${err.message}` : 'Une erreur inattendue s\'est produite.');
 }
 
 // ─────────────────────────────────────────────
@@ -170,7 +175,7 @@ export function LoginPage({ onSuccess, onGoRegister, onGoForgot, onBack, onSkip,
       await signInWithEmailAndPassword(auth, email.trim().toLowerCase(), password);
       onSuccess();
     } catch (err) {
-      setError(fbError(err.code) || err.message);
+      setError(fbError(err));
     } finally {
       setLoading(false);
     }
@@ -300,7 +305,7 @@ export function RegisterPage({ onSuccess, onGoLogin, onBack, onSkip, onShowLegal
 
       setVerifyStep(true);
     } catch (err) {
-      setError(fbError(err.code) || err.message);
+      setError(fbError(err));
     } finally {
       setLoading(false);
     }
@@ -456,7 +461,7 @@ export function ForgotPasswordPage({ onGoLogin, onBack }) {
       if (err.code === 'auth/user-not-found') {
         setSent(true);
       } else {
-        setError(fbError(err.code) || err.message);
+        setError(fbError(err));
       }
     } finally {
       setLoading(false);

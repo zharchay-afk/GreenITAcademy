@@ -11,7 +11,7 @@ import LegalPages from './src/LegalPages';
 import AdminPage from './src/AdminPage';
 import { LoginPage, RegisterPage, ForgotPasswordPage, EmailVerificationBanner } from './src/AuthPages';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, collection } from 'firebase/firestore';
 import { auth, db } from './src/firebase';
 import { useFirebaseSync } from './src/useFirebaseSync';
 
@@ -105,6 +105,38 @@ export default function App() {
   const [firebaseUser, setFirebaseUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [authMode, setAuthMode] = useState('login'); // 'login' | 'register' | 'forgot'
+
+  // Overrides Firestore : titres modifiés, modules supprimés, modules personnalisés
+  const [contentOverrides, setContentOverrides] = useState({});
+
+  useEffect(() => {
+    if (!db) return;
+    const unsub = onSnapshot(collection(db, 'content_modules'), snap => {
+      const map = {};
+      snap.forEach(d => { map[d.id] = d.data(); });
+      setContentOverrides(map);
+    });
+    return unsub;
+  }, []);
+
+  // Ajoute les modules personnalisés (créés dans l'admin) à l'état de progression
+  useEffect(() => {
+    const customEntries = Object.entries(contentOverrides)
+      .filter(([, d]) => d._custom && !d._deleted);
+    if (customEntries.length === 0) return;
+    setModules(prev => {
+      const existingIds = new Set(prev.map(m => m.id));
+      const toAdd = customEntries
+        .filter(([id]) => !existingIds.has(parseInt(id)))
+        .map(([id, d]) => ({
+          id: parseInt(id), unite: `MODULE ${id}`,
+          title: d.title || 'Nouveau module', image: d.image || '📦',
+          bgColor: d.bgColor || '#64748b',
+          tempsPasse: '00:00:00', score: 0, started: false,
+        }));
+      return toAdd.length > 0 ? [...prev, ...toAdd] : prev;
+    });
+  }, [contentOverrides]);
 
   useEffect(() => {
     if (!auth) return;
@@ -212,6 +244,15 @@ export default function App() {
     setScreen('legal');
   };
 
+  // Modules affichés : applique les overrides Firestore (titre, image, suppression)
+  const effectiveModules = modules
+    .filter(m => !contentOverrides[String(m.id)]?._deleted)
+    .map(m => {
+      const ov = contentOverrides[String(m.id)];
+      if (!ov) return m;
+      return { ...m, title: ov.title || m.title, image: ov.image || m.image };
+    });
+
   // ----- Rendering -----
   if (screen === 'landing') {
     return (
@@ -311,19 +352,21 @@ export default function App() {
     );
   }
 
-  if (screen === 'attestation') return <AttestationPage modules={modules} onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} />;
+  if (screen === 'attestation') return <AttestationPage modules={effectiveModules} onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={handleSignOut} />;
   if (screen === 'scorm-player') return <ScormPlayer onNavigate={handleNavigate} />;
-  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} />;
+  if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={handleSignOut} />;
 
   if (screen === 'profil') {
     return (
       <ProfilePage
-        modules={modules}
+        modules={effectiveModules}
         onNavigate={handleNavigate}
         onShowLegal={showLegal}
         onShowLanding={() => setScreen('landing')}
         onReset={handleReset}
         firebaseUser={firebaseUser}
+        isAdmin={isAdmin}
+        onSignOut={handleSignOut}
         onImport={(imported) => {
           setModules(prev => prev.map(m => {
             const found = imported.find(i => i.id === m.id);
@@ -345,7 +388,7 @@ export default function App() {
     <>
       <EmailVerificationBanner user={firebaseUser} />
       <GreenITAcademie
-        modules={modules}
+        modules={effectiveModules}
         onStart={handleStart}
         onEvaluate={handleEvaluate}
         onNavigate={handleNavigate}

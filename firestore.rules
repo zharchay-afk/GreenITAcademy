@@ -1,16 +1,40 @@
 rules_version = '2';
 
-// Règles de sécurité Firestore — Green IT Académie
-// À copier dans Firebase Console → Firestore → Règles
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Chaque utilisateur peut lire et écrire uniquement ses propres données
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    // Vérifie si l'utilisateur connecté a le rôle admin
+    function isAdmin() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // Aucun autre accès n'est autorisé
+    // Données utilisateur : chacun accède uniquement à son propre document
+    // Les admins peuvent lire tous les documents (pour l'onglet Utilisateurs)
+    match /users/{userId} {
+      allow read:  if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Contenu des modules : lecture libre, écriture réservée aux admins
+    match /content_modules/{moduleId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+
+      // Historique des versions (sous-collection)
+      match /versions/{versionId} {
+        allow read:  if isAdmin();
+        allow write: if isAdmin();
+      }
+    }
+
+    // Questions : lecture libre (quiz), écriture réservée aux admins
+    match /content_questions/{questionId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
+    // Tout le reste est refusé
     match /{document=**} {
       allow read, write: if false;
     }
