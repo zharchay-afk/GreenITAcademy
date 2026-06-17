@@ -100,7 +100,7 @@ function LegalNotice() {
 }
 
 // -----------------------------------------------------------------------------
-// Politique de confidentialité — version actualisée (compte optionnel Firebase)
+// Politique de confidentialité — conforme RGPD
 // -----------------------------------------------------------------------------
 function PrivacyShort() {
   return (
@@ -108,171 +108,78 @@ function PrivacyShort() {
 
       <Section title="L'essentiel">
         <Highlight>
-          <strong>Green IT Académie est un projet pédagogique.</strong> L'utilisation sans compte est totalement anonyme. Si vous créez un compte (facultatif), seule votre adresse e-mail est transmise à Firebase Authentication (service Google) à des fins d'authentification. Les auteurs n'ont pas accès à vos données de progression.
+          Green IT Académie peut être utilisé <strong>sans créer de compte</strong> : dans ce cas, aucune donnée ne quitte votre navigateur.
+          Si vous créez un compte (facultatif), votre adresse e-mail et votre progression sont transmises à <strong>Firebase (Google)</strong>.
+          Nous sommes responsables de ce traitement au sens du RGPD et vous informons ci-dessous de façon transparente.
         </Highlight>
       </Section>
 
-      <Section title="Pourquoi le RGPD s'applique de manière très limitée">
-        <p>Le RGPD (Règlement (UE) 2016/679) encadre les traitements de données personnelles effectués par un <em>responsable de traitement</em>. Plusieurs arguments plaident pour une applicabilité réduite ou nulle dans notre contexte :</p>
-        <ul>
-          <li><strong>Activité strictement pédagogique et non commerciale.</strong> Ce service est édité par deux étudiants dans le cadre d'un projet académique sans finalité commerciale, sans revenu, sans structure juridique propre. Il n'entre pas dans le champ de l'activité économique visée par le RGPD.</li>
-          <li><strong>Exemption « activité domestique ».</strong> L'article 2 (2) c du RGPD exclut les traitements effectués « par une personne physique dans le cadre d'une activité strictement personnelle ou domestique ». L'utilisation de l'application sans compte (mode anonyme) correspond exactement à cette situation : vous traitez vos propres données, sur votre propre terminal, sans interaction avec un tiers collecteur.</li>
-          <li><strong>Absence d'accès aux données de progression.</strong> Les scores, temps passé et modules complétés restent dans votre navigateur (<code>localStorage</code>). Les auteurs n'y ont physiquement pas accès — il n'y a donc pas de traitement au sens de l'article 4 (2) du règlement.</li>
-          <li><strong>Pas de télémétrie, pas d'analytics.</strong> Aucun cookie de mesure d'audience, aucun pixel de tracking, aucun journal d'accès nominatif n'est mis en œuvre.</li>
-        </ul>
-        <p>Par mesure de transparence — et parce que la création d'un compte fait intervenir Firebase, un service tiers — nous décrivons ci-dessous l'ensemble des données traitées.</p>
+      <Section title="Responsable du traitement">
+        <p>Les étudiants éditeurs du service (cf. Mentions légales) sont responsables conjoints du traitement au sens de l'article 4 (7) du RGPD : ils ont défini les finalités (authentification, synchronisation pédagogique) et les moyens techniques (Firebase Auth, Firestore). À ce titre, le cadre du RGPD leur est pleinement applicable dès lors qu'un compte est créé.</p>
+        <p>Contact : adresse indiquée dans les Mentions légales.</p>
       </Section>
 
-      <Section title="Deux modes d'utilisation">
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>Mode anonyme (sans compte) — aucune donnée personnelle transmise</p>
-        <p>L'application fonctionne intégralement dans votre navigateur. Les données suivantes sont stockées <em>uniquement sur votre terminal</em> :</p>
-        <ul>
-          <li>Modules consultés, scores obtenus, temps passé par module ;</li>
-          <li>Préférence de thème (clair / sombre).</li>
-        </ul>
-        <p>Vous pouvez les effacer à tout moment via le bouton <em>« Réinitialiser ma progression »</em> dans « Mon profil », ou via les paramètres de confidentialité de votre navigateur.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '16px' }}>Mode connecté (compte optionnel) — Firebase Authentication</p>
-        <p>Si vous choisissez de créer un compte pour synchroniser votre progression entre appareils :</p>
-        <ul>
-          <li>Votre <strong>adresse e-mail</strong> est transmise à <strong>Firebase Authentication</strong> (Google LLC) pour sécuriser votre accès.</li>
-          <li>Votre <strong>progression pédagogique</strong> (scores, modules, temps passé) est stockée dans <strong>Firestore</strong> (base de données Google), chiffrée au repos.</li>
-          <li>Firebase se charge de l'envoi des e-mails de confirmation et de réinitialisation de mot de passe.</li>
-        </ul>
-        <p>Firebase est soumis à la politique de confidentialité de Google (<em>google.com/intl/fr/policies/privacy/</em>) et aux clauses contractuelles types UE (CCT/SCCs) pour les transferts hors EEE.</p>
-      </Section>
-
-      <Section title="Droits des personnes concernées">
-        <p>Si vous avez créé un compte, vous disposez, sur les données traitées via Firebase, des droits suivants :</p>
-        <ul>
-          <li><strong>Accès et rectification</strong> : modifiez votre nom affiché dans « Mon profil ».</li>
-          <li><strong>Suppression</strong> : supprimez votre compte depuis « Mon profil » → « Supprimer mon compte ». Toutes vos données Firestore seront effacées.</li>
-          <li><strong>Portabilité</strong> : exportez votre progression en JSON depuis « Mon profil ».</li>
-          <li><strong>Opposition</strong> : cessez simplement d'utiliser le service en mode connecté — la désinscription supprime toute trace côté Firebase.</li>
-        </ul>
-        <p>Pour toute demande, contactez les auteurs via l'adresse mentionnée dans les Mentions légales. Le délai de réponse est de 30 jours (article 12 RGPD).</p>
-      </Section>
-
-      <Section title="Base légale (si le RGPD était applicable)">
-        <p>Si l'on retenait malgré tout l'applicabilité du RGPD, les bases légales seraient :</p>
-        <ul>
-          <li><strong>Exécution du service</strong> (art. 6 (1) b) : authentification, synchronisation de la progression ;</li>
-          <li><strong>Consentement</strong> (art. 6 (1) a) : création de compte — explicitement recueilli lors de l'inscription via la case à cocher.</li>
-        </ul>
-      </Section>
-
-    </Article>
-  );
-}
-
-// (Conservée en commentaire pour référence : version étendue style CNIL.)
-function PrivacyPolicy_legacy_unused() {
-  return (
-    <Article title="Données personnelles — Green IT Académie" updated="Dernière mise à jour : mai 2026">
-      <Section title="En résumé">
-        <Highlight>Green IT Académie est une application pédagogique qui fonctionne <strong>entièrement dans votre navigateur</strong>, sans serveur ni base de données distante. Aucune donnée n'est transmise aux auteurs. Les rares informations stockées (compte facultatif, progression) restent <strong>localement</strong> sur votre terminal.</Highlight>
-      </Section>
-
-      <Section title="A — Statut du traitement et applicabilité du RGPD">
-        <p>L'application est éditée dans un cadre strictement pédagogique par deux étudiants (cf. « Mentions légales »), sans finalité commerciale ni structure juridique propre.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Sommes-nous responsables de traitement ?</p>
-        <p>Au sens de l'article 4 (7) du RGPD, le responsable du traitement est la personne qui <em>« détermine les finalités et les moyens du traitement »</em>. En l'espèce, la question est délicate :</p>
-        <ul>
-          <li>Nous avons effectivement défini les <em>moyens techniques</em> du traitement (mécanisme d'authentification, format de stockage, durée de conservation des sessions, etc.) ;</li>
-          <li>Mais nous n'avons <em>aucun accès aux données</em> : elles ne sortent jamais du terminal de l'utilisateur. Aucune copie, aucun journal, aucune télémétrie n'est transmise aux éditeurs.</li>
-        </ul>
-        <p>La jurisprudence européenne (arrêts <em>Wirtschaftsakademie</em> C-210/16, <em>Fashion ID</em> C-40/17) admet qu'une entité puisse être qualifiée de responsable de traitement même sans accès aux données. Dans le doute, et par mesure de transparence pédagogique, <strong>nous appliquons volontairement le cadre du RGPD</strong> comme si nous étions responsables de traitement.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Le RGPD s'applique-t-il matériellement ?</p>
-        <p>L'article 2 (1) du RGPD le rend applicable à tout traitement automatisé de données à caractère personnel. L'article 2 (2) (c) exclut toutefois les traitements effectués <em>« par une personne physique dans le cadre d'une activité strictement personnelle ou domestique »</em>. Lorsque vous utilisez cette application sur votre propre terminal sans interaction avec un tiers, vous pouvez vous-même être considéré comme effectuant un traitement à des fins purement personnelles, et donc hors champ.</p>
-        <p>Quoi qu'il en soit, nous estimons que la <strong>meilleure pratique</strong> est de fournir une information complète et transparente sur les opérations effectuées par l'application, ce qui fait l'objet du présent document.</p>
-      </Section>
-
-      <Section title="B — Objet du traitement">
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Finalités</p>
-        <p>Le traitement de données mis en œuvre par l'application a pour objet :</p>
-        <ul>
-          <li>de permettre la <strong>création d'un compte facultatif</strong> et l'authentification de son titulaire ;</li>
-          <li>d'<strong>enregistrer la progression pédagogique</strong> (modules ouverts, scores obtenus, temps passé) afin de la restituer lors des sessions suivantes ;</li>
-          <li>d'<strong>autoriser le suivi multi-appareils</strong> via une fonction d'export/import manuel de la progression ;</li>
-          <li>de <strong>délivrer une attestation de réussite</strong> aux utilisateurs ayant atteint le seuil de validation des modules.</li>
-        </ul>
-        <p>L'application ne met en œuvre aucune autre finalité (pas de profilage, pas de publicité, pas de mesure d'audience, pas de communication marketing).</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Base légale</p>
-        <p>Lorsque le RGPD est applicable, les bases légales mobilisées sont :</p>
-        <ul>
-          <li><strong>L'exécution du service</strong> (article 6 (1) b RGPD) pour les opérations indispensables (authentification, conservation de la progression) ;</li>
-          <li><strong>Le consentement</strong> (article 6 (1) a RGPD) recueilli explicitement à la création du compte pour le traitement des données d'identification facultatives (nom affiché).</li>
-        </ul>
-      </Section>
-
-      <Section title="C — Données traitées">
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Catégories de données</p>
+      <Section title="Ce qui est stocké — selon votre mode d'utilisation">
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginBottom: '8px' }}>A — Sans compte (mode anonyme)</p>
+        <p>Toutes les données restent <strong>exclusivement sur votre navigateur</strong>, dans le <code>localStorage</code> (mécanisme Web Storage, distinct des cookies — les données ne sont jamais envoyées au serveur) :</p>
         <table style={tableStyle}>
-          <thead><tr><th style={th}>Donnée</th><th style={th}>Finalité</th><th style={th}>Conservation</th></tr></thead>
+          <thead><tr><th style={th}>Donnée</th><th style={th}>Emplacement</th><th style={th}>Durée</th></tr></thead>
           <tbody>
-            <tr><td style={td}>Adresse e-mail</td><td style={td}>Identifiant unique du compte</td><td style={td}>Jusqu'à suppression par l'utilisateur</td></tr>
-            <tr><td style={td}>Nom affiché (facultatif)</td><td style={td}>Personnalisation de l'interface</td><td style={td}>Jusqu'à suppression</td></tr>
-            <tr><td style={td}>Hash PBKDF2 du mot de passe + sel + nombre d'itérations</td><td style={td}>Authentification sécurisée</td><td style={td}>Jusqu'à suppression</td></tr>
-            <tr><td style={td}>Progression pédagogique (modules ouverts, scores, temps passé)</td><td style={td}>Suivi du parcours apprenant</td><td style={td}>Jusqu'à réinitialisation ou suppression du compte</td></tr>
-            <tr><td style={td}>Token de session aléatoire (256 bits) + horodatage d'expiration</td><td style={td}>Maintien de la connexion</td><td style={td}>12 h maximum, effacé à la fermeture de l'onglet</td></tr>
+            <tr><td style={td}>Modules ouverts, scores, temps passé</td><td style={td}><code>localStorage</code></td><td style={td}>Persistant jusqu'à réinitialisation</td></tr>
+            <tr><td style={td}>Préférence thème (clair/sombre)</td><td style={td}><code>localStorage</code></td><td style={td}>Persistant</td></tr>
+            <tr><td style={td}>État sidebar (réduite/étendue)</td><td style={td}><code>localStorage</code></td><td style={td}>Persistant</td></tr>
+            <tr><td style={td}>Fichiers de l'application (PWA)</td><td style={td}>Cache Service Worker</td><td style={td}>Renouvelé à chaque mise à jour</td></tr>
           </tbody>
         </table>
+        <p style={{ marginTop: '10px' }}>Les auteurs n'ont aucun accès à ces données. Vous pouvez les effacer depuis « Mon profil » → « Réinitialiser ma progression », ou depuis les paramètres de confidentialité de votre navigateur.</p>
 
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Sources des données</p>
-        <p>Toutes les données sont collectées directement auprès de l'utilisateur via les formulaires d'inscription et de connexion. Aucune source tierce n'est utilisée.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>3 — Caractère obligatoire</p>
-        <p>L'utilisation de l'application <strong>ne requiert aucune donnée personnelle</strong>. Une option « Continuer sans compte » est mise en avant sur la page d'accueil et permet d'accéder à l'intégralité du parcours sans la moindre saisie. La création d'un compte n'est utile que pour retrouver sa progression sur plusieurs appareils.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>4 — Prise de décision automatisée</p>
-        <p>Le traitement <strong>ne prévoit aucune prise de décision entièrement automatisée</strong> au sens de l'article 22 du RGPD.</p>
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '20px', marginBottom: '8px' }}>B — Avec compte (mode connecté)</p>
+        <p>Si vous créez un compte, les données suivantes sont traitées par les éditeurs via Firebase :</p>
+        <table style={tableStyle}>
+          <thead><tr><th style={th}>Donnée</th><th style={th}>Où</th><th style={th}>Base légale</th><th style={th}>Durée de conservation</th></tr></thead>
+          <tbody>
+            <tr><td style={td}>Adresse e-mail</td><td style={td}>Firebase Authentication (Google)</td><td style={td}>Consentement (art. 6.1.a)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
+            <tr><td style={td}>Prénom affiché (facultatif)</td><td style={td}>Firebase Authentication + Firestore</td><td style={td}>Consentement (art. 6.1.a)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
+            <tr><td style={td}>Scores, modules, temps passé</td><td style={td}>Cloud Firestore (Google)</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
+            <tr><td style={td}>Token d'authentification (Firebase)</td><td style={td}><code>IndexedDB</code> local (navigateur)</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à déconnexion</td></tr>
+          </tbody>
+        </table>
+        <p style={{ marginTop: '10px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+          Aucun profilage, aucune publicité, aucune mesure d'audience, aucune revente de données.
+        </p>
       </Section>
 
-      <Section title="D — Personnes concernées">
-        <p>Le traitement concerne exclusivement les personnes qui choisissent de créer un compte ou de poursuivre leur progression dans l'application. Aucun tiers (apprenant, employeur, organisme tiers) n'a accès aux données saisies.</p>
-      </Section>
-
-      <Section title="E — Destinataires des données">
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>1 — Catégories de destinataires</p>
-        <p>Compte tenu de l'architecture exclusivement locale, <strong>aucun destinataire externe</strong> n'a accès aux données saisies dans l'application. Les éditeurs eux-mêmes n'y ont pas accès. Aucun sous-traitant n'est mobilisé pour le traitement.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>2 — Transferts hors UE</p>
-        <p>Aucun transfert de données vers un pays tiers ou une organisation internationale n'est réalisé.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>3 — Durée de conservation</p>
-        <p>Les données sont conservées tant que l'utilisateur en conserve le bénéfice (compte actif, progression non réinitialisée). Lorsque l'utilisateur vide le stockage de son navigateur, désinstalle la PWA ou utilise les fonctions « Réinitialiser ma progression » et « Supprimer mon compte », les données sont effacées <strong>immédiatement et définitivement</strong>. Aucune sauvegarde n'est conservée par les éditeurs.</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>4 — Sécurité</p>
-        <p>Bien que les données ne quittent pas le terminal, des mesures de sécurité robustes sont mises en œuvre :</p>
+      <Section title="Sous-traitant — Firebase (Google)">
+        <p>Le service utilise <strong>Firebase</strong>, produit de Google LLC (siège : Dublin, Irlande pour les services européens). Firebase agit en qualité de sous-traitant au sens de l'article 28 RGPD.</p>
         <ul>
-          <li>Mot de passe jamais stocké en clair — seulement son hash PBKDF2-HMAC-SHA-256 calculé sur <strong>600 000 itérations</strong> (recommandation OWASP, Password Storage Cheat Sheet 2023), avec un sel aléatoire de 16 octets propre à chaque compte ;</li>
-          <li>Comparaison des hashs à temps constant pour résister aux attaques temporelles ;</li>
-          <li>Token de session de 256 bits généré via le CSPRNG du navigateur (<code>crypto.getRandomValues</code>) avec expiration de 12 heures ;</li>
-          <li>Aucune librairie tierce d'authentification : minimisation de la surface d'attaque ;</li>
-          <li>Conformité aux principes de l'article 32 du RGPD et de la norme NIST SP 800-63B.</li>
+          <li><strong>Firebase Authentication</strong> : gestion des identifiants, envoi des e-mails de confirmation et de réinitialisation de mot de passe.</li>
+          <li><strong>Cloud Firestore</strong> : base de données NoSQL hébergeant la progression synchronisée.</li>
         </ul>
+        <p>Les transferts éventuels hors EEE sont encadrés par les <strong>clauses contractuelles types (CCT)</strong> adoptées par la Commission européenne. Politique de confidentialité Google : <em>policies.google.com/privacy</em>.</p>
+        <p>Les mots de passe ne sont jamais transmis aux éditeurs ; Firebase gère leur stockage sécurisé côté serveur.</p>
+      </Section>
 
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>5 — Vos droits</p>
-        <p>Vous disposez à tout moment des droits prévus par les articles 15 à 22 du RGPD :</p>
+      <Section title="Vos droits (art. 15–22 RGPD)">
+        <p>Pour les données traitées dans le cadre d'un compte :</p>
         <ul>
-          <li><strong>Accès</strong> et copie : la rubrique « Mon profil » affiche les données enregistrées ; vous pouvez les exporter au format JSON.</li>
-          <li><strong>Rectification</strong> : nom et mot de passe modifiables depuis le profil.</li>
-          <li><strong>Effacement</strong> : boutons « Réinitialiser ma progression » et « Supprimer mon compte » dans le profil. Effet immédiat et définitif.</li>
-          <li><strong>Portabilité</strong> : export de la progression au format SCORM ou JSON.</li>
-          <li><strong>Opposition</strong> et <strong>limitation</strong> : effaçables à tout moment en vidant le stockage du navigateur.</li>
+          <li><strong>Accès</strong> : consultez vos données dans « Mon profil ».</li>
+          <li><strong>Rectification</strong> : modifiez votre prénom depuis « Mon profil ».</li>
+          <li><strong>Effacement</strong> : supprimez votre compte depuis « Mon profil » → « Supprimer mon compte ». Toutes les données Firebase associées sont effacées.</li>
+          <li><strong>Portabilité</strong> : exportez votre progression en JSON depuis « Mon profil ».</li>
+          <li><strong>Retrait du consentement</strong> : vous pouvez retirer votre consentement à tout moment en supprimant votre compte. Ce retrait ne remet pas en cause la licéité des traitements antérieurs.</li>
+          <li><strong>Réclamation</strong> : vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (France — <em>cnil.fr</em>) ou de la <strong>CNPD</strong> (Luxembourg — <em>cnpd.public.lu</em>).</li>
         </ul>
-        <p>Compte tenu de l'architecture, ces droits s'exercent <strong>directement depuis l'application</strong>, sans avoir à formuler de demande externe. En cas de difficulté, vous pouvez nous contacter à l'adresse <a href="mailto:greenit-academie@example.lu" style={linkInline}>greenit-academie@example.lu</a> et, à défaut de réponse satisfaisante, introduire une réclamation auprès de la <strong>CNPD</strong> (<a href="https://cnpd.public.lu" target="_blank" rel="noreferrer" style={linkInline}>cnpd.public.lu</a>).</p>
-
-        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>6 — Cookies</p>
-        <p>Aucun cookie n'est déposé. Les seuls éléments enregistrés sur le terminal sont les espaces de stockage Web (<code>localStorage</code> et <code>sessionStorage</code>) strictement nécessaires au fonctionnement du service. À ce titre, ils relèvent de l'exemption prévue à l'article 5.3 de la directive 2002/58/CE et ne nécessitent pas de recueil de consentement préalable (voir l'onglet « Cookies & stockage local »).</p>
+        <p>Pour exercer vos droits, contactez les éditeurs à l'adresse mentionnée dans les Mentions légales. Délai de réponse : 30 jours (art. 12 RGPD).</p>
       </Section>
 
-      <Section title="Modification de la politique">
-        <p>La présente politique pourra être mise à jour pour refléter les évolutions du service ou du cadre légal. La date indiquée en haut de cette page correspond à la dernière révision.</p>
+      <Section title="Cookies">
+        <p><strong>Aucun cookie n'est utilisé.</strong> Le stockage local repose sur <code>localStorage</code> et <code>IndexedDB</code> (Web Storage API), qui ne sont pas des cookies au sens de la directive ePrivacy et ne sont pas transmis au serveur lors des requêtes HTTP. Voir l'onglet « Cookies &amp; stockage » pour l'inventaire complet.</p>
       </Section>
+
+      <Section title="Mise à jour de cette politique">
+        <p>Toute modification substantielle sera notifiée aux utilisateurs connectés par e-mail ou via une bannière dans l'application. La date en haut de page indique la dernière révision.</p>
+      </Section>
+
     </Article>
   );
 }
@@ -295,7 +202,9 @@ function CookiesPolicy() {
         <table style={tableStyle}>
           <thead><tr><th style={th}>Clé</th><th style={th}>Type</th><th style={th}>Contenu</th><th style={th}>Durée</th><th style={th}>Finalité</th></tr></thead>
           <tbody>
-            <tr><td style={td}><code>greenitacademie-progress</code></td><td style={td}>localStorage</td><td style={td}>Modules commencés, scores, temps passé</td><td style={td}>Persistant jusqu'à suppression</td><td style={td}>Suivi pédagogique personnel</td></tr>
+            <tr><td style={td}><code>greenitacademie-progress</code></td><td style={td}>localStorage</td><td style={td}>Modules commencés, scores, temps passé</td><td style={td}>Persistant jusqu'à suppression</td><td style={td}>Suivi pédagogique (mode anonyme)</td></tr>
+            <tr><td style={td}><code>greenit-sidebar-collapsed</code></td><td style={td}>localStorage</td><td style={td}>Préférence repli du menu (0 ou 1)</td><td style={td}>Persistant</td><td style={td}>Interface</td></tr>
+            <tr><td style={td}><code>firebase:authUser:*</code></td><td style={td}>IndexedDB (navigateur)</td><td style={td}>Token d'authentification Firebase (si compte créé)</td><td style={td}>Jusqu'à déconnexion</td><td style={td}>Maintien de la session (mode connecté uniquement)</td></tr>
             <tr><td style={td}><em>Cache PWA</em></td><td style={td}>Cache API (service worker)</td><td style={td}>Fichiers de l'application (HTML, JS, CSS, JSON, SVG)</td><td style={td}>Renouvelé à chaque mise à jour</td><td style={td}>Fonctionnement hors-ligne</td></tr>
           </tbody>
         </table>
