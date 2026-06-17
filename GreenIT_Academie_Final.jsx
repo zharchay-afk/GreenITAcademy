@@ -102,7 +102,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
-export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal, onShowLanding, firebaseUser, isAdmin, onGoToAuth, onSignOut }) {
+export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal, onShowLanding, firebaseUser, isAdmin, onGoToAuth, onSignOut, formationScormUrl, onLaunchScorm }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
 
@@ -208,6 +208,23 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
             </div>
           )}
         </header>
+
+        {/* Bandeau SCORM formation */}
+        {formationScormUrl && onLaunchScorm && (
+          <div style={{ backgroundColor: '#eff6ff', borderBottom: '1px solid #bfdbfe', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', flexShrink: 0 }}>
+            <span style={{ fontSize: '20px' }}>📦</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ fontSize: '13px', fontWeight: '600', color: '#1e40af' }}>Formation SCORM disponible</span>
+              <span style={{ fontSize: '12px', color: '#3b82f6', marginLeft: '8px' }}>Lancez le parcours interactif complet dans le lecteur intégré</span>
+            </div>
+            <button
+              onClick={() => onLaunchScorm(formationScormUrl)}
+              style={{ padding: '8px 16px', backgroundColor: '#1e40af', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '13px', fontFamily: 'inherit', whiteSpace: 'nowrap', flexShrink: 0 }}
+            >
+              Lancer la formation →
+            </button>
+          </div>
+        )}
 
         {/* Contenu */}
         <div className="m-pb-nav" style={{ padding: isMobile ? '12px 16px' : '20px 24px', flex: 1, overflowY: 'auto' }}>

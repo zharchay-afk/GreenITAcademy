@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   collection, doc, getDocs, setDoc, getDoc, deleteDoc, onSnapshot,
 } from 'firebase/firestore';
-import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { db, storage, isConfigured } from './firebase';
 import Logo from './Logo';
 import useIsMobile from './useIsMobile';
@@ -10,6 +10,7 @@ import { useTheme } from './theme';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
 import Visual, { VISUALS } from './Visuals';
+import { exportScorm } from './utils/scormExport';
 
 // ─────────────────────────────────────────────────────────────
 // Palette
@@ -1116,15 +1117,54 @@ function UsersTab({ toast }) {
 // ─────────────────────────────────────────────────────────────
 // Tab: Pages — édition du contenu des pages statiques
 // ─────────────────────────────────────────────────────────────
+const PAGES_EMPTY = {
+  siteName: '', heroTitle: '', heroSubtitle: '', ctaLabel: '', loginLabel: '',
+  interetTitle: '', interetSubtitle: '',
+  interetCard0Title: '', interetCard0Text: '',
+  interetCard1Title: '', interetCard1Text: '',
+  interetCard2Title: '', interetCard2Text: '',
+  programmeTitle: '', programmeSubtitle: '',
+  moduleTeaser1: '', moduleTeaser2: '', moduleTeaser3: '',
+  moduleTeaser4: '', moduleTeaser5: '', moduleTeaser6: '',
+};
+
+const PAGES_DEFAULTS = {
+  siteName:      'Green IT Académie',
+  heroTitle:     'Formez-vous au\nNumérique Responsable',
+  heroSubtitle:  'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.',
+  ctaLabel:      'Commencer la formation',
+  loginLabel:    'Connexion / Inscription',
+  interetTitle:      'Pourquoi suivre cette formation ?',
+  interetSubtitle:   'Le Green IT ne se résume pas à de bonnes intentions : il s\'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les outils opérationnels.',
+  interetCard0Title: 'Connaître les obligations réglementaires',
+  interetCard0Text:  'Green Deal, CSRD, Taxonomie, EED, DEEE, Écoconception : depuis 2019, l\'Union européenne multiplie les textes qui imposent aux organisations de mesurer et de réduire leur empreinte numérique.',
+  interetCard1Title: 'Maîtriser les outils techniques',
+  interetCard1Text:  'Normes ISO (14001, 14040/44, 50001, EN 50600) et labels environnementaux (EPEAT, Energy Star, Blue Angel) : ces référentiels permettent d\'objectiver les choix d\'achat et de fournir des preuves crédibles.',
+  interetCard2Title: 'Anticiper l\'évolution du cadre légal',
+  interetCard2Text:  'Ce qui est volontaire aujourd\'hui devient souvent obligatoire demain. Les acteurs déjà engagés prennent un avantage compétitif et évitent les coûts d\'une mise en conformité dans l\'urgence.',
+  programmeTitle:    'Le parcours en 6 modules',
+  programmeSubtitle: 'Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.',
+  moduleTeaser1: 'Comprendre le gradient de contrainte entre lois, normes, labels et codes.',
+  moduleTeaser2: 'Panorama complet des réglementations qui s\'imposent aux organisations.',
+  moduleTeaser3: 'Mettre en œuvre les principales normes ISO et la norme EN 50600 des datacenters.',
+  moduleTeaser4: 'Choisir et utiliser les labels pour des achats IT responsables.',
+  moduleTeaser5: 'Les engagements volontaires des opérateurs et le rôle de la profession.',
+  moduleTeaser6: 'Deux success stories qui illustrent concrètement la mise en œuvre.',
+};
+
+function PagesSection({ title, children }) {
+  return (
+    <div style={{ marginBottom: '24px' }}>
+      <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px', paddingBottom: '6px', borderBottom: '1px solid var(--border)' }}>
+        {title}
+      </div>
+      {children}
+    </div>
+  );
+}
+
 function PagesTab({ toast }) {
-  const DEFAULTS = {
-    siteName:      'Green IT Académie',
-    heroTitle:     'Formez-vous au\nNumérique Responsable',
-    heroSubtitle:  'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.',
-    ctaLabel:      'Commencer la formation',
-    loginLabel:    'Connexion / Inscription',
-  };
-  const [form, setForm]     = useState({ siteName: '', heroTitle: '', heroSubtitle: '', ctaLabel: '', loginLabel: '' });
+  const [form, setForm]       = useState({ ...PAGES_EMPTY });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving]   = useState(false);
 
@@ -1136,12 +1176,26 @@ function PagesTab({ toast }) {
     }).catch(() => setLoading(false));
   }, []);
 
+  const set = (key) => (e) => setForm(f => ({ ...f, [key]: e.target.value }));
+
+  const field = (key, label, type = 'input', rows = 2) => (
+    <div style={{ marginBottom: '12px' }}>
+      <label style={labelStyle}>{label}</label>
+      {type === 'textarea' ? (
+        <textarea rows={rows} value={form[key]} onChange={set(key)}
+          style={{ ...inputStyle, resize: 'vertical' }} placeholder={PAGES_DEFAULTS[key] || ''} />
+      ) : (
+        <input value={form[key]} onChange={set(key)} style={inputStyle} placeholder={PAGES_DEFAULTS[key] || ''} />
+      )}
+    </div>
+  );
+
   const save = async () => {
     if (!db) { toast('Firestore non configuré'); return; }
     setSaving(true);
     try {
       await setDoc(doc(db, 'config', 'pages'), form, { merge: true });
-      toast('Pages mises à jour');
+      toast('Pages mises à jour ✓');
     } catch (e) {
       alert('Erreur : ' + e.message);
     } finally {
@@ -1150,8 +1204,8 @@ function PagesTab({ toast }) {
   };
 
   const reset = async () => {
-    if (!window.confirm('Remettre les textes par défaut ?')) return;
-    setForm({ siteName: '', heroTitle: '', heroSubtitle: '', ctaLabel: '', loginLabel: '' });
+    if (!window.confirm('Remettre tous les textes par défaut ?')) return;
+    setForm({ ...PAGES_EMPTY });
     if (db) await setDoc(doc(db, 'config', 'pages'), {}, { merge: false });
     toast('Textes réinitialisés');
   };
@@ -1161,46 +1215,191 @@ function PagesTab({ toast }) {
   return (
     <div>
       <div style={cardStyle}>
-        <h3 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>
-          Page de présentation (Landing)
-        </h3>
-        <p style={{ margin: '0 0 20px 0', fontSize: '12px', color: 'var(--text-muted)' }}>
-          Les champs vides utilisent le texte par défaut. Les changements sont visibles immédiatement sur le site.
+        <p style={{ margin: '0 0 20px 0', fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+          Les champs vides utilisent le texte par défaut (affiché en gris dans le champ). Les modifications sont visibles immédiatement.
         </p>
 
-        {[
-          { key: 'siteName',     label: 'Nom du site',                    type: 'input',    placeholder: DEFAULTS.siteName },
-          { key: 'heroTitle',    label: 'Titre principal (hero)',          type: 'textarea', placeholder: DEFAULTS.heroTitle, rows: 2 },
-          { key: 'heroSubtitle', label: 'Sous-titre / description',       type: 'textarea', placeholder: DEFAULTS.heroSubtitle, rows: 3 },
-          { key: 'ctaLabel',     label: 'Bouton "Commencer"',             type: 'input',    placeholder: DEFAULTS.ctaLabel },
-          { key: 'loginLabel',   label: 'Bouton "Connexion / Inscription"', type: 'input', placeholder: DEFAULTS.loginLabel },
-        ].map(({ key, label, type, placeholder, rows }) => (
-          <div key={key} style={{ marginBottom: '14px' }}>
-            <label style={labelStyle}>{label}</label>
-            {type === 'textarea' ? (
-              <textarea rows={rows || 2} value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                style={{ ...inputStyle, resize: 'vertical' }} placeholder={placeholder} />
-            ) : (
-              <input value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                style={inputStyle} placeholder={placeholder} />
-            )}
+        <PagesSection title="Section Accueil">
+          {field('siteName',     'Nom du site')}
+          {field('heroTitle',    'Titre principal', 'textarea', 2)}
+          {field('heroSubtitle', 'Sous-titre / description', 'textarea', 3)}
+          {field('ctaLabel',     'Bouton "Commencer"')}
+          {field('loginLabel',   'Bouton "Connexion"')}
+        </PagesSection>
+
+        <PagesSection title="Section Intérêt">
+          {field('interetTitle',    'Titre de section')}
+          {field('interetSubtitle', 'Sous-titre de section', 'textarea', 3)}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
+            <div>
+              <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '8px' }}>Carte 1</div>
+              {field('interetCard0Title', 'Titre')}
+              {field('interetCard0Text',  'Texte', 'textarea', 4)}
+            </div>
+            <div>
+              <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '8px' }}>Carte 2</div>
+              {field('interetCard1Title', 'Titre')}
+              {field('interetCard1Text',  'Texte', 'textarea', 4)}
+            </div>
           </div>
-        ))}
+          <div style={{ maxWidth: '50%', paddingRight: '8px' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '8px' }}>Carte 3</div>
+            {field('interetCard2Title', 'Titre')}
+            {field('interetCard2Text',  'Texte', 'textarea', 4)}
+          </div>
+        </PagesSection>
+
+        <PagesSection title="Section Programme">
+          {field('programmeTitle',    'Titre de section')}
+          {field('programmeSubtitle', 'Sous-titre de section', 'textarea', 2)}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
+            {[1, 2, 3, 4, 5, 6].map(n => (
+              <div key={n} style={{ marginBottom: '10px' }}>
+                <label style={labelStyle}>Module {n} — accroche</label>
+                <textarea rows={2} value={form[`moduleTeaser${n}`]} onChange={set(`moduleTeaser${n}`)}
+                  style={{ ...inputStyle, resize: 'vertical' }} placeholder={PAGES_DEFAULTS[`moduleTeaser${n}`]} />
+              </div>
+            ))}
+          </div>
+        </PagesSection>
 
         <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
           <button onClick={save} disabled={saving} style={{ ...btnStyle('primary'), opacity: saving ? 0.7 : 1 }}>
-            {saving ? 'Sauvegarde…' : '✓ Sauvegarder'}
+            {saving ? 'Sauvegarde…' : '✓ Sauvegarder tout'}
           </button>
           <button onClick={reset} style={{ ...btnStyle('ghost'), color: '#ef4444', fontSize: '12px' }}>
             Réinitialiser
           </button>
         </div>
       </div>
+    </div>
+  );
+}
 
-      <div style={{ ...cardStyle, backgroundColor: 'var(--bg-page)', marginTop: '12px' }}>
+// ─────────────────────────────────────────────────────────────
+// Tab: SCORM — import formation + export
+// ─────────────────────────────────────────────────────────────
+function ScormTab({ toast }) {
+  const [formationUrl, setFormationUrl] = useState(null);
+  const [loadingCfg, setLoadingCfg]     = useState(true);
+  const [uploading, setUploading]       = useState(false);
+  const [exporting, setExporting]       = useState(false);
+  const fileRef = useRef(null);
+
+  useEffect(() => {
+    if (!db) { setLoadingCfg(false); return; }
+    getDoc(doc(db, 'config', 'formation')).then(snap => {
+      if (snap.exists()) setFormationUrl(snap.data().scormUrl || null);
+      setLoadingCfg(false);
+    }).catch(() => setLoadingCfg(false));
+  }, []);
+
+  const uploadFormationScorm = async (file) => {
+    if (!file || !storage || !db) return;
+    setUploading(true);
+    try {
+      const path = `scorm/formation/package_${Date.now()}.zip`;
+      const snap = await uploadBytes(storageRef(storage, path), file);
+      const url  = await getDownloadURL(snap.ref);
+      await setDoc(doc(db, 'config', 'formation'), { scormUrl: url }, { merge: true });
+      setFormationUrl(url);
+      toast('Package SCORM formation importé ✓');
+    } catch (e) {
+      alert('Erreur upload : ' + e.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeFormationScorm = async () => {
+    if (!window.confirm('Supprimer le SCORM formation ?')) return;
+    if (!db) return;
+    await setDoc(doc(db, 'config', 'formation'), { scormUrl: null }, { merge: true });
+    setFormationUrl(null);
+    toast('SCORM formation supprimé');
+  };
+
+  const handleExport = async () => {
+    setExporting(true);
+    try {
+      await exportScorm();
+      toast('Export SCORM téléchargé ✓');
+    } catch (e) {
+      alert('Erreur export : ' + e.message);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  if (loadingCfg) return <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Chargement…</p>;
+
+  return (
+    <div>
+      {/* Import */}
+      <div style={cardStyle}>
+        <h3 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>
+          Importer un SCORM — formation complète
+        </h3>
+        <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+          Téléversez un package .zip SCORM qui couvre l'ensemble de la formation. Un bouton de lancement apparaîtra sur l'écran d'accueil.
+        </p>
+
+        {formationUrl ? (
+          <div style={{ marginBottom: '16px', padding: '12px 14px', backgroundColor: '#f0fdf4', border: '1px solid #86efac', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '20px' }}>📦</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '12px', fontWeight: '700', color: '#166534' }}>Package SCORM actif</div>
+              <div style={{ fontSize: '11px', color: '#4ade80', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{formationUrl}</div>
+            </div>
+            <button onClick={removeFormationScorm} style={{ ...btnStyle('ghost'), color: '#ef4444', fontSize: '11px', flexShrink: 0 }}>Supprimer</button>
+          </div>
+        ) : (
+          <div style={{ marginBottom: '16px', padding: '12px 14px', backgroundColor: 'var(--bg-page)', border: '1px dashed var(--border)', borderRadius: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
+            Aucun SCORM formation importé.
+          </div>
+        )}
+
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => fileRef.current?.click()}
+            disabled={uploading}
+            style={{ ...btnStyle('primary'), opacity: uploading ? 0.7 : 1 }}
+          >
+            {uploading ? 'Téléversement…' : formationUrl ? '↻ Remplacer le SCORM' : '📦 Importer un .zip SCORM'}
+          </button>
+          <input ref={fileRef} type="file" accept=".zip" style={{ display: 'none' }}
+            onChange={e => { const f = e.target.files[0]; e.target.value = ''; if (f) uploadFormationScorm(f); }} />
+        </div>
+      </div>
+
+      {/* Export */}
+      <div style={{ ...cardStyle, marginTop: '16px' }}>
+        <h3 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>
+          Exporter la formation en SCORM
+        </h3>
+        <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+          Génère un package SCORM 1.2 (.zip) complet à partir du contenu actuel : 6 modules, toutes les sections, tous les quiz. Compatible avec tout LMS standard (Moodle, 360Learning, etc.).
+        </p>
+        <div style={{ marginBottom: '14px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          {[
+            ['📚', `${modulesData.modules.length} modules`],
+            ['📄', `${modulesData.modules.reduce((s, m) => s + m.sections.length, 0)} sections`],
+            ['❓', `${questionsData.questions.length} questions`],
+          ].map(([icon, label]) => (
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+              <span>{icon}</span><span>{label}</span>
+            </div>
+          ))}
+        </div>
+        <button onClick={handleExport} disabled={exporting} style={{ ...btnStyle('primary'), opacity: exporting ? 0.7 : 1 }}>
+          {exporting ? 'Génération…' : '⬇ Télécharger le SCORM complet'}
+        </button>
+      </div>
+
+      {/* SCORM par module */}
+      <div style={{ ...cardStyle, marginTop: '16px', backgroundColor: 'var(--bg-page)' }}>
         <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
-          💡 Pour modifier les textes des cartes "Intérêt" ou les descriptions de modules sur la landing, éditez les fichiers sources{' '}
-          <code>src/LandingPage.jsx</code> et <code>data/modules.json</code>.
+          💡 Pour associer un SCORM à un module spécifique (pas à la formation entière), ouvrez l'onglet <strong>Modules</strong>, éditez le module, puis allez dans l'onglet <strong>Méta</strong>.
         </p>
       </div>
     </div>
@@ -1254,6 +1453,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
   const TABS = [
     { id: 'modules',   label: '📚 Modules' },
     { id: 'questions', label: '❓ Questions' },
+    { id: 'scorm',     label: '📦 SCORM' },
     { id: 'users',     label: '👥 Utilisateurs' },
     { id: 'pages',     label: '🖊️ Pages' },
   ];
@@ -1324,6 +1524,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
           {tab === 'modules'   && <ModulesTab   toast={toast} />}
           {tab === 'questions' && <QuestionsTab toast={toast} />}
           {tab === 'users'     && <UsersTab     toast={toast} />}
+          {tab === 'scorm'     && <ScormTab     toast={toast} />}
           {tab === 'pages'     && <PagesTab     toast={toast} />}
         </div>
       </main>

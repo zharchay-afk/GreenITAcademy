@@ -108,9 +108,17 @@ export default function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [authMode, setAuthMode] = useState('login'); // 'login' | 'register' | 'forgot'
   const [scormUrl, setScormUrl] = useState(null);
+  const [formationScormUrl, setFormationScormUrl] = useState(null);
 
   // Overrides Firestore : titres modifiés, modules supprimés, modules personnalisés
   const [contentOverrides, setContentOverrides] = useState({});
+
+  useEffect(() => {
+    if (!db) return;
+    getDoc(doc(db, 'config', 'formation')).then(snap => {
+      if (snap.exists()) setFormationScormUrl(snap.data().scormUrl || null);
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!db) return;
@@ -403,6 +411,8 @@ export default function App() {
         isAdmin={isAdmin}
         onGoToAuth={handleGoToAuth}
         onSignOut={handleSignOut}
+        formationScormUrl={formationScormUrl}
+        onLaunchScorm={(url) => { setScormUrl(url); setScreen('scorm-player'); }}
       />
     </>
   );

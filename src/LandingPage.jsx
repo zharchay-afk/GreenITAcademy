@@ -5,7 +5,7 @@ import questionsData from '../data/questions.json';
 import { useTheme } from './theme';
 import useIsMobile from './useIsMobile';
 import Footer from './Footer';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from './firebase';
 
 // ============================================================================
@@ -51,7 +51,7 @@ const IconCompass = () => (
   </svg>
 );
 
-const interests = [
+const INTEREST_DEFAULTS = [
   {
     Icon: IconScale,
     bg: '#dcfce7',
@@ -72,12 +72,9 @@ const interests = [
   },
 ];
 
-const totalSections = modulesData.modules.reduce((s, m) => s + m.sections.length, 0);
-const stats = [
-  { value: modulesData.modules.length,    label: 'Modules' },
-  { value: totalSections,                  label: 'Leçons' },
-  { value: questionsData.questions.length, label: 'Questions' },
-];
+const BASE_MODULES   = modulesData.modules.length;
+const BASE_SECTIONS  = modulesData.modules.reduce((s, m) => s + m.sections.length, 0);
+const BASE_QUESTIONS = questionsData.questions.length;
 
 // Convertit "HH:MM:SS" en minutes affichables
 const toMinutes = (str) => {
@@ -92,13 +89,46 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
   const isDark = theme === 'dark';
   const isMobile = useIsMobile();
   const [pageCfg, setPageCfg] = useState({});
+  const [extraModules,   setExtraModules]   = useState(0);
+  const [extraSections,  setExtraSections]  = useState(0);
+  const [extraQuestions, setExtraQuestions] = useState(0);
 
   useEffect(() => {
     if (!db) return;
     getDoc(doc(db, 'config', 'pages')).then(snap => {
       if (snap.exists()) setPageCfg(snap.data());
     }).catch(() => {});
+
+    const unsubMods = onSnapshot(
+      query(collection(db, 'content_modules'), where('_custom', '==', true)),
+      (snap) => {
+        const active = snap.docs.filter(d => !d.data()._deleted);
+        setExtraModules(active.length);
+        setExtraSections(active.reduce((s, d) => s + (d.data().sections?.length || 0), 0));
+      },
+      () => {}
+    );
+
+    const unsubQ = onSnapshot(
+      collection(db, 'content_questions'),
+      (snap) => setExtraQuestions(snap.docs.filter(d => !d.data()._deleted).length),
+      () => {}
+    );
+
+    return () => { unsubMods(); unsubQ(); };
   }, []);
+
+  const stats = [
+    { value: BASE_MODULES   + extraModules,   label: 'Modules' },
+    { value: BASE_SECTIONS  + extraSections,  label: 'Leçons' },
+    { value: BASE_QUESTIONS + extraQuestions, label: 'Questions' },
+  ];
+
+  const activeInterests = INTEREST_DEFAULTS.map((d, i) => ({
+    ...d,
+    title: pageCfg[`interetCard${i}Title`] || d.title,
+    text:  pageCfg[`interetCard${i}Text`]  || d.text,
+  }));
 
   // Suivi de la section visible pour la nav active
   useEffect(() => {
@@ -240,15 +270,15 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
           <div style={containerStyle}>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
               <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
-                Pourquoi suivre cette formation&nbsp;?
+                {pageCfg.interetTitle || 'Pourquoi suivre cette formation ?'}
               </h2>
               <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '720px', margin: '0 auto', lineHeight: '1.65' }}>
-                Le Green IT ne se résume pas à de bonnes intentions : il s'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les <strong>outils opérationnels</strong>.
+                {pageCfg.interetSubtitle || <>Le Green IT ne se résume pas à de bonnes intentions : il s'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les <strong>outils opérationnels</strong>.</>}
               </p>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
-              {interests.map((r, i) => (
+              {activeInterests.map((r, i) => (
                 <div key={i} style={{ textAlign: 'center', padding: '8px' }}>
                   <div style={{ width: '64px', height: '64px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
                     <r.Icon />
@@ -266,10 +296,10 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
           <div style={containerStyle}>
             <div style={{ textAlign: 'center', marginBottom: '36px' }}>
               <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
-                Le parcours en 6 modules
+                {pageCfg.programmeTitle || 'Le parcours en 6 modules'}
               </h2>
               <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
-                Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.
+                {pageCfg.programmeSubtitle || 'Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.'}
               </p>
             </div>
 
@@ -296,8 +326,8 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                     {m.subtitle && (
                       <p style={{ margin: '0 0 6px 0', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4', fontStyle: 'italic' }}>{m.subtitle}</p>
                     )}
-                    {MODULE_TEASER[m.id] && (
-                      <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{MODULE_TEASER[m.id]}</p>
+                    {(pageCfg[`moduleTeaser${m.id}`] || MODULE_TEASER[m.id]) && (
+                      <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{pageCfg[`moduleTeaser${m.id}`] || MODULE_TEASER[m.id]}</p>
                     )}
                   </div>
                 );
