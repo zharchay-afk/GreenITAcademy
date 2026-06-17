@@ -6,6 +6,11 @@ import useIsMobile from './useIsMobile';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
+function fmtSecs(s) {
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+  return [h, m, sec].map(n => String(n).padStart(2, '0')).join(':');
+}
+
 export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectModule, onLaunchScorm }) {
   const jsonModule = modulesData.modules.find(m => m.id === moduleId);
   const [firestoreOverride, setFirestoreOverride] = useState(null);
@@ -14,6 +19,7 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
   const isMobile = useIsMobile();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false); // desktop collapse
   const [sidebarOpen, setSidebarOpen] = useState(false);           // mobile overlay
+  const [sessElapsed, setSessElapsed] = useState(0);               // chrono session
 
   // Charge les overrides Firestore pour ce module
   useEffect(() => {
@@ -26,6 +32,13 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
         setFirestoreOverride(null);
       }
     }).catch(() => setFirestoreOverride(null));
+  }, [moduleId]);
+
+  // Chrono de session : tick toutes les secondes
+  useEffect(() => {
+    setSessElapsed(0);
+    const id = setInterval(() => setSessElapsed(s => s + 1), 1000);
+    return () => clearInterval(id);
   }, [moduleId]);
 
   // Réinitialise sur la première section quand on change de module + remonte
@@ -341,8 +354,9 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
               </div>
             </div>
 
-            {/* Progression */}
+            {/* Progression + chrono */}
             <span style={{ flexShrink: 0, fontSize: '11px', color: 'var(--text-secondary)', fontWeight: '600' }}>{progressPct}%</span>
+            <span style={{ flexShrink: 0, fontSize: '11px', color: 'var(--accent)', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>⏱{fmtSecs(sessElapsed)}</span>
 
             {/* Bouton sections overlay */}
             <button
@@ -382,7 +396,8 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px', fontStyle: 'italic' }}>{module.subtitle}</div>
               )}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
+              <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>⏱ {fmtSecs(sessElapsed)}</span>
               <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Progression</span>
               <div style={{ width: '120px', height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px' }}>
                 <div style={{ width: `${progressPct}%`, height: '100%', backgroundColor: '#22c55e', borderRadius: '3px', transition: 'width 0.3s' }} />
