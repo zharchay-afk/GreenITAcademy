@@ -1165,15 +1165,14 @@ function PagesSection({ title, children }) {
 
 function PagesTab({ toast }) {
   const [form, setForm]       = useState({ ...PAGES_EMPTY });
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving]   = useState(false);
 
   useEffect(() => {
-    if (!db) { setLoading(false); return; }
-    getDoc(doc(db, 'config', 'pages')).then(snap => {
+    if (!db) return;
+    const unsub = onSnapshot(doc(db, 'config', 'pages'), snap => {
       if (snap.exists()) setForm(f => ({ ...f, ...snap.data() }));
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    }, () => {});
+    return unsub;
   }, []);
 
   const set = (key) => (e) => setForm(f => ({ ...f, [key]: e.target.value }));
@@ -1209,8 +1208,6 @@ function PagesTab({ toast }) {
     if (db) await setDoc(doc(db, 'config', 'pages'), {}, { merge: false });
     toast('Textes réinitialisés');
   };
-
-  if (loading) return <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Chargement…</p>;
 
   return (
     <div>
@@ -1281,17 +1278,16 @@ function PagesTab({ toast }) {
 // ─────────────────────────────────────────────────────────────
 function ScormTab({ toast }) {
   const [formationUrl, setFormationUrl] = useState(null);
-  const [loadingCfg, setLoadingCfg]     = useState(true);
   const [uploading, setUploading]       = useState(false);
   const [exporting, setExporting]       = useState(false);
   const fileRef = useRef(null);
 
   useEffect(() => {
-    if (!db) { setLoadingCfg(false); return; }
-    getDoc(doc(db, 'config', 'formation')).then(snap => {
-      if (snap.exists()) setFormationUrl(snap.data().scormUrl || null);
-      setLoadingCfg(false);
-    }).catch(() => setLoadingCfg(false));
+    if (!db) return;
+    const unsub = onSnapshot(doc(db, 'config', 'formation'), snap => {
+      setFormationUrl(snap.exists() ? (snap.data().scormUrl || null) : null);
+    }, () => {});
+    return unsub;
   }, []);
 
   const uploadFormationScorm = async (file) => {
@@ -1331,7 +1327,6 @@ function ScormTab({ toast }) {
     }
   };
 
-  if (loadingCfg) return <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Chargement…</p>;
 
   return (
     <div>
