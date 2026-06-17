@@ -889,10 +889,27 @@ function ModuleQuestionsSection({ mod, questions, editing, form, setForm, onEdit
 // Tab: Questions — groupées par module
 // ─────────────────────────────────────────────────────────────
 function QuestionsTab({ toast }) {
-  const [questions, setQuestions] = useState([]);
-  const [editing, setEditing]     = useState(null);
-  const [form, setForm]           = useState({});
-  const [saving, setSaving]       = useState(false);
+  const [questions, setQuestions]   = useState([]);
+  const [customMods, setCustomMods] = useState([]);
+  const [editing, setEditing]       = useState(null);
+  const [form, setForm]             = useState({});
+  const [saving, setSaving]         = useState(false);
+
+  // Charge les modules personnalisés depuis Firestore
+  useEffect(() => {
+    if (!db) return;
+    const unsub = onSnapshot(collection(db, 'content_modules'), snap => {
+      const mods = [];
+      snap.forEach(d => {
+        const data = d.data();
+        if (data._custom && !data._deleted) {
+          mods.push({ id: parseInt(d.id), title: data.title || `Module ${d.id}`, image: data.image || '📦' });
+        }
+      });
+      setCustomMods(mods);
+    });
+    return unsub;
+  }, []);
 
   const loadQuestions = async () => {
     if (!db) {
@@ -958,7 +975,7 @@ function QuestionsTab({ toast }) {
         {total} questions au total · Cliquez sur un module pour voir et modifier ses questions.
       </p>
 
-      {modulesData.modules.map(mod => {
+      {[...modulesData.modules, ...customMods].map(mod => {
         const modQuestions = questions.filter(q => String(q.moduleId) === String(mod.id));
         return (
           <ModuleQuestionsSection
