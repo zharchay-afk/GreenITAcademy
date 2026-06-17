@@ -255,14 +255,27 @@ export default function App() {
     setScreen('legal');
   };
 
-  // Modules affichés : applique les overrides Firestore (titre, image, suppression)
-  const effectiveModules = modules
+  // Modules affichés : overrides Firestore (titre, image, suppression) + modules
+  // personnalisés toujours inclus même si le useEffect n'a pas encore pu les
+  // ajouter à modules state (race condition avec useFirebaseSync au login).
+  const baseModules = modules
     .filter(m => !contentOverrides[String(m.id)]?._deleted)
     .map(m => {
       const ov = contentOverrides[String(m.id)];
       if (!ov) return m;
       return { ...m, title: ov.title || m.title, image: ov.image || m.image };
     });
+  const baseIds = new Set(baseModules.map(m => m.id));
+  const extraCustom = Object.entries(contentOverrides)
+    .filter(([id, d]) => d._custom && !d._deleted && !baseIds.has(parseInt(id)))
+    .map(([id, d]) => ({
+      id: parseInt(id), unite: `MODULE ${id}`,
+      title: d.title || 'Nouveau module', image: d.image || '📦',
+      bgColor: d.bgColor || '#64748b',
+      tempsPasse: '00:00:00', score: 0, started: false,
+    }))
+    .sort((a, b) => a.id - b.id);
+  const effectiveModules = [...baseModules, ...extraCustom];
 
   // ----- Rendering -----
   if (screen === 'landing') {
