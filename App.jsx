@@ -303,6 +303,7 @@ export default function App() {
         firebaseUser={firebaseUser}
         isAdmin={isAdmin}
         onNavigate={handleNavigate}
+        onShowLegal={showLegal}
       />
     );
   }

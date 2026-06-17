@@ -711,7 +711,7 @@ function ModuleQuestionsSection({ mod, questions, editing, form, setForm, onEdit
                       {q.text || q.question}
                     </p>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
-                      {(q.choices || q.options || []).map((c, i) => (
+                      {(q.choices || q.options || q.answers || []).map((c, i) => (
                         <span key={i} style={{
                           fontSize: '11px', padding: '2px 8px', borderRadius: '4px',
                           backgroundColor: i === (q.correct ?? q.correctIndex) ? '#dcfce7' : 'var(--bg-soft)',
@@ -780,7 +780,7 @@ function QuestionsTab({ toast }) {
     setForm({
       moduleId:    String(q.moduleId || '1'),
       text:        q.text || q.question || '',
-      choices:     (q.choices || q.options || []).join('\n'),
+      choices:     (q.choices || q.options || q.answers || []).join('\n'),
       correct:     String(q.correct ?? q.correctIndex ?? '0'),
       difficulty:  q.difficulty || q.level || 'intermediaire',
       explanation: q.explanation || '',
@@ -927,7 +927,7 @@ const ADMIN_BLUE   = '#1e40af';  // header fond
 const ADMIN_ACTIVE = '#3b82f6';  // onglet actif / accent
 const ADMIN_BADGE  = { bg: '#dbeafe', color: '#1e3a8a' };
 
-export default function AdminPage({ firebaseUser, isAdmin, onNavigate }) {
+export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLegal }) {
   const [tab, setTab]           = useState('modules');
   const [toastMsg, setToastMsg] = useState('');
   const isMobile                = useIsMobile();
@@ -1037,6 +1037,34 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate }) {
           {tab === 'users'     && <UsersTab     toast={toast} />}
         </div>
       </main>
+
+      {/* ── Footer légal ── */}
+      <footer style={{
+        flexShrink: 0, backgroundColor: 'var(--bg-surface)',
+        borderTop: '1px solid var(--border)',
+        padding: '10px 24px',
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        gap: '16px', flexWrap: 'wrap',
+      }}>
+        {[
+          { label: 'Mentions légales', tab: 'notice' },
+          { label: 'Politique de confidentialité', tab: 'privacy' },
+          { label: 'CGU', tab: 'cgu' },
+        ].map(({ label, tab: legalTab }) => (
+          <button
+            key={legalTab}
+            onClick={() => onShowLegal && onShowLegal(legalTab)}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              fontSize: '11px', color: 'var(--text-muted)',
+              fontFamily: 'inherit', padding: '2px 0',
+              textDecoration: 'underline',
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </footer>
 
       <Toast msg={toastMsg} onDone={() => setToastMsg('')} />
     </div>
