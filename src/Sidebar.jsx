@@ -19,7 +19,7 @@ const ITEMS = [
 
 const STORAGE_KEY = 'greenit-sidebar-collapsed';
 
-export default function Sidebar({ activePage, onNavigate }) {
+export default function Sidebar({ activePage, onNavigate, isAdmin }) {
   const isMobile = useIsMobile();
 
   // Desktop : repliée ou étendue
@@ -148,8 +148,9 @@ export default function Sidebar({ activePage, onNavigate }) {
       <LogoBtn centered={collapsed} />
 
       <nav style={{ padding: '12px 0', flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-        {ITEMS.map((item) => {
+        {[...ITEMS, ...(isAdmin ? [{ id: 'admin', icon: '⚙️', label: 'Admin' }] : [])].map((item) => {
           const isActive = activePage === item.id;
+          const isAdminItem = item.id === 'admin';
           return (
             <button
               key={item.id}
@@ -161,8 +162,8 @@ export default function Sidebar({ activePage, onNavigate }) {
                 padding: collapsed ? '11px 0' : '11px 16px',
                 backgroundColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
                 border: 'none',
-                borderLeft: isActive ? '3px solid var(--sidebar-active)' : '3px solid transparent',
-                color: isActive ? 'var(--sidebar-active)' : 'rgba(255,255,255,0.85)',
+                borderLeft: isActive ? '3px solid var(--sidebar-active)' : isAdminItem ? '3px solid rgba(255,255,255,0.2)' : '3px solid transparent',
+                color: isActive ? 'var(--sidebar-active)' : isAdminItem ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.85)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: collapsed ? 'center' : 'flex-start',
@@ -174,6 +175,8 @@ export default function Sidebar({ activePage, onNavigate }) {
                 fontFamily: 'inherit',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
+                marginTop: isAdminItem ? '4px' : 0,
+                borderTop: isAdminItem ? '1px solid rgba(255,255,255,0.08)' : 'none',
               }}
             >
               <span style={{ fontSize: '17px', flexShrink: 0 }}>{item.icon}</span>

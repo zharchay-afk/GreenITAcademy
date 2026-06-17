@@ -83,7 +83,7 @@ const toMinutes = (str) => {
   return h * 60 + m;
 };
 
-export default function LandingPage({ onStart, onShowLegal }) {
+export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebaseUser }) {
   const mainRef = useRef(null);
   const [activeSection, setActiveSection] = useState('accueil');
   const [theme] = useTheme();
@@ -148,7 +148,18 @@ export default function LandingPage({ onStart, onShowLegal }) {
               {it.label}
             </button>
           ))}
-          <button onClick={onStart} style={ctaSmallStyle}>Commencer →</button>
+          {firebaseUser ? (
+            <button onClick={onStart} style={ctaSmallStyle}>Ma formation →</button>
+          ) : (
+            <>
+              {!isMobile && (
+                <button onClick={() => onGoToAuth && onGoToAuth('login')} style={{ ...ctaSmallStyle, backgroundColor: 'transparent', color: 'var(--accent)', border: '1px solid var(--accent)', marginLeft: 0 }}>
+                  Connexion
+                </button>
+              )}
+              <button onClick={onStart} style={ctaSmallStyle}>Commencer →</button>
+            </>
+          )}
         </nav>
       </header>
 
@@ -177,10 +188,32 @@ export default function LandingPage({ onStart, onShowLegal }) {
               Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.
             </p>
 
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '40px' }}>
-              <button onClick={onStart} style={ctaPrimaryStyle}>Commencer la formation  →</button>
-              <button onClick={() => scrollTo('programme')} style={ctaSecondaryStyle}>Voir le programme</button>
-            </div>
+            {/* CTA principal — deux chemins clairs */}
+            {firebaseUser ? (
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '40px' }}>
+                <button onClick={onStart} style={ctaPrimaryStyle}>Reprendre la formation →</button>
+                <span style={{ fontSize: '13px', color: isDark ? '#74b893' : '#166534', fontWeight: '500' }}>
+                  Bonjour, {firebaseUser.displayName || firebaseUser.email?.split('@')[0]} 👋
+                </span>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                  <button onClick={() => onGoToAuth && onGoToAuth('login')} style={ctaPrimaryStyle}>
+                    🔐 Connexion / Inscription
+                  </button>
+                  <button onClick={() => scrollTo('programme')} style={ctaSecondaryStyle}>Voir le programme</button>
+                </div>
+                <div style={{ marginBottom: '40px' }}>
+                  <button onClick={onStart} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', color: isDark ? '#74b893' : '#166534', textDecoration: 'underline', padding: 0, fontFamily: 'inherit' }}>
+                    Continuer sans compte →
+                  </button>
+                  <span style={{ fontSize: '12px', color: isDark ? '#94a3b8' : '#166534', marginLeft: '8px', opacity: 0.7 }}>
+                    (votre progression restera locale)
+                  </span>
+                </div>
+              </>
+            )}
 
             <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
               {stats.map((s, i) => (
@@ -263,7 +296,14 @@ export default function LandingPage({ onStart, onShowLegal }) {
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <button onClick={onStart} style={ctaPrimaryStyle}>Commencer la formation  →</button>
+              {firebaseUser ? (
+                <button onClick={onStart} style={ctaPrimaryStyle}>Reprendre la formation →</button>
+              ) : (
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <button onClick={() => onGoToAuth && onGoToAuth('register')} style={ctaPrimaryStyle}>Créer un compte gratuit →</button>
+                  <button onClick={onStart} style={ctaSecondaryStyle}>Commencer sans compte</button>
+                </div>
+              )}
             </div>
           </div>
         </section>

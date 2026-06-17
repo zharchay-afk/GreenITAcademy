@@ -8,8 +8,11 @@ import ScormPlayer from './src/ScormPlayer';
 import ReferencesPage from './src/ReferencesPage';
 import LandingPage from './src/LandingPage';
 import LegalPages from './src/LegalPages';
+import AdminPage from './src/AdminPage';
+import { LoginPage, RegisterPage, ForgotPasswordPage, EmailVerificationBanner } from './src/AuthPages';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './src/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './src/firebase';
 import { useFirebaseSync } from './src/useFirebaseSync';
 
 const initialModules = [
@@ -89,7 +92,7 @@ export default function App() {
   // État initial dérivé de l'URL (permet de partager un lien direct vers une page)
   const initial = parseHash(window.location.hash);
 
-  // 'landing' | 'home' | 'module' | 'quiz' | 'attestation' | 'profil' | 'scorm-player' | 'references' | 'legal'
+  // 'landing' | 'home' | 'auth' | 'admin' | 'module' | 'quiz' | 'attestation' | 'profil' | 'scorm-player' | 'references' | 'legal'
   const [screen, setScreen] = useState(initial.screen);
   const [legalTab, setLegalTab] = useState(initial.legalTab || 'notice');
   const [legalReturnTo, setLegalReturnTo] = useState('landing');
@@ -100,9 +103,22 @@ export default function App() {
 
   // Firebase Auth — suivi de l'état de connexion
   const [firebaseUser, setFirebaseUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register' | 'forgot'
+
   useEffect(() => {
-    if (!auth) return; // Firebase non configuré → mode localStorage uniquement
-    return onAuthStateChanged(auth, setFirebaseUser);
+    if (!auth) return;
+    return onAuthStateChanged(auth, (user) => {
+      setFirebaseUser(user);
+      // Vérification du rôle admin dans Firestore
+      if (user && db) {
+        getDoc(doc(db, 'users', user.uid)).then(snap => {
+          setIsAdmin(snap.exists() && snap.data()?.role === 'admin');
+        }).catch(() => setIsAdmin(false));
+      } else {
+        setIsAdmin(false);
+      }
+    });
   }, []);
 
   // Synchronisation bidirectionnelle progression ↔ Firestore
@@ -173,6 +189,12 @@ export default function App() {
     if (page === 'profil') setScreen('profil');
     if (page === 'scorm-player') setScreen('scorm-player');
     if (page === 'references') setScreen('references');
+    if (page === 'admin') setScreen('admin');
+  };
+
+  const handleGoToAuth = (mode = 'login') => {
+    setAuthMode(mode);
+    setScreen('auth');
   };
   const handleReset = () => {
     setModules(initialModules);
@@ -193,6 +215,48 @@ export default function App() {
       <LandingPage
         onStart={() => setScreen('home')}
         onShowLegal={showLegal}
+        onGoToAuth={handleGoToAuth}
+        firebaseUser={firebaseUser}
+      />
+    );
+  }
+
+  if (screen === 'auth') {
+    if (authMode === 'register') {
+      return (
+        <RegisterPage
+          onSuccess={() => setScreen('home')}
+          onGoLogin={() => setAuthMode('login')}
+          onBack={() => setScreen('landing')}
+          onSkip={() => setScreen('home')}
+        />
+      );
+    }
+    if (authMode === 'forgot') {
+      return (
+        <ForgotPasswordPage
+          onGoLogin={() => setAuthMode('login')}
+          onBack={() => setAuthMode('login')}
+        />
+      );
+    }
+    return (
+      <LoginPage
+        onSuccess={() => setScreen('home')}
+        onGoRegister={() => setAuthMode('register')}
+        onGoForgot={() => setAuthMode('forgot')}
+        onBack={() => setScreen('landing')}
+        onSkip={() => setScreen('home')}
+      />
+    );
+  }
+
+  if (screen === 'admin') {
+    return (
+      <AdminPage
+        firebaseUser={firebaseUser}
+        isAdmin={isAdmin}
+        onNavigate={handleNavigate}
       />
     );
   }
@@ -273,13 +337,19 @@ export default function App() {
 
   // home (dashboard)
   return (
-    <GreenITAcademie
-      modules={modules}
-      onStart={handleStart}
-      onEvaluate={handleEvaluate}
-      onNavigate={handleNavigate}
-      onShowLegal={showLegal}
-      onShowLanding={() => setScreen('landing')}
-    />
+    <>
+      <EmailVerificationBanner user={firebaseUser} />
+      <GreenITAcademie
+        modules={modules}
+        onStart={handleStart}
+        onEvaluate={handleEvaluate}
+        onNavigate={handleNavigate}
+        onShowLegal={showLegal}
+        onShowLanding={() => setScreen('landing')}
+        firebaseUser={firebaseUser}
+        isAdmin={isAdmin}
+        onGoToAuth={handleGoToAuth}
+      />
+    </>
   );
 }

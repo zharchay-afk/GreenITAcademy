@@ -102,7 +102,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
-export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal, onShowLanding }) {
+export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal, onShowLanding, firebaseUser, isAdmin, onGoToAuth }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
 
@@ -146,7 +146,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
       color: 'var(--text-primary)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
-      <Sidebar activePage={activePage} onNavigate={handleNavigate} />
+      <Sidebar activePage={activePage} onNavigate={handleNavigate} isAdmin={isAdmin} />
 
       <main style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
@@ -169,6 +169,19 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px', color: 'var(--text-secondary)', flexShrink: 0 }}>
               <span>📚 {totalStarted}/6 modules commencés</span>
               <span>✓ {completedModules}/6 validés</span>
+              {/* Statut connexion */}
+              {firebaseUser ? (
+                <span style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: 'var(--accent-soft)', color: 'var(--accent)', padding: '3px 10px', borderRadius: '10px', fontWeight: '600' }}>
+                  ☁️ {firebaseUser.displayName || firebaseUser.email?.split('@')[0]}
+                </span>
+              ) : (
+                <button
+                  onClick={() => onGoToAuth && onGoToAuth('login')}
+                  style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer', fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'inherit' }}
+                >
+                  🔐 Connexion
+                </button>
+              )}
             </div>
           )}
           {isMobile && (

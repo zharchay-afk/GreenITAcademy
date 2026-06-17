@@ -16,6 +16,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 // Variables injectées depuis .env.local (voir .env.example)
 const firebaseConfig = {
@@ -32,15 +33,17 @@ const isConfigured = !!(firebaseConfig.apiKey && firebaseConfig.projectId);
 
 let auth = null;
 let db = null;
+let storage = null;
 
 if (isConfigured) {
   try {
     const app = initializeApp(firebaseConfig);
     auth = getAuth(app);
     db = getFirestore(app);
+    storage = getStorage(app);
   } catch (err) {
     console.warn('[Firebase] Initialisation échouée — mode hors ligne.', err);
   }
 }
 
-export { auth, db, isConfigured };
+export { auth, db, storage, isConfigured };

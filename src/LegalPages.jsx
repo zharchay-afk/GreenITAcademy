@@ -84,7 +84,8 @@ function LegalNotice() {
       </Section>
 
       <Section title="Hébergement">
-        <p>L'application est distribuée sous forme de <strong>Progressive Web App</strong> exécutée intégralement dans le navigateur de l'utilisateur. Aucun serveur applicatif n'est mobilisé, aucune base de données n'est interrogée. Lorsqu'elle est mise en ligne pour démonstration, l'hébergement est assuré par un service de pages statiques (GitHub&nbsp;Pages, Vercel ou équivalent), sans capacité de traitement de données personnelles côté serveur.</p>
+        <p>L'application est distribuée sous forme de <strong>Progressive Web App</strong> (PWA) hébergée sur <strong>GitHub Pages</strong> (Microsoft Corporation). Les ressources statiques (HTML, JavaScript, CSS) sont servies depuis l'infrastructure GitHub sans traitement de données personnelles côté hébergeur.</p>
+        <p>Le service optionnel de compte utilisateur fait appel à <strong>Firebase</strong> (Google LLC, Dublin, Irlande) pour l'authentification (<em>Firebase Authentication</em>) et la synchronisation de la progression (<em>Cloud Firestore</em>). Ces services sont soumis aux conditions d'utilisation de Google et aux clauses contractuelles types UE pour les transferts de données.</p>
       </Section>
 
       <Section title="Propriété intellectuelle">
@@ -99,47 +100,67 @@ function LegalNotice() {
 }
 
 // -----------------------------------------------------------------------------
-// Politique de confidentialité (RGPD)
-// -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-// Politique de confidentialité — version concise (RGPD non-applicable)
+// Politique de confidentialité — version actualisée (compte optionnel Firebase)
 // -----------------------------------------------------------------------------
 function PrivacyShort() {
   return (
-    <Article title="Données personnelles" updated="Dernière mise à jour : mai 2026">
+    <Article title="Données personnelles" updated="Dernière mise à jour : juin 2026">
+
       <Section title="L'essentiel">
         <Highlight>
-          <strong>Le RGPD ne s'applique pas à ce service.</strong> Green IT Académie est une application 100 % locale : aucune donnée ne quitte votre terminal. Les auteurs n'ont pas accès aux informations que vous saisissez et n'effectuent aucun traitement de données personnelles.
+          <strong>Green IT Académie est un projet pédagogique.</strong> L'utilisation sans compte est totalement anonyme. Si vous créez un compte (facultatif), seule votre adresse e-mail est transmise à Firebase Authentication (service Google) à des fins d'authentification. Les auteurs n'ont pas accès à vos données de progression.
         </Highlight>
       </Section>
 
-      <Section title="Pourquoi le RGPD ne s'applique pas ici ?">
-        <p>Le RGPD (Règlement (UE) 2016/679) encadre les traitements de données personnelles effectués par un responsable de traitement. Or, dans le cas présent :</p>
+      <Section title="Pourquoi le RGPD s'applique de manière très limitée">
+        <p>Le RGPD (Règlement (UE) 2016/679) encadre les traitements de données personnelles effectués par un <em>responsable de traitement</em>. Plusieurs arguments plaident pour une applicabilité réduite ou nulle dans notre contexte :</p>
         <ul>
-          <li>L'application s'exécute <strong>intégralement dans votre navigateur</strong>. Aucun serveur, aucune base de données distante, aucun service tiers n'est mobilisé.</li>
-          <li>Les auteurs n'ont <strong>aucun accès aux données</strong> que vous saisissez (progression dans les modules, scores, temps passé). Ces informations ne sont jamais transmises et n'existent que sur votre terminal.</li>
-          <li>Aucune collecte n'a lieu côté éditeur : ni télémétrie, ni analytics, ni journalisation, ni cookie de mesure d'audience.</li>
+          <li><strong>Activité strictement pédagogique et non commerciale.</strong> Ce service est édité par deux étudiants dans le cadre d'un projet académique sans finalité commerciale, sans revenu, sans structure juridique propre. Il n'entre pas dans le champ de l'activité économique visée par le RGPD.</li>
+          <li><strong>Exemption « activité domestique ».</strong> L'article 2 (2) c du RGPD exclut les traitements effectués « par une personne physique dans le cadre d'une activité strictement personnelle ou domestique ». L'utilisation de l'application sans compte (mode anonyme) correspond exactement à cette situation : vous traitez vos propres données, sur votre propre terminal, sans interaction avec un tiers collecteur.</li>
+          <li><strong>Absence d'accès aux données de progression.</strong> Les scores, temps passé et modules complétés restent dans votre navigateur (<code>localStorage</code>). Les auteurs n'y ont physiquement pas accès — il n'y a donc pas de traitement au sens de l'article 4 (2) du règlement.</li>
+          <li><strong>Pas de télémétrie, pas d'analytics.</strong> Aucun cookie de mesure d'audience, aucun pixel de tracking, aucun journal d'accès nominatif n'est mis en œuvre.</li>
         </ul>
-        <p>Lorsque vous utilisez l'application, vous traitez vos propres données dans votre propre environnement — ce qui correspond typiquement à l'exemption « activité strictement personnelle ou domestique » prévue à l'article 2 (2) c du RGPD pour l'utilisateur, et qui ne fait pas des auteurs des responsables de traitement au sens de l'article 4 (7) faute d'accès et de finalité propres.</p>
+        <p>Par mesure de transparence — et parce que la création d'un compte fait intervenir Firebase, un service tiers — nous décrivons ci-dessous l'ensemble des données traitées.</p>
       </Section>
 
-      <Section title="Ce qui est stocké sur votre terminal">
-        <p>L'application enregistre dans le <code>localStorage</code> de votre navigateur :</p>
+      <Section title="Deux modes d'utilisation">
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)' }}>Mode anonyme (sans compte) — aucune donnée personnelle transmise</p>
+        <p>L'application fonctionne intégralement dans votre navigateur. Les données suivantes sont stockées <em>uniquement sur votre terminal</em> :</p>
         <ul>
-          <li>la liste des modules que vous avez ouverts ;</li>
-          <li>vos scores aux quiz ;</li>
-          <li>le temps cumulé passé dans chaque module.</li>
+          <li>Modules consultés, scores obtenus, temps passé par module ;</li>
+          <li>Préférence de thème (clair / sombre).</li>
         </ul>
-        <p>Ces données restent uniquement chez vous. Vous pouvez à tout moment les effacer&nbsp;:</p>
+        <p>Vous pouvez les effacer à tout moment via le bouton <em>« Réinitialiser ma progression »</em> dans « Mon profil », ou via les paramètres de confidentialité de votre navigateur.</p>
+
+        <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '16px' }}>Mode connecté (compte optionnel) — Firebase Authentication</p>
+        <p>Si vous choisissez de créer un compte pour synchroniser votre progression entre appareils :</p>
         <ul>
-          <li>depuis l'application — bouton <em>« Réinitialiser ma progression »</em> dans la rubrique « Mon profil » ;</li>
-          <li>depuis votre navigateur — paramètres → confidentialité → effacer les données du site.</li>
+          <li>Votre <strong>adresse e-mail</strong> est transmise à <strong>Firebase Authentication</strong> (Google LLC) pour sécuriser votre accès.</li>
+          <li>Votre <strong>progression pédagogique</strong> (scores, modules, temps passé) est stockée dans <strong>Firestore</strong> (base de données Google), chiffrée au repos.</li>
+          <li>Firebase se charge de l'envoi des e-mails de confirmation et de réinitialisation de mot de passe.</li>
+        </ul>
+        <p>Firebase est soumis à la politique de confidentialité de Google (<em>google.com/intl/fr/policies/privacy/</em>) et aux clauses contractuelles types UE (CCT/SCCs) pour les transferts hors EEE.</p>
+      </Section>
+
+      <Section title="Droits des personnes concernées">
+        <p>Si vous avez créé un compte, vous disposez, sur les données traitées via Firebase, des droits suivants :</p>
+        <ul>
+          <li><strong>Accès et rectification</strong> : modifiez votre nom affiché dans « Mon profil ».</li>
+          <li><strong>Suppression</strong> : supprimez votre compte depuis « Mon profil » → « Supprimer mon compte ». Toutes vos données Firestore seront effacées.</li>
+          <li><strong>Portabilité</strong> : exportez votre progression en JSON depuis « Mon profil ».</li>
+          <li><strong>Opposition</strong> : cessez simplement d'utiliser le service en mode connecté — la désinscription supprime toute trace côté Firebase.</li>
+        </ul>
+        <p>Pour toute demande, contactez les auteurs via l'adresse mentionnée dans les Mentions légales. Le délai de réponse est de 30 jours (article 12 RGPD).</p>
+      </Section>
+
+      <Section title="Base légale (si le RGPD était applicable)">
+        <p>Si l'on retenait malgré tout l'applicabilité du RGPD, les bases légales seraient :</p>
+        <ul>
+          <li><strong>Exécution du service</strong> (art. 6 (1) b) : authentification, synchronisation de la progression ;</li>
+          <li><strong>Consentement</strong> (art. 6 (1) a) : création de compte — explicitement recueilli lors de l'inscription via la case à cocher.</li>
         </ul>
       </Section>
 
-      <Section title="Aucun transfert, aucun tiers">
-        <p>Aucune donnée n'est transmise à un serveur, à un sous-traitant ou à un service tiers. L'application est conçue pour fonctionner totalement hors ligne après son chargement initial.</p>
-      </Section>
     </Article>
   );
 }
