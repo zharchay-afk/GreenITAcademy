@@ -39,6 +39,7 @@ if (isConfigured) {
   try {
     const app = initializeApp(firebaseConfig);
     auth = getAuth(app);
+    auth.languageCode = 'fr';
     db = getFirestore(app);
     storage = getStorage(app);
   } catch (err) {

@@ -63,6 +63,7 @@ function buildHash(screen, opts = {}) {
     case 'profil':       return '#profil';
     case 'references':   return '#references';
     case 'scorm-player': return '#scorm';
+    case 'admin':        return '#admin';
     case 'legal':        return `#legal/${opts.legalTab || 'notice'}`;
     default:             return '';
   }
@@ -76,6 +77,7 @@ function parseHash(hash) {
   if (h === 'profil')          return { screen: 'profil' };
   if (h === 'references')      return { screen: 'references' };
   if (h === 'scorm')           return { screen: 'scorm-player' };
+  if (h === 'admin')           return { screen: 'admin' };
   if (h.startsWith('module/')) {
     const id = parseInt(h.slice(7), 10);
     return Number.isFinite(id) ? { screen: 'module', moduleId: id } : { screen: 'home' };
