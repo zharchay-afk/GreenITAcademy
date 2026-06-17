@@ -110,10 +110,6 @@ function E({ field, def, multiline = false }) {
   );
 }
 
-// Paragraphe éditable (bloc multiline)
-function EP({ field, def }) {
-  return <p style={{ margin: '0 0 12px' }}><E field={field} def={def} multiline /></p>;
-}
 
 // Page-wrapper et tabs
 export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding, onShowHome, onNavigate, isAdmin = false }) {
@@ -199,7 +195,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
       {isAdmin && (
         <div style={{ flexShrink: 0, backgroundColor: '#1e40af', color: '#fff', padding: '8px 24px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 700 }}>🔧 Mode administration</span>
-          <span style={{ opacity: 0.85 }}>— <span style={{ backgroundColor: '#93c5fd', color: '#1e3a8a', borderRadius: '3px', padding: '0 4px', fontWeight: 600 }}>fond bleu</span> = valeur inline &nbsp;·&nbsp; <span style={{ border: '2px dashed #93c5fd', borderRadius: '3px', padding: '0 4px' }}>bordure pointillée</span> = paragraphe — cliquez pour modifier</span>
+          <span style={{ opacity: 0.85 }}>— bouton <strong>✏ Modifier</strong> sur chaque section pour éditer le texte complet · <span style={{ backgroundColor: '#93c5fd', color: '#1e3a8a', borderRadius: '3px', padding: '0 4px', fontWeight: 600 }}>fond bleu</span> = valeur courte (email, date…)</span>
           {saveError && <span style={{ marginLeft: 'auto', backgroundColor: '#ef4444', borderRadius: '4px', padding: '2px 8px' }}>{saveError}</span>}
         </div>
       )}
@@ -222,23 +218,23 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
 function LegalNotice() {
   return (
     <Article title="Mentions légales" dateField="updatedNotice" dateDef="mai 2026">
-      <Section title="Éditeur du service">
+      <Section title="Éditeur du service" sectionKey="notice_editor">
         <p>Le service <strong>« Green IT Académie »</strong> est édité, dans un cadre strictement pédagogique et non commercial, par <strong><E field="orgDescription" def="deux étudiants en Master Data Science de l'UTBM" /></strong>.</p>
-        <EP field="noticePurpose" def="Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique." />
+        <p>Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique.</p>
         <p>Contact : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong></p>
       </Section>
 
-      <Section title="Hébergement">
-        <EP field="noticeHostingStatic" def="L'application est distribuée sous forme de Progressive Web App (PWA) hébergée sur GitHub Pages (Microsoft Corporation). Les ressources statiques (HTML, JavaScript, CSS) sont servies depuis l'infrastructure GitHub sans traitement de données personnelles côté hébergeur." />
-        <EP field="noticeHostingFirebase" def="Le service optionnel de compte utilisateur fait appel à Firebase (Google LLC, Dublin, Irlande) pour l'authentification (Firebase Authentication) et la synchronisation de la progression (Cloud Firestore). Ces services sont soumis aux conditions d'utilisation de Google et aux clauses contractuelles types UE pour les transferts de données." />
+      <Section title="Hébergement" sectionKey="notice_hosting">
+        <p>L'application est distribuée sous forme de <strong>Progressive Web App</strong> (PWA) hébergée sur <strong>GitHub Pages</strong> (Microsoft Corporation). Les ressources statiques (HTML, JavaScript, CSS) sont servies depuis l'infrastructure GitHub sans traitement de données personnelles côté hébergeur.</p>
+        <p>Le service optionnel de compte utilisateur fait appel à <strong>Firebase</strong> (Google LLC, Dublin, Irlande) pour l'authentification (<em>Firebase Authentication</em>) et la synchronisation de la progression (<em>Cloud Firestore</em>). Ces services sont soumis aux conditions d'utilisation de Google et aux clauses contractuelles types UE pour les transferts de données.</p>
       </Section>
 
-      <Section title="Propriété intellectuelle">
-        <EP field="noticeIP" def="L'ensemble des contenus pédagogiques (textes, schémas SVG, illustrations) a été produit par les auteurs sur la base de sources publiques citées en bibliographie. Les marques et logos évoqués (ISO, EPEAT, Energy Star, Blue Angel, LuxConnect, EBRC, etc.) appartiennent à leurs titulaires respectifs. Leur citation est faite à titre purement informatif et pédagogique." />
+      <Section title="Propriété intellectuelle" sectionKey="notice_ip">
+        <p>L'ensemble des contenus pédagogiques (textes, schémas SVG, illustrations) a été produit par les auteurs sur la base de sources publiques citées en bibliographie. Les marques et logos évoqués (ISO, EPEAT, Energy Star, Blue Angel, LuxConnect, EBRC, etc.) appartiennent à leurs titulaires respectifs. Leur citation est faite à titre purement informatif et pédagogique.</p>
       </Section>
 
-      <Section title="Limitation de responsabilité">
-        <EP field="noticeDisclaimer" def="Le contenu pédagogique est rédigé avec soin sur la base de sources officielles à la date indiquée. Les auteurs ne peuvent toutefois être tenus pour responsables d'éventuelles inexactitudes ou d'une évolution réglementaire postérieure à la rédaction. Les informations fournies ne constituent pas un avis juridique professionnel." />
+      <Section title="Limitation de responsabilité" sectionKey="notice_disclaimer">
+        <p>Le contenu pédagogique est rédigé avec soin sur la base de sources officielles à la date indiquée. Les auteurs ne peuvent toutefois être tenus pour responsables d'éventuelles inexactitudes ou d'une évolution réglementaire postérieure à la rédaction. Les informations fournies ne constituent pas un avis juridique professionnel.</p>
       </Section>
     </Article>
   );
@@ -251,19 +247,19 @@ function PrivacyShort() {
   return (
     <Article title="Données personnelles" dateField="updatedPrivacy" dateDef="juin 2026">
 
-      <Section title="L'essentiel">
+      <Section title="L'essentiel" sectionKey="privacy_essential">
         <Highlight>
           Green IT Académie peut être utilisé <strong>sans créer de compte</strong> : dans ce cas, aucune donnée ne quitte votre navigateur.
           Si vous créez un compte (facultatif), votre adresse e-mail et votre progression sont transmises à <strong>Firebase (Google)</strong> pour faire fonctionner le service que vous avez demandé.
         </Highlight>
       </Section>
 
-      <Section title="Responsable du traitement">
-        <EP field="privacyResponsible" def="Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'UTBM (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant." />
+      <Section title="Responsable du traitement" sectionKey="privacy_responsible">
+        <p>Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'<strong>UTBM</strong> (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant.</p>
         <p>Pour toute question relative à vos données : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong> — ou adressez-vous au DPO de l'UTBM.</p>
       </Section>
 
-      <Section title="Ce qui est stocké — selon votre mode d'utilisation">
+      <Section title="Ce qui est stocké — selon votre mode d'utilisation" sectionKey="privacy_stored">
         <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginBottom: '8px' }}>A — Sans compte (mode anonyme)</p>
         <p>Toutes les données restent <strong>exclusivement sur votre navigateur</strong>, dans le <code>localStorage</code> (mécanisme Web Storage, distinct des cookies — les données ne sont jamais envoyées au serveur) :</p>
         <table style={tableStyle}>
@@ -293,7 +289,7 @@ function PrivacyShort() {
         </p>
       </Section>
 
-      <Section title="Sous-traitant — Firebase (Google)">
+      <Section title="Sous-traitant — Firebase (Google)" sectionKey="privacy_subcontractor">
         <p>Le service utilise <strong>Firebase</strong>, produit de Google LLC (siège : Dublin, Irlande pour les services européens). Firebase agit en qualité de sous-traitant au sens de l'article 28 RGPD.</p>
         <ul>
           <li><strong>Firebase Authentication</strong> : gestion des identifiants, envoi des e-mails de confirmation et de réinitialisation de mot de passe.</li>
@@ -303,7 +299,7 @@ function PrivacyShort() {
         <p>Les mots de passe ne sont jamais transmis aux éditeurs ; Firebase gère leur stockage sécurisé côté serveur.</p>
       </Section>
 
-      <Section title="Vos droits (art. 15–22 RGPD)">
+      <Section title="Vos droits (art. 15–22 RGPD)" sectionKey="privacy_rights">
         <p>Pour les données traitées dans le cadre d'un compte :</p>
         <ul>
           <li><strong>Accès</strong> : consultez vos données dans « Mon profil ».</li>
@@ -316,12 +312,12 @@ function PrivacyShort() {
         <p>Pour exercer vos droits : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong>.</p>
       </Section>
 
-      <Section title="Cookies">
+      <Section title="Cookies" sectionKey="privacy_cookies">
         <p><strong>Aucun cookie n'est utilisé.</strong> Le stockage local repose sur <code>localStorage</code> et <code>IndexedDB</code> (Web Storage API), qui ne sont pas des cookies au sens de la directive ePrivacy et ne sont pas transmis au serveur lors des requêtes HTTP. Voir l'onglet « Cookies &amp; stockage » pour l'inventaire complet.</p>
       </Section>
 
-      <Section title="Mise à jour de cette politique">
-        <EP field="privacyUpdate" def="Toute modification substantielle sera notifiée aux utilisateurs connectés par e-mail ou via une bannière dans l'application. La date en haut de page indique la dernière révision." />
+      <Section title="Mise à jour de cette politique" sectionKey="privacy_update">
+        <p>Toute modification substantielle sera notifiée aux utilisateurs connectés par e-mail ou via une bannière dans l'application. La date en haut de page indique la dernière révision.</p>
       </Section>
 
     </Article>
@@ -334,15 +330,15 @@ function PrivacyShort() {
 function CookiesPolicy() {
   return (
     <Article title="Cookies et stockage local" dateField="updatedCookies" dateDef="mai 2026">
-      <Section title="L'essentiel">
+      <Section title="L'essentiel" sectionKey="cookies_essential">
         <Highlight>Green IT Académie <strong>n'utilise aucun cookie</strong>. L'application stocke certaines informations dans le <code>localStorage</code> et le <code>sessionStorage</code> de votre navigateur, exclusivement à des fins techniques et de personnalisation. Aucune donnée n'est transmise à un tiers.</Highlight>
       </Section>
 
-      <Section title="Qu'est-ce que le stockage local ?">
+      <Section title="Qu'est-ce que le stockage local ?" sectionKey="cookies_what">
         <p>Le <strong>localStorage</strong> et le <strong>sessionStorage</strong> sont des mécanismes standard du navigateur (Web Storage API, norme W3C) qui permettent à un site de conserver de petites quantités d'information côté client. Contrairement aux cookies, ils ne sont jamais transmis automatiquement au serveur — ce qui en fait des moyens techniquement plus sûrs et plus sobres pour stocker des données qui doivent rester côté utilisateur.</p>
       </Section>
 
-      <Section title="Inventaire détaillé">
+      <Section title="Inventaire détaillé" sectionKey="cookies_inventory">
         <table style={tableStyle}>
           <thead><tr><th style={th}>Clé</th><th style={th}>Type</th><th style={th}>Contenu</th><th style={th}>Durée</th><th style={th}>Finalité</th></tr></thead>
           <tbody>
@@ -354,11 +350,11 @@ function CookiesPolicy() {
         </table>
       </Section>
 
-      <Section title="Pourquoi pas de bannière « cookies » ?">
-        <EP field="cookiesNoBanner" def="La directive « ePrivacy » (2002/58/CE) et son application luxembourgeoise imposent le recueil du consentement pour tout dépôt ou lecture d'information sur le terminal de l'utilisateur, à l'exception des traceurs « strictement nécessaires à la fourniture d'un service expressément demandé par l'utilisateur » (article 5.3, transposé). Les stockages listés ci-dessus relèvent tous de cette exemption : ils sont indispensables à l'exécution de la fonctionnalité demandée (s'authentifier, suivre son parcours, utiliser l'application hors-ligne). Aucune bannière de consentement n'est donc requise." />
+      <Section title="Pourquoi pas de bannière « cookies » ?" sectionKey="cookies_nobanner">
+        <p>La directive « ePrivacy » (2002/58/CE) et son application luxembourgeoise imposent le recueil du consentement pour tout dépôt ou lecture d'information sur le terminal de l'utilisateur, <strong>à l'exception</strong> des traceurs « strictement nécessaires à la fourniture d'un service expressément demandé par l'utilisateur » (article 5.3, transposé). Les stockages listés ci-dessus relèvent tous de cette exemption : ils sont indispensables à l'exécution de la fonctionnalité demandée (s'authentifier, suivre son parcours, utiliser l'application hors-ligne). Aucune bannière de consentement n'est donc requise.</p>
       </Section>
 
-      <Section title="Comment supprimer vos données ?">
+      <Section title="Comment supprimer vos données ?" sectionKey="cookies_delete">
         <p>Plusieurs options :</p>
         <ul>
           <li>Depuis l'application : rubrique <em>Mon profil</em> → bouton « Réinitialiser ma progression ».</li>
@@ -367,7 +363,7 @@ function CookiesPolicy() {
         </ul>
       </Section>
 
-      <Section title="Pour aller plus loin">
+      <Section title="Pour aller plus loin" sectionKey="cookies_more">
         <p>Les principes appliqués ici (minimisation, locality first, privacy by design) sont l'application concrète d'enseignements du module 4 du parcours sur les labels et de le module 2 sur le cadre réglementaire européen. Une application Green IT bien conçue est aussi une application qui respecte la vie privée par construction.</p>
       </Section>
     </Article>
@@ -380,16 +376,16 @@ function CookiesPolicy() {
 function EcoConception({ onShowScormPlayer }) {
   return (
     <Article title="Éco-conception de l'application" dateField="updatedEco" dateDef="mai 2026">
-      <Section title="Préambule">
-        <Highlight><EP field="ecoPreambule" def="Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent." /></Highlight>
+      <Section title="Préambule" sectionKey="eco_preambule">
+        <Highlight>Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent.</Highlight>
       </Section>
 
-      <Section title="1. Architecture sans serveur ni base de données">
+      <Section title="1. Architecture sans serveur ni base de données" sectionKey="eco_arch">
         <p>L'application est une <strong>Progressive Web App (PWA)</strong> dont l'intégralité du code et des données s'exécute dans le navigateur de l'utilisateur. Aucun serveur applicatif n'est interrogé, aucune base de données n'est mobilisée, aucune requête réseau n'est émise vers les éditeurs après le chargement initial.</p>
         <p>L'impact direct est la suppression du poste « datacenter » dans le bilan d'une session utilisateur. À titre indicatif, une visite sur un site contemporain déclenche couramment 60 à 100 requêtes HTTP additionnelles à destination de tiers (mesure d'audience, polices, scripts publicitaires, chat support, etc.) ; ce nombre est ramené à zéro ici, hors chargement initial.</p>
       </Section>
 
-      <Section title="2. Absence de traceurs et de tiers">
+      <Section title="2. Absence de traceurs et de tiers" sectionKey="eco_trackers">
         <p>Aucun script tiers n'est intégré (Google Analytics, Tag Manager, pixels marketing, services de cartographie, CDN externes…). Cette décision produit deux effets convergents :</p>
         <ul>
           <li><strong>Réduction de l'empreinte réseau</strong> : aucune connexion sortante n'est ouverte pour transmettre de la télémétrie ;</li>
@@ -397,39 +393,39 @@ function EcoConception({ onShowScormPlayer }) {
         </ul>
       </Section>
 
-      <Section title="3. Schémas vectoriels intégrés (SVG inline)">
+      <Section title="3. Schémas vectoriels intégrés (SVG inline)" sectionKey="eco_svg">
         <p>Les 14 schémas pédagogiques du parcours (pyramide des instruments, cycle ACV, échelle PUE, frise du Green Deal, etc.) sont définis sous forme de <strong>SVG inline</strong>, embarqués directement dans le code source. Ils s'affichent sans requête HTTP supplémentaire et restent nets à toute résolution.</p>
         <p>Une comparaison synthétique : une image bitmap haute résolution équivalente pèse en moyenne 200 à 500 Ko ; les 14 schémas SVG inline représentent ensemble moins de 30 Ko, soit une réduction de poids de l'ordre de 90 %.</p>
       </Section>
 
-      <Section title="4. Polices système, absence de webfont">
+      <Section title="4. Polices système, absence de webfont" sectionKey="eco_polices">
         <p>L'application s'appuie sur la <strong>police système</strong> du terminal (San Francisco sur macOS et iOS, Segoe UI sur Windows, Roboto sur Android, polices par défaut sur Linux). Aucune webfont externe n'est téléchargée.</p>
         <p>Une webfont standard (Google Fonts, Adobe Fonts) pèse typiquement entre 100 et 300 Ko et exige plusieurs requêtes réseau supplémentaires. Cette dépendance est ici entièrement évitée.</p>
       </Section>
 
-      <Section title="5. Dépendances limitées au strict nécessaire">
+      <Section title="5. Dépendances limitées au strict nécessaire" sectionKey="eco_deps">
         <p>Trois dépendances seulement sont mobilisées : <code>react</code> et <code>react-dom</code> pour l'interface, <code>jszip</code> pour la génération du package SCORM. Aucun framework UI (Material UI, Ant Design, Bootstrap), aucune bibliothèque d'animation, aucun moteur d'icônes externe — les pictogrammes utilisés sont des emojis Unicode déjà présents dans le système.</p>
         <p>Le bundle JavaScript distribué pèse approximativement <strong><E field="bundleSize" def="150 Ko gzippé" /></strong>, à comparer à 500 Ko – 2 Mo couramment observés sur une application React moyenne.</p>
       </Section>
 
-      <Section title="6. Fonctionnement hors-ligne via service worker">
+      <Section title="6. Fonctionnement hors-ligne via service worker" sectionKey="eco_offline">
         <p>Un service worker met en cache l'intégralité de l'application au premier chargement. Les visites suivantes s'exécutent sans connexion réseau et ne re-téléchargent pas les ressources statiques tant qu'une nouvelle version n'est pas publiée.</p>
       </Section>
 
-      <Section title="7. Codebase unique web et mobile">
+      <Section title="7. Codebase unique web et mobile" sectionKey="eco_codebase">
         <p>L'application fonctionne à l'identique sur ordinateur, tablette et smartphone à partir d'un <strong>codebase unique</strong>. Aucune version native Android ou iOS distincte n'est maintenue : la maintenance, la duplication de code et le passage par les magasins d'applications sont entièrement évités.</p>
       </Section>
 
-      <Section title="8. Hébergement statique">
+      <Section title="8. Hébergement statique" sectionKey="eco_hosting">
         <p>Lorsque l'application est publiée pour démonstration, elle est servie par un hébergeur de pages statiques (GitHub Pages, Vercel, Netlify) couplé à une distribution CDN. Aucun traitement applicatif n'est exécuté côté serveur pour servir une visite, ce qui correspond à l'un des modèles d'hébergement les moins énergivores disponibles aujourd'hui.</p>
       </Section>
 
-      <Section title="9. Mode sombre par défaut respecté">
+      <Section title="9. Mode sombre par défaut respecté" sectionKey="eco_dark">
         <p>Sur les écrans OLED — désormais majoritaires sur smartphones et présents sur de nombreux ordinateurs portables — l'affichage de pixels noirs consomme nettement moins d'énergie que l'affichage de pixels blancs. Les études disponibles font état d'une économie pouvant atteindre 30 % pour l'affichage en mode sombre sur ces dalles.</p>
         <p>L'application propose un <strong>thème sombre commutable</strong> via le bouton 🌙 / ☀️ présent dans le footer. La préférence système de l'utilisateur (<code>prefers-color-scheme</code>) est respectée par défaut au premier chargement, et le choix manuel est ensuite mémorisé en <code>localStorage</code>. La bascule s'opère sans rechargement de page grâce à un système de variables CSS appliquées au niveau de l'élément racine.</p>
       </Section>
 
-      <Section title="Limites et arbitrages assumés">
+      <Section title="Limites et arbitrages assumés" sectionKey="eco_limits">
         <p>Plusieurs optimisations supplémentaires sont identifiées dans la littérature de l'éco-conception. Leur non-mise en œuvre dans le présent projet résulte d'arbitrages explicites, exposés ci-dessous.</p>
 
         <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Lazy-loading des modules</p>
@@ -445,7 +441,7 @@ function EcoConception({ onShowScormPlayer }) {
         <p><em>Raison de l'arbitrage</em> : ajouter de la mesure d'audience contredirait directement les principes affichés (« aucune donnée ne quitte le terminal »). Le compromis a été tranché en faveur de la sobriété maximale, au prix de l'absence de statistiques d'usage pour les éditeurs.</p>
       </Section>
 
-      <Section title="Interopérabilité : export SCORM 1.2">
+      <Section title="Interopérabilité : export SCORM 1.2" sectionKey="eco_scorm">
         <p>Le parcours peut être exporté au format <strong>SCORM 1.2</strong>, standard de l'<em>Advanced Distributed Learning Initiative</em>, et intégré dans tout système de gestion d'apprentissage compatible (Moodle, Canvas, Blackboard, 360Learning, etc.). L'interopérabilité avec les LMS institutionnels existants évite la duplication d'infrastructures pédagogiques et réduit la charge d'hébergement supplémentaire associée à un parcours autonome.</p>
         <p>Une fonction d'import est également proposée : tout package SCORM 1.2 tiers peut être chargé et lu directement dans l'application, sans envoi de données à un serveur externe.</p>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '14px' }}>
@@ -466,7 +462,7 @@ function EcoConception({ onShowScormPlayer }) {
         </div>
       </Section>
 
-      <Section title="Réutilisabilité : un parcours servant de gabarit">
+      <Section title="Réutilisabilité : un parcours servant de gabarit" sectionKey="eco_reuse">
         <p>L'architecture du projet sépare strictement le <strong>cadre applicatif</strong> (composants d'interface, lecteur de cours, moteur de quiz adaptatif, sidebar, pages légales) du <strong>contenu pédagogique</strong>, intégralement décrit dans deux fichiers JSON : <code>data/modules.json</code> pour les cours et <code>data/questions.json</code> pour le quiz.</p>
         <p>Cette séparation permet de réutiliser l'ensemble du dispositif pour une formation différente sans réécrire la moindre ligne de code applicatif. Le remplacement du contenu des deux fichiers JSON, accompagné de l'ajustement de quelques éléments de marque (titre, palette, illustration) et d'un redéploiement, suffit. Il s'agit de la mise en pratique d'un principe clé du Green IT : <em>conçu une fois, réutilisé largement</em>.</p>
         <p>Le bénéfice environnemental est double. Le développement répété d'applications de formation depuis zéro, opération chronophage et énergivore, est évité. Plusieurs formations partagent par ailleurs le même socle technique, donc le même cache navigateur, le même bundle et la même distribution CDN — autant de ressources mutualisées plutôt que dupliquées.</p>
@@ -488,15 +484,15 @@ function EcoConception({ onShowScormPlayer }) {
 function Accessibilite() {
   return (
     <Article title="Accessibilité" dateField="updatedAccess" dateDef="mai 2026">
-      <Section title="Préambule">
-        <Highlight><EP field="accessPreambule" def="L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés." /></Highlight>
+      <Section title="Préambule" sectionKey="access_preambule">
+        <Highlight>L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés.</Highlight>
       </Section>
 
-      <Section title="Référentiel suivi">
+      <Section title="Référentiel suivi" sectionKey="access_ref">
         <p>L'application vise le respect du référentiel <strong>WCAG 2.1 niveau AA</strong> du W3C. Au Luxembourg, la <strong>loi du 28 mai 2019</strong> sur l'accessibilité des sites internet et applications mobiles des organismes du secteur public transpose la directive (UE) 2016/2102, qui s'appuie elle-même sur la norme européenne <strong>EN 301 549</strong> reprenant les critères WCAG. La vérification de conformité relève au Luxembourg du <strong>Service Information et Presse (SIP)</strong>.</p>
       </Section>
 
-      <Section title="Dispositions mises en œuvre">
+      <Section title="Dispositions mises en œuvre" sectionKey="access_measures">
         <ul>
           <li><strong>Contrastes des textes</strong> : le texte blanc sur fond vert (#fff sur #15803d) atteint un ratio de 4,9:1, au-dessus du seuil AA (4,5:1). Les textes secondaires gris (#6b7280 sur fond blanc) se situent à 4,7:1.</li>
           <li><strong>Mode sombre disponible</strong> : un thème alternatif à dominante sombre est proposé via le bouton 🌙 / ☀️ du footer. Le choix est mémorisé et la préférence système (<code>prefers-color-scheme</code>) est respectée par défaut.</li>
@@ -509,7 +505,7 @@ function Accessibilite() {
         </ul>
       </Section>
 
-      <Section title="Limites et arbitrages assumés">
+      <Section title="Limites et arbitrages assumés" sectionKey="access_limits">
         <p>Plusieurs dispositions complémentaires n'ont pas été mises en œuvre dans le présent projet. Leur statut et la justification de cet arbitrage sont exposés ci-dessous.</p>
 
         <p style={{ fontWeight: '600', color: 'var(--text-primary)', marginTop: '12px' }}>Audit professionnel</p>
@@ -537,7 +533,7 @@ function Accessibilite() {
         <p><em>Justification</em> : la mise en place de tels tests requiert un protocole formel et des partenariats associatifs hors du périmètre du projet pédagogique. La démarche serait nécessaire avant toute mise en exploitation commerciale.</p>
       </Section>
 
-      <Section title="Signalement d'un défaut d'accessibilité">
+      <Section title="Signalement d'un défaut d'accessibilité" sectionKey="access_signalement">
         <p>Toute difficulté d'accès rencontrée peut être signalée en ouvrant une <em>issue</em> sur le dépôt source du projet. La résolution sera traitée prioritairement.</p>
       </Section>
     </Article>
@@ -561,11 +557,71 @@ function Article({ title, dateField, dateDef, children }) {
   );
 }
 
-function Section({ title, children }) {
+function extractText(node) {
+  if (!node) return '';
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join('\n');
+  if (node.props?.children) return extractText(node.props.children);
+  return '';
+}
+
+function Section({ title, sectionKey, children }) {
+  const { cfg, isAdmin, onSave } = useContext(LegalCtx);
+  const stored = sectionKey ? (cfg[sectionKey] || '') : '';
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const canEdit = isAdmin && !!sectionKey;
+
+  const startEdit = () => {
+    setDraft(stored || extractText(children).replace(/[ \t]+/g, ' ').trim());
+    setEditing(true);
+  };
+
+  const doSave = async () => {
+    setSaving(true);
+    await onSave(sectionKey, draft);
+    setSaving(false);
+    setEditing(false);
+  };
+
   return (
-    <section style={{ marginBottom: '24px' }}>
-      <h2 style={{ fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 10px 0', fontWeight: '700', paddingBottom: '6px', borderBottom: '1px solid var(--border-soft)' }}>{title}</h2>
-      {children}
+    <section style={{ marginBottom: '24px', position: 'relative' }}>
+      <h2 style={{ fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 10px 0', fontWeight: '700', paddingBottom: '6px', borderBottom: '1px solid var(--border-soft)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span>{title}</span>
+        {canEdit && !editing && (
+          <button
+            onClick={startEdit}
+            style={{ fontSize: '11px', padding: '2px 8px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit', flexShrink: 0 }}
+          >✏ Modifier</button>
+        )}
+      </h2>
+      {editing ? (
+        <div>
+          <textarea
+            value={draft}
+            onChange={e => setDraft(e.target.value)}
+            autoFocus
+            rows={Math.max(6, draft.split('\n').length + 2)}
+            style={{ width: '100%', padding: '10px', border: '2px solid #2563eb', borderRadius: '6px', fontSize: '14px', fontFamily: 'inherit', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box' }}
+          />
+          <div style={{ display: 'flex', gap: '8px', marginTop: '6px', flexWrap: 'wrap' }}>
+            <button onClick={doSave} disabled={saving} style={{ padding: '6px 16px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 700, fontFamily: 'inherit' }}>{saving ? '…' : '✓ Sauvegarder'}</button>
+            <button onClick={() => setEditing(false)} style={{ padding: '6px 12px', border: '1px solid #cbd5e1', borderRadius: '4px', cursor: 'pointer', fontFamily: 'inherit', backgroundColor: 'transparent', color: 'var(--text-secondary)' }}>✕ Annuler</button>
+            {stored && (
+              <button onClick={async () => { await onSave(sectionKey, ''); setEditing(false); }} style={{ padding: '6px 12px', border: '1px solid #fca5a5', borderRadius: '4px', cursor: 'pointer', color: '#dc2626', fontFamily: 'inherit', backgroundColor: 'transparent', marginLeft: 'auto' }}>↩ Rétablir l'original</button>
+            )}
+          </div>
+        </div>
+      ) : stored ? (
+        <div style={{ color: 'var(--text-primary)', fontSize: '14px', lineHeight: '1.75' }}>
+          {stored.split('\n\n').filter(p => p.trim()).map((para, i) => <p key={i} style={{ margin: '0 0 12px' }}>{para}</p>)}
+        </div>
+      ) : (
+        children
+      )}
     </section>
   );
 }
