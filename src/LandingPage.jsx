@@ -190,6 +190,8 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
   const [extraModules,   setExtraModules]   = useState(0);
   const [extraSections,  setExtraSections]  = useState(0);
   const [extraQuestions, setExtraQuestions] = useState(0);
+  const [editingSiteName, setEditingSiteName] = useState(false);
+  const [siteNameDraft,   setSiteNameDraft]   = useState('');
 
   useEffect(() => {
     if (!db) return;
@@ -217,6 +219,15 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
   }, []);
 
   const handleUpdate = (key, val) => setPageCfg(cfg => ({ ...cfg, [key]: val }));
+
+  const saveSiteName = async () => {
+    if (!db) return;
+    try {
+      await setDoc(doc(db, 'config', 'pages'), { siteName: siteNameDraft }, { merge: true });
+      setPageCfg(cfg => ({ ...cfg, siteName: siteNameDraft }));
+    } catch (e) { alert(e.message); }
+    setEditingSiteName(false);
+  };
 
   const stats = [
     { value: BASE_MODULES   + extraModules,   label: 'Modules' },
@@ -265,15 +276,40 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
         paddingLeft: isMobile ? '16px' : '32px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
-        <button onClick={() => scrollTo('accueil')} style={brandBtnStyle}>
-          <Logo size={isMobile ? 26 : 32} />
-          {!isMobile && (
-            <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>{pageCfg.siteName || 'Green IT Académie'}</span>
-          )}
-          {isMobile && (
-            <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)' }}>{(pageCfg.siteName || 'Green IT').split(' ')[0]}</span>
-          )}
-        </button>
+        {editingSiteName ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Logo size={isMobile ? 26 : 32} />
+            <input
+              value={siteNameDraft}
+              onChange={e => setSiteNameDraft(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') saveSiteName(); if (e.key === 'Escape') setEditingSiteName(false); }}
+              autoFocus
+              placeholder="Green IT Académie"
+              style={{ padding: '4px 8px', borderRadius: '5px', border: '2px solid #3b82f6', fontSize: '15px', fontFamily: 'inherit', fontWeight: 700, outline: 'none', width: '200px' }}
+            />
+            <button onClick={saveSiteName} style={{ width: '26px', height: '26px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontFamily: 'inherit' }}>✓</button>
+            <button onClick={() => setEditingSiteName(false)} style={{ width: '26px', height: '26px', background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: '5px', cursor: 'pointer', fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontFamily: 'inherit' }}>✕</button>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <button onClick={() => scrollTo('accueil')} style={brandBtnStyle}>
+              <Logo size={isMobile ? 26 : 32} />
+              {!isMobile && (
+                <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>{pageCfg.siteName || 'Green IT Académie'}</span>
+              )}
+              {isMobile && (
+                <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)' }}>{(pageCfg.siteName || 'Green IT').split(' ')[0]}</span>
+              )}
+            </button>
+            {isAdmin && (
+              <button
+                onClick={() => { setSiteNameDraft(pageCfg.siteName || ''); setEditingSiteName(true); }}
+                title="Modifier le nom du site"
+                style={{ width: '20px', height: '20px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, flexShrink: 0 }}
+              >✏</button>
+            )}
+          </div>
+        )}
 
         <nav style={{ display: 'flex', gap: isMobile ? '6px' : '8px', alignItems: 'center' }}>
           {!isMobile && [
@@ -335,21 +371,31 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
       <main ref={mainRef} style={{ flex: 1, overflowY: 'auto', scrollBehavior: 'smooth' }}>
 
         {/* ── Section Accueil ── */}
-        <section id="accueil" style={sectionStyle({
-          background: isDark
-            ? 'linear-gradient(135deg, #0f172a 0%, #16241d 100%)'
-            : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 60%, #a7f3d0 100%)',
-          color: isDark ? '#e8edf4' : '#064e3b',
-        })}>
+        {(() => {
+          const hasHeroImg = !!pageCfg.heroImage;
+          const heroBg = hasHeroImg
+            ? `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${pageCfg.heroImage}) center/cover no-repeat`
+            : isDark
+              ? 'linear-gradient(135deg, #0f172a 0%, #16241d 100%)'
+              : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 60%, #a7f3d0 100%)';
+          const h1Color   = hasHeroImg ? '#fff'                    : isDark ? '#e8edf4' : '#064e3b';
+          const subColor  = hasHeroImg ? 'rgba(255,255,255,0.85)' : isDark ? '#94a3b8' : '#166534';
+          const badgeBg   = hasHeroImg ? 'rgba(255,255,255,0.12)' : isDark ? 'rgba(255,255,255,0.06)' : '#fff';
+          const badgeBord = hasHeroImg ? 'rgba(255,255,255,0.25)' : isDark ? 'rgba(255,255,255,0.12)' : '#bbf7d0';
+          const badgeTxt  = hasHeroImg ? '#a7f3d0'                : isDark ? '#74b893'                : '#15803d';
+          const statNumCol = hasHeroImg ? '#a7f3d0'               : isDark ? '#74b893'                : '#15803d';
+          const statLblCol = hasHeroImg ? 'rgba(255,255,255,0.7)' : isDark ? '#94a3b8'               : '#166534';
+          return (
+        <section id="accueil" style={sectionStyle({ background: heroBg, color: h1Color })}>
           <div style={containerStyle}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : '#fff', border: `1px solid ${isDark ? 'rgba(255,255,255,0.12)' : '#bbf7d0'}`, borderRadius: '20px', marginBottom: '24px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 12px 5px 6px', backgroundColor: badgeBg, border: `1px solid ${badgeBord}`, borderRadius: '20px', marginBottom: '24px' }}>
               <Logo size={20} />
-              <span style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#74b893' : '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, color: badgeTxt, letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
             </div>
 
             <E fieldKey="heroTitle" value={pageCfg.heroTitle} multiline>
               {(val) => (
-                <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#e8edf4' : '#064e3b', whiteSpace: 'pre-line' }}>
+                <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: h1Color, whiteSpace: 'pre-line' }}>
                   {val || 'Formez-vous au\nNumérique Responsable'}
                 </h1>
               )}
@@ -357,7 +403,7 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
 
             <E fieldKey="heroSubtitle" value={pageCfg.heroSubtitle} multiline>
               {(val) => (
-                <p style={{ fontSize: '17px', color: isDark ? '#94a3b8' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
+                <p style={{ fontSize: '17px', color: subColor, maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
                   {val || 'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.'}
                 </p>
               )}
@@ -393,13 +439,15 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
             <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
               {stats.map((s, i) => (
                 <div key={i}>
-                  <div style={{ fontSize: '32px', fontWeight: 800, color: isDark ? '#74b893' : '#15803d' }}>{s.value}</div>
-                  <div style={{ fontSize: '12px', color: isDark ? '#94a3b8' : '#166534', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
+                  <div style={{ fontSize: '32px', fontWeight: 800, color: statNumCol }}>{s.value}</div>
+                  <div style={{ fontSize: '12px', color: statLblCol, marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
+          );
+        })()}
 
         {/* ── Section Intérêt ── */}
         <section id="interet" style={sectionStyle({ background: 'var(--bg-surface)' })}>
@@ -478,8 +526,10 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                     display: 'flex', flexDirection: 'column',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                      <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : pal.bg, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
-                        {m.image}
+                      <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : pal.bg, borderRadius: '10px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', flexShrink: 0 }}>
+                        {pageCfg[`moduleImage${m.id}`]
+                          ? <img src={pageCfg[`moduleImage${m.id}`]} alt={`Module ${m.id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          : m.image}
                       </div>
                       <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                         ⏱ {minutes} min

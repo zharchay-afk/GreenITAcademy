@@ -1119,6 +1119,7 @@ function UsersTab({ toast }) {
 // ─────────────────────────────────────────────────────────────
 const PAGES_EMPTY = {
   siteName: '', heroTitle: '', heroSubtitle: '', ctaLabel: '', loginLabel: '',
+  heroImage: '',
   interetTitle: '', interetSubtitle: '',
   interetCard0Title: '', interetCard0Text: '',
   interetCard1Title: '', interetCard1Text: '',
@@ -1126,6 +1127,8 @@ const PAGES_EMPTY = {
   programmeTitle: '', programmeSubtitle: '',
   moduleTeaser1: '', moduleTeaser2: '', moduleTeaser3: '',
   moduleTeaser4: '', moduleTeaser5: '', moduleTeaser6: '',
+  moduleImage1: '', moduleImage2: '', moduleImage3: '',
+  moduleImage4: '', moduleImage5: '', moduleImage6: '',
 };
 
 const PAGES_DEFAULTS = {
@@ -1402,6 +1405,136 @@ function ScormTab({ toast }) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Tab: Images — hero + module thumbnails
+// ─────────────────────────────────────────────────────────────
+function ImageSlot({ fieldKey, label, subtitle, url, uploading, onPickFile, onRemove }) {
+  const fileRef = useRef(null);
+  return (
+    <div style={{ ...cardStyle, marginBottom: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+        {/* Thumbnail */}
+        <div style={{ width: '88px', height: '62px', borderRadius: '8px', border: '1px solid var(--border)', overflow: 'hidden', flexShrink: 0, backgroundColor: 'var(--bg-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {url ? (
+            <img src={url} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <span style={{ fontSize: '22px', color: 'var(--text-muted)' }}>🖼</span>
+          )}
+        </div>
+        {/* Info */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: '600', fontSize: '13px', color: 'var(--text-primary)', marginBottom: '2px' }}>{label}</div>
+          {subtitle && <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px' }}>{subtitle}</div>}
+          {url ? (
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{url.split('?')[0].split('/').pop()}</div>
+          ) : (
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontStyle: 'italic' }}>Aucune image — affichage par défaut</div>
+          )}
+        </div>
+        {/* Actions */}
+        <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+          <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }}
+            onChange={e => { const f = e.target.files?.[0]; if (f) onPickFile(fieldKey, f); e.target.value = ''; }} />
+          <button onClick={() => fileRef.current?.click()} disabled={uploading === fieldKey} style={btnStyle('ghost')}>
+            {uploading === fieldKey ? 'Envoi…' : url ? '↻ Remplacer' : '📷 Choisir'}
+          </button>
+          {url && (
+            <button onClick={() => onRemove(fieldKey)} style={{ ...btnStyle('ghost'), color: '#ef4444' }}>
+              Supprimer
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ImagesTab({ toast }) {
+  const [cfg, setCfg]           = useState({});
+  const [uploading, setUploading] = useState(null);
+
+  useEffect(() => {
+    if (!db) return;
+    const unsub = onSnapshot(doc(db, 'config', 'pages'), snap => {
+      if (snap.exists()) setCfg(snap.data());
+    }, () => {});
+    return unsub;
+  }, []);
+
+  const upload = async (fieldKey, file) => {
+    if (!file || !storage || !db) return;
+    setUploading(fieldKey);
+    try {
+      const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
+      const path = `pages/${fieldKey}_${Date.now()}.${ext}`;
+      const snap = await uploadBytes(storageRef(storage, path), file);
+      const url  = await getDownloadURL(snap.ref);
+      await setDoc(doc(db, 'config', 'pages'), { [fieldKey]: url }, { merge: true });
+      setCfg(c => ({ ...c, [fieldKey]: url }));
+      toast('Image mise à jour ✓');
+    } catch (e) {
+      alert('Erreur upload : ' + e.message);
+    }
+    setUploading(null);
+  };
+
+  const remove = async (fieldKey) => {
+    if (!window.confirm('Supprimer cette image ?')) return;
+    if (!db) return;
+    await setDoc(doc(db, 'config', 'pages'), { [fieldKey]: null }, { merge: true });
+    setCfg(c => ({ ...c, [fieldKey]: null }));
+    toast('Image supprimée');
+  };
+
+  const MODULE_TITLES = {
+    1: 'Cadres conceptuels et typologie',
+    2: 'Cadre réglementaire UE & Luxembourg',
+    3: 'Normes et certifications ISO',
+    4: 'Labels environnementaux IT',
+    5: 'Codes de conduite et chartes',
+    6: 'Cas pratiques Luxembourg',
+  };
+
+  return (
+    <div>
+      <div style={cardStyle}>
+        <p style={{ margin: '0 0 20px 0', fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+          Les images sont hébergées sur Firebase Storage. Formats : JPG, PNG, WebP, SVG. Sans image personnalisée, l'affichage par défaut (dégradé / emoji) est conservé.
+        </p>
+
+        <PagesSection title="Image hero">
+          <ImageSlot
+            fieldKey="heroImage"
+            label="Image de fond du hero"
+            subtitle="Remplace le dégradé vert. Une teinte sombre est appliquée automatiquement pour garder le texte lisible."
+            url={cfg.heroImage || null}
+            uploading={uploading}
+            onPickFile={upload}
+            onRemove={remove}
+          />
+        </PagesSection>
+
+        <PagesSection title="Images des modules (vignettes)">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '0' }}>
+            {[1, 2, 3, 4, 5, 6].map(n => (
+              <ImageSlot
+                key={n}
+                fieldKey={`moduleImage${n}`}
+                label={`Module ${n}`}
+                subtitle={MODULE_TITLES[n]}
+                url={cfg[`moduleImage${n}`] || null}
+                uploading={uploading}
+                onPickFile={upload}
+                onRemove={remove}
+              />
+            ))}
+          </div>
+        </PagesSection>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
 // AdminPage — composant principal
 // ─────────────────────────────────────────────────────────────
 // Bleu admin — distinct du vert de la formation
@@ -1451,6 +1584,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
     { id: 'scorm',     label: '📦 SCORM' },
     { id: 'users',     label: '👥 Utilisateurs' },
     { id: 'pages',     label: '🖊️ Pages' },
+    { id: 'images',    label: '🖼 Images' },
   ];
 
   return (
@@ -1521,6 +1655,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
           {tab === 'users'     && <UsersTab     toast={toast} />}
           {tab === 'scorm'     && <ScormTab     toast={toast} />}
           {tab === 'pages'     && <PagesTab     toast={toast} />}
+          {tab === 'images'    && <ImagesTab    toast={toast} />}
         </div>
       </main>
 
