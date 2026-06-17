@@ -271,6 +271,13 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
 
   return (
     <div style={{ height: '100dvh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      {showLogoPicker && (
+        <LogoPicker
+          currentVariant={pageCfg.logoVariant || 'leaf'}
+          currentUrl={pageCfg.logoUrl || ''}
+          onClose={() => setShowLogoPicker(false)}
+        />
+      )}
 
       {/* ──── Header sticky ──── */}
       <header style={{
@@ -324,15 +331,6 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
             )}
           </div>
         )}
-        {showLogoPicker && (
-          <LogoPicker
-            currentVariant={pageCfg.logoVariant || 'leaf'}
-            currentUrl={pageCfg.logoUrl || ''}
-            onClose={() => setShowLogoPicker(false)}
-            toast={toast}
-          />
-        )}
-
         <nav style={{ display: 'flex', gap: isMobile ? '6px' : '8px', alignItems: 'center' }}>
           {!isMobile && [
             { id: 'accueil',   label: 'Accueil' },
