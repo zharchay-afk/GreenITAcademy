@@ -15,7 +15,7 @@ const modulesData = [
   { id: 3, unite: "MODULE 3", title: "Normes et certifications ISO", image: "📋", bgColor: "#48bb78", tempsPasse: "00:00:00", score: 0, started: false },
   { id: 4, unite: "MODULE 4", title: "Labels environnementaux IT", image: "🏷️", bgColor: "#9f7aea", tempsPasse: "00:00:00", score: 0, started: false },
   { id: 5, unite: "MODULE 5", title: "Codes de conduite et chartes", image: "📜", bgColor: "#f56565", tempsPasse: "00:00:00", score: 0, started: false },
-  { id: 6, unite: "MODULE 6", title: "Cas pratiques Luxembourg", image: "🇱🇺", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
+  { id: 6, unite: "MODULE 6", title: "Cas pratiques Luxembourg", image: "🏙️", bgColor: "#38b2ac", tempsPasse: "00:00:00", score: 0, started: false },
 ];
 
 // Palette adoucie (accents discrets sur fond pastel — moins de bruit visuel)

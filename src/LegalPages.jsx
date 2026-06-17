@@ -1,12 +1,70 @@
-﻿import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { exportScorm } from './utils/scormExport';
 import Footer from './Footer';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { db } from './firebase';
+
+// ── Contexte admin/config partagé entre toutes les sous-pages ─────────────
+const LegalCtx = React.createContext({ cfg: {}, isAdmin: false, onSave: () => {} });
+
+// Champ de texte inline éditable par l'admin (cliquer pour modifier)
+function E({ field, def }) {
+  const { cfg, isAdmin, onSave } = useContext(LegalCtx);
+  const value = cfg[field] ?? def;
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+
+  if (!isAdmin) return <>{value}</>;
+
+  if (editing) {
+    return (
+      <span>
+        <input
+          value={draft}
+          onChange={e => setDraft(e.target.value)}
+          autoFocus
+          onKeyDown={e => {
+            if (e.key === 'Enter')  { onSave(field, draft); setEditing(false); }
+            if (e.key === 'Escape') { setEditing(false); }
+          }}
+          style={{ padding: '1px 6px', border: '2px solid #3b82f6', borderRadius: '4px', fontSize: 'inherit', fontFamily: 'inherit', width: `${Math.max(draft.length + 2, 12)}ch` }}
+        />
+        <button onClick={() => { onSave(field, draft); setEditing(false); }} style={{ marginLeft: '4px', padding: '1px 6px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✓</button>
+        <button onClick={() => setEditing(false)} style={{ marginLeft: '2px', padding: '1px 6px', background: 'transparent', border: '1px solid #cbd5e1', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✕</button>
+      </span>
+    );
+  }
+
+  return (
+    <span
+      onClick={() => { setDraft(value); setEditing(true); }}
+      title="Cliquer pour modifier"
+      style={{ outline: '1px dashed #3b82f6', borderRadius: '2px', padding: '0 2px', cursor: 'pointer' }}
+    >
+      {value}<span style={{ fontSize: '10px', color: '#3b82f6', marginLeft: '3px' }}>✏</span>
+    </span>
+  );
+}
 
 // Page-wrapper et tabs
-export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding, onShowHome, onNavigate }) {
-  const [current, setCurrent] = React.useState(initial);
+export default function LegalPages({ initial = 'notice', onBack, onShowScormPlayer, onShowLegal, onShowLanding, onShowHome, onNavigate, isAdmin = false }) {
+  const [current, setCurrent] = useState(initial);
+  const [legalCfg, setLegalCfg] = useState({});
 
-  React.useEffect(() => { setCurrent(initial); }, [initial]);
+  useEffect(() => { setCurrent(initial); }, [initial]);
+
+  useEffect(() => {
+    if (!db) return;
+    return onSnapshot(doc(db, 'config', 'legal'), snap => {
+      if (snap.exists()) setLegalCfg(snap.data());
+    }, () => {});
+  }, []);
+
+  const saveLegal = async (field, value) => {
+    if (!db) return;
+    await setDoc(doc(db, 'config', 'legal'), { [field]: value }, { merge: true });
+    setLegalCfg(prev => ({ ...prev, [field]: value }));
+  };
 
   const Pane = {
     notice:        LegalNotice,
@@ -18,6 +76,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
   }[current] || LegalNotice;
 
   return (
+    <LegalCtx.Provider value={{ cfg: legalCfg, isAdmin, onSave: saveLegal }}>
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <header style={{ flexShrink: 0, backgroundColor: 'var(--sidebar-bg)', paddingTop: 'calc(14px + env(safe-area-inset-top))', paddingRight: '32px', paddingBottom: '14px', paddingLeft: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -69,6 +128,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
 
       <Footer onShowLegal={onShowLegal} onShowLanding={onShowLanding} />
     </div>
+    </LegalCtx.Provider>
   );
 }
 
@@ -77,11 +137,11 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
 // -----------------------------------------------------------------------------
 function LegalNotice() {
   return (
-    <Article title="Mentions légales" updated="Dernière mise à jour : mai 2026">
+    <Article title="Mentions légales" dateField="updatedNotice" dateDef="mai 2026">
       <Section title="Éditeur du service">
-        <p>Le service <strong>« Green IT Académie »</strong> est édité, dans un cadre strictement pédagogique et non commercial, par deux étudiants en <strong>Master Data Science de l'UTBM</strong> (Université de Technologie de Belfort-Montbéliard).</p>
+        <p>Le service <strong>« Green IT Académie »</strong> est édité, dans un cadre strictement pédagogique et non commercial, par <strong><E field="orgDescription" def="deux étudiants en Master Data Science de l'UTBM" /></strong>.</p>
         <p>Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique.</p>
-        <p>Contact : <strong>xxx@utbm.fr</strong></p>
+        <p>Contact : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong></p>
       </Section>
 
       <Section title="Hébergement">
@@ -105,7 +165,7 @@ function LegalNotice() {
 // -----------------------------------------------------------------------------
 function PrivacyShort() {
   return (
-    <Article title="Données personnelles" updated="Dernière mise à jour : juin 2026">
+    <Article title="Données personnelles" dateField="updatedPrivacy" dateDef="juin 2026">
 
       <Section title="L'essentiel">
         <Highlight>
@@ -116,7 +176,7 @@ function PrivacyShort() {
 
       <Section title="Responsable du traitement">
         <p>Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'<strong>UTBM</strong> (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant.</p>
-        <p>Pour toute question relative à vos données : <strong>xxx@utbm.fr</strong> — ou adressez-vous au DPO de l'UTBM.</p>
+        <p>Pour toute question relative à vos données : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong> — ou adressez-vous au DPO de l'UTBM.</p>
       </Section>
 
       <Section title="Ce qui est stocké — selon votre mode d'utilisation">
@@ -169,7 +229,7 @@ function PrivacyShort() {
           <li><strong>Opposition</strong> (art. 21) : cessez d'utiliser le service en mode connecté et supprimez votre compte — toute trace est effacée côté Firebase.</li>
           <li><strong>Réclamation</strong> : vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (France — <em>cnil.fr</em>) ou de la <strong>CNPD</strong> (Luxembourg — <em>cnpd.public.lu</em>).</li>
         </ul>
-        <p>Pour exercer vos droits : <strong>xxx@utbm.fr</strong>.</p>
+        <p>Pour exercer vos droits : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong>.</p>
       </Section>
 
       <Section title="Cookies">
@@ -189,7 +249,7 @@ function PrivacyShort() {
 // -----------------------------------------------------------------------------
 function CookiesPolicy() {
   return (
-    <Article title="Cookies et stockage local" updated="Dernière mise à jour : mai 2026">
+    <Article title="Cookies et stockage local" dateField="updatedCookies" dateDef="mai 2026">
       <Section title="L'essentiel">
         <Highlight>Green IT Académie <strong>n'utilise aucun cookie</strong>. L'application stocke certaines informations dans le <code>localStorage</code> et le <code>sessionStorage</code> de votre navigateur, exclusivement à des fins techniques et de personnalisation. Aucune donnée n'est transmise à un tiers.</Highlight>
       </Section>
@@ -235,7 +295,7 @@ function CookiesPolicy() {
 // -----------------------------------------------------------------------------
 function EcoConception({ onShowScormPlayer }) {
   return (
-    <Article title="Éco-conception de l'application" updated="Dernière mise à jour : mai 2026">
+    <Article title="Éco-conception de l'application" dateField="updatedEco" dateDef="mai 2026">
       <Section title="Préambule">
         <Highlight>
           Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent.
@@ -267,7 +327,7 @@ function EcoConception({ onShowScormPlayer }) {
 
       <Section title="5. Dépendances limitées au strict nécessaire">
         <p>Trois dépendances seulement sont mobilisées : <code>react</code> et <code>react-dom</code> pour l'interface, <code>jszip</code> pour la génération du package SCORM. Aucun framework UI (Material UI, Ant Design, Bootstrap), aucune bibliothèque d'animation, aucun moteur d'icônes externe — les pictogrammes utilisés sont des emojis Unicode déjà présents dans le système.</p>
-        <p>Le bundle JavaScript distribué pèse approximativement <strong>150 Ko gzippé</strong>, à comparer à 500 Ko – 2 Mo couramment observés sur une application React moyenne.</p>
+        <p>Le bundle JavaScript distribué pèse approximativement <strong><E field="bundleSize" def="150 Ko gzippé" /></strong>, à comparer à 500 Ko – 2 Mo couramment observés sur une application React moyenne.</p>
       </Section>
 
       <Section title="6. Fonctionnement hors-ligne via service worker">
@@ -345,7 +405,7 @@ function EcoConception({ onShowScormPlayer }) {
 // -----------------------------------------------------------------------------
 function Accessibilite() {
   return (
-    <Article title="Accessibilité" updated="Dernière mise à jour : mai 2026">
+    <Article title="Accessibilité" dateField="updatedAccess" dateDef="mai 2026">
       <Section title="Préambule">
         <Highlight>
           L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés.
@@ -407,11 +467,15 @@ function Accessibilite() {
 // -----------------------------------------------------------------------------
 // Petits composants utilitaires
 // -----------------------------------------------------------------------------
-function Article({ title, updated, children }) {
+function Article({ title, dateField, dateDef, children }) {
   return (
     <article style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '32px 36px', border: '1px solid var(--border)' }}>
       <h1 style={{ fontSize: '24px', color: 'var(--text-primary)', margin: '0 0 4px 0', fontWeight: '700' }}>{title}</h1>
-      <p style={{ color: 'var(--text-muted)', fontSize: '12px', margin: '0 0 24px 0' }}>{updated}</p>
+      {dateField && (
+        <p style={{ color: 'var(--text-muted)', fontSize: '12px', margin: '0 0 24px 0' }}>
+          Dernière mise à jour : <E field={dateField} def={dateDef || ''} />
+        </p>
+      )}
       <div style={{ color: 'var(--text-primary)', fontSize: '14px', lineHeight: '1.75', textAlign: 'justify', hyphens: 'auto' }}>{children}</div>
     </article>
   );
@@ -458,7 +522,7 @@ function SitemapPane({ onShowLanding, onShowHome, onShowLegal, onNavigate }) {
   };
 
   return (
-    <Article title="Plan du site" updated="">
+    <Article title="Plan du site">
       <Section title="Pages principales">
         <ul style={listStyle}>
           <li>
