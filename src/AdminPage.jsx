@@ -9,6 +9,7 @@ import useIsMobile from './useIsMobile';
 import { useTheme } from './theme';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
+import Visual, { VISUALS } from './Visuals';
 
 // ─────────────────────────────────────────────────────────────
 // Palette
@@ -66,6 +67,138 @@ function Toast({ msg, onDone }) {
       borderRadius: '8px', fontSize: '13px', fontWeight: '600', zIndex: 999,
       boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
     }}>✓ {msg}</div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// VisualPicker — sélecteur de visuels SVG pour une section
+// ─────────────────────────────────────────────────────────────
+const VISUAL_NAMES = Object.keys(VISUALS);
+
+function VisualPicker({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  const current = Array.isArray(value) ? value[0] : (value || null);
+
+  return (
+    <div style={{ marginBottom: '12px' }}>
+      <label style={labelStyle}>Visuel / Animation SVG</label>
+
+      {/* Barre de contrôle */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
+        {current ? (
+          <span style={{ fontSize: '12px', color: 'var(--text-primary)', fontWeight: '600', backgroundColor: 'var(--bg-soft)', padding: '3px 8px', borderRadius: '5px' }}>
+            {current}
+          </span>
+        ) : (
+          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Aucun visuel assigné</span>
+        )}
+        <button
+          onClick={() => setOpen(o => !o)}
+          style={{ ...btnStyle('ghost'), fontSize: '11px', padding: '5px 10px' }}
+        >
+          {open ? 'Fermer' : current ? 'Changer' : '+ Ajouter'}
+        </button>
+        {current && (
+          <button
+            onClick={() => { onChange(null); setOpen(false); }}
+            style={{ ...btnStyle('ghost'), fontSize: '11px', padding: '5px 10px', color: '#ef4444' }}
+          >
+            ✕ Retirer
+          </button>
+        )}
+      </div>
+
+      {/* Preview du visuel actuel */}
+      {current && !open && (
+        <div style={{
+          border: '1px solid var(--border)', borderRadius: '8px',
+          overflow: 'hidden', height: '130px', position: 'relative',
+          backgroundColor: '#fff',
+        }}>
+          <div style={{
+            position: 'absolute', top: 0, left: 0,
+            transformOrigin: 'top left', transform: 'scale(0.34)',
+            width: '294%', pointerEvents: 'none',
+          }}>
+            <Visual name={current} />
+          </div>
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            padding: '3px 8px', backgroundColor: 'rgba(0,0,0,0.45)',
+            fontSize: '10px', color: '#fff',
+          }}>{current}</div>
+        </div>
+      )}
+
+      {/* Grille de sélection */}
+      {open && (
+        <div style={{
+          border: '1px solid var(--border)', borderRadius: '8px',
+          backgroundColor: 'var(--bg-surface)', padding: '12px',
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+            gap: '8px',
+          }}>
+            {/* Option : aucun visuel */}
+            <button
+              onClick={() => { onChange(null); setOpen(false); }}
+              style={{
+                border: !current ? '2px solid var(--accent)' : '1px solid var(--border)',
+                borderRadius: '8px', cursor: 'pointer', padding: '12px 8px',
+                background: 'var(--bg-page)', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', fontFamily: 'inherit',
+                color: 'var(--text-muted)', fontSize: '11px', minHeight: '60px',
+              }}
+            >
+              🚫 Aucun visuel
+            </button>
+
+            {VISUAL_NAMES.map(name => (
+              <button
+                key={name}
+                onClick={() => { onChange(name); setOpen(false); }}
+                style={{
+                  border: current === name ? '2px solid var(--accent)' : '1px solid var(--border)',
+                  borderRadius: '8px', cursor: 'pointer', padding: 0,
+                  background: '#fff', position: 'relative',
+                  overflow: 'hidden', height: '110px',
+                }}
+              >
+                {/* Mini preview du SVG */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0,
+                  width: '300%', transformOrigin: 'top left', transform: 'scale(0.33)',
+                  pointerEvents: 'none',
+                }}>
+                  <Visual name={name} />
+                </div>
+                {/* Label en bas */}
+                <div style={{
+                  position: 'absolute', bottom: 0, left: 0, right: 0,
+                  padding: '3px 6px', backgroundColor: 'rgba(0,0,0,0.5)',
+                  fontSize: '9px', color: '#fff', textAlign: 'left',
+                  lineHeight: '1.3',
+                }}>
+                  {name}
+                </div>
+                {/* Coche si sélectionné */}
+                {current === name && (
+                  <div style={{
+                    position: 'absolute', top: '4px', right: '4px',
+                    backgroundColor: 'var(--accent)', color: '#fff',
+                    borderRadius: '50%', width: '18px', height: '18px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '11px', fontWeight: '700',
+                  }}>✓</div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -152,7 +285,7 @@ function SectionEditor({ sections, onChange, moduleId }) {
                 <textarea rows={8} value={s.content || ''} onChange={e => update(s.id, 'content', e.target.value)}
                   style={{ ...inputStyle, resize: 'vertical' }} placeholder="Corps de la section…" />
               </div>
-              <div style={{ marginBottom: '4px' }}>
+              <div style={{ marginBottom: '12px' }}>
                 <label style={labelStyle}>Points clés à retenir (un par ligne)</label>
                 <textarea
                   rows={4}
@@ -162,6 +295,10 @@ function SectionEditor({ sections, onChange, moduleId }) {
                   placeholder="Point clé 1&#10;Point clé 2&#10;…"
                 />
               </div>
+              <VisualPicker
+                value={s.visual}
+                onChange={v => update(s.id, 'visual', v)}
+              />
             </div>
           )}
         </div>
