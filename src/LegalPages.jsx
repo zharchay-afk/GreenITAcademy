@@ -13,24 +13,29 @@ function E({ field, def }) {
   const value = cfg[field] ?? def;
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState('');
+  const [saving, setSaving] = useState(false);
 
   if (!isAdmin) return <>{value}</>;
 
   if (editing) {
     return (
-      <span>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', verticalAlign: 'middle' }}>
         <input
           value={draft}
           onChange={e => setDraft(e.target.value)}
           autoFocus
-          onKeyDown={e => {
-            if (e.key === 'Enter')  { onSave(field, draft); setEditing(false); }
+          onKeyDown={async e => {
+            if (e.key === 'Enter')  { setSaving(true); await onSave(field, draft); setSaving(false); setEditing(false); }
             if (e.key === 'Escape') { setEditing(false); }
           }}
-          style={{ padding: '1px 6px', border: '2px solid #3b82f6', borderRadius: '4px', fontSize: 'inherit', fontFamily: 'inherit', width: `${Math.max(draft.length + 2, 12)}ch` }}
+          style={{ padding: '2px 8px', border: '2px solid #2563eb', borderRadius: '4px', fontSize: 'inherit', fontFamily: 'inherit', width: `${Math.max((draft.length || 10) + 4, 14)}ch`, minWidth: '80px' }}
         />
-        <button onClick={() => { onSave(field, draft); setEditing(false); }} style={{ marginLeft: '4px', padding: '1px 6px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✓</button>
-        <button onClick={() => setEditing(false)} style={{ marginLeft: '2px', padding: '1px 6px', background: 'transparent', border: '1px solid #cbd5e1', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✕</button>
+        <button
+          onClick={async () => { setSaving(true); await onSave(field, draft); setSaving(false); setEditing(false); }}
+          disabled={saving}
+          style={{ padding: '2px 8px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', fontWeight: 700 }}
+        >{saving ? '…' : '✓'}</button>
+        <button onClick={() => setEditing(false)} style={{ padding: '2px 6px', background: 'transparent', border: '1px solid #cbd5e1', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✕</button>
       </span>
     );
   }
@@ -39,9 +44,17 @@ function E({ field, def }) {
     <span
       onClick={() => { setDraft(value); setEditing(true); }}
       title="Cliquer pour modifier"
-      style={{ outline: '1px dashed #3b82f6', borderRadius: '2px', padding: '0 2px', cursor: 'pointer' }}
+      style={{
+        backgroundColor: '#dbeafe', color: '#1e40af',
+        border: '1px solid #93c5fd', borderRadius: '4px',
+        padding: '1px 6px', cursor: 'pointer',
+        display: 'inline-flex', alignItems: 'center', gap: '4px',
+        fontWeight: 600,
+        verticalAlign: 'middle',
+      }}
     >
-      {value}<span style={{ fontSize: '10px', color: '#3b82f6', marginLeft: '3px' }}>✏</span>
+      {value}
+      <span style={{ fontSize: '11px', opacity: 0.8 }}>✏</span>
     </span>
   );
 }
@@ -60,10 +73,17 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
     }, () => {});
   }, []);
 
+  const [saveError, setSaveError] = useState('');
+
   const saveLegal = async (field, value) => {
     if (!db) return;
-    await setDoc(doc(db, 'config', 'legal'), { [field]: value }, { merge: true });
-    setLegalCfg(prev => ({ ...prev, [field]: value }));
+    try {
+      await setDoc(doc(db, 'config', 'legal'), { [field]: value }, { merge: true });
+      setLegalCfg(prev => ({ ...prev, [field]: value }));
+      setSaveError('');
+    } catch (err) {
+      setSaveError(`Erreur sauvegarde : ${err.message}`);
+    }
   };
 
   const Pane = {
@@ -119,6 +139,14 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
           >{t.label}</button>
         ))}
       </nav>
+
+      {isAdmin && (
+        <div style={{ flexShrink: 0, backgroundColor: '#1e40af', color: '#fff', padding: '8px 24px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontWeight: 700 }}>🔧 Mode administration</span>
+          <span style={{ opacity: 0.85 }}>— cliquez sur les textes surlignés en bleu pour les modifier</span>
+          {saveError && <span style={{ marginLeft: 'auto', backgroundColor: '#ef4444', borderRadius: '4px', padding: '2px 8px' }}>{saveError}</span>}
+        </div>
+      )}
 
       <main style={{ flex: 1, overflowY: 'auto', padding: '32px 24px 40px' }}>
         <div style={{ maxWidth: '820px', margin: '0 auto' }}>
