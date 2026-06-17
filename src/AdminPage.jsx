@@ -1185,8 +1185,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
       }}>
         {[
           { label: 'Mentions légales', tab: 'notice' },
-          { label: 'Politique de confidentialité', tab: 'privacy' },
-          { label: 'CGU', tab: 'cgu' },
+          { label: 'Données personnelles', tab: 'privacy' },
         ].map(({ label, tab: legalTab }) => (
           <button
             key={legalTab}
