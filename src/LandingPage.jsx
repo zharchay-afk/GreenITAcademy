@@ -1,20 +1,17 @@
-﻿import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
 import { useTheme } from './theme';
 import useIsMobile from './useIsMobile';
 import Footer from './Footer';
-import { doc, getDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
+import { doc, setDoc, collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from './firebase';
 
 // ============================================================================
 // LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
-// Palette : verts doux, modules en pastels (couleur d'accent sur fond clair)
 // ============================================================================
 
-// Palette adoucie (les couleurs originales des modules sont gardées comme
-// accent mais utilisées en faible quantité — fond pastel + texte coloré)
 const MODULE_PALETTE = {
   1: { accent: '#0ea5e9', bg: '#e0f2fe' },
   2: { accent: '#f59e0b', bg: '#fef3c7' },
@@ -24,7 +21,6 @@ const MODULE_PALETTE = {
   6: { accent: '#14b8a6', bg: '#ccfbf1' },
 };
 
-// Description courte par module — sert d'accroche pédagogique sur la landing
 const MODULE_TEASER = {
   1: 'Comprendre le gradient de contrainte entre lois, normes, labels et codes.',
   2: 'Panorama complet des réglementations qui s\'imposent aux organisations.',
@@ -34,7 +30,6 @@ const MODULE_TEASER = {
   6: 'Deux success stories qui illustrent concrètement la mise en œuvre.',
 };
 
-// Icônes SVG sobres line-art pour la section Intérêt
 const IconScale = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 3v18" /><path d="M3 7l4 8-2 1c-.5.5-1 .5-2 0v-1l4-8" /><path d="M17 7l4 8-2 1c-.5.5-1 .5-2 0v-1l4-8" /><path d="M5 21h14" />
@@ -76,13 +71,116 @@ const BASE_MODULES   = modulesData.modules.length;
 const BASE_SECTIONS  = modulesData.modules.reduce((s, m) => s + m.sections.length, 0);
 const BASE_QUESTIONS = questionsData.questions.length;
 
-// Convertit "HH:MM:SS" en minutes affichables
 const toMinutes = (str) => {
   const [h, m] = (str || '00:00:00').split(':').map(Number);
   return h * 60 + m;
 };
 
-export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebaseUser }) {
+// ─── Inline admin editor ──────────────────────────────────────────────────────
+// Wraps any block of content. In admin mode, adds a dashed blue outline on
+// hover and a pencil button. Clicking the pencil replaces the content with
+// a textarea/input + save & cancel buttons that write directly to Firestore.
+function Editable({ fieldKey, value, isAdmin, onUpdate, multiline = false, children }) {
+  const [editing, setEditing] = useState(false);
+  const [draft,   setDraft]   = useState('');
+  const [hover,   setHover]   = useState(false);
+  const [saving,  setSaving]  = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (editing && inputRef.current) inputRef.current.focus();
+  }, [editing]);
+
+  const startEdit = (e) => {
+    e.stopPropagation();
+    setDraft(value || '');
+    setEditing(true);
+    setHover(false);
+  };
+
+  const save = async () => {
+    if (!db) return;
+    setSaving(true);
+    try {
+      await setDoc(doc(db, 'config', 'pages'), { [fieldKey]: draft }, { merge: true });
+      onUpdate(fieldKey, draft);
+      setEditing(false);
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+    }
+    setSaving(false);
+  };
+
+  const cancel = () => setEditing(false);
+
+  if (!isAdmin) return <>{children(value)}</>;
+
+  if (editing) {
+    return (
+      <div style={{ width: '100%' }}>
+        {multiline ? (
+          <textarea
+            ref={inputRef}
+            value={draft}
+            onChange={e => setDraft(e.target.value)}
+            rows={4}
+            style={{ width: '100%', padding: '8px', fontFamily: 'inherit', borderRadius: '6px', border: '2px solid #3b82f6', outline: 'none', resize: 'vertical', boxSizing: 'border-box', fontSize: '13px', lineHeight: '1.5', color: '#111', backgroundColor: '#fff' }}
+          />
+        ) : (
+          <input
+            ref={inputRef}
+            value={draft}
+            onChange={e => setDraft(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') save(); if (e.key === 'Escape') cancel(); }}
+            style={{ width: '100%', padding: '6px 8px', fontFamily: 'inherit', borderRadius: '6px', border: '2px solid #3b82f6', outline: 'none', boxSizing: 'border-box', fontSize: '13px', color: '#111', backgroundColor: '#fff' }}
+          />
+        )}
+        <div style={{ display: 'flex', gap: '6px', marginTop: '6px' }}>
+          <button onClick={save} disabled={saving} style={{ padding: '4px 12px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: saving ? 'wait' : 'pointer', fontSize: '12px', fontWeight: 700, fontFamily: 'inherit' }}>
+            {saving ? '…' : '✓ Enregistrer'}
+          </button>
+          <button onClick={cancel} style={{ padding: '4px 10px', background: 'transparent', color: '#6b7280', border: '1px solid #d1d5db', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontFamily: 'inherit' }}>
+            Annuler
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: 'relative',
+        borderRadius: '6px',
+        ...(hover ? { outline: '2px dashed #3b82f6', outlineOffset: '4px' } : {}),
+      }}
+    >
+      {children(value)}
+      {hover && (
+        <button
+          onClick={startEdit}
+          title={`Modifier : ${fieldKey}`}
+          style={{
+            position: 'absolute', top: '4px', right: '4px',
+            width: '24px', height: '24px',
+            backgroundColor: '#2563eb', color: '#fff',
+            border: 'none', borderRadius: '5px',
+            cursor: 'pointer', fontSize: '12px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 20, padding: 0, boxShadow: '0 2px 8px rgba(37,99,235,0.4)',
+          }}
+        >
+          ✏
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebaseUser, isAdmin, onGoToAdmin }) {
   const mainRef = useRef(null);
   const [activeSection, setActiveSection] = useState('accueil');
   const [theme] = useTheme();
@@ -95,9 +193,9 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
 
   useEffect(() => {
     if (!db) return;
-    getDoc(doc(db, 'config', 'pages')).then(snap => {
+    const unsubPages = onSnapshot(doc(db, 'config', 'pages'), snap => {
       if (snap.exists()) setPageCfg(snap.data());
-    }).catch(() => {});
+    }, () => {});
 
     const unsubMods = onSnapshot(
       query(collection(db, 'content_modules'), where('_custom', '==', true)),
@@ -115,8 +213,10 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
       () => {}
     );
 
-    return () => { unsubMods(); unsubQ(); };
+    return () => { unsubPages(); unsubMods(); unsubQ(); };
   }, []);
+
+  const handleUpdate = (key, val) => setPageCfg(cfg => ({ ...cfg, [key]: val }));
 
   const stats = [
     { value: BASE_MODULES   + extraModules,   label: 'Modules' },
@@ -130,7 +230,6 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
     text:  pageCfg[`interetCard${i}Text`]  || d.text,
   }));
 
-  // Suivi de la section visible pour la nav active
   useEffect(() => {
     if (!mainRef.current) return;
     const observer = new IntersectionObserver(
@@ -150,10 +249,12 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const E = (props) => <Editable {...props} isAdmin={isAdmin} onUpdate={handleUpdate} />;
+
   return (
     <div style={{ height: '100dvh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)', color: 'var(--text-primary)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
 
-      {/* ============================ Header sticky ============================ */}
+      {/* ──── Header sticky ──── */}
       <header style={{
         flexShrink: 0,
         backgroundColor: 'var(--bg-surface)',
@@ -203,10 +304,37 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
         </nav>
       </header>
 
-      {/* ============================ Contenu scrollable ============================ */}
+      {/* ──── Admin banner ──── */}
+      {isAdmin && (
+        <div style={{
+          flexShrink: 0,
+          backgroundColor: '#eff6ff',
+          borderBottom: '2px solid #bfdbfe',
+          padding: '7px 24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          fontSize: '12px',
+        }}>
+          <span style={{ fontSize: '15px' }}>🛠</span>
+          <span style={{ fontWeight: 700, color: '#1e40af' }}>Mode admin</span>
+          <span style={{ color: '#3b82f6' }}>· Survolez un texte et cliquez sur ✏ pour le modifier en ligne</span>
+          <div style={{ flex: 1 }} />
+          {onGoToAdmin && (
+            <button
+              onClick={onGoToAdmin}
+              style={{ padding: '3px 12px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '12px', fontWeight: 600, fontFamily: 'inherit' }}
+            >
+              Panneau admin →
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* ──── Contenu scrollable ──── */}
       <main ref={mainRef} style={{ flex: 1, overflowY: 'auto', scrollBehavior: 'smooth' }}>
 
-        {/* ----------------- Section Accueil ----------------- */}
+        {/* ── Section Accueil ── */}
         <section id="accueil" style={sectionStyle({
           background: isDark
             ? 'linear-gradient(135deg, #0f172a 0%, #16241d 100%)'
@@ -219,15 +347,23 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
               <span style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#74b893' : '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#e8edf4' : '#064e3b', whiteSpace: 'pre-line' }}>
-              {pageCfg.heroTitle || 'Formez-vous au\nNumérique Responsable'}
-            </h1>
+            <E fieldKey="heroTitle" value={pageCfg.heroTitle} multiline>
+              {(val) => (
+                <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#e8edf4' : '#064e3b', whiteSpace: 'pre-line' }}>
+                  {val || 'Formez-vous au\nNumérique Responsable'}
+                </h1>
+              )}
+            </E>
 
-            <p style={{ fontSize: '17px', color: isDark ? '#94a3b8' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
-              {pageCfg.heroSubtitle || 'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.'}
-            </p>
+            <E fieldKey="heroSubtitle" value={pageCfg.heroSubtitle} multiline>
+              {(val) => (
+                <p style={{ fontSize: '17px', color: isDark ? '#94a3b8' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
+                  {val || 'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.'}
+                </p>
+              )}
+            </E>
 
-            {/* CTA principal — deux chemins clairs */}
+            {/* CTA */}
             {firebaseUser ? (
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '40px' }}>
                 <button onClick={onStart} style={ctaPrimaryStyle}>Reprendre la formation →</button>
@@ -265,42 +401,70 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
           </div>
         </section>
 
-        {/* ----------------- Section Intérêt ----------------- */}
+        {/* ── Section Intérêt ── */}
         <section id="interet" style={sectionStyle({ background: 'var(--bg-surface)' })}>
           <div style={containerStyle}>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
-                {pageCfg.interetTitle || 'Pourquoi suivre cette formation ?'}
-              </h2>
-              <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '720px', margin: '0 auto', lineHeight: '1.65' }}>
-                {pageCfg.interetSubtitle || <>Le Green IT ne se résume pas à de bonnes intentions : il s'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les <strong>outils opérationnels</strong>.</>}
-              </p>
+              <E fieldKey="interetTitle" value={pageCfg.interetTitle}>
+                {(val) => (
+                  <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
+                    {val || 'Pourquoi suivre cette formation ?'}
+                  </h2>
+                )}
+              </E>
+              <E fieldKey="interetSubtitle" value={pageCfg.interetSubtitle} multiline>
+                {(val) => (
+                  <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '720px', margin: '0 auto', lineHeight: '1.65' }}>
+                    {val || <>Le Green IT ne se résume pas à de bonnes intentions : il s'inscrit dans un cadre réglementaire, normatif et certificatoire en pleine expansion. Cette formation va au-delà des principes pour fournir les <strong>outils opérationnels</strong>.</>}
+                  </p>
+                )}
+              </E>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
-              {activeInterests.map((r, i) => (
+              {INTEREST_DEFAULTS.map((r, i) => (
                 <div key={i} style={{ textAlign: 'center', padding: '8px' }}>
                   <div style={{ width: '64px', height: '64px', backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : r.bg, borderRadius: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
                     <r.Icon />
                   </div>
-                  <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 10px 0' }}>{r.title}</h3>
-                  <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.65', margin: 0 }}>{r.text}</p>
+                  <E fieldKey={`interetCard${i}Title`} value={pageCfg[`interetCard${i}Title`]}>
+                    {(val) => (
+                      <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 10px 0' }}>
+                        {val || r.title}
+                      </h3>
+                    )}
+                  </E>
+                  <E fieldKey={`interetCard${i}Text`} value={pageCfg[`interetCard${i}Text`]} multiline>
+                    {(val) => (
+                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.65', margin: 0 }}>
+                        {val || r.text}
+                      </p>
+                    )}
+                  </E>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ----------------- Section Programme ----------------- */}
+        {/* ── Section Programme ── */}
         <section id="programme" style={sectionStyle({ background: 'var(--bg-page)' })}>
           <div style={containerStyle}>
             <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
-                {pageCfg.programmeTitle || 'Le parcours en 6 modules'}
-              </h2>
-              <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
-                {pageCfg.programmeSubtitle || 'Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.'}
-              </p>
+              <E fieldKey="programmeTitle" value={pageCfg.programmeTitle}>
+                {(val) => (
+                  <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 14px 0' }}>
+                    {val || 'Le parcours en 6 modules'}
+                  </h2>
+                )}
+              </E>
+              <E fieldKey="programmeSubtitle" value={pageCfg.programmeSubtitle} multiline>
+                {(val) => (
+                  <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
+                    {val || 'Une progression structurée : des concepts généraux aux cas pratiques luxembourgeois.'}
+                  </p>
+                )}
+              </E>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '36px' }}>
@@ -326,9 +490,14 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                     {m.subtitle && (
                       <p style={{ margin: '0 0 6px 0', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4', fontStyle: 'italic' }}>{m.subtitle}</p>
                     )}
-                    {(pageCfg[`moduleTeaser${m.id}`] || MODULE_TEASER[m.id]) && (
-                      <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{pageCfg[`moduleTeaser${m.id}`] || MODULE_TEASER[m.id]}</p>
-                    )}
+                    <E fieldKey={`moduleTeaser${m.id}`} value={pageCfg[`moduleTeaser${m.id}`]} multiline>
+                      {(val) => {
+                        const text = val || MODULE_TEASER[m.id];
+                        return text ? (
+                          <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{text}</p>
+                        ) : null;
+                      }}
+                    </E>
                   </div>
                 );
               })}
@@ -348,7 +517,7 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
         </section>
       </main>
 
-      {/* ============================ Footer sticky ============================ */}
+      {/* ──── Footer sticky ──── */}
       <Footer onShowLegal={onShowLegal} />
     </div>
   );
@@ -405,4 +574,3 @@ const ctaSecondaryStyle = {
   border: '1px solid var(--accent)', borderRadius: '10px',
   fontSize: '14px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
 };
-

@@ -272,6 +272,8 @@ export default function App() {
         onShowLegal={showLegal}
         onGoToAuth={handleGoToAuth}
         firebaseUser={firebaseUser}
+        isAdmin={isAdmin}
+        onGoToAdmin={() => setScreen('admin')}
       />
     );
   }
