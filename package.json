@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "vite build && gh-pages -d dist",
     "preview": "vite preview",
     "build:native": "vite build --base / --outDir dist-native",
     "cap:sync": "npm run build:native && npx cap copy android && npx cap sync android",
@@ -31,6 +32,7 @@
     "@babel/core": "^7.24.0",
     "@capacitor/cli": "^8.4.0",
     "@vitejs/plugin-react": "^5.1.4",
+    "gh-pages": "^6.3.0",
     "typescript": "^6.0.3",
     "vite": "^7.3.1"
   }
