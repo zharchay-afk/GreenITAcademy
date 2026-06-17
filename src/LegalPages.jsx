@@ -81,6 +81,7 @@ function LegalNotice() {
       <Section title="Éditeur du service">
         <p>Le service <strong>« Green IT Académie »</strong> est édité, dans un cadre strictement pédagogique et non commercial, par deux étudiants en <strong>Master Data Science de l'UTBM</strong> (Université de Technologie de Belfort-Montbéliard).</p>
         <p>Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique.</p>
+        <p>Contact : <strong>xxx@utbm.fr</strong></p>
       </Section>
 
       <Section title="Hébergement">
@@ -115,7 +116,7 @@ function PrivacyShort() {
 
       <Section title="Responsable du traitement">
         <p>Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'<strong>UTBM</strong> (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant.</p>
-        <p>Pour toute question relative à vos données, contactez-les à l'adresse indiquée dans les Mentions légales, ou adressez-vous au DPO de l'UTBM.</p>
+        <p>Pour toute question relative à vos données : <strong>xxx@utbm.fr</strong> — ou adressez-vous au DPO de l'UTBM.</p>
       </Section>
 
       <Section title="Ce qui est stocké — selon votre mode d'utilisation">
@@ -168,7 +169,7 @@ function PrivacyShort() {
           <li><strong>Opposition</strong> (art. 21) : cessez d'utiliser le service en mode connecté et supprimez votre compte — toute trace est effacée côté Firebase.</li>
           <li><strong>Réclamation</strong> : vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (France — <em>cnil.fr</em>) ou de la <strong>CNPD</strong> (Luxembourg — <em>cnpd.public.lu</em>).</li>
         </ul>
-        <p>Pour exercer vos droits, contactez les éditeurs à l'adresse mentionnée dans les Mentions légales. Délai de réponse : 30 jours (art. 12 RGPD).</p>
+        <p>Pour exercer vos droits : <strong>xxx@utbm.fr</strong>. Délai de réponse : 30 jours (art. 12 RGPD).</p>
       </Section>
 
       <Section title="Cookies">
