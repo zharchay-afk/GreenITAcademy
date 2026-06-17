@@ -34,6 +34,12 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Configuration du site (landing page, branding) : lecture libre, écriture admin
+    match /config/{configId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
     // Tout le reste est refusé
     match /{document=**} {
       allow read, write: if false;

@@ -373,7 +373,8 @@ function ModulesTab({ toast }) {
   const [showDeleted, setShowDeleted] = useState(false);
   const [addingModule, setAddingModule] = useState(false);
   const [newModForm, setNewModForm]     = useState({ title: '', subtitle: '', image: '📦', bgColor: '#64748b', intro: '' });
-  const fileRef = useRef();
+  const fileRef  = useRef();
+  const scormRef = useRef();
 
   useEffect(() => {
     if (!db) return;
@@ -393,6 +394,7 @@ function ModulesTab({ toast }) {
       image:    ov.image    || mod.image    || '',
       imageUrl: ov.imageUrl || '',
       intro:    ov.intro    || '',
+      scormUrl: ov.scormUrl || '',
     });
     const baseSections = mod.sections || [];
     const fsSections   = ov.sections  || [];
@@ -460,6 +462,22 @@ function ModulesTab({ toast }) {
       toast('Image téléversée');
     } catch (e) {
       alert('Erreur upload : ' + e.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const uploadScorm = async (file) => {
+    if (!storage || !file) return;
+    setUploading(true);
+    try {
+      const path = `scorm/${editing}/package_${Date.now()}.zip`;
+      const snap = await uploadBytes(storageRef(storage, path), file);
+      const url  = await getDownloadURL(snap.ref);
+      setForm(f => ({ ...f, scormUrl: url }));
+      toast('Package SCORM téléversé');
+    } catch (e) {
+      alert('Erreur upload SCORM : ' + e.message);
     } finally {
       setUploading(false);
     }
@@ -626,10 +644,32 @@ function ModulesTab({ toast }) {
                       <label style={labelStyle}>Sous-titre</label>
                       <input type="text" value={form.subtitle} onChange={e => setForm(f => ({ ...f, subtitle: e.target.value }))} style={inputStyle} />
                     </div>
-                    <div style={{ marginBottom: '20px' }}>
+                    <div style={{ marginBottom: '16px' }}>
                       <label style={labelStyle}>Introduction du module</label>
                       <textarea rows={5} value={form.intro} onChange={e => setForm(f => ({ ...f, intro: e.target.value }))}
                         style={{ ...inputStyle, resize: 'vertical' }} placeholder="Texte affiché en tête du module dans le lecteur de cours…" />
+                    </div>
+
+                    {/* ── Package SCORM ── */}
+                    <div style={{ borderTop: '1px solid var(--border)', paddingTop: '16px', marginBottom: '4px' }}>
+                      <label style={labelStyle}>Package SCORM 1.2 (.zip)</label>
+                      <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: '0 0 10px 0', lineHeight: '1.5' }}>
+                        Un package SCORM .zip peut remplacer ou compléter le contenu textuel. Les apprenants verront un bouton "Lancer SCORM" dans le lecteur de cours.
+                      </p>
+                      {form.scormUrl ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', backgroundColor: '#f0fdf4', border: '1px solid #86efac', padding: '8px 12px', borderRadius: '7px' }}>
+                          <span style={{ fontSize: '12px', color: '#15803d', fontWeight: '600', flex: 1 }}>✓ Package SCORM téléversé</span>
+                          <button onClick={() => setForm(f => ({ ...f, scormUrl: '' }))} style={{ ...btnStyle('ghost'), color: '#ef4444', fontSize: '11px', padding: '3px 8px' }}>
+                            Supprimer
+                          </button>
+                        </div>
+                      ) : null}
+                      <button onClick={() => scormRef.current?.click()} disabled={uploading}
+                        style={{ ...btnStyle('ghost'), display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        {uploading ? 'Téléversement…' : '📦 Choisir un .zip SCORM'}
+                      </button>
+                      <input ref={scormRef} type="file" accept=".zip" style={{ display: 'none' }}
+                        onChange={e => e.target.files[0] && uploadScorm(e.target.files[0])} />
                     </div>
                   </>
                 )}
@@ -1074,6 +1114,100 @@ function UsersTab({ toast }) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Tab: Pages — édition du contenu des pages statiques
+// ─────────────────────────────────────────────────────────────
+function PagesTab({ toast }) {
+  const DEFAULTS = {
+    siteName:      'Green IT Académie',
+    heroTitle:     'Formez-vous au\nNumérique Responsable',
+    heroSubtitle:  'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.',
+    ctaLabel:      'Commencer la formation',
+    loginLabel:    'Connexion / Inscription',
+  };
+  const [form, setForm]     = useState({ siteName: '', heroTitle: '', heroSubtitle: '', ctaLabel: '', loginLabel: '' });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving]   = useState(false);
+
+  useEffect(() => {
+    if (!db) { setLoading(false); return; }
+    getDoc(doc(db, 'config', 'pages')).then(snap => {
+      if (snap.exists()) setForm(f => ({ ...f, ...snap.data() }));
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
+
+  const save = async () => {
+    if (!db) { toast('Firestore non configuré'); return; }
+    setSaving(true);
+    try {
+      await setDoc(doc(db, 'config', 'pages'), form, { merge: true });
+      toast('Pages mises à jour');
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const reset = async () => {
+    if (!window.confirm('Remettre les textes par défaut ?')) return;
+    setForm({ siteName: '', heroTitle: '', heroSubtitle: '', ctaLabel: '', loginLabel: '' });
+    if (db) await setDoc(doc(db, 'config', 'pages'), {}, { merge: false });
+    toast('Textes réinitialisés');
+  };
+
+  if (loading) return <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Chargement…</p>;
+
+  return (
+    <div>
+      <div style={cardStyle}>
+        <h3 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>
+          Page de présentation (Landing)
+        </h3>
+        <p style={{ margin: '0 0 20px 0', fontSize: '12px', color: 'var(--text-muted)' }}>
+          Les champs vides utilisent le texte par défaut. Les changements sont visibles immédiatement sur le site.
+        </p>
+
+        {[
+          { key: 'siteName',     label: 'Nom du site',                    type: 'input',    placeholder: DEFAULTS.siteName },
+          { key: 'heroTitle',    label: 'Titre principal (hero)',          type: 'textarea', placeholder: DEFAULTS.heroTitle, rows: 2 },
+          { key: 'heroSubtitle', label: 'Sous-titre / description',       type: 'textarea', placeholder: DEFAULTS.heroSubtitle, rows: 3 },
+          { key: 'ctaLabel',     label: 'Bouton "Commencer"',             type: 'input',    placeholder: DEFAULTS.ctaLabel },
+          { key: 'loginLabel',   label: 'Bouton "Connexion / Inscription"', type: 'input', placeholder: DEFAULTS.loginLabel },
+        ].map(({ key, label, type, placeholder, rows }) => (
+          <div key={key} style={{ marginBottom: '14px' }}>
+            <label style={labelStyle}>{label}</label>
+            {type === 'textarea' ? (
+              <textarea rows={rows || 2} value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                style={{ ...inputStyle, resize: 'vertical' }} placeholder={placeholder} />
+            ) : (
+              <input value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                style={inputStyle} placeholder={placeholder} />
+            )}
+          </div>
+        ))}
+
+        <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+          <button onClick={save} disabled={saving} style={{ ...btnStyle('primary'), opacity: saving ? 0.7 : 1 }}>
+            {saving ? 'Sauvegarde…' : '✓ Sauvegarder'}
+          </button>
+          <button onClick={reset} style={{ ...btnStyle('ghost'), color: '#ef4444', fontSize: '12px' }}>
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <div style={{ ...cardStyle, backgroundColor: 'var(--bg-page)', marginTop: '12px' }}>
+        <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+          💡 Pour modifier les textes des cartes "Intérêt" ou les descriptions de modules sur la landing, éditez les fichiers sources{' '}
+          <code>src/LandingPage.jsx</code> et <code>data/modules.json</code>.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
 // AdminPage — composant principal
 // ─────────────────────────────────────────────────────────────
 // Bleu admin — distinct du vert de la formation
@@ -1121,6 +1255,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
     { id: 'modules',   label: '📚 Modules' },
     { id: 'questions', label: '❓ Questions' },
     { id: 'users',     label: '👥 Utilisateurs' },
+    { id: 'pages',     label: '🖊️ Pages' },
   ];
 
   return (
@@ -1189,6 +1324,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
           {tab === 'modules'   && <ModulesTab   toast={toast} />}
           {tab === 'questions' && <QuestionsTab toast={toast} />}
           {tab === 'users'     && <UsersTab     toast={toast} />}
+          {tab === 'pages'     && <PagesTab     toast={toast} />}
         </div>
       </main>
 

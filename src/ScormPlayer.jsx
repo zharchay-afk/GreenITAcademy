@@ -10,13 +10,26 @@ const STATUS_LABELS = {
   'not attempted': { label: '○ Non commencé', color: 'var(--text-muted)', bg: '#f1f5f9' },
 };
 
-export default function ScormPlayer({ onNavigate }) {
+export default function ScormPlayer({ onNavigate, scormUrl }) {
   const [status, setStatus] = useState('idle');    // idle | loading | ready | error
   const [packageInfo, setPackageInfo] = useState(null);
   const [score, setScore] = useState(null);
   const [lessonStatus, setLessonStatus] = useState('not attempted');
   const [errorMsg, setErrorMsg] = useState('');
   const fileInputRef = useRef(null);
+
+  // Auto-charge depuis une URL Firebase Storage si fournie
+  useEffect(() => {
+    if (!scormUrl) return;
+    setStatus('loading');
+    setScore(null);
+    setLessonStatus('not attempted');
+    fetch(scormUrl)
+      .then(r => r.blob())
+      .then(blob => loadScormPackage(new File([blob], 'package.zip', { type: 'application/zip' })))
+      .then(info => { setPackageInfo(info); setStatus('ready'); })
+      .catch(err => { setErrorMsg(err.message || 'Erreur de chargement SCORM.'); setStatus('error'); });
+  }, [scormUrl]);
 
   // Écouter les messages SCORM API venant de l'iframe
   useEffect(() => {

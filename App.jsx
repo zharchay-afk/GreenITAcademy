@@ -105,6 +105,7 @@ export default function App() {
   const [firebaseUser, setFirebaseUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [authMode, setAuthMode] = useState('login'); // 'login' | 'register' | 'forgot'
+  const [scormUrl, setScormUrl] = useState(null);
 
   // Overrides Firestore : titres modifiés, modules supprimés, modules personnalisés
   const [contentOverrides, setContentOverrides] = useState({});
@@ -219,7 +220,7 @@ export default function App() {
     if (page === 'accueil') setScreen('home');
     if (page === 'attestation') setScreen('attestation');
     if (page === 'profil') setScreen('profil');
-    if (page === 'scorm-player') setScreen('scorm-player');
+    if (page === 'scorm-player') { setScormUrl(null); setScreen('scorm-player'); }
     if (page === 'references') setScreen('references');
     if (page === 'admin') setScreen('admin');
   };
@@ -328,6 +329,7 @@ export default function App() {
         moduleId={selectedModuleId}
         onBack={() => setScreen('home')}
         onStartQuiz={() => setScreen('quiz')}
+        onLaunchScorm={(url) => { setScormUrl(url); setScreen('scorm-player'); }}
         onSelectModule={(id) => {
           // Démarre le nouveau module et reset le chrono de lecture
           startTimeRef.current = Date.now();
@@ -354,7 +356,7 @@ export default function App() {
   }
 
   if (screen === 'attestation') return <AttestationPage modules={effectiveModules} onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={handleSignOut} />;
-  if (screen === 'scorm-player') return <ScormPlayer onNavigate={handleNavigate} />;
+  if (screen === 'scorm-player') return <ScormPlayer onNavigate={handleNavigate} scormUrl={scormUrl} />;
   if (screen === 'references') return <ReferencesPage onNavigate={handleNavigate} onShowLegal={showLegal} onShowLanding={() => setScreen('landing')} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={handleSignOut} />;
 
   if (screen === 'profil') {

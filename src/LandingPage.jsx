@@ -5,6 +5,8 @@ import questionsData from '../data/questions.json';
 import { useTheme } from './theme';
 import useIsMobile from './useIsMobile';
 import Footer from './Footer';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 // ============================================================================
 // LandingPage — header & footer sticky, 3 sections (Accueil / Intérêt / Programme)
@@ -89,6 +91,14 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
   const [theme] = useTheme();
   const isDark = theme === 'dark';
   const isMobile = useIsMobile();
+  const [pageCfg, setPageCfg] = useState({});
+
+  useEffect(() => {
+    if (!db) return;
+    getDoc(doc(db, 'config', 'pages')).then(snap => {
+      if (snap.exists()) setPageCfg(snap.data());
+    }).catch(() => {});
+  }, []);
 
   // Suivi de la section visible pour la nav active
   useEffect(() => {
@@ -127,10 +137,10 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
         <button onClick={() => scrollTo('accueil')} style={brandBtnStyle}>
           <Logo size={isMobile ? 26 : 32} />
           {!isMobile && (
-            <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>Green IT Académie</span>
+            <span style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)' }}>{pageCfg.siteName || 'Green IT Académie'}</span>
           )}
           {isMobile && (
-            <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)' }}>Green IT</span>
+            <span style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)' }}>{(pageCfg.siteName || 'Green IT').split(' ')[0]}</span>
           )}
         </button>
 
@@ -179,13 +189,12 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
               <span style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#74b893' : '#15803d', letterSpacing: '1.5px' }}>GREEN IT ACADÉMIE</span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#e8edf4' : '#064e3b' }}>
-              Formez-vous au<br />
-              <span style={{ color: isDark ? '#74b893' : '#15803d' }}>Numérique Responsable</span>
+            <h1 style={{ fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 800, lineHeight: '1.1', margin: '0 0 18px 0', color: isDark ? '#e8edf4' : '#064e3b', whiteSpace: 'pre-line' }}>
+              {pageCfg.heroTitle || 'Formez-vous au\nNumérique Responsable'}
             </h1>
 
             <p style={{ fontSize: '17px', color: isDark ? '#94a3b8' : '#166534', maxWidth: '640px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
-              Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.
+              {pageCfg.heroSubtitle || 'Comprenez le cadre réglementaire européen et luxembourgeois, maîtrisez les normes ISO et les labels environnementaux qui structurent le numérique responsable.'}
             </p>
 
             {/* CTA principal — deux chemins clairs */}
@@ -200,7 +209,7 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
               <>
                 <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>
                   <button onClick={() => onGoToAuth && onGoToAuth('login')} style={ctaPrimaryStyle}>
-                    🔐 Connexion / Inscription
+                    🔐 {pageCfg.loginLabel || 'Connexion / Inscription'}
                   </button>
                   <button onClick={() => scrollTo('programme')} style={ctaSecondaryStyle}>Voir le programme</button>
                 </div>

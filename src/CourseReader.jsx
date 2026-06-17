@@ -6,7 +6,7 @@ import useIsMobile from './useIsMobile';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
-export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectModule }) {
+export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectModule, onLaunchScorm }) {
   const jsonModule = modulesData.modules.find(m => m.id === moduleId);
   const [firestoreOverride, setFirestoreOverride] = useState(null);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -390,6 +390,29 @@ export default function CourseReader({ moduleId, onBack, onStartQuiz, onSelectMo
               <span style={{ fontSize: '12px', color: 'var(--text-secondary)', minWidth: '36px' }}>{progressPct}%</span>
             </div>
           </header>
+        )}
+
+        {/* Bandeau SCORM — affiché si le module a un package SCORM */}
+        {firestoreOverride?.scormUrl && onLaunchScorm && (
+          <div style={{
+            flexShrink: 0, padding: '10px 24px',
+            backgroundColor: '#eff6ff', borderBottom: '1px solid #bfdbfe',
+            display: 'flex', alignItems: 'center', gap: '12px',
+          }}>
+            <span style={{ fontSize: '13px', color: '#1e40af', flex: 1 }}>
+              📦 Un module SCORM interactif est disponible pour ce cours.
+            </span>
+            <button
+              onClick={() => onLaunchScorm(firestoreOverride.scormUrl)}
+              style={{
+                padding: '7px 16px', backgroundColor: '#1e40af', color: '#fff',
+                border: 'none', borderRadius: '6px', cursor: 'pointer',
+                fontWeight: '700', fontSize: '12px', fontFamily: 'inherit', whiteSpace: 'nowrap',
+              }}
+            >
+              Lancer SCORM →
+            </button>
+          </div>
         )}
 
         {/* Zone de défilement du cours */}
