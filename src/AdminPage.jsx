@@ -1076,6 +1076,14 @@ function UsersTab({ toast }) {
     load();
   };
 
+  const removeUser = async (user) => {
+    if (!db) return;
+    if (!window.confirm(`Supprimer ${user.email} de la console ?\n\nSes données Firestore seront effacées. Son compte de connexion Firebase Authentication reste actif — désactivez-le manuellement dans la console Firebase si nécessaire.`)) return;
+    await deleteDoc(doc(db, 'users', user.uid));
+    toast(`${user.email} supprimé`);
+    load();
+  };
+
   if (loading) return <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>Chargement…</div>;
   if (!users.length) return (
     <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
@@ -1106,6 +1114,9 @@ function UsersTab({ toast }) {
               </span>
               <button onClick={() => toggleAdmin(u)} style={{ ...btnStyle('ghost'), fontSize: '11px', padding: '5px 10px' }}>
                 {u.role === 'admin' ? 'Rétrograder' : 'Admin →'}
+              </button>
+              <button onClick={() => removeUser(u)} title="Supprimer de Firestore" style={{ fontSize: '11px', padding: '5px 10px', backgroundColor: 'transparent', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: '6px', cursor: 'pointer', fontFamily: 'inherit' }}>
+                🗑
               </button>
             </div>
           </div>
