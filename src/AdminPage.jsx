@@ -1072,7 +1072,7 @@ export default function AdminPage({ firebaseUser, isAdmin, onNavigate, onShowLeg
 
   const toast = (msg) => setToastMsg(msg);
 
-  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
   if (!firebaseUser) {
     return (
