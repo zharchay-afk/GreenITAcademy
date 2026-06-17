@@ -195,7 +195,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
       {isAdmin && (
         <div style={{ flexShrink: 0, backgroundColor: '#1e40af', color: '#fff', padding: '8px 24px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 700 }}>🔧 Mode administration</span>
-          <span style={{ opacity: 0.85 }}>— bouton <strong>✏ Modifier</strong> sur chaque section pour éditer le texte complet · <span style={{ backgroundColor: '#93c5fd', color: '#1e3a8a', borderRadius: '3px', padding: '0 4px', fontWeight: 600 }}>fond bleu</span> = valeur courte (email, date…)</span>
+          <span style={{ opacity: 0.85 }}>— <span style={{ backgroundColor: '#93c5fd', color: '#1e3a8a', borderRadius: '3px', padding: '0 4px', fontWeight: 600 }}>cliquer</span> sur un titre ou une valeur bleue pour l'éditer · bouton <strong>✏ Contenu</strong> pour éditer tout le texte d'une section</span>
           {saveError && <span style={{ marginLeft: 'auto', backgroundColor: '#ef4444', borderRadius: '4px', padding: '2px 8px' }}>{saveError}</span>}
         </div>
       )}
@@ -217,7 +217,7 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
 // -----------------------------------------------------------------------------
 function LegalNotice() {
   return (
-    <Article title="Mentions légales" dateField="updatedNotice" dateDef="mai 2026">
+    <Article title="Mentions légales" titleField="page_title_notice" dateField="updatedNotice" dateDef="mai 2026">
       <Section title="Éditeur du service" sectionKey="notice_editor">
         <p>Le service <strong>« Green IT Académie »</strong> est édité, dans un cadre strictement pédagogique et non commercial, par <strong><E field="orgDescription" def="deux étudiants en Master Data Science de l'UTBM" /></strong>.</p>
         <p>Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique.</p>
@@ -245,7 +245,7 @@ function LegalNotice() {
 // -----------------------------------------------------------------------------
 function PrivacyShort() {
   return (
-    <Article title="Données personnelles" dateField="updatedPrivacy" dateDef="juin 2026">
+    <Article title="Données personnelles" titleField="page_title_privacy" dateField="updatedPrivacy" dateDef="juin 2026">
 
       <Section title="L'essentiel" sectionKey="privacy_essential">
         <Highlight>
@@ -329,7 +329,7 @@ function PrivacyShort() {
 // -----------------------------------------------------------------------------
 function CookiesPolicy() {
   return (
-    <Article title="Cookies et stockage local" dateField="updatedCookies" dateDef="mai 2026">
+    <Article title="Cookies et stockage local" titleField="page_title_cookies" dateField="updatedCookies" dateDef="mai 2026">
       <Section title="L'essentiel" sectionKey="cookies_essential">
         <Highlight>Green IT Académie <strong>n'utilise aucun cookie</strong>. L'application stocke certaines informations dans le <code>localStorage</code> et le <code>sessionStorage</code> de votre navigateur, exclusivement à des fins techniques et de personnalisation. Aucune donnée n'est transmise à un tiers.</Highlight>
       </Section>
@@ -375,7 +375,7 @@ function CookiesPolicy() {
 // -----------------------------------------------------------------------------
 function EcoConception({ onShowScormPlayer }) {
   return (
-    <Article title="Éco-conception de l'application" dateField="updatedEco" dateDef="mai 2026">
+    <Article title="Éco-conception de l'application" titleField="page_title_eco" dateField="updatedEco" dateDef="mai 2026">
       <Section title="Préambule" sectionKey="eco_preambule">
         <Highlight>Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent.</Highlight>
       </Section>
@@ -483,7 +483,7 @@ function EcoConception({ onShowScormPlayer }) {
 // -----------------------------------------------------------------------------
 function Accessibilite() {
   return (
-    <Article title="Accessibilité" dateField="updatedAccess" dateDef="mai 2026">
+    <Article title="Accessibilité" titleField="page_title_access" dateField="updatedAccess" dateDef="mai 2026">
       <Section title="Préambule" sectionKey="access_preambule">
         <Highlight>L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés.</Highlight>
       </Section>
@@ -543,10 +543,12 @@ function Accessibilite() {
 // -----------------------------------------------------------------------------
 // Petits composants utilitaires
 // -----------------------------------------------------------------------------
-function Article({ title, dateField, dateDef, children }) {
+function Article({ title, titleField, dateField, dateDef, children }) {
   return (
     <article style={{ backgroundColor: 'var(--bg-surface)', borderRadius: '10px', padding: '32px 36px', border: '1px solid var(--border)' }}>
-      <h1 style={{ fontSize: '24px', color: 'var(--text-primary)', margin: '0 0 4px 0', fontWeight: '700' }}>{title}</h1>
+      <h1 style={{ fontSize: '24px', color: 'var(--text-primary)', margin: '0 0 4px 0', fontWeight: '700' }}>
+        {titleField ? <E field={titleField} def={title} /> : title}
+      </h1>
       {dateField && (
         <p style={{ color: 'var(--text-muted)', fontSize: '12px', margin: '0 0 24px 0' }}>
           Dernière mise à jour : <E field={dateField} def={dateDef || ''} />
@@ -587,15 +589,17 @@ function Section({ title, sectionKey, children }) {
     setEditing(false);
   };
 
+  const titleKey = sectionKey ? `${sectionKey}_title` : null;
+
   return (
     <section style={{ marginBottom: '24px', position: 'relative' }}>
-      <h2 style={{ fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 10px 0', fontWeight: '700', paddingBottom: '6px', borderBottom: '1px solid var(--border-soft)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span>{title}</span>
+      <h2 style={{ fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 10px 0', fontWeight: '700', paddingBottom: '6px', borderBottom: '1px solid var(--border-soft)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+        <span style={{ flex: 1 }}>{titleKey ? <E field={titleKey} def={title} /> : title}</span>
         {canEdit && !editing && (
           <button
             onClick={startEdit}
             style={{ fontSize: '11px', padding: '2px 8px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit', flexShrink: 0 }}
-          >✏ Modifier</button>
+          >✏ Contenu</button>
         )}
       </h2>
       {editing ? (
