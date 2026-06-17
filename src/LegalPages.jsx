@@ -109,14 +109,13 @@ function PrivacyShort() {
       <Section title="L'essentiel">
         <Highlight>
           Green IT Académie peut être utilisé <strong>sans créer de compte</strong> : dans ce cas, aucune donnée ne quitte votre navigateur.
-          Si vous créez un compte (facultatif), votre adresse e-mail et votre progression sont transmises à <strong>Firebase (Google)</strong>.
-          Nous sommes responsables de ce traitement au sens du RGPD et vous informons ci-dessous de façon transparente.
+          Si vous créez un compte (facultatif), votre adresse e-mail et votre progression sont transmises à <strong>Firebase (Google)</strong> pour faire fonctionner le service que vous avez demandé.
         </Highlight>
       </Section>
 
       <Section title="Responsable du traitement">
-        <p>Les étudiants éditeurs du service (cf. Mentions légales) sont responsables conjoints du traitement au sens de l'article 4 (7) du RGPD : ils ont défini les finalités (authentification, synchronisation pédagogique) et les moyens techniques (Firebase Auth, Firestore). À ce titre, le cadre du RGPD leur est pleinement applicable dès lors qu'un compte est créé.</p>
-        <p>Contact : adresse indiquée dans les Mentions légales.</p>
+        <p>Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'<strong>UTBM</strong> (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant.</p>
+        <p>Pour toute question relative à vos données, contactez-les à l'adresse indiquée dans les Mentions légales, ou adressez-vous au DPO de l'UTBM.</p>
       </Section>
 
       <Section title="Ce qui est stocké — selon votre mode d'utilisation">
@@ -138,10 +137,10 @@ function PrivacyShort() {
         <table style={tableStyle}>
           <thead><tr><th style={th}>Donnée</th><th style={th}>Où</th><th style={th}>Base légale</th><th style={th}>Durée de conservation</th></tr></thead>
           <tbody>
-            <tr><td style={td}>Adresse e-mail</td><td style={td}>Firebase Authentication (Google)</td><td style={td}>Consentement (art. 6.1.a)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
-            <tr><td style={td}>Prénom affiché (facultatif)</td><td style={td}>Firebase Authentication + Firestore</td><td style={td}>Consentement (art. 6.1.a)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
+            <tr><td style={td}>Adresse e-mail</td><td style={td}>Firebase Authentication (Google)</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
+            <tr><td style={td}>Prénom affiché (facultatif)</td><td style={td}>Firebase Auth + Firestore</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
             <tr><td style={td}>Scores, modules, temps passé</td><td style={td}>Cloud Firestore (Google)</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à suppression du compte</td></tr>
-            <tr><td style={td}>Token d'authentification (Firebase)</td><td style={td}><code>IndexedDB</code> local (navigateur)</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à déconnexion</td></tr>
+            <tr><td style={td}>Token d'authentification</td><td style={td}><code>IndexedDB</code> local</td><td style={td}>Exécution du service (art. 6.1.b)</td><td style={td}>Jusqu'à déconnexion</td></tr>
           </tbody>
         </table>
         <p style={{ marginTop: '10px', fontSize: '13px', color: 'var(--text-secondary)' }}>
@@ -166,7 +165,7 @@ function PrivacyShort() {
           <li><strong>Rectification</strong> : modifiez votre prénom depuis « Mon profil ».</li>
           <li><strong>Effacement</strong> : supprimez votre compte depuis « Mon profil » → « Supprimer mon compte ». Toutes les données Firebase associées sont effacées.</li>
           <li><strong>Portabilité</strong> : exportez votre progression en JSON depuis « Mon profil ».</li>
-          <li><strong>Retrait du consentement</strong> : vous pouvez retirer votre consentement à tout moment en supprimant votre compte. Ce retrait ne remet pas en cause la licéité des traitements antérieurs.</li>
+          <li><strong>Opposition</strong> (art. 21) : cessez d'utiliser le service en mode connecté et supprimez votre compte — toute trace est effacée côté Firebase.</li>
           <li><strong>Réclamation</strong> : vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (France — <em>cnil.fr</em>) ou de la <strong>CNPD</strong> (Luxembourg — <em>cnpd.public.lu</em>).</li>
         </ul>
         <p>Pour exercer vos droits, contactez les éditeurs à l'adresse mentionnée dans les Mentions légales. Délai de réponse : 30 jours (art. 12 RGPD).</p>
@@ -435,9 +434,9 @@ function Highlight({ children }) {
 }
 
 const linkInline = { color: '#166534', fontWeight: '600' };
-const tableStyle = { width: '100%', borderCollapse: 'collapse', marginTop: '10px', marginBottom: '10px', fontSize: '13px' };
-const th = { textAlign: 'left', padding: '8px 10px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', borderBottom: '2px solid #e2e8f0', fontWeight: '700' };
-const td = { padding: '8px 10px', borderBottom: '1px solid var(--border-soft)', color: 'var(--text-primary)', verticalAlign: 'top' };
+const tableStyle = { width: '100%', borderCollapse: 'collapse', marginTop: '10px', marginBottom: '10px', fontSize: '13px', tableLayout: 'fixed' };
+const th = { textAlign: 'left', padding: '8px 10px', backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)', borderBottom: '2px solid #e2e8f0', fontWeight: '700', whiteSpace: 'nowrap' };
+const td = { padding: '8px 10px', borderBottom: '1px solid var(--border-soft)', color: 'var(--text-primary)', verticalAlign: 'top', textAlign: 'left', hyphens: 'none', wordBreak: 'break-word' };
 
 // -----------------------------------------------------------------------------
 // Plan du site
