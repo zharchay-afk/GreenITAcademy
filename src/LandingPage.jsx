@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
+import LogoPicker from './LogoPicker';
 import modulesData from '../data/modules.json';
 import questionsData from '../data/questions.json';
 import { useTheme } from './theme';
@@ -193,6 +194,7 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
   const [customModules,  setCustomModules]  = useState([]);
   const [editingSiteName, setEditingSiteName] = useState(false);
   const [siteNameDraft,   setSiteNameDraft]   = useState('');
+  const [showLogoPicker,  setShowLogoPicker]  = useState(false);
 
   useEffect(() => {
     if (!db) return;
@@ -307,13 +309,28 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
               )}
             </button>
             {isAdmin && (
-              <button
-                onClick={() => { setSiteNameDraft(pageCfg.siteName || ''); setEditingSiteName(true); }}
-                title="Modifier le nom du site"
-                style={{ width: '20px', height: '20px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, flexShrink: 0 }}
-              >✏</button>
+              <>
+                <button
+                  onClick={() => setShowLogoPicker(true)}
+                  title="Changer le logo"
+                  style={{ width: '20px', height: '20px', backgroundColor: '#7c3aed', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, flexShrink: 0 }}
+                >🖼</button>
+                <button
+                  onClick={() => { setSiteNameDraft(pageCfg.siteName || ''); setEditingSiteName(true); }}
+                  title="Modifier le nom du site"
+                  style={{ width: '20px', height: '20px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, flexShrink: 0 }}
+                >✏</button>
+              </>
             )}
           </div>
+        )}
+        {showLogoPicker && (
+          <LogoPicker
+            currentVariant={pageCfg.logoVariant || 'leaf'}
+            currentUrl={pageCfg.logoUrl || ''}
+            onClose={() => setShowLogoPicker(false)}
+            toast={toast}
+          />
         )}
 
         <nav style={{ display: 'flex', gap: isMobile ? '6px' : '8px', alignItems: 'center' }}>
@@ -558,7 +575,9 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                 );
               })}
               {/* Modules personnalisés (Firestore) */}
-              {customModules.map((m) => (
+              {customModules.map((m) => {
+                const isNew = m.createdAt && (Date.now() - m.createdAt < 30 * 24 * 60 * 60 * 1000);
+                return (
                 <div key={m.id} style={{
                   backgroundColor: 'var(--bg-surface)', borderRadius: '12px',
                   border: `1px solid ${isDark ? 'rgba(139,92,246,0.3)' : '#e9d5ff'}`,
@@ -570,9 +589,11 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                         ? <img src={m.imageUrl} alt={m.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         : (m.image || '📦')}
                     </div>
-                    <span style={{ fontSize: '10px', fontWeight: 700, backgroundColor: isDark ? 'rgba(139,92,246,0.2)' : '#f3e8ff', color: isDark ? '#c4b5fd' : '#7c3aed', padding: '2px 7px', borderRadius: '8px' }}>
-                      Nouveau
-                    </span>
+                    {isNew && (
+                      <span style={{ fontSize: '10px', fontWeight: 700, backgroundColor: isDark ? 'rgba(139,92,246,0.2)' : '#f3e8ff', color: isDark ? '#c4b5fd' : '#7c3aed', padding: '2px 7px', borderRadius: '8px' }}>
+                        Nouveau
+                      </span>
+                    )}
                   </div>
                   <div style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#c4b5fd' : '#7c3aed', letterSpacing: '1px', marginBottom: '6px' }}>MODULE {m.id}</div>
                   <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: '1.35' }}>{m.title || 'Nouveau module'}</h3>
@@ -583,7 +604,8 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                     <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{m.intro}</p>
                   )}
                 </div>
-              ))}
+              );})}
+
             </div>
 
             <div style={{ textAlign: 'center' }}>

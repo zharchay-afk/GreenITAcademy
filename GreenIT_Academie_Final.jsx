@@ -3,6 +3,7 @@ import Sidebar from './src/Sidebar';
 import Footer from './src/Footer';
 import { useTheme } from './src/theme';
 import useIsMobile from './src/useIsMobile';
+import { useSiteConfig } from './src/SiteConfigContext';
 
 // ================================================
 // GREEN IT ACADÉMIE - Style SecNum
@@ -134,6 +135,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
   };
 
   const isMobile = useIsMobile();
+  const { siteName } = useSiteConfig();
   const totalStarted = modules.filter(m => m.started).length;
   const completedModules = modules.filter(m => m.score >= 70).length;
 
@@ -163,7 +165,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
           gap: '12px',
         }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '16px' : '18px', fontWeight: '700', color: 'var(--accent)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: isMobile ? 'nowrap' : 'normal' }}>
-            {isMobile ? '📚 Mes modules' : 'Mes modules — Normes, Labels & Certifications Green IT'}
+            {isMobile ? '📚 Mes modules' : `Mes modules — ${siteName || 'Green IT Académie'}`}
           </h1>
           {!isMobile && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px', color: 'var(--text-secondary)', flexShrink: 0 }}>

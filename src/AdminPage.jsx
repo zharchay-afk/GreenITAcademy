@@ -497,6 +497,7 @@ function ModulesTab({ toast }) {
         ...newModForm,
         _custom: true,
         sections: [],
+        createdAt: Date.now(),
       });
       toast(`Module ${nextId} créé`);
       setAddingModule(false);

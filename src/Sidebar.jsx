@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import useIsMobile from './useIsMobile';
+import { useSiteConfig } from './SiteConfigContext';
 
 // Sidebar réutilisable pour toutes les pages internes (dashboard, attestation,
 // profil, références).
@@ -21,6 +22,7 @@ const STORAGE_KEY = 'greenit-sidebar-collapsed';
 
 export default function Sidebar({ activePage, onNavigate, isAdmin, firebaseUser, onSignOut }) {
   const isMobile = useIsMobile();
+  const { siteName } = useSiteConfig();
 
   // Desktop : repliée ou étendue
   const [collapsed, setCollapsed] = useState(() => {
@@ -49,8 +51,9 @@ export default function Sidebar({ activePage, onNavigate, isAdmin, firebaseUser,
         <Logo size={36} />
         {!centered && (
           <div>
-            <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px' }}>Green IT</div>
-            <div style={{ color: 'var(--sidebar-active)', fontSize: '10px', fontStyle: 'italic' }}>académie</div>
+            <div style={{ color: '#fff', fontWeight: '700', fontSize: '14px', maxWidth: '110px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {siteName || 'Green IT'}
+            </div>
           </div>
         )}
       </div>
