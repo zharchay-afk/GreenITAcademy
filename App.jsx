@@ -10,7 +10,7 @@ import LandingPage from './src/LandingPage';
 import LegalPages from './src/LegalPages';
 import AdminPage from './src/AdminPage';
 import { LoginPage, RegisterPage, ForgotPasswordPage, EmailVerificationBanner } from './src/AuthPages';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from './src/firebase';
 import { useFirebaseSync } from './src/useFirebaseSync';
@@ -196,6 +196,9 @@ export default function App() {
     setAuthMode(mode);
     setScreen('auth');
   };
+  const handleSignOut = () => {
+    if (auth) signOut(auth).catch(() => {});
+  };
   const handleReset = () => {
     setModules(initialModules);
     localStorage.removeItem(STORAGE_KEY);
@@ -351,6 +354,7 @@ export default function App() {
         firebaseUser={firebaseUser}
         isAdmin={isAdmin}
         onGoToAuth={handleGoToAuth}
+        onSignOut={handleSignOut}
       />
     </>
   );

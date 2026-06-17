@@ -102,7 +102,7 @@ const ModuleCard = ({ module, onStart, onEvaluate }) => {
 };
 
 // Main App Component
-export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal, onShowLanding, firebaseUser, isAdmin, onGoToAuth }) {
+export default function GreenITAcademie({ modules: modulesProp, onStart: onStartProp, onEvaluate: onEvaluateProp, onNavigate: onNavigateProp, onShowLegal, onShowLanding, firebaseUser, isAdmin, onGoToAuth, onSignOut }) {
   const [activePage, setActivePage] = useState('accueil');
   const [modulesState, setModulesState] = useState(modulesData);
 
@@ -146,7 +146,7 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
       color: 'var(--text-primary)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
-      <Sidebar activePage={activePage} onNavigate={handleNavigate} isAdmin={isAdmin} />
+      <Sidebar activePage={activePage} onNavigate={handleNavigate} isAdmin={isAdmin} firebaseUser={firebaseUser} onSignOut={onSignOut} />
 
       <main style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
@@ -171,9 +171,18 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
               <span>✓ {completedModules}/6 validés</span>
               {/* Statut connexion */}
               {firebaseUser ? (
-                <span style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: 'var(--accent-soft)', color: 'var(--accent)', padding: '3px 10px', borderRadius: '10px', fontWeight: '600' }}>
-                  ☁️ {firebaseUser.displayName || firebaseUser.email?.split('@')[0]}
-                </span>
+                <>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: 'var(--accent-soft)', color: 'var(--accent)', padding: '3px 10px', borderRadius: '10px', fontWeight: '600' }}>
+                    ☁️ {firebaseUser.displayName || firebaseUser.email?.split('@')[0]}
+                  </span>
+                  <button
+                    onClick={onSignOut}
+                    title="Se déconnecter"
+                    style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer', fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'inherit' }}
+                  >
+                    ↪ Déconnexion
+                  </button>
+                </>
               ) : (
                 <button
                   onClick={() => onGoToAuth && onGoToAuth('login')}
@@ -185,8 +194,17 @@ export default function GreenITAcademie({ modules: modulesProp, onStart: onStart
             </div>
           )}
           {isMobile && (
-            <div style={{ flexShrink: 0, fontSize: '11px', color: 'var(--text-secondary)' }}>
-              {completedModules}/6 validés
+            <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: '10px', fontSize: '11px', color: 'var(--text-secondary)' }}>
+              <span>{completedModules}/6 validés</span>
+              {firebaseUser && (
+                <button
+                  onClick={onSignOut}
+                  title="Se déconnecter"
+                  style={{ background: 'none', border: '1px solid var(--border)', borderRadius: '6px', padding: '4px 8px', cursor: 'pointer', fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'inherit' }}
+                >
+                  ↪
+                </button>
+              )}
             </div>
           )}
         </header>

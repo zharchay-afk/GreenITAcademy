@@ -19,7 +19,7 @@ const ITEMS = [
 
 const STORAGE_KEY = 'greenit-sidebar-collapsed';
 
-export default function Sidebar({ activePage, onNavigate, isAdmin }) {
+export default function Sidebar({ activePage, onNavigate, isAdmin, firebaseUser, onSignOut }) {
   const isMobile = useIsMobile();
 
   // Desktop : repliée ou étendue
@@ -147,43 +147,78 @@ export default function Sidebar({ activePage, onNavigate, isAdmin }) {
 
       <LogoBtn centered={collapsed} />
 
-      <nav style={{ padding: '12px 0', flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-        {[...ITEMS, ...(isAdmin ? [{ id: 'admin', icon: '⚙️', label: 'Admin' }] : [])].map((item) => {
-          const isActive = activePage === item.id;
-          const isAdminItem = item.id === 'admin';
-          return (
+      <nav style={{ padding: '12px 0', flex: 1, overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div>
+          {[...ITEMS, ...(isAdmin ? [{ id: 'admin', icon: '⚙️', label: 'Admin' }] : [])].map((item) => {
+            const isActive = activePage === item.id;
+            const isAdminItem = item.id === 'admin';
+            return (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                title={collapsed ? item.label : undefined}
+                aria-label={item.label}
+                style={{
+                  width: '100%',
+                  padding: collapsed ? '11px 0' : '11px 16px',
+                  backgroundColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+                  border: 'none',
+                  borderLeft: isActive ? '3px solid var(--sidebar-active)' : isAdminItem ? '3px solid rgba(255,255,255,0.2)' : '3px solid transparent',
+                  color: isActive ? 'var(--sidebar-active)' : isAdminItem ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.85)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: collapsed ? 'center' : 'flex-start',
+                  gap: '10px',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: isActive ? '600' : '400',
+                  textAlign: 'left',
+                  fontFamily: 'inherit',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  marginTop: isAdminItem ? '4px' : 0,
+                  borderTop: isAdminItem ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                }}
+              >
+                <span style={{ fontSize: '17px', flexShrink: 0 }}>{item.icon}</span>
+                {!collapsed && <span>{item.label}</span>}
+              </button>
+            );
+          })}
+        </div>
+
+        {firebaseUser && (
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: collapsed ? '10px 0' : '10px 12px' }}>
+            {!collapsed && (
+              <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', padding: '0 4px 6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {firebaseUser.displayName || firebaseUser.email?.split('@')[0]}
+              </div>
+            )}
             <button
-              key={item.id}
-              onClick={() => onNavigate(item.id)}
-              title={collapsed ? item.label : undefined}
-              aria-label={item.label}
+              onClick={onSignOut}
+              title="Se déconnecter"
+              aria-label="Se déconnecter"
               style={{
                 width: '100%',
-                padding: collapsed ? '11px 0' : '11px 16px',
-                backgroundColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+                padding: collapsed ? '9px 0' : '9px 4px',
+                background: 'transparent',
                 border: 'none',
-                borderLeft: isActive ? '3px solid var(--sidebar-active)' : isAdminItem ? '3px solid rgba(255,255,255,0.2)' : '3px solid transparent',
-                color: isActive ? 'var(--sidebar-active)' : isAdminItem ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.85)',
+                borderRadius: '6px',
+                color: 'rgba(255,255,255,0.55)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: collapsed ? 'center' : 'flex-start',
-                gap: '10px',
+                gap: '8px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: isActive ? '600' : '400',
-                textAlign: 'left',
+                fontSize: '12px',
                 fontFamily: 'inherit',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                marginTop: isAdminItem ? '4px' : 0,
-                borderTop: isAdminItem ? '1px solid rgba(255,255,255,0.08)' : 'none',
               }}
             >
-              <span style={{ fontSize: '17px', flexShrink: 0 }}>{item.icon}</span>
-              {!collapsed && <span>{item.label}</span>}
+              <span style={{ fontSize: '16px' }}>↪</span>
+              {!collapsed && <span>Se déconnecter</span>}
             </button>
-          );
-        })}
+          </div>
+        )}
       </nav>
     </aside>
   );
