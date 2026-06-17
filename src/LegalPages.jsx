@@ -7,8 +7,8 @@ import { db } from './firebase';
 // ── Contexte admin/config partagé entre toutes les sous-pages ─────────────
 const LegalCtx = React.createContext({ cfg: {}, isAdmin: false, onSave: () => {} });
 
-// Champ de texte inline éditable par l'admin (cliquer pour modifier)
-function E({ field, def }) {
+// Champ inline (petit texte) ou bloc paragraphe (multiline) éditable par l'admin
+function E({ field, def, multiline = false }) {
   const { cfg, isAdmin, onSave } = useContext(LegalCtx);
   const value = cfg[field] ?? def;
   const [editing, setEditing] = useState(false);
@@ -16,6 +16,37 @@ function E({ field, def }) {
   const [saving, setSaving] = useState(false);
 
   if (!isAdmin) return <>{value}</>;
+
+  const doSave = async () => {
+    setSaving(true);
+    await onSave(field, draft);
+    setSaving(false);
+    setEditing(false);
+  };
+
+  // ── mode édition ──────────────────────────────────────────────────
+  if (editing && multiline) {
+    return (
+      <span style={{ display: 'block', margin: '4px 0' }}>
+        <textarea
+          value={draft}
+          onChange={e => setDraft(e.target.value)}
+          autoFocus
+          rows={Math.max(4, draft.split('\n').length + 1)}
+          style={{
+            width: '100%', padding: '8px 10px',
+            border: '2px solid #2563eb', borderRadius: '6px',
+            fontSize: 'inherit', fontFamily: 'inherit', lineHeight: '1.75',
+            resize: 'vertical', boxSizing: 'border-box',
+          }}
+        />
+        <span style={{ display: 'flex', gap: '6px', marginTop: '4px' }}>
+          <button onClick={doSave} disabled={saving} style={{ padding: '4px 14px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', fontWeight: 700 }}>{saving ? '…' : '✓ Sauvegarder'}</button>
+          <button onClick={() => setEditing(false)} style={{ padding: '4px 10px', background: 'transparent', border: '1px solid #cbd5e1', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✕ Annuler</button>
+        </span>
+      </span>
+    );
+  }
 
   if (editing) {
     return (
@@ -25,17 +56,38 @@ function E({ field, def }) {
           onChange={e => setDraft(e.target.value)}
           autoFocus
           onKeyDown={async e => {
-            if (e.key === 'Enter')  { setSaving(true); await onSave(field, draft); setSaving(false); setEditing(false); }
-            if (e.key === 'Escape') { setEditing(false); }
+            if (e.key === 'Enter')  doSave();
+            if (e.key === 'Escape') setEditing(false);
           }}
           style={{ padding: '2px 8px', border: '2px solid #2563eb', borderRadius: '4px', fontSize: 'inherit', fontFamily: 'inherit', width: `${Math.max((draft.length || 10) + 4, 14)}ch`, minWidth: '80px' }}
         />
-        <button
-          onClick={async () => { setSaving(true); await onSave(field, draft); setSaving(false); setEditing(false); }}
-          disabled={saving}
-          style={{ padding: '2px 8px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', fontWeight: 700 }}
-        >{saving ? '…' : '✓'}</button>
+        <button onClick={doSave} disabled={saving} style={{ padding: '2px 8px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', fontWeight: 700 }}>{saving ? '…' : '✓'}</button>
         <button onClick={() => setEditing(false)} style={{ padding: '2px 6px', background: 'transparent', border: '1px solid #cbd5e1', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>✕</button>
+      </span>
+    );
+  }
+
+  // ── mode affichage ────────────────────────────────────────────────
+  if (multiline) {
+    return (
+      <span
+        onClick={() => { setDraft(value); setEditing(true); }}
+        title="Cliquer pour modifier ce paragraphe"
+        style={{
+          display: 'block', cursor: 'pointer',
+          outline: '2px dashed #93c5fd', borderRadius: '6px',
+          padding: '6px 32px 6px 8px',
+          position: 'relative', transition: 'outline-color 0.15s',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        {value}
+        <span style={{
+          position: 'absolute', top: '4px', right: '4px',
+          fontSize: '11px', color: '#2563eb',
+          backgroundColor: '#dbeafe', border: '1px solid #93c5fd',
+          padding: '1px 5px', borderRadius: '3px', lineHeight: '1.4',
+        }}>✏</span>
       </span>
     );
   }
@@ -49,14 +101,18 @@ function E({ field, def }) {
         border: '1px solid #93c5fd', borderRadius: '4px',
         padding: '1px 6px', cursor: 'pointer',
         display: 'inline-flex', alignItems: 'center', gap: '4px',
-        fontWeight: 600,
-        verticalAlign: 'middle',
+        fontWeight: 600, verticalAlign: 'middle',
       }}
     >
       {value}
       <span style={{ fontSize: '11px', opacity: 0.8 }}>✏</span>
     </span>
   );
+}
+
+// Paragraphe éditable (bloc multiline)
+function EP({ field, def }) {
+  return <p style={{ margin: '0 0 12px' }}><E field={field} def={def} multiline /></p>;
 }
 
 // Page-wrapper et tabs
@@ -141,9 +197,9 @@ export default function LegalPages({ initial = 'notice', onBack, onShowScormPlay
       </nav>
 
       {isAdmin && (
-        <div style={{ flexShrink: 0, backgroundColor: '#1e40af', color: '#fff', padding: '8px 24px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ flexShrink: 0, backgroundColor: '#1e40af', color: '#fff', padding: '8px 24px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 700 }}>🔧 Mode administration</span>
-          <span style={{ opacity: 0.85 }}>— cliquez sur les textes surlignés en bleu pour les modifier</span>
+          <span style={{ opacity: 0.85 }}>— <span style={{ backgroundColor: '#93c5fd', color: '#1e3a8a', borderRadius: '3px', padding: '0 4px', fontWeight: 600 }}>fond bleu</span> = valeur inline &nbsp;·&nbsp; <span style={{ border: '2px dashed #93c5fd', borderRadius: '3px', padding: '0 4px' }}>bordure pointillée</span> = paragraphe — cliquez pour modifier</span>
           {saveError && <span style={{ marginLeft: 'auto', backgroundColor: '#ef4444', borderRadius: '4px', padding: '2px 8px' }}>{saveError}</span>}
         </div>
       )}
@@ -168,21 +224,21 @@ function LegalNotice() {
     <Article title="Mentions légales" dateField="updatedNotice" dateDef="mai 2026">
       <Section title="Éditeur du service">
         <p>Le service <strong>« Green IT Académie »</strong> est édité, dans un cadre strictement pédagogique et non commercial, par <strong><E field="orgDescription" def="deux étudiants en Master Data Science de l'UTBM" /></strong>.</p>
-        <p>Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique.</p>
+        <EP field="noticePurpose" def="Il s'agit d'un projet académique sans personnalité morale ni structure commerciale. Le service n'a pas vocation à être exploité au-delà de ce cadre pédagogique." />
         <p>Contact : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong></p>
       </Section>
 
       <Section title="Hébergement">
-        <p>L'application est distribuée sous forme de <strong>Progressive Web App</strong> (PWA) hébergée sur <strong>GitHub Pages</strong> (Microsoft Corporation). Les ressources statiques (HTML, JavaScript, CSS) sont servies depuis l'infrastructure GitHub sans traitement de données personnelles côté hébergeur.</p>
-        <p>Le service optionnel de compte utilisateur fait appel à <strong>Firebase</strong> (Google LLC, Dublin, Irlande) pour l'authentification (<em>Firebase Authentication</em>) et la synchronisation de la progression (<em>Cloud Firestore</em>). Ces services sont soumis aux conditions d'utilisation de Google et aux clauses contractuelles types UE pour les transferts de données.</p>
+        <EP field="noticeHostingStatic" def="L'application est distribuée sous forme de Progressive Web App (PWA) hébergée sur GitHub Pages (Microsoft Corporation). Les ressources statiques (HTML, JavaScript, CSS) sont servies depuis l'infrastructure GitHub sans traitement de données personnelles côté hébergeur." />
+        <EP field="noticeHostingFirebase" def="Le service optionnel de compte utilisateur fait appel à Firebase (Google LLC, Dublin, Irlande) pour l'authentification (Firebase Authentication) et la synchronisation de la progression (Cloud Firestore). Ces services sont soumis aux conditions d'utilisation de Google et aux clauses contractuelles types UE pour les transferts de données." />
       </Section>
 
       <Section title="Propriété intellectuelle">
-        <p>L'ensemble des contenus pédagogiques (textes, schémas SVG, illustrations) a été produit par les auteurs sur la base de sources publiques citées en bibliographie. Les marques et logos évoqués (ISO, EPEAT, Energy Star, Blue Angel, LuxConnect, EBRC, etc.) appartiennent à leurs titulaires respectifs. Leur citation est faite à titre purement informatif et pédagogique.</p>
+        <EP field="noticeIP" def="L'ensemble des contenus pédagogiques (textes, schémas SVG, illustrations) a été produit par les auteurs sur la base de sources publiques citées en bibliographie. Les marques et logos évoqués (ISO, EPEAT, Energy Star, Blue Angel, LuxConnect, EBRC, etc.) appartiennent à leurs titulaires respectifs. Leur citation est faite à titre purement informatif et pédagogique." />
       </Section>
 
       <Section title="Limitation de responsabilité">
-        <p>Le contenu pédagogique est rédigé avec soin sur la base de sources officielles à la date indiquée. Les auteurs ne peuvent toutefois être tenus pour responsables d'éventuelles inexactitudes ou d'une évolution réglementaire postérieure à la rédaction. Les informations fournies ne constituent pas un avis juridique professionnel.</p>
+        <EP field="noticeDisclaimer" def="Le contenu pédagogique est rédigé avec soin sur la base de sources officielles à la date indiquée. Les auteurs ne peuvent toutefois être tenus pour responsables d'éventuelles inexactitudes ou d'une évolution réglementaire postérieure à la rédaction. Les informations fournies ne constituent pas un avis juridique professionnel." />
       </Section>
     </Article>
   );
@@ -203,7 +259,7 @@ function PrivacyShort() {
       </Section>
 
       <Section title="Responsable du traitement">
-        <p>Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'<strong>UTBM</strong> (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant.</p>
+        <EP field="privacyResponsible" def="Ce site a été développé par des étudiants en Master Data Science dans le cadre d'un projet pédagogique commandité par l'UTBM (Université de Technologie de Belfort-Montbéliard). Les étudiants ont agi en qualité de développeurs pour le compte de l'établissement, dans le respect des consignes de leur enseignant." />
         <p>Pour toute question relative à vos données : <strong><E field="contactEmail" def="xxx@utbm.fr" /></strong> — ou adressez-vous au DPO de l'UTBM.</p>
       </Section>
 
@@ -265,7 +321,7 @@ function PrivacyShort() {
       </Section>
 
       <Section title="Mise à jour de cette politique">
-        <p>Toute modification substantielle sera notifiée aux utilisateurs connectés par e-mail ou via une bannière dans l'application. La date en haut de page indique la dernière révision.</p>
+        <EP field="privacyUpdate" def="Toute modification substantielle sera notifiée aux utilisateurs connectés par e-mail ou via une bannière dans l'application. La date en haut de page indique la dernière révision." />
       </Section>
 
     </Article>
@@ -299,7 +355,7 @@ function CookiesPolicy() {
       </Section>
 
       <Section title="Pourquoi pas de bannière « cookies » ?">
-        <p>La directive « ePrivacy » (2002/58/CE) et son application luxembourgeoise imposent le recueil du consentement pour tout dépôt ou lecture d'information sur le terminal de l'utilisateur, <strong>à l'exception</strong> des traceurs « strictement nécessaires à la fourniture d'un service expressément demandé par l'utilisateur » (article 5.3, transposé). Les stockages listés ci-dessus relèvent tous de cette exemption : ils sont indispensables à l'exécution de la fonctionnalité demandée (s'authentifier, suivre son parcours, utiliser l'application hors-ligne). Aucune bannière de consentement n'est donc requise.</p>
+        <EP field="cookiesNoBanner" def="La directive « ePrivacy » (2002/58/CE) et son application luxembourgeoise imposent le recueil du consentement pour tout dépôt ou lecture d'information sur le terminal de l'utilisateur, à l'exception des traceurs « strictement nécessaires à la fourniture d'un service expressément demandé par l'utilisateur » (article 5.3, transposé). Les stockages listés ci-dessus relèvent tous de cette exemption : ils sont indispensables à l'exécution de la fonctionnalité demandée (s'authentifier, suivre son parcours, utiliser l'application hors-ligne). Aucune bannière de consentement n'est donc requise." />
       </Section>
 
       <Section title="Comment supprimer vos données ?">
@@ -325,9 +381,7 @@ function EcoConception({ onShowScormPlayer }) {
   return (
     <Article title="Éco-conception de l'application" dateField="updatedEco" dateDef="mai 2026">
       <Section title="Préambule">
-        <Highlight>
-          Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent.
-        </Highlight>
+        <Highlight><EP field="ecoPreambule" def="Le contenu pédagogique de Green IT Académie porte sur l'éco-conception et la sobriété numérique. La cohérence imposait que l'application elle-même applique ces principes. Cette page documente les choix techniques retenus, leurs effets mesurables, et les limites qui subsistent." /></Highlight>
       </Section>
 
       <Section title="1. Architecture sans serveur ni base de données">
@@ -435,9 +489,7 @@ function Accessibilite() {
   return (
     <Article title="Accessibilité" dateField="updatedAccess" dateDef="mai 2026">
       <Section title="Préambule">
-        <Highlight>
-          L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés.
-        </Highlight>
+        <Highlight><EP field="accessPreambule" def="L'accessibilité numérique est une composante intrinsèque du numérique responsable. Un outil pédagogique qui exclut une partie de ses utilisateurs ne peut prétendre relever de cette catégorie. Cette page documente les dispositions effectivement mises en œuvre, les limites qui subsistent et les arbitrages associés." /></Highlight>
       </Section>
 
       <Section title="Référentiel suivi">
