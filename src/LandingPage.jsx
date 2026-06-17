@@ -190,6 +190,7 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
   const [extraModules,   setExtraModules]   = useState(0);
   const [extraSections,  setExtraSections]  = useState(0);
   const [extraQuestions, setExtraQuestions] = useState(0);
+  const [customModules,  setCustomModules]  = useState([]);
   const [editingSiteName, setEditingSiteName] = useState(false);
   const [siteNameDraft,   setSiteNameDraft]   = useState('');
 
@@ -202,9 +203,13 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
     const unsubMods = onSnapshot(
       query(collection(db, 'content_modules'), where('_custom', '==', true)),
       (snap) => {
-        const active = snap.docs.filter(d => !d.data()._deleted);
+        const active = snap.docs
+          .map(d => ({ id: parseInt(d.id), ...d.data() }))
+          .filter(d => !d._deleted)
+          .sort((a, b) => a.id - b.id);
         setExtraModules(active.length);
-        setExtraSections(active.reduce((s, d) => s + (d.data().sections?.length || 0), 0));
+        setExtraSections(active.reduce((s, d) => s + (d.sections?.length || 0), 0));
+        setCustomModules(active);
       },
       () => {}
     );
@@ -516,6 +521,7 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '36px' }}>
+              {/* Modules de base (JSON) */}
               {modulesData.modules.map((m) => {
                 const pal = MODULE_PALETTE[m.id] || { accent: '#15803d', bg: '#dcfce7' };
                 const minutes = toMinutes(m.estimatedTime);
@@ -551,6 +557,33 @@ export default function LandingPage({ onStart, onShowLegal, onGoToAuth, firebase
                   </div>
                 );
               })}
+              {/* Modules personnalisés (Firestore) */}
+              {customModules.map((m) => (
+                <div key={m.id} style={{
+                  backgroundColor: 'var(--bg-surface)', borderRadius: '12px',
+                  border: `1px solid ${isDark ? 'rgba(139,92,246,0.3)' : '#e9d5ff'}`,
+                  padding: '20px', display: 'flex', flexDirection: 'column',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                    <div style={{ width: '44px', height: '44px', backgroundColor: isDark ? 'rgba(139,92,246,0.15)' : '#f3e8ff', borderRadius: '10px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', flexShrink: 0 }}>
+                      {m.imageUrl
+                        ? <img src={m.imageUrl} alt={m.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        : (m.image || '📦')}
+                    </div>
+                    <span style={{ fontSize: '10px', fontWeight: 700, backgroundColor: isDark ? 'rgba(139,92,246,0.2)' : '#f3e8ff', color: isDark ? '#c4b5fd' : '#7c3aed', padding: '2px 7px', borderRadius: '8px' }}>
+                      Nouveau
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: isDark ? '#c4b5fd' : '#7c3aed', letterSpacing: '1px', marginBottom: '6px' }}>MODULE {m.id}</div>
+                  <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: '1.35' }}>{m.title || 'Nouveau module'}</h3>
+                  {m.subtitle && (
+                    <p style={{ margin: '0 0 6px 0', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.4', fontStyle: 'italic' }}>{m.subtitle}</p>
+                  )}
+                  {m.intro && (
+                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{m.intro}</p>
+                  )}
+                </div>
+              ))}
             </div>
 
             <div style={{ textAlign: 'center' }}>
