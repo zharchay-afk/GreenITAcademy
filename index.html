@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>Green IT Académie</title>
+    <meta name="description" content="Parcours pédagogique sur les normes, labels et certifications du Green IT — Master Data Science, UE LUPT01." />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/GreenITAcademy/manifest.webmanifest" />
+    <meta name="theme-color" content="#1e3a5f" />
+    <link rel="icon" type="image/svg+xml" href="/GreenITAcademy/icon.svg" />
+
+    <!-- iOS : nom et apparence quand l'app est ajoutée à l'écran d'accueil -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Green IT" />
+    <link rel="apple-touch-icon" href="/GreenITAcademy/icon.svg" />
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { height: 100%; }
+
+      /* ---------- Thème clair (par défaut) ---------- */
+      :root {
+        --bg-page:        #f9fafb;
+        --bg-surface:     #ffffff;
+        --bg-soft:        #f1f5f9;
+        --bg-muted:       #f8fafc;
+        --text-primary:   #0f172a;
+        --text-secondary: #6b7280;
+        --text-muted:     #9ca3af;
+        --border:         #e5e7eb;
+        --border-soft:    #f1f5f9;
+        --accent:         #15803d;
+        --accent-soft:    #dcfce7;
+        /* Verts de marque (surfaces et boutons) */
+        --sidebar-bg:     #15803d;
+        --sidebar-active: #bbf7d0;
+        --brand:          #15803d;
+        --brand-text:     #ffffff;
+        --on-brand:       #ffffff;
+      }
+
+      /* ---------- Thème sombre ---------- */
+      html[data-theme="dark"] {
+        --bg-page:        #0f172a;
+        --bg-surface:     #1e293b;
+        --bg-soft:        #283548;
+        --bg-muted:       #111827;
+        --text-primary:   #e8edf4;
+        --text-secondary: #94a3b8;
+        --text-muted:     #64748b;
+        --border:         #334155;
+        --border-soft:    #1e293b;
+        /* Mode sombre : on neutralise presque tout le vert. Surfaces en slate,
+           accents en vert sage discret réservé aux petits éléments. */
+        --accent:         #74b893;
+        --accent-soft:    rgba(116,184,147,0.12);
+        --sidebar-bg:     #1a2333;
+        --sidebar-active: #74b893;
+        --brand:          #1f6b40;
+        --brand-text:     #e8f3ec;
+        --on-brand:       #f1f5f9;
+      }
+
+      body {
+        background-color: var(--bg-page);
+        color: var(--text-primary);
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+
+      /* Empêche le rebond élastique sur iOS quand on est en mode standalone */
+      @media (display-mode: standalone) {
+        body { overscroll-behavior: none; }
+      }
+
+      /* Espace pour la barre de navigation basse sur mobile */
+      @media (max-width: 767px) {
+        .m-pb-nav { padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important; }
+
+        /* Pages avec barre de navigation basse (Sidebar mobile fixée) :
+           on réduit la hauteur du conteneur racine pour que le Footer reste
+           toujours visible juste au-dessus de la barre de navigation. */
+        .with-sidebar-nav {
+          height: calc(100dvh - 48px) !important;
+        }
+        /* Force le <main> à hériter cette hauteur,
+           même s'il déclare height:100vh en inline style. */
+        .with-sidebar-nav > main {
+          height: 100% !important;
+        }
+      }
+
+      /* Inversion automatique des fonds clairs / textes sombres en mode sombre */
+      html[data-theme="dark"] [data-themed="surface"]      { background-color: var(--bg-surface) !important; color: var(--text-primary) !important; }
+      html[data-theme="dark"] [data-themed="page"]         { background-color: var(--bg-page) !important; }
+      html[data-theme="dark"] [data-themed="soft"]         { background-color: var(--bg-soft) !important; }
+      html[data-theme="dark"] [data-themed="text-primary"] { color: var(--text-primary) !important; }
+      html[data-theme="dark"] [data-themed="text-secondary"] { color: var(--text-secondary) !important; }
+      html[data-theme="dark"] [data-themed="border"]       { border-color: var(--border) !important; }
+    </style>
+    <script>
+      // Application du thème AVANT le rendu React pour éviter le flash blanc
+      (function () {
+        try {
+          var stored = localStorage.getItem('greenit-theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored || (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/GreenITAcademy/assets/index-cK5HOhQq.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Enregistrement du service worker — UNIQUEMENT en production.
+         En développement (localhost), le SW est désenregistré pour ne pas
+         servir un cache obsolète qui court-circuiterait le HMR de Vite. -->
+    <script>
+      (function () {
+        if (!('serviceWorker' in navigator)) return;
+        var host = window.location.hostname;
+        var isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+
+        if (isLocalhost) {
+          // Désinscrit tout SW résiduel + vide les caches en dev
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) { r.unregister(); });
+          });
+          if (window.caches && caches.keys) {
+            caches.keys().then(function (keys) { keys.forEach(function (k) { caches.delete(k); }); });
+          }
+          return;
+        }
+
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/GreenITAcademy/sw.js').then(function (reg) {
+            // Recharge la page dès qu'un nouveau SW prend le contrôle
+            // (le SW appelle skipWaiting + clients.claim → le rechargement est
+            //  quasi-instantané et transparent pour l'utilisateur).
+            navigator.serviceWorker.addEventListener('controllerchange', function () {
+              window.location.reload();
+            });
+          }).catch(function () {
+            // Échec silencieux : l'application fonctionne sans le SW
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

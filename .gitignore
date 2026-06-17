@@ -1,0 +1,27 @@
+# Dépendances (à réinstaller avec npm install)
+node_modules/
+
+# Builds de production
+dist/
+dist-native/
+web-build/
+
+# Android build cache (le projet source android/ est versionné)
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+
+# Fichiers Expo
+.expo/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Paramètres locaux de l'éditeur
+.claude/
+
+# Variables d'environnement (ne jamais partager)
+.env
+.env.local

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zharchay-afk.github.io/GreenITAcademy/sitemap.xml
