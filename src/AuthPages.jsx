@@ -155,7 +155,7 @@ function AuthHeader({ onBack }) {
 // ─────────────────────────────────────────────
 // LoginPage
 // ─────────────────────────────────────────────
-export function LoginPage({ onSuccess, onGoRegister, onGoForgot, onBack, onSkip }) {
+export function LoginPage({ onSuccess, onGoRegister, onGoForgot, onBack, onSkip, onShowLegal }) {
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const [error, setError]       = useState(null);
@@ -228,8 +228,17 @@ export function LoginPage({ onSuccess, onGoRegister, onGoForgot, onBack, onSkip 
           </div>
         )}
 
-        <div style={{ marginTop: '24px', padding: '10px 14px', backgroundColor: 'var(--bg-soft)', borderRadius: '8px', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.5' }}>
-          🔒 Authentification sécurisée via Firebase (Google) · Chiffrement TLS · Aucune donnée de progression transmise sans votre accord
+        <div style={{ marginTop: '24px', borderTop: '1px solid var(--border)', paddingTop: '16px', textAlign: 'center' }}>
+          <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 6px 0' }}>
+            En vous connectant, vous acceptez nos conditions d'utilisation.
+          </p>
+          <button
+            type="button"
+            onClick={() => onShowLegal && onShowLegal('privacy')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '12px', color: 'var(--accent)', fontWeight: '600', textDecoration: 'underline', fontFamily: 'inherit' }}
+          >
+            📋 Données personnelles &amp; Mentions légales
+          </button>
         </div>
       </div>
     </div>
@@ -239,7 +248,7 @@ export function LoginPage({ onSuccess, onGoRegister, onGoForgot, onBack, onSkip 
 // ─────────────────────────────────────────────
 // RegisterPage
 // ─────────────────────────────────────────────
-export function RegisterPage({ onSuccess, onGoLogin, onBack, onSkip }) {
+export function RegisterPage({ onSuccess, onGoLogin, onBack, onSkip, onShowLegal }) {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail]             = useState('');
   const [password, setPassword]       = useState('');
@@ -382,7 +391,9 @@ export function RegisterPage({ onSuccess, onGoLogin, onBack, onSkip }) {
             />
             <span style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.55' }}>
               J'accepte que mon adresse e-mail soit traitée par Firebase (Google) dans le seul but de sécuriser mon accès à ce parcours pédagogique.{' '}
-              <em>Voir la rubrique « Données personnelles ».</em>
+              <button type="button" onClick={() => onShowLegal && onShowLegal('privacy')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--accent)', textDecoration: 'underline', fontSize: '12px', fontFamily: 'inherit', fontWeight: '600' }}>
+                Voir la politique de confidentialité →
+              </button>
             </span>
           </label>
 
@@ -406,8 +417,14 @@ export function RegisterPage({ onSuccess, onGoLogin, onBack, onSkip }) {
           </div>
         )}
 
-        <div style={{ marginTop: '24px', padding: '10px 14px', backgroundColor: 'var(--bg-soft)', borderRadius: '8px', fontSize: '11px', color: 'var(--text-muted)', lineHeight: '1.5' }}>
-          🔒 Mot de passe géré par Firebase Authentication · Chiffré côté serveur · Aucune donnée de progression envoyée sans votre accord · Conformément aux recommandations OWASP et NIST SP 800-63B
+        <div style={{ marginTop: '24px', borderTop: '1px solid var(--border)', paddingTop: '16px', textAlign: 'center' }}>
+          <button
+            type="button"
+            onClick={() => onShowLegal && onShowLegal('privacy')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '12px', color: 'var(--accent)', fontWeight: '600', textDecoration: 'underline', fontFamily: 'inherit' }}
+          >
+            📋 Données personnelles &amp; Mentions légales
+          </button>
         </div>
       </div>
     </div>

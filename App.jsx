@@ -229,6 +229,7 @@ export default function App() {
           onGoLogin={() => setAuthMode('login')}
           onBack={() => setScreen('landing')}
           onSkip={() => setScreen('home')}
+          onShowLegal={showLegal}
         />
       );
     }
@@ -247,6 +248,7 @@ export default function App() {
         onGoForgot={() => setAuthMode('forgot')}
         onBack={() => setScreen('landing')}
         onSkip={() => setScreen('home')}
+        onShowLegal={showLegal}
       />
     );
   }
