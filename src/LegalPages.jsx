@@ -169,7 +169,7 @@ function PrivacyShort() {
           <li><strong>Opposition</strong> (art. 21) : cessez d'utiliser le service en mode connecté et supprimez votre compte — toute trace est effacée côté Firebase.</li>
           <li><strong>Réclamation</strong> : vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> (France — <em>cnil.fr</em>) ou de la <strong>CNPD</strong> (Luxembourg — <em>cnpd.public.lu</em>).</li>
         </ul>
-        <p>Pour exercer vos droits : <strong>xxx@utbm.fr</strong>. Délai de réponse : 30 jours (art. 12 RGPD).</p>
+        <p>Pour exercer vos droits : <strong>xxx@utbm.fr</strong>.</p>
       </Section>
 
       <Section title="Cookies">
